@@ -1,0 +1,2 @@
+# prevent git from messing with hashes
+*.hash binary
