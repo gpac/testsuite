@@ -217,7 +217,6 @@ echo "  -h:                    print this help"
 #performs mirroring of media and references hash & videos
 sync_media ()
 {
- return 0
  log $L_INF "- Mirroring $REFERENCE_DIR/media/ to $EXTERNAL_MEDIA_DIR"
  if [ ! -e $EXTERNAL_MEDIA_DIR ] ; then
   mkdir $EXTERNAL_MEDIA_DIR
