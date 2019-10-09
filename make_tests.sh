@@ -205,7 +205,7 @@ echo "  -sync-before:          syncs all remote resources with local base (warni
 echo "  -check:                check test suites (names of each test is unique)"
 echo "  -track-stack:          track stack in malloc and turns on -warn option"
 echo "  -play:                 executes playback tests (not all tests use playback tests)"
-echo "  -p=NAME:               sets execution profile of all gpac apps to NAME. Use '-p 0' to disable profiles from local storage (eg for parallel executions of test suite)"
+echo "  -p=NAME:               sets execution profile of all gpac apps to NAME. Use '-p=0' to disable profiles from local storage (eg for parallel executions of test suite)"
 echo "  -test=NAME             only executes given test"
 echo "  -precommit             alias for -sync-before -git-hash -warn. Before commit/push, you should run ./make_tests -precommit"
 echo "  SCRIPTS                only runs the scripts provided as arguments, by default runs everything in $SCRIPTS_DIR"
@@ -319,7 +319,7 @@ for i in $* ; do
   ;;
  "-v")
   verbose=1;;
- -p*)
+ -p=*)
   gpac_profile="${i#-p=}"
   ;;
  "-precommit")
