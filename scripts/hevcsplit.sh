@@ -1,3 +1,4 @@
+
 #test hevcsplit and hevcmerge filters
 
 test_begin "hevc-split-merge"
@@ -22,6 +23,10 @@ do_hash_test "$i" "$name"
 do_play_test "play" "$i -blacklist=nvdec,vtbdec" ""
 
 done
+
+#merge a shuffled tiles combination 
+do_test "$GPAC -i $TEMP_DIR/high_0x0.hvc -i $TEMP_DIR/low_0x0.hvc -i $TEMP_DIR/high_832x0.hvc -i $TEMP_DIR/low_384x0.hvc -i $TEMP_DIR/high_384x256.hvc -i $TEMP_DIR/low_192x128.hvc hevcmerge @ -o $TEMP_DIR/merge0.hvc" "merge-6shuffledtiles"
+do_hash_test "$TEMP_DIR/merge0.hvc" "merge-6shuffledtiles"
 
 #merge a few tiles
 do_test "$GPAC -i $TEMP_DIR/high_0x256.hvc -i $TEMP_DIR/high_832x512.hvc  -i $TEMP_DIR/low_0x256.hvc -i $TEMP_DIR/low_384x0.hvc hevcmerge @ -o $TEMP_DIR/merge1.hvc" "merge-4tiles"
