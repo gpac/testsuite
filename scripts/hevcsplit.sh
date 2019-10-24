@@ -41,6 +41,9 @@ do_hash_test "$TEMP_DIR/merge2.hvc" "merge-abspos"
 do_test "$GPAC -i $TEMP_DIR/high_832x512.hvc:#CropOrigin=-1x0 -i $TEMP_DIR/low_192x128.hvc:#CropOrigin=0x0 hevcmerge @ -o $TEMP_DIR/merge3.hvc" "merge-relpos"
 do_hash_test "$TEMP_DIR/merge3.hvc" "merge-relpos"
 
+#SRD features
+do_test "$GPAC -i $TEMP_DIR/high_832x512.hvc:#CropOrigin=832x512:#SRDRef=1280x720:#SRD=832x512x448x208  -i $TEMP_DIR/low_192x128.hvc:#CropOrigin=192x128:#SRDRef=640x360:#SRD=192x128x192x128 hevcmerge @ -o $TEMP_DIR/merge4.hvc" "merge-SRDFeatures"
+do_hash_test "$TEMP_DIR/merge4.hvc" "merge-SRDFeatures"
 
 test_end
 
