@@ -32,7 +32,6 @@ do_hash_test "$TEMP_DIR/merge0.hvc" "merge-6shuffledtiles"
 do_test "$GPAC -i $TEMP_DIR/high_0x256.hvc -i $TEMP_DIR/high_832x512.hvc  -i $TEMP_DIR/low_0x256.hvc -i $TEMP_DIR/low_384x0.hvc hevcmerge @ -o $TEMP_DIR/merge1.hvc" "merge-4tiles"
 do_hash_test "$TEMP_DIR/merge1.hvc" "merge-4tiles"
 
-
 #merge a few tiles with absolute coords
 do_test "$GPAC -i $TEMP_DIR/high_832x512.hvc:#CropOrigin=192x256 -i $TEMP_DIR/low_192x128.hvc:#CropOrigin=0x0 hevcmerge @ -o $TEMP_DIR/merge2.hvc" "merge-abspos"
 do_hash_test "$TEMP_DIR/merge2.hvc" "merge-abspos"
@@ -42,8 +41,10 @@ do_test "$GPAC -i $TEMP_DIR/high_832x512.hvc:#CropOrigin=-1x0 -i $TEMP_DIR/low_1
 do_hash_test "$TEMP_DIR/merge3.hvc" "merge-relpos"
 
 #SRD features
-do_test "$GPAC -i $TEMP_DIR/high_832x512.hvc:#CropOrigin=832x512:#SRDRef=1280x720:#SRD=832x512x448x208  -i $TEMP_DIR/low_192x128.hvc:#CropOrigin=192x128:#SRDRef=640x360:#SRD=192x128x192x128 hevcmerge @ -o $TEMP_DIR/merge4.hvc" "merge-SRDFeatures"
-do_hash_test "$TEMP_DIR/merge4.hvc" "merge-SRDFeatures"
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i $TEMP_DIR/low_0x0.hvc:#CropOrigin=0x0:#SRDRef=640x360:#SRD=0x0x192x128 -i $TEMP_DIR/high_832x512.hvc:#CropOrigin=832x512:#SRDRef=1280x720:#SRD=832x512x448x208  -i $TEMP_DIR/low_192x128.hvc:#CropOrigin=192x128:#SRDRef=640x360:#SRD=192x128x192x128 hevcmerge @ inspect:allp:deep:interleave=false:log=$myinspect" "merge-SRDfeatures"
+do_hash_test $myinspect "merge-SRDfeatures"
+
 
 test_end
 
