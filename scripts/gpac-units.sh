@@ -155,9 +155,11 @@ test_end
 
 test_begin "gpac-opts-file"
 if [ $test_skip != 1 ] ; then
-optsfile=$TEMP_DIR/opts.txt
-echo "log=$TEMP_DIR/insp.txt" > $optsfile
-do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/logo.jpg inspect:$optsfile" "gpac-exec"
+optsfile1=$TEMP_DIR/opts1.txt
+echo "#ServiceID=20" > $optsfile1
+optsfile2=$TEMP_DIR/opts2.txt
+echo "log=$TEMP_DIR/insp.txt" > $optsfile2
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/logo.jpg:$optsfile1 inspect:$optsfile2" "gpac-exec"
 do_hash_test $TEMP_DIR/insp.txt  "gpac-inspect"
 fi
 test_end
