@@ -35,3 +35,17 @@ do_hash_test "$TEMP_DIR/prog_374.mp4" "prog_374"
 fi
 test_end
 
+test_begin "m2ts-split"
+if [ $test_skip != 1 ] ; then
+
+do_test "$GPAC -i $srcfile tssplit @#ServiceID= -o $TEMP_DIR/prog_\$GINC(10,2).ts" "tssplit"
+
+do_hash_test "$TEMP_DIR/prog_10.ts" "prog_10"
+do_hash_test "$TEMP_DIR/prog_12.ts" "prog_12"
+do_hash_test "$TEMP_DIR/prog_14.ts" "prog_14"
+do_hash_test "$TEMP_DIR/prog_16.ts" "prog_16"
+do_hash_test "$TEMP_DIR/prog_18.ts" "prog_18"
+do_hash_test "$TEMP_DIR/prog_20.ts" "prog_20"
+
+fi
+test_end
