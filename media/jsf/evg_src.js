@@ -40,7 +40,7 @@ text.align=GF_TEXT_ALIGN_CENTER;
 text.lineSpacing=0;
 //text.italic=true;
 text.set_text(['My awsome text', 'Powered by GPAC 1.0']);
-/*create a horizontal line, we will place it at the bseline of the text*/
+/*create a horizontal line, we will place it at the baseline of the text*/
 let line = new evg.Path().move_to(-200, 0).line_to(200, 0).outline({width: 0.5} );
 
 let centered=true;
