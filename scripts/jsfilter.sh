@@ -21,6 +21,15 @@ do_hash_test $insp  "jsf-generate"
 fi
 test_end
 
+#test JSFilter as source with boxpatch to insert a box, muxing the result
+test_begin "jsf-generate-boxpatch"
+dst=$TEMP_DIR/file.mp4
+if [ $test_skip != 1 ] ; then
+do_test "$GPAC $MEDIA_DIR/jsf/generate.js:patch @ -o $dst" "jsf-generate"
+do_hash_test $dst  "jsf-generate"
+fi
+test_end
+
 
 #test JSFilter as loader of filters, using a sink destination and a sink filter
 test_begin "jsf-load-dest"

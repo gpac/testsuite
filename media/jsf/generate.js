@@ -10,12 +10,22 @@ filter.set_help("This filter provides a very simple javascript text packet gener
 
 //exposed arguments
 filter.set_arg({name: "str", desc: "string to send", type: GF_PROP_STRING, def: "GPAC JS Filter Packet"} );
+filter.set_arg({name: "patch", desc: "insert patchbox on output pid", type: GF_PROP_BOOL, def: "false"} );
 filter.max_pids = -1;
 
 filter.set_cap({id: "StreamType", value: "Text", output: true});
 filter.set_cap({id: "CodecID", value: "subs", output: true});
 
 filter.my_shared_string = "Shared data test";
+
+let boxpatch = '<?xml version="1.0" encoding="UTF-8" />\
+<GPACBOXES>\
+<Box path="trak.tkhd+">\
+<BS fcc="GPAC"/>\
+<BS value="2" bits="32"/>\
+<BS value="1" bits="32"/>\
+</Box>\
+</GPACBOXES>';
 
 filter.initialize = function() {
  print(GF_LOG_DEBUG, "Init at " + Date() + " nb pids " + this.pids.length);
@@ -33,6 +43,10 @@ filter.initialize = function() {
  	abv[i] = 48+i;
  
  this.opid.set_prop("DecoderConfig", ab);
+ if (this.patch) {
+
+   this.opid.set_prop("boxpatch", boxpatch, true);
+ }
 
  }
 
@@ -48,8 +62,6 @@ filter.process = function()
 
 	if (this.opid.nb_pck>=100) {
  		this.opid.eos = true;
- 		this.opid.remove();
- 		this.opid = null;
  		return;
 	}
 	this.opid.nb_pck++;
