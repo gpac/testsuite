@@ -153,6 +153,17 @@ do_test "$GPAC -uncache" "uncache"
 fi
 test_end
 
+test_begin "gpac-opts-file"
+if [ $test_skip != 1 ] ; then
+optsfile1=$TEMP_DIR/opts1.txt
+echo "#ServiceID=20" > $optsfile1
+optsfile2=$TEMP_DIR/opts2.txt
+echo "log=$TEMP_DIR/insp.txt" > $optsfile2
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/logo.jpg:$optsfile1 inspect:$optsfile2" "gpac-exec"
+do_hash_test $TEMP_DIR/insp.txt  "gpac-inspect"
+fi
+test_end
+
 
 single_test "$GPAC -ltf UTSource:cov UTFilter:cov UTSink:cov" "gpac-filter-dump_props"
 

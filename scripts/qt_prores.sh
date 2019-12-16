@@ -33,6 +33,27 @@ qt_prores_test ()
  do_test "$MP4BOX -add $1:bitdepth=32:colr=nclc,1,1,1 -new $movfile" "MediaImportMoov"
  do_hash_test $movfile "addmov"
 
+ #dump prores media
+ prores="$TEMP_DIR/$name.prores"
+ do_test "$MP4BOX -raw 1 $1 -out $prores" "ProResExport"
+ do_hash_test $prores "export"
+
+ #add prores media
+ movfile="$TEMP_DIR/test.mov"
+ do_test "$MP4BOX -add $prores -new $movfile" "ProResImport"
+ do_hash_test $movfile "import"
+
+ #add prores with rewind
+ movfile="$TEMP_DIR/test2.mov"
+ do_test "$GPAC -i $prores -o $movfile:speed=-1" "ProResRewindImport"
+ do_hash_test $movfile "rewind_import"
+
+ #test -dnal
+ dmpfile="$TEMP_DIR/test.xml"
+ do_test "$MP4BOX -dnal 1 $1 -out $dmpfile" "ProResInspect"
+ do_hash_test $dmpfile "inspect"
+
+
  test_end
 }
 
@@ -41,4 +62,5 @@ qt_prores_test ()
 for src in $EXTERNAL_MEDIA_DIR/qt_prores/* ; do
  qt_prores_test $src
 done
+
 

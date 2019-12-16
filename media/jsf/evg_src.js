@@ -34,12 +34,13 @@ brush.set_color('cyan');
 /*create a text*/
 let text = new evg.Text();
 text.font = 'Times';
+text.fontsize = 20;
 text.baseline = GF_TEXT_BASELINE_HANGING;
-text.align=GF_TEXT_ALIGN_RIGHT;
+text.align=GF_TEXT_ALIGN_CENTER;
 text.lineSpacing=0;
-text.italic=true;
-text.set_text(['My awsome text', 'on two lines']);
-/*create a horizontal line, we will place it at the bseline of the text*/
+//text.italic=true;
+text.set_text(['My awsome text', 'Powered by GPAC 1.0']);
+/*create a horizontal line, we will place it at the baseline of the text*/
 let line = new evg.Path().move_to(-200, 0).line_to(200, 0).outline({width: 0.5} );
 
 let centered=true;
@@ -68,7 +69,7 @@ tx.repeat_t = true;
 
 /*get a matrix for the text*/
 let mxtxt = new evg.Matrix2D();
-mxtxt.translate(-50, -100);
+mxtxt.translate(-50, -80);
 
 function txp_fun(x, y)
 {

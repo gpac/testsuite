@@ -21,8 +21,10 @@ function do_xhr()
  filter.xhr.onload = function()
  {
  	print('load status: ' + this.status);
- 	let reps = this.response.documentElement.getElementsByTagName('Representation');
- 	print('nb reps: ' + reps.length);
+ 	let doc = this.response.documentElement;
+ 	if (!doc) return;
+ 	let reps = doc.getElementsByTagName('Representation');
+ 	print('nb reps: ' + reps ? reps.length : ' not found');
 
  };
  filter.xhr.onerror = function() {

@@ -20,7 +20,9 @@ nhml_test  ()
 
  rm -f $TEMP_DIR/test.xml
  do_test "$MP4BOX -raw 1 $mp4file -out $TEMP_DIR/test.xml " "export-track"
+ if [ -f $TEMP_DIR/test.xml ] ; then
  do_hash_test $TEMP_DIR/test.xml "export-track"
+ fi
  rm -f $TEMP_DIR/test.xml
 
  do_test "$MP4BOX -raws 1 $mp4file" "export-samples"
@@ -91,7 +93,9 @@ do_hash_test $TEMP_DIR/subt-stpp-ttml.mp4 "import"
 
 rm -f $TEMP_DIR/test.ttml
 do_test "$MP4BOX -raw 1 $TEMP_DIR/subt-stpp-ttml.mp4 -out $TEMP_DIR/test.ttml" "export-track"
+if [ -f $TEMP_DIR/test.ttml ] ; then
 do_hash_test $TEMP_DIR/test.ttml "export-track"
+fi
 rm -f $TEMP_DIR/test.ttml
 
 do_test "$MP4BOX -raws 1 $TEMP_DIR/subt-stpp-ttml.mp4" "export-samples"
