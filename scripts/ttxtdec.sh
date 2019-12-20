@@ -38,5 +38,5 @@ ttxt_test "ttxt" $MEDIA_DIR/auxiliary_files/subtitle.ttxt 0
 ttxt_test "tx3g" $MEDIA_DIR/auxiliary_files/subtitle.srt 1
 
 #test webvtt
-ttxt_test "vtt" $MEDIA_DIR/webvtt/simple.vtt 0
+ttxt_test "vtt" $MEDIA_DIR/webvtt/simple.vtt:fontSize=80:color=cyan 0
 
