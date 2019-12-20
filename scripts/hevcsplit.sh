@@ -41,7 +41,7 @@ do_hash_test "$TEMP_DIR/merge3.hvc" "merge-relpos"
 #merge a few tiles with SRD features
 myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i $TEMP_DIR/low_0x0.hvc:#CropOrigin=0x0:#SRDRef=640x360:#SRD=0x0x192x128 -i $TEMP_DIR/low_192x128.hvc:#CropOrigin=192x128:#SRDRef=640x360:#SRD=192x128x192x104 -i $TEMP_DIR/high_832x512.hvc:#CropOrigin=832x512:#SRDRef=1280x720:#SRD=832x512x448x208 hevcmerge @ inspect:allp:deep:interleave=false:log=$myinspect" "merge-SRDfeatures-3tiles"
-do_hash_test $myinspect "merge-SRDfeatures-3tiles"
+do_hash_test $myinspect "merge-SRDfeatures-3tiles-inspect"
 
 #merge all tiles with SRD features
 cropOrigins="0x0 0x128 0x256 192x0 192x128 192x256 384x0 384x128 384x256"
@@ -58,9 +58,9 @@ done
 #TODO: the following command is better. However when the output is doubled, one for inspect filter the other for dipslaying the video, an issue appears repeating the inspect filter. 
 #testarg+="hevcmerge  @ inspect:allp:deep:interleave=false:log=$myinspect @1 -o $TEMP_DIR/merge4.hvc -graph"
 
-testarg1="$testarg hevcmerge @ -o $TEMP_DIR/merge4.hvc -graph"
+testarg1="$testarg hevcmerge @ -o $TEMP_DIR/merge_all_low.hvc -graph"
 do_test "$testarg1" "merge-SRDfeatures-all-lowtiles"
-do_hash_test "$TEMP_DIR/merge4.hvc" "merge-SRDfeatures-all-lowtiles"
+do_hash_test "$TEMP_DIR/merge_all_low.hvc" "merge-SRDfeatures-all-lowtiles"
 
 testarg2="$testarg hevcmerge @ inspect:allp:deep:interleave=false:log=$myinspect -graph"
 do_test "$testarg2" "merge-SRDfeatures-all-lowtiles-inspect"
