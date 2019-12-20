@@ -119,11 +119,9 @@ do_test "$GPAC -genmd" "gpac-genmd"
 do_test "$MP4BOX -genmd" "mp4box-genmd"
 do_test "$MP4CLIENT -genmd" "mp4client-genmd"
 for i in *.md ; do
-case i in
-README* )
- continue;;
-esac;
-rm $i
+if [ $i != "README.md" ] ; then
+ rm $i
+fi
 done
 
 fi
