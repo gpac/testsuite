@@ -29,6 +29,10 @@ dst="$TEMP_DIR/item_prop_add2.mp4"
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/sky.jpg:#ItemID=1:#boxpatch=$MEDIA_DIR/boxpatch/box_add_item_prop_no_item.xml -o $dst" "add-item-prop2"
 do_hash_test $dst "add-item-prop2"
 
+dst="$TEMP_DIR/file.mpd"
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 --boxpatch=$MEDIA_DIR/boxpatch/box_add_frag.xml -o $dst" "add-frag"
+do_hash_test $TEMP_DIR/enst_video_dashinit.mp4 "add-frag-moov"
+do_hash_test $TEMP_DIR/enst_video_dash1.m4s "add-frag-moof"
 
 test_end
 
