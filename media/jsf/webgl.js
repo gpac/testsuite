@@ -1,5 +1,5 @@
-import {WebGLContext, Matrix} from 'webgl'
-import {Texture} from 'evg'
+import {WebGLContext} from 'webgl'
+import {Texture, Matrix} from 'evg'
 
 
 //metadata
@@ -57,7 +57,7 @@ print('generate pck for cts '+cts + ' pending ' + filter.frame_pending);
 	gl.activate(false);
 
 	//create packet from webgl framebuffer
-	let opck = pid.new_packet(gl, () => { filter.frame_pending=false; print('frame done ' + filter.frame_pending); } );
+	let opck = pid.new_packet(gl, () => { filter.frame_pending=false; } );
 	this.frame_pending = true;
 	opck.cts = cts;
 	cts += 1;

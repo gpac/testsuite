@@ -1,5 +1,5 @@
-import {WebGLContext, Matrix} from 'webgl'
-import {Texture} from 'evg'
+import {WebGLContext} from 'webgl'
+import {Texture, Matrix} from 'evg'
 
 
 //metadata
@@ -14,11 +14,12 @@ filter.set_cap({id: "StreamType", value: "Video", inout: true} );
 filter.set_cap({id: "CodecID", value: "raw", inout: true} );
 
 let use_depth = false;
+let use_primary = false;
 let width=600;
 let height=400;
 let ipid=null;
 let opid=null;
-let gl = new WebGLContext(width, height, {depth: use_depth?"texture":true});
+let gl = new WebGLContext(width, height, {depth: use_depth?"texture":true, primary: use_primary});
 let nb_frames=0;
 let pix_fmt = '';
 let programInfo = null;
@@ -62,8 +63,10 @@ filter.process = function()
 {
   let ipck = ipid.get_packet();
   if (!ipck) return GF_OK;
-  if (filter.frame_pending) return GF_OK;
-
+  if (filter.frame_pending) {
+//    print('frame pending, waiting');
+    return GF_OK;
+  }
   gl.activate(true);
 
 //  pck_tx.upload(ipck);
@@ -245,9 +248,11 @@ function initBuffers(gl) {
 
 function drawScene(gl, programInfo, buffers) {
   gl.viewport(0, 0, width, height);
-  gl.clearColor(0.4, 0.4, 0.4, 1.0);
+  gl.clearColor(0.8, 0.4, 0.8, 1.0);
   gl.clearDepth(1.0);
   gl.enable(gl.DEPTH_TEST);
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
   gl.depthFunc(gl.LEQUAL);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
