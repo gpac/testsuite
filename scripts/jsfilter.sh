@@ -50,7 +50,13 @@ single_test "$GPAC $MEDIA_DIR/jsf/xhr.js" "jsf-xhr"
 single_test "$GPAC $MEDIA_DIR/jsf/evg_src.js inspect:deep" "jsf-evg-src"
 
 # EVG overlay
-single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -blacklist=vtbdec,nvdec $MEDIA_DIR/jsf/evg_overlay.js @ inspect:deep" "jsf-evg-overlay"
+single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -blacklist=vtbdec,nvdec $MEDIA_DIR/jsf/evg_overlay.js @ inspect:deep" "jsf-webgl-overlay"
+
+# WebGL generator
+single_test "$GPAC $MEDIA_DIR/jsf/webgl.js inspect:deep" "jsf-webgl-src"
+
+# WebGL overlay
+single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -blacklist=vtbdec,nvdec $MEDIA_DIR/jsf/webgl_yuv.js @ inspect:deep" "jsf-webgl-overlay"
 
 # EVG-3D generator
 single_test "$GPAC $MEDIA_DIR/jsf/soft3d.js inspect:deep" "jsf-soft3d"

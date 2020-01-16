@@ -46,7 +46,10 @@ filter.update_arg = function(name, val)
 filter.process = function()
 {
 	if (filter.frame_pending) return GF_OK;
-print('generate pck for cts '+cts + ' pending ' + filter.frame_pending);
+  if (cts>max_cts) {
+      pid.eos = true;
+      return GF_EOS;
+  }
 	gl.activate(true);
 
 	  // Draw the scene

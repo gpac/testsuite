@@ -13,7 +13,7 @@ let height = 600;
 let fps = {n:25, d:1};
 let osize=0;
 let cts=0;
-let max_cts=200;
+let max_cts=100;
 let pid;
 let frag_shader=null;
 let vert_shader=null;
