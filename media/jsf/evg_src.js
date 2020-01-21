@@ -9,6 +9,8 @@ filter.set_version("0.1beta");
 filter.set_author("GPAC team");
 filter.set_help("This filter provides testing of gpac's vector graphics bindings");
 
+filter.set_arg({ name: "cov", desc: "perform coverage test for EVG bindings", type: GF_PROP_BOOL, def: "false"} );
+
 let width = 320;
 let height = 240;
 let fps = {n:25, d:1};
@@ -98,6 +100,8 @@ pid.set_prop('PixelFormat', 'rgb');
 osize = 3 * width * height;
 cts=0;
 this.canvas=null;
+
+if (filter.cov) do_coverage();
 }
 
 filter.update_arg = function(name, val)
@@ -223,4 +227,116 @@ filter.process_event = function(pid, evt)
 	}
 }
 
+
+function do_coverage()
+{
+	//matrix2d
+	let mx = new evg.Matrix2D();
+	mx = mx.skew(10, 10);
+	mx = mx.skew_x(5);
+	mx = mx.skew_y(-5);
+	let pt = {x:20, y:20};
+	let res = mx.apply(pt);
+	mx = mx.inverse();
+	let mx2 = mx.copy();
+	let apt = mx2.get_scale();
+	apt = mx2.get_translate();
+	let d = mx2.get_rotate();
+	d = mx.xx;
+	mx.xy = 0.5;
+	mx2.identity = true;
+
+	//color matrix
+	let acmx = new evg.ColorMatrix();
+	acmx.bb = cmx.bb;
+	let cres = acmx.applyf([1.0, 0.0, 0.0, 1.0]);
+	acmx = acmx.multiply(cmx);
+
+	//path
+	let apath = path.clone();
+	apath.reset();
+	apath.move_to(0, 0);
+	apath.cubic_to(10, 10, 20, -10, 30, 0);
+	apath.close();
+	apath.reset();
+	apath.move_to(0, 0);
+	apath.quadratic_to(10, 10, 20, 0);
+	apath.reset();
+	apath.rectangle(0, 0, 20, 20);
+	apath.bezier({x:0, y:0}, {x:10, y:10}, {x:20, y:-10}, {x:30, y:10}, {x:40, y:-10}, {x:50, y:0} );
+	apath.arc_bifs(100, 0, 50, 0, 50, 0);
+	apath.arc_svg(100, 0, 50, 50);
+	apath.arc(50, 10, 20);
+	apath.flatten();
+
+	apath.reset();
+	apath.move_to(0, 0);
+	apath.cubic_to(10, 10, 20, -10, 30, 0);
+	apath.close();
+	let ap2 = apath.get_flatten();
+	apath.reset();
+	apath.add_path(ap2);
+	apath.point_over(0, 0);
+	let rc = apath.bounds;
+
+	//text
+	let font = text.font;
+	apath = text.get_path();
+	let tsize = text.measure();
+
+	//stencil
+	let lin = new evg.LinearGradient();
+	lin.set_points(0.0, 0.0, 1.0, 1.0);
+	lin.set_alpha(128);
+	lin.pad = GF_GRADIENT_MODE_REPEAT;
+
+	let ab = new evg.SolidBrush();
+	ab.set_colorf(1.0, 0.0, 1.0, 1.0);
+
+	//matrix
+	let mx1 = new evg.Matrix();
+	mx2 = new evg.Matrix();
+	mx1.scale(1.0, 2.0, 2.0);
+	let eq = mx1.equal(mx2);
+
+	let pt2 = mx1.apply({x:0, y:0, z:0});
+	mx1.ortho(-100, 100, 100, -100, -100, 100);
+	mx2.lookat( {x: 0, y:0, z:0}, {x: 0, y:1, z:0}, {x: 0, y:0, z:-10} );
+
+	//canvas
+	let cnv = new evg.Canvas(32, 32, 'rgb');
+	let c = cnv.centered;
+	cnv.clear('yellow');
+	let resY = cnv.toYUV(1.0, 0.0, 0.0);
+	let resR = cnv.toRGB(resY);
+	cnv.on_alpha = function(in_alpha, x, y) {
+		return x > y ? in_alpha : 255 - in_alpha;
+	}
+	cnv.matrix = mx;
+	cnv.path = text;
+	cnv.fill(brush);
+
+	//texture
+	print('ok1');
+	let tx2 = tx.rgb2hsv();
+	print('ok2');
+	tx2 = tx2.hsv2rgb();
+	print('ok3');
+	tx2 = tx.yuv2rgb(cnv);
+	print('ok4');
+	tx2 = tx.split(0);
+	print('ok5');
+	tx2 = tx.convolution({w:3, h:1, k: [0, 1, 0]})
+	print('ok6');
+
+
+
+	//canvas3d
+	cnv = new evg.Canvas3D(32, 32, 'rgb');
+	cnv.clear('yellow');
+	resY = cnv.toYUV(1.0, 0.0, 0.0);
+	resR = cnv.toRGB(resY);
+    cnv.depth_buffer = new ArrayBuffer(32 * 32 * 4);
+    let db = cnv.depth_buffer;
+}
 

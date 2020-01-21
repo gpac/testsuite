@@ -9,6 +9,8 @@ filter.set_version("0.1beta");
 filter.set_author("GPAC team");
 filter.set_help("This filter provides testing of gpac's WebGL bindings");
 
+filter.set_arg({ name: "cov", desc: "perform coverage test for EVG bindings", type: GF_PROP_BOOL, def: "false"} );
+
 let width = 600;
 let height = 600;
 let fps = {n:25, d:1};
@@ -256,6 +258,12 @@ function drawScene(gl, programInfo, buffers) {
   }
 
   gl.useProgram(programInfo.program);
+  //for coverage
+  gl.getActiveUniform(shaderProgram, 0);
+  gl.getActiveAttrib(shaderProgram, 0);
+  gl.getVertexAttrib(0, gl.VERTEX_ATTRIB_ARRAY_SIZE);
+  gl.getVertexAttribOffset(0, gl.VERTEX_ATTRIB_ARRAY_POINTER);
+  gl.getUniform(programInfo.program, programInfo.uniformLocations.projectionMatrix);
 
   //set uniforms
   gl.uniformMatrix4fv(programInfo.uniformLocations.projectionMatrix, false, projectionMatrix.m);
@@ -286,10 +294,16 @@ function loadTexture(gl) {
   const srcType = gl.UNSIGNED_BYTE;  //ignored, overriden by texImage2D from object
   let tx = new Texture("../auxiliary_files/logo.jpg", true);
   gl.texImage2D(gl.TEXTURE_2D, level, internalFormat, srcFormat, srcType, tx);
+  //for coverage
+  gl.texSubImage2D(gl.TEXTURE_2D, level, 0, 0, srcFormat, srcType, tx);
 
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+
+  //for coverage
+  gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER);
+
   return texture;
 }
 
@@ -307,6 +321,21 @@ function initShaderProgram(gl, vsSource, fsSource) {
     alert('Unable to initialize the shader program: ' + gl.getProgramInfoLog(shaderProgram));
     return null;
   }
+  //for coverage
+  print('Prog info: ' + gl.getProgramInfoLog(shaderProgram));
+  gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.LOW_FLOAT);
+  gl.getRenderbufferParameter(gl.RENDERBUFFER, gl.RENDERBUFFER_WIDTH);
+  gl.getFramebufferAttachmentParameter(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE);
+  gl.getParameter(gl.ACTIVE_TEXTURE);
+  gl.getBufferParameter(gl.ARRAY_BUFFER, gl.BUFFER_SIZE);
+  gl.getSupportedExtensions();
+  gl.getExtension('EXT_sRGB');
+  gl.isContextLost();
+  gl.getContextAttributes();
+  gl.getAttachedShaders(shaderProgram);
+  let w = gl.drawingBufferWidth;
+  let buf = new ArrayBuffer(width * height * 3);
+  gl.readPixels(0, 0, width, height, gl.RGB, gl.UNSIGNED_BYTE, buf);
   return shaderProgram;
 }
 
@@ -319,6 +348,9 @@ function loadShader(gl, type, source) {
     gl.deleteShader(shader);
     return null;
   }
+  //for coverage
+  print('Shader info: ' + gl.getShaderInfoLog(shader));
+  print('Shader source: ' + gl.getShaderSource(shader));
   return shader;
 }
 

@@ -27,6 +27,7 @@ let programInfo = null;
 let pck_tx = gl.createTexture('vidTx');
 let img_tx = gl.createTexture('imgTx');
 img_tx.upload(new Texture("../auxiliary_files/logo.png", true));
+pck_tx.pbo = false;
 
 filter.configure_pid = function(pid) {
 

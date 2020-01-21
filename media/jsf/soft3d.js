@@ -314,20 +314,12 @@ function draw_scene()
 {
   let canvas = filter.canvas;
 
-//  canvas.clearf(cts/100, 0.4, 0.4, 1.0);
   canvas.clearf('green');
   canvas.viewport(0, 0, width, height);
   canvas.antialias = true;
   canvas.clip_zero = true;
   canvas.depth_test = GF_EVGDEPTH_LESS;
   canvas.clear_depth(1.0);
-
-  /*gl.clearColor(cts/100, 0.4, 0.4, 1.0);
-  gl.clearDepth(1.0);
-  gl.enable(gl.DEPTH_TEST);
-  gl.depthFunc(gl.LEQUAL);
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-*/
 
   const fieldOfView = Math.PI / 4;   // in radians
   const aspect = width / height;
@@ -336,8 +328,6 @@ function draw_scene()
 
   const projectionMatrix = new evg.Matrix().perspective(fieldOfView, aspect, zNear, zFar);
   const modelViewMatrix = new evg.Matrix().translate(0.0, 0.0, -10.0).rotate(0, 1, 0, cts*Math.PI/50);
-//  const modelViewMatrix = new evg.Matrix().translate(0.0, 0.0, -8);//.rotate(0, 1, 0, 1.2*Math.PI/5);
-//  const modelViewMatrix = new evg.Matrix().lookat({x:0, y:5, z:0}, {x:0, y:-1, z:0}, {x:1, y:0, z:0});//.rotate(1, 1, 0, 4*Math.PI/5);
 
   if (!vert_shader) {
     canvas.projection(projectionMatrix.m);
@@ -424,6 +414,7 @@ function setup_shader()
   let ni = new evg.VertexAttribInterpolator(3);
   ni.normalize=true;
   let normals = new evg.VertexAttrib(cube_normals_face, 3, GF_EVG_VAI_PRIMITIVE);
+  normals.normalize = true;
 
   vert_shader=filter.canvas.new_shader(GF_EVG_SHADER_VERTEX);
   vert_shader.push('normal', '=', normals);
@@ -431,6 +422,13 @@ function setup_shader()
   vert_shader.push(ni, '=', 'normal');
   vert_shader.push('vertex', '*=', matrix);
   vert_shader.push('vertexOut', '=', 'vertex');
+  //for coverage
+  vert_shader.push('dummy', 'inversesqrt', [3, 2, 3]);
+  vert_shader.push('dummy', 'sign', [-1, 1, 2]);
+  vert_shader.push('dummy', 'fract', [-1.5, 1.1, 2.9]);
+  vert_shader.push('modul', '=', [3,3,3]);
+  vert_shader.push('dummy', 'mod', [-1.5, 1.1, 2.9], 'modul');
+  //end coverage
   vert_shader.push(gfEye, '=', 'vertex');
 
 
@@ -507,7 +505,9 @@ function setup_shader()
 
   frag_shader.push('lightColor.a', '=', '.matDiffuse.a');
   frag_shader.push('lightColor', '+=', '.matEmissive');
-
+  //for coverage, test clamp
+  frag_shader.push('max', '=', [1.0,1.0,1.0,1.0]);
+  frag_shader.push('lightColor', 'clamp', [0.0,0.0,0.0,1.0], 'max');
   frag_shader.push('fragColor', '=', 'lightColor');
 
 

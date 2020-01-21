@@ -46,11 +46,22 @@ single_test "$GPAC $MEDIA_DIR/jsf/loader.js:in=$MEDIA_DIR/auxiliary_files/enst_v
 # XHR test
 single_test "$GPAC $MEDIA_DIR/jsf/xhr.js" "jsf-xhr"
 
+# XHR SAX local
+test_begin "jsf-xhr-sax"
+if [ $test_skip != 1 ] ; then
+$MP4BOX -ttxt $MEDIA_DIR/auxiliary_files/subtitle.srt -out $TEMP_DIR/source.ttxt 2> /dev/null
+do_test "$GPAC $MEDIA_DIR/jsf/xhr.js:url=$TEMP_DIR/source.ttxt:sax" "jsf-xhr-sax"
+
+do_test "$GPAC $MEDIA_DIR/jsf/xhr.js:url=$TEMP_DIR/source.ttxt" "jsf-xhr-dom"
+fi
+test_end
+
+
 # EVG generator
-single_test "$GPAC $MEDIA_DIR/jsf/evg_src.js inspect:deep" "jsf-evg-src"
+single_test "$GPAC $MEDIA_DIR/jsf/evg_src.js:cov inspect:deep" "jsf-evg-src"
 
 # EVG overlay
-single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -blacklist=vtbdec,nvdec $MEDIA_DIR/jsf/evg_overlay.js @ inspect:deep" "jsf-webgl-overlay"
+single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -blacklist=vtbdec,nvdec $MEDIA_DIR/jsf/evg_overlay.js @ inspect:deep" "jsf-evg-overlay"
 
 # WebGL generator
 single_test "$GPAC $MEDIA_DIR/jsf/webgl.js inspect:deep" "jsf-webgl-src"
@@ -63,3 +74,8 @@ single_test "$GPAC $MEDIA_DIR/jsf/soft3d.js inspect:deep" "jsf-soft3d"
 
 # EVG-3D overlay
 single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -blacklist=vtbdec,nvdec $MEDIA_DIR/jsf/soft3d_overlay.js @ inspect:deep" "jsf-soft3d-overlay"
+
+# Storage
+single_test "$GPAC $MEDIA_DIR/jsf/storage.js" "jsf-storage"
+
+
