@@ -64,10 +64,15 @@ if [ $test_skip != 1 ] ; then
 do_test "$GPAC -lc -logs=all@debug src=$MEDIA_DIR/auxiliary_files/logo.jpg dst=$TEMP_DIR/test.jpg" "io-syntax1"
 do_hash_test $TEMP_DIR/test.jpg  "io-syntax1"
 
-do_test "$GPAC -src $MEDIA_DIR/auxiliary_files/logo.jpg -dst $TEMP_DIR/test.jpg" "io-syntax2"
-do_hash_test $TEMP_DIR/test.jpg  "io-syntax2"
+do_test "$GPAC -src $MEDIA_DIR/auxiliary_files/logo.jpg -dst $TEMP_DIR/test2.jpg" "io-syntax2"
+do_hash_test $TEMP_DIR/test2.jpg  "io-syntax2"
+
+do_test "$GPAC fin:src=$MEDIA_DIR/auxiliary_files/logo.jpg fout:dst=$TEMP_DIR/test3.jpg" "io-syntax3"
+do_hash_test $TEMP_DIR/test3.jpg  "io-syntax3"
+
 fi
 test_end
+
 
 test_begin "gpac-alias"
 if [ $test_skip != 1 ] ; then
