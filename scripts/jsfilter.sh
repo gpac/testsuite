@@ -1,3 +1,4 @@
+
 #test JSFilter as sink
 single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 $MEDIA_DIR/jsf/inspect.js" "jsf-inspect"
 
@@ -74,6 +75,23 @@ single_test "$GPAC $MEDIA_DIR/jsf/soft3d.js inspect:deep" "jsf-soft3d"
 
 # EVG-3D overlay
 single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -blacklist=vtbdec,nvdec $MEDIA_DIR/jsf/soft3d_overlay.js @ inspect:deep" "jsf-soft3d-overlay"
+
+# EVG-3D RGB formats coverage
+test_begin "jsf-soft3d-pfmt"
+if [ $test_skip != 1 ] ; then
+
+#only test RGB formats, for fill_single functions (not used in YUV)
+pfstr="grey algr gral rgb4 rgb5 rgb6 rgba argb bgra abgr bgr xrgb rgbx xbgr bgrx"
+
+for fmt in $pfstr ; do
+do_test "$GPAC $MEDIA_DIR/jsf/soft3d_pfmt.js:pfmt=$fmt -o $TEMP_DIR/dump.$fmt" "$fmt"
+do_hash_test "$TEMP_DIR/dump.$fmt" "$fmt"
+
+done
+
+fi
+test_end
+
 
 # Storage
 single_test "$GPAC $MEDIA_DIR/jsf/storage.js" "jsf-storage"
