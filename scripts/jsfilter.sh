@@ -76,6 +76,9 @@ single_test "$GPAC $MEDIA_DIR/jsf/soft3d.js inspect:deep" "jsf-soft3d"
 # EVG-3D overlay
 single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -blacklist=vtbdec,nvdec $MEDIA_DIR/jsf/soft3d_overlay.js @ inspect:deep" "jsf-soft3d-overlay"
 
+# EVG-3D misc coverage
+single_test "$GPAC $MEDIA_DIR/jsf/soft3d_cov.js inspect:deep" "jsf-soft3d-cov"
+
 # EVG-3D RGB formats coverage
 test_begin "jsf-soft3d-pfmt"
 if [ $test_skip != 1 ] ; then

@@ -314,22 +314,63 @@ function do_coverage()
 	}
 	cnv.matrix = mx;
 	cnv.path = text;
+	cnv.compositeOperation = GF_EVG_SRC_OVER;
+	let atxp = new evg.Texture(32, 32, 'rgb', txp_fun, true);
+	cnv.fill(atxp);
+
+	let aproj = new evg.Matrix().perspective(Math.PI/4, 1.0, 1, 100);
+	let amv = new evg.Matrix().lookat(0, 0, -10, 0, 1, 0, 0, 0, 0);
+	aproj.add(amv);
+	cnv.matrix3d = aproj;
+	apath.reset().rectangle(0, 0, 200, 200);
+	cnv.path = apath;
 	cnv.fill(brush);
 
+	cnv = new evg.Canvas(32, 32, 'yuvl');
+	cnv.matrix = mx;
+	cnv.path = text;
+	cnv.fill(atxp);
+
+	let txbuf = new ArrayBuffer(200);
+	atxp = new evg.Texture(2, 2, 'nv1l', txbuf, 4);
+	cnv.fill(atxp);
+	atxp = new evg.Texture(2, 2, 'nv2l', txbuf, 4);
+	cnv.fill(atxp);
+	atxp = new evg.Texture(2, 2, 'yp4l', txbuf, 4);
+	cnv.fill(atxp);
+	//test getPixel with bi-linear interpolation on a wide color fomat
+	atxp.filtering = GF_TEXTURE_FILTER_HIGH_QUALITY;
+	let ap = atxp.pixelf(0.001, 0.004);
+
+	atxp = new evg.Texture(2, 2, 'yp2l', txbuf, 4);
+	cnv.fill(atxp);
+	atxp = new evg.Texture(2, 2, 'yuvl', txbuf, 4);
+	cnv.fill(atxp);	
+	atxp = new evg.Texture(2, 2, 'yuva', txbuf, 2);
+	cnv.fill(atxp);
+	atxp = new evg.Texture(2, 2, 'yp4a', txbuf, 2);
+	let mycmx = new evg.ColorMatrix();
+	mycmx.rr = 0.5;
+	atxp.cmx = mycmx; 
+	cnv.fill(atxp);
+
+	cnv = new evg.Canvas(32, 32, 'argb');
+	cnv.matrix = mx;
+	cnv.path = text;
+	let myb = new evg.SolidBrush();
+	myb.set_colorf(0.0, 0.0, 0.0, 0.0);
+	cnv.fill(myb);
+
 	//texture
-	print('ok1');
 	let tx2 = tx.rgb2hsv();
-	print('ok2');
 	tx2 = tx2.hsv2rgb();
-	print('ok3');
 	tx2 = tx.yuv2rgb(cnv);
-	print('ok4');
 	tx2 = tx.split(0);
-	print('ok5');
 	tx2 = tx.convolution({w:3, h:1, k: [0, 1, 0]})
-	print('ok6');
 
-
+	//test getPixel with bi-linear interpolation on a 8-bit color fomat
+	tx2.filtering = GF_TEXTURE_FILTER_HIGH_QUALITY;
+	let pix = tx2.pixelf(0.001, 0.004);
 
 	//canvas3d
 	cnv = new evg.Canvas3D(32, 32, 'rgb');
