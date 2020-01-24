@@ -340,7 +340,8 @@ function do_coverage()
 	cnv.fill(atxp);
 	//test getPixel with bi-linear interpolation on a wide color fomat
 	atxp.filtering = GF_TEXTURE_FILTER_HIGH_QUALITY;
-	let ap = atxp.pixelf(0.001, 0.004);
+	let ap = atxp.get_pixelf(0.001, 0.004);
+	ap = atxp.get_pixel(20, 30);
 
 	atxp = new evg.Texture(2, 2, 'yp2l', txbuf, 4);
 	cnv.fill(atxp);
@@ -370,7 +371,7 @@ function do_coverage()
 
 	//test getPixel with bi-linear interpolation on a 8-bit color fomat
 	tx2.filtering = GF_TEXTURE_FILTER_HIGH_QUALITY;
-	let pix = tx2.pixelf(0.001, 0.004);
+	let pix = tx2.get_pixelf(0.001, 0.004);
 
 	//canvas3d
 	cnv = new evg.Canvas3D(32, 32, 'rgb');
