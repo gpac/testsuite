@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#test import of encrypted files, whether flat or fragmented. 
+#test encryption and decryption of init segement and segment files
 test_begin "encryption-segment"
 if [ $test_skip  = 1 ] ; then
  return
@@ -27,5 +27,11 @@ do_hash_test "$TEMP_DIR/source_dash2_info.xml" "diso-seg2"
 
 do_test "$MP4BOX -diso -init-seg $TEMP_DIR/dst_dashinit.mp4 $TEMP_DIR/dst_dash2.m4s" "diso-crypt-seg2"
 do_hash_test "$TEMP_DIR/dst_dash2_info.xml" "diso-crypt-seg2"
+
+do_test "$MP4BOX -decrypt $MEDIA_DIR/encryption/ctr.xml $TEMP_DIR/dst_dashinit.mp4 -out $TEMP_DIR/decrypt_dashinit.mp4" "decrypt-init"
+do_hash_test "$TEMP_DIR/decrypt_dashinit.mp4" "decrypt-init"
+
+do_test "$MP4BOX -decrypt $MEDIA_DIR/encryption/ctr.xml -init-seg $TEMP_DIR/dst_dashinit.mp4 $TEMP_DIR/dst_dash1.m4s -out $TEMP_DIR/decrypt_dash1.m4s" "decrypt-seg1"
+do_hash_test "$TEMP_DIR/decrypt_dash1.m4s" "decrypt-seg1"
 
 test_end
