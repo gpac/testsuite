@@ -66,7 +66,7 @@ test_decoder "avc-ffdec" $MEDIA_DIR/auxiliary_files/enst_video.h264 "test.yuv" "
 
 #test h264 decode to raw using openhevc
 if [ -n "$ohevcdec" ] ; then
-test_decoder "avc-ohevc" $MEDIA_DIR/auxiliary_files/enst_video.h264 "test.yuv" "-blacklist=vtbdec,nvdec,ffdec" 1
+test_decoder "avc-ohevc" $MEDIA_DIR/auxiliary_files/enst_video.h264 "test.yuv" "-blacklist=vtbdec,nvdec,ffdec --no_copy" 1
 fi
 
 if [ -n "$vtbdec" ] ; then
@@ -83,6 +83,8 @@ test_decoder "hevc-ffdec" $MEDIA_DIR/auxiliary_files/counter.hvc "test.yuv" "-bl
 #test hevc decode to raw using openhevc
 if [ -n "$ohevcdec" ] ; then
 test_decoder "hevc-ohevc" $MEDIA_DIR/auxiliary_files/counter.hvc "test.yuv" "-blacklist=vtbdec,nvdec,ffdec" 0
+
+test_decoder "hevc-ohevc-nocopy" $MEDIA_DIR/auxiliary_files/counter.hvc "test.yuv" "-blacklist=vtbdec,nvdec,ffdec" 0
 fi
 
 #latest OSX releases breaks decoding of our counter sequence !! Commented for now until we find a fix
