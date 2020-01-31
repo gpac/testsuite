@@ -42,8 +42,16 @@ dash_exotic_test "raw-nomux" "$src:id=1 $src2:id=1 -profile onDemand --muxtype=r
 #using ISOBMFF output format in live profile with custom extensions
 dash_exotic_test "raw-isobmf-mime" "$src -profile live --segext=raw --initext=raw --muxtype=mp4" 1
 
+
+#check if we have ffmpeg mux support
+ffmx=`$GPAC -h filters 2>&1 | grep ffmx`
+
+if [ -n "$ffmx" ] ; then
+
 #using MKV output format in live profile, detected from extension - no support for demux of mkv+dash yet
 dash_exotic_test "mkv-live" "$src -profile live --initext=mkv" 0
 
 #using MKV output format in main profile, using explicit mux type and custom extensions  - no support for demux of mkv+dash yet
 dash_exotic_test "mkv-main" "$src -profile main --sfile --initext=raw --segext=raw --muxtype=mkv" 0
+
+fi

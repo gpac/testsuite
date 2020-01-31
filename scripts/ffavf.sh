@@ -17,6 +17,10 @@ do_hash_test $myinspect "inspect"
 test_end
 }
 
+#check if we have libavfilter support
+ffavf=`$GPAC -h filters 2>&1 | grep ffavf`
+if [ -n "$ffavf" ] ; then
+
 #video -> video filter test
 ffavf_test "v2v" "-i $MEDIA_DIR/auxiliary_files/enst_video.h264 ffavf:dump::f=negate"
 
@@ -32,3 +36,5 @@ ffavf_test "a2v-cfg" "-i $MEDIA_DIR/auxiliary_files/enst_audio.aac ffavf:pfmt=yu
 
 #video+video -> video filter test
 ffavf_test "vv2v" "-i $MEDIA_DIR/auxiliary_files/enst_video.h264:#ffid=a -i $MEDIA_DIR/auxiliary_files/logo.png:#ffid=b ffavf:dump::f=[a][b]overlay=main_w-overlay_w-10:main_h-overlay_h-10"
+
+fi

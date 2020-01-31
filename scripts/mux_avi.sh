@@ -22,7 +22,7 @@ do_hash_test $TEMP_DIR/test_audio.mp3 "aviraw-audio"
 fi
 
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i $dstfile inspect:allp:fmt=%cts%-%size%%lf%:interleave=false:log=$myinspect -graph -stats"
+do_test "$GPAC -i $dstfile inspect:allp:fmt=%cts%-%size%%lf%:interleave=false:log=$myinspect -graph -stats" "inspect"
 do_hash_test $myinspect "inspect"
 
 test_end
