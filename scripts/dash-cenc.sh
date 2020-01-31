@@ -18,5 +18,8 @@ myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i $TEMP_DIR/file.mpd inspect:allp:deep:interleave=false:log=$myinspect -graph -stats"
 do_hash_test $myinspect "inspect"
 
+do_test "$MP4BOX -dash 1000 -pssh=m -profile dashavc264:live $TEMP_DIR/file.mp4#video $TEMP_DIR/file.mp4#audio -out $TEMP_DIR/file2.mpd" "dashing-cenc-pssh-mpd"
+do_hash_test $TEMP_DIR/file2.mpd "pssh-mpd"
+
 test_end
 
