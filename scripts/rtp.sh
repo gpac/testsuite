@@ -134,3 +134,6 @@ $MP4BOX -add $EXTERNAL_MEDIA_DIR/import/counter_english.qcp:dur=1 -new $mp4file 
 rtp_test "qcp" $mp4file "inspect_only" ""
 #rm $mp4file > /dev/null
 
+mp4file="$MYTMP/avc.mp4"
+$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_openGOP_1920x1080_640kbps.264:dur=1 -new $mp4file 2> /dev/null
+rtp_test "264" $mp4file "" ""

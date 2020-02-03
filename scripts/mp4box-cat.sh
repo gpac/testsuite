@@ -87,3 +87,16 @@ fi
 fi
 test_end
 
+
+test_begin "mp4box-catforce"
+if [ "$test_skip" != 1 ] ; then
+
+
+mp4file="$TEMP_DIR/file.mp4"
+do_test "$MP4BOX -cat $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_320x180_128kbps.264 -cat $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_640x360_192kbps.264 -force-cat -new $mp4file" "cat"
+
+do_hash_test $mp4file "forcecat"
+
+fi
+test_end
+

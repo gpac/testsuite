@@ -17,6 +17,8 @@ do_test "$MP4BOX -comp moof=cmof $mp4file -out $compfile" "comp"
 #zlib result not reliable across platforms/versions, commenting hash
 #do_hash_test $compfile "comp"
 
+do_test "$MP4BOX -topsize moof $mp4file" "comp"
+
 test_end
 }
 
