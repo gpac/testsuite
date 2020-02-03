@@ -1,7 +1,7 @@
 #test software stretcher
 
-
-pfstr="yuv yuvl yuv2 yp2l yuv4 yp4l uyvy vyuy yuyv yvyu nv12 nv21 nv1l nv2l yuva grey gral algr rgb4 rgb5 rgb6 rgba argb bgra rgb bgr xrgb rgbx xbgr bgrx rgbd rgbds rgbs rgbas"
+#we don't test the following formats not supported as output format by our 2D rasterizer: yuva rgbd rgbds rgbs rgbas
+pfstr="yuv yuvl yuv2 yp2l yuv4 yp4l uyvy vyuy yuyv yvyu nv12 nv21 nv1l nv2l grey gral algr rgb4 rgb5 rgb6 rgba argb bgra rgb bgr xrgb rgbx xbgr bgrx"
 
 yuv_dst_pfstr="yuv yuv2 yuv4"
 
@@ -14,20 +14,6 @@ if [ $test_skip  = 1 ] ; then
 return
 fi
 
-skip_dump=0;
-
-case "$1" in
-"rgbd" )
-	skip_dump=1 ;;
-"rgbds" )
-	skip_dump=1 ;;
-"rgbs" )
-	skip_dump=1 ;;
-"rgbas" )
-	skip_dump=1 ;;
-esac
-
-if [ $skip_dump = 0 ] ; then
 
 #test YUV -> desired format (for copy row)
 rawfile=$TEMP_DIR/raw.$1
@@ -36,18 +22,18 @@ do_hash_test "$rawfile" "dump-$1"
 
 #test RGBA -> desired format (for merge row)
 rawout=$TEMP_DIR/dump_alpha.$1
-do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/logo.png compositor:opfmt=$1 @ -o $rawout -stats" "blit-alpha-$1"
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/logo.png compositor:opfmt=$1 @ -o $rawout" "blit-alpha-$1"
 do_hash_test "$rawout" "dump-alpha-$1"
-
-fi
 
 #check desired format -> rgb (for line loaders)
 rawout=$TEMP_DIR/dump.rgb
-do_test "$GPAC -i $rawfile:size=128x128 compositor:opfmt=rgb @ -o $rawout -stats" "blit-rgb"
-do_hash_test "$rawout" "blit-$pf-to-rgb"
+do_test "$GPAC -i $rawfile:size=128x128 compositor:opfmt=rgb @ -o $rawout" "blit-rgb"
+do_hash_test "$rawout" "blit-$1-to-rgb"
+
 
 #check if input is 10 bits, if so also test our 10->8 bit YUV conversions
 is_10bits=0
+is_yuv=0
 
 case "$1" in
 "yuvl" )
@@ -60,7 +46,34 @@ case "$1" in
 	is_10bits=1 ;;
 "nv2l" )
 	is_10bits=1 ;;
+"yuv")
+	is_yuv=1 ;;
+"yuv2")
+	is_yuv=1 ;;
+"yuv4")
+	is_yuv=1 ;;
+"uyvy")
+	is_yuv=1 ;;
+"vyuy")
+	is_yuv=1 ;;
+"yuyv")
+	is_yuv=1 ;;
+"yvyu")
+	is_yuv=1 ;;
+"nv12")
+	is_yuv=1 ;;
+"nv21")
+	is_yuv=1 ;;
+"yuva")
+	is_yuv=1 ;;
 esac
+
+if [ $is_yuv == 1 ] ; then
+rawout=$TEMP_DIR/dump_yuv.yuv
+do_test "$GPAC -i $rawfile:size=128x128 compositor:opfmt=yuv @ -o $rawout" "dump-$1-yuv"
+do_hash_test "$rawout" "dump-$1-yuv"
+
+fi
 
 if [ $is_10bits == 1 ] ; then
 
@@ -68,12 +81,14 @@ if [ $is_10bits == 1 ] ; then
 for pf in $yuv_dst_pfstr ; do
 
 rawout=$TEMP_DIR/dump.$pf
-do_test "$GPAC -i $rawfile:size=128x128 compositor:opfmt=$pf @ -o $rawout -stats" "blit-$pf"
+do_test "$GPAC -i $rawfile:size=128x128 compositor:opfmt=$pf @ -o $rawout" "blit-$pf"
 do_hash_test "$rawout" "blit-$1-to-$pf"
 
 done
 
 fi
+
+
 test_end
 }
 
