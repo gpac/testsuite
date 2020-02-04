@@ -2,6 +2,9 @@
 #test JSFilter as sink
 single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 $MEDIA_DIR/jsf/inspect.js" "jsf-inspect"
 
+#test JSFilter links
+single_test "$GPAC -h links $MEDIA_DIR/jsf/inspect.js" "jsf-inspect-links"
+
 
 #test JSFilter as filter, forwarding to inspect
 test_begin "jsf-inspect-fwd"

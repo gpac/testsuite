@@ -50,6 +50,7 @@ filter.configure_pid = function(pid)
 			pid.opid.allow_direct_dispatch();
 			pid.opid.resolve_file_template('myfile$PID$.txt');
 			pid.query_caps('CodecID');
+			pid.query_caps('MySuperProp', true);
 			pid.get_clock_info();
 			pid.opid.set_info('MyInfo', 'MyValue', true);
 			pid.get_info('Cached');
