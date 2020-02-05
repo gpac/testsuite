@@ -95,7 +95,7 @@ test_sock_tcp "raw-raw" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.aac" "aa
 #raw file | pipe | mp4 file
 test_sock_tcp "raw-mp4" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.mp4" "aac" 0
 
-#raw file -> demux -> gsf | pipe | mp4 file
+#raw file -> demux -> gsf | tcp | mp4 file
 test_sock_tcp "raw-gsf-mp4" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.mp4" "gsf" 0
 
 
@@ -105,7 +105,7 @@ test_sock_udp "raw-raw" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.aac" "lo
 #raw file | udp | mp4 file
 test_sock_udp "raw-mp4" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.mp4" "localhost:1234:ext=aac" 0 ""
 
-#raw file -> demux -> gsf | pipe | mp4 file
+#raw file -> demux -> gsf | udp | mp4 file
 test_sock_udp "raw-gsf-mp4" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.mp4" "localhost:1234:ext=gsf" 0 ":pckr=0/10:pckd=0/100"
 
 #raw file | udp multicast | raw file
