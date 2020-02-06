@@ -1,5 +1,12 @@
 #!/bin/sh
 
+#
+# WARNING
+#
+#	Either remove the dash context at the end of the test or make sure you use different names
+#	The temp dir is not cleaned until the end of the subscript!
+#
+
 test_begin "dash-live-generation"
 
 if [ $test_skip  = 0 ] ; then
@@ -17,6 +24,7 @@ do_hash_test $myinspect "inspect"
 fi
 
 test_end
+exit
 
 
 test_begin "dash-live-gen-segtime"
@@ -25,15 +33,15 @@ if [ $test_skip  = 0 ] ; then
 
 do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264:dur=10 -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:dur=10 -new $TEMP_DIR/file.mp4" "dash-input-preparation"
 
-do_test "$MP4BOX -segment-timeline -mpd-refresh 10 -time-shift 0 -dash-ctx $TEMP_DIR/dash_ctx -subdur 1000 -dynamic -profile live -dash 1000 $TEMP_DIR/file.mp4 -out $TEMP_DIR/file.mpd" "dash-live1"
+do_test "$MP4BOX -segment-timeline -mpd-refresh 10 -time-shift 0 -dash-ctx $TEMP_DIR/dash_ctx2 -subdur 1000 -dynamic -profile live -dash 1000 $TEMP_DIR/file.mp4 -out $TEMP_DIR/file.mpd" "dash-live1"
 
 sleep 1.5
 
-do_test "$MP4BOX -segment-timeline -mpd-refresh 10 -time-shift 0 -dash-ctx $TEMP_DIR/dash_ctx -subdur 1000 -dynamic -profile live -dash 1000 $TEMP_DIR/file.mp4 -out $TEMP_DIR/file.mpd" "dash-live2"
+do_test "$MP4BOX -segment-timeline -mpd-refresh 10 -time-shift 0 -dash-ctx $TEMP_DIR/dash_ctx2 -subdur 1000 -dynamic -profile live -dash 1000 $TEMP_DIR/file.mp4 -out $TEMP_DIR/file.mpd" "dash-live2"
 
 sleep 1.5
 
-do_test "$MP4BOX -segment-timeline -mpd-refresh 10 -time-shift 0 -dash-ctx $TEMP_DIR/dash_ctx -subdur 1000 -last-dynamic -profile live -dash 1000 $TEMP_DIR/file.mp4 -out $TEMP_DIR/file.mpd" "dash-live3"
+do_test "$MP4BOX -segment-timeline -mpd-refresh 10 -time-shift 0 -dash-ctx $TEMP_DIR/dash_ctx2 -subdur 1000 -last-dynamic -profile live -dash 1000 $TEMP_DIR/file.mp4 -out $TEMP_DIR/file.mpd" "dash-live3"
 
 do_hash_test $TEMP_DIR/file.mpd "mpd-final"
 do_hash_test $TEMP_DIR/file_dash100.m4s "segment"
@@ -45,4 +53,3 @@ fi
 fi
 
 test_end
-
