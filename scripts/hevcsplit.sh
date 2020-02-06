@@ -22,13 +22,16 @@ do_play_test "play" "$i -blacklist=nvdec,vtbdec" ""
 
 done
 
-#merge a shuffled tiles combination 
-do_test "$GPAC -i $TEMP_DIR/high_0x0.hvc -i $TEMP_DIR/low_0x0.hvc -i $TEMP_DIR/high_832x0.hvc -i $TEMP_DIR/low_384x0.hvc -i $TEMP_DIR/high_384x256.hvc -i $TEMP_DIR/low_192x128.hvc hevcmerge @ -o $TEMP_DIR/merge0.hvc" "merge-6shuffledtiles"
-do_hash_test "$TEMP_DIR/merge0.hvc" "merge-6shuffledtiles"
-
-#merge a few tiles
-do_test "$GPAC -i $TEMP_DIR/high_0x256.hvc -i $TEMP_DIR/high_832x512.hvc  -i $TEMP_DIR/low_0x256.hvc -i $TEMP_DIR/low_384x0.hvc hevcmerge @ -o $TEMP_DIR/merge1.hvc" "merge-4tiles"
-do_hash_test "$TEMP_DIR/merge1.hvc" "merge-4tiles"
+#commenting the following tests, as the result is scheduling dependent: no positionning of tiles is given, the grid will select the first column on the first declared pid
+#which may be low or high res ...
+#
+##merge a shuffled tiles combination
+#do_test "$GPAC -i $TEMP_DIR/high_0x0.hvc -i $TEMP_DIR/low_0x0.hvc -i $TEMP_DIR/high_832x0.hvc -i $TEMP_DIR/low_384x0.hvc -i $TEMP_DIR/high_384x256.hvc -i $TEMP_DIR/low_192x128.hvc hevcmerge @ -o $TEMP_DIR/merge0.hvc" "merge-6shuffledtiles"
+#do_hash_test "$TEMP_DIR/merge0.hvc" "merge-6shuffledtiles"
+#
+##merge a few tiles
+#do_test "$GPAC -i $TEMP_DIR/high_0x256.hvc -i $TEMP_DIR/high_832x512.hvc  -i $TEMP_DIR/low_0x256.hvc -i $TEMP_DIR/low_384x0.hvc hevcmerge @ -o $TEMP_DIR/merge1.hvc" "merge-4tiles"
+#do_hash_test "$TEMP_DIR/merge1.hvc" "merge-4tiles"
 
 #merge a few tiles with absolute coords
 do_test "$GPAC -i $TEMP_DIR/high_832x512.hvc:#CropOrigin=192x256 -i $TEMP_DIR/low_192x128.hvc:#CropOrigin=0x0 hevcmerge @ -o $TEMP_DIR/merge2.hvc" "merge-abspos"
@@ -40,8 +43,8 @@ do_hash_test "$TEMP_DIR/merge3.hvc" "merge-relpos"
 
 #merge a few tiles with SRD features
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i $TEMP_DIR/low_0x0.hvc:#CropOrigin=0x0:#SRDRef=640x360:#SRD=0x0x192x128 -i $TEMP_DIR/low_192x128.hvc:#CropOrigin=192x128:#SRDRef=640x360:#SRD=192x128x192x104 -i $TEMP_DIR/high_832x512.hvc:#CropOrigin=832x512:#SRDRef=1280x720:#SRD=832x512x448x208 hevcmerge @ inspect:allp:deep:interleave=false:log=$myinspect" "merge-SRDfeatures-3tiles"
-do_hash_test $myinspect "merge-SRDfeatures-3tiles-inspect"
+do_test "$GPAC -i $TEMP_DIR/low_0x0.hvc:#CropOrigin=0x0:#SRDRef=640x360:#SRD=0x0x192x128 -i $TEMP_DIR/low_192x128.hvc:#CropOrigin=192x128:#SRDRef=640x360:#SRD=192x128x192x104 -i $TEMP_DIR/high_832x512.hvc:#CropOrigin=832x512:#SRDRef=1280x720:#SRD=832x512x448x208 hevcmerge @ inspect:allp:deep:interleave=false:log=$myinspect" "merge-SRD-3tiles"
+do_hash_test $myinspect "merge-SRD-3tiles"
 
 #merge all tiles with SRD features
 cropOrigins="0x0 0x128 0x256 192x0 192x128 192x256 384x0 384x128 384x256"
@@ -59,12 +62,12 @@ done
 #testarg+="hevcmerge  @ inspect:allp:deep:interleave=false:log=$myinspect @1 -o $TEMP_DIR/merge4.hvc -graph"
 
 testarg1="$testarg hevcmerge @ -o $TEMP_DIR/merge_all_low.hvc -graph"
-do_test "$testarg1" "merge-SRDfeatures-all-lowtiles"
-do_hash_test "$TEMP_DIR/merge_all_low.hvc" "merge-SRDfeatures-all-lowtiles"
+do_test "$testarg1" "merge-all-low"
+do_hash_test "$TEMP_DIR/merge_all_low.hvc" "merge-all-low"
 
 testarg2="$testarg hevcmerge @ inspect:allp:deep:interleave=false:log=$myinspect -graph"
-do_test "$testarg2" "merge-SRDfeatures-all-lowtiles-inspect"
-do_hash_test $myinspect "merge-SRDfeatures-all-lowtiles-inspect"
+do_test "$testarg2" "merge-all-low-inspect"
+do_hash_test $myinspect "merge-all-low-inspect"
 
 test_end
 
