@@ -24,8 +24,6 @@ do_hash_test $myinspect "inspect"
 fi
 
 test_end
-exit
-
 
 test_begin "dash-live-gen-segtime"
 
