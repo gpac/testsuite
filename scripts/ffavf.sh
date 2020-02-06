@@ -11,7 +11,7 @@ fi
 #inspect result of filter graph, using packet number, dts, cts, sap and size
 #we don't check CRC as we will likely not be bit-exact (codecs, afvilter behavior on various platforms/version)
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC $2 @ inspect:interleave=false:deep:fmt=%pn%-%dts%-%cts%-%sap%-%size%%lf%:log=$myinspect -graph -stats" "inspect"
+do_test "$GPAC $2 @ inspect:interleave=false:deep:fmt=%pn%-%dts%-%cts%-%sap%-%size%%lf%:log=$myinspect -graph -stats -blacklist=vtbdec,nvdec" "inspect"
 do_hash_test $myinspect "inspect"
 
 test_end

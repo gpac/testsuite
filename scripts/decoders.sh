@@ -119,8 +119,8 @@ test_decoder "qcp-ffdec" $EXTERNAL_MEDIA_DIR/import/count_english.qcp "test.pcm"
 test_decoder "m1v-ffdec" $EXTERNAL_MEDIA_DIR/import/dead.m1v "test.yuv" "" 1
 
 if [ -n "$j2koj2k" ] ; then
-test_decoder "j2k-oj2k" $EXTERNAL_MEDIA_DIR/import/logo.jp2 "test.rgb" "-blacklist=ffdec" 0
-test_decoder "mjp2-oj2k" $EXTERNAL_MEDIA_DIR/import/speedway.mj2 "test.yuv" "-blacklist=ffdec" 0
+test_decoder "j2k-oj2k" $EXTERNAL_MEDIA_DIR/import/logo.jp2 "test.rgb" "-blacklist=ffdec" 1
+test_decoder "mjp2-oj2k" $EXTERNAL_MEDIA_DIR/import/speedway.mj2 "test.yuv" "-blacklist=ffdec" 1
 fi
 
 if [ -n "$j2kff" ] ; then
@@ -133,7 +133,7 @@ test_decoder "ac3-ff" $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3 "test.pc
 
 test_decoder "vorbis" $EXTERNAL_MEDIA_DIR/import/dead_ogg.ogg "test.pcm" "-blacklist=ffdec" 0
 
-test_decoder "theora" $EXTERNAL_MEDIA_DIR/import/dead_ogg.ogg "test.yuv" "-blacklist=ffdec" 0
+test_decoder "theora" $EXTERNAL_MEDIA_DIR/import/dead_ogg.ogg "test.yuv" "-blacklist=ffdec" 1
 
 #test aac multichannel decode to raw
 test_decoder "aac-faad-mc" $EXTERNAL_MEDIA_DIR/import/aac_vbr_51_128k.aac "test.pcm" "-blacklist=ffdec" 1
