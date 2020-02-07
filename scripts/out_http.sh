@@ -131,7 +131,7 @@ if [ $test_skip = 1 ] ; then
 fi
 #make a 3sec
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=3.4 -new $TEMP_DIR/source.mp4 2> /dev/null
-do_test "$GPAC -i $TEMP_DIR/source.mp4 reframer:rt=on @ -o http://localhost:8080/live.mpd:gpac:rdirs=$TEMP_DIR --cdur=0.1 --asto=0.9 --dmode=dynamic -logs=http@debug -lu" "http-origin" &
+do_test "$GPAC -i $TEMP_DIR/source.mp4 reframer:rt=on @ -o http://localhost:8080/live.mpd:gpac:rdirs=$TEMP_DIR --sutc --cdur=0.1 --asto=0.9 --dmode=dynamic -logs=http@debug -lu" "http-origin" &
 sleep 0.01
 
 myinspect=$TEMP_DIR/inspect.txt
