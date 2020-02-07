@@ -34,6 +34,7 @@ do_hash_test "$rawout" "blit-$1-to-rgb"
 #check if input is 10 bits, if so also test our 10->8 bit YUV conversions
 is_10bits=0
 is_yuv=0
+check_32b=0
 
 case "$1" in
 "yuvl" )
@@ -41,7 +42,8 @@ case "$1" in
 "yp2l" )
 	is_10bits=1 ;;
 "yp4l" )
-	is_10bits=1 ;;
+	is_10bits=1
+	check_32b=1 ;;
 "nv1l" )
 	is_10bits=1 ;;
 "nv2l" )
@@ -82,7 +84,22 @@ for pf in $yuv_dst_pfstr ; do
 
 rawout=$TEMP_DIR/dump.$pf
 do_test "$GPAC -i $rawfile:size=128x128 compositor:opfmt=$pf @ -o $rawout" "blit-$pf"
-do_hash_test "$rawout" "blit-$1-to-$pf"
+
+#yp4l->yuv without SSE does not give exactly the same results as with sse, disable hash test
+check_hash=1
+if [ $check_32b = 1 ] ; then
+ if [ $GPAC_OSTYPE = "lin32" ] || [ $GPAC_OSTYPE = "win32" ]  ; then
+  check_hash=0
+ fi
+fi
+
+if [ $check_hash = 1 ] ; then
+ do_hash_test "$rawout" "blit-$1-to-$pf"
+else
+ if [ ! -f $rawout ] ; then
+  result="output not present"
+ fi
+fi
 
 done
 
