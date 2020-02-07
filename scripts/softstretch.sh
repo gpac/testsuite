@@ -41,6 +41,7 @@ case "$1" in
 	is_10bits=1 ;;
 "yp2l" )
 	is_10bits=1 ;;
+check_32b=1 ;;
 "yp4l" )
 	is_10bits=1
 	check_32b=1 ;;

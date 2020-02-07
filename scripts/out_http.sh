@@ -152,7 +152,11 @@ fi
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac -o http://localhost:8080/file1.mpd:gpac:rdirs=$TEMP_DIR:muxtype=raw:sfile:profile=main" "http-origin"
 do_hash_test $TEMP_DIR/file1.mpd "dash-sfile"
 
-do_test "$GPAC -runfor=3 httpout:port=8080:rdirs=$TEMP_DIR" "http-server" &
+#increase run time for win
+do_test "$GPAC -runfor=6000 httpout:port=8080:rdirs=$TEMP_DIR" "http-server" &
+
+sleep 0.5
+
 myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i http://localhost:8080/file1.mpd inspect:dur=2:allp:deep:test=network:interleave=false:log=$myinspect -logs=dash:http@debug -lu" "dash-read"
 do_hash_test $myinspect "inspect"
