@@ -42,10 +42,6 @@ global_test_ui=0
 log_after_fail=0
 verbose=0
 enable_timeout=0
-enable_fuzzing=0
-fuzz_all=0
-fuzz_duration=60
-no_fuzz_cleanup=0
 skip_next_hash_test=0
 do_playback=0
 do_clean=0
@@ -186,12 +182,6 @@ echo "  -uirec:                generates UI event traces."
 echo "  -uiplay:               replays all recorded UI event traces - this requies MP4Client."
 echo "  -speed=N:              sets playback speed for -uiplay. Default is 1."
 echo ""
-echo "*** Fuzzing options"
-echo "  -do-fuzz:              runs test using afl-fuzz (gpac has to be compiled with afl-gcc first)."
-echo "  -fuzzdur=D:            runs fuzz tests for D (default is $fuzz_duration seconds). D is passed as is to timout program."
-echo "  -fuzzall:              fuzz all tests."
-echo "  -keepfuzz:             keeps all fuzzing data."
-echo ""
 echo "*** General options"
 echo "  -strict:               stops at the first failed test"
 echo "  -warn:                 dump logs after each failed test (used for travisCI)"
@@ -283,15 +273,6 @@ for i in $* ; do
   disable_hash=1;;
  "-strict")
   strict_mode=1;;
- "-do-fuzz")
-  enable_fuzzing=1;;
- -fuzzdur*)
-  fuzz_duration="${i#-fuzzdur=}"
-  ;;
- "-fuzzall")
-  fuzz_all=1;;
- "-keepfuzz")
-  no_fuzz_cleanup=1;;
  "-sync-hash")
   sync_hash
   exit;;
@@ -422,10 +403,6 @@ res=$?
 if [ $res != 0 ] ; then
  log $L_ERR "GNU timeout not found (ret $res) - some tests may hang forever ..."
  enable_timeout=0
- if [ $enable_fuzzing != 0 ] ; then
-  log $L_ERR "GNU timeout not found - disabling fuzzing"
-  enable_fuzzing=0
- fi
 else
 enable_timeout=1
 fi
@@ -514,30 +491,6 @@ fi
 #end check_only
 
 
-#check for afl-fuzz
-if [ $enable_fuzzing != 0 ] ; then
- log $L_INF "Checking for afl-fuzz"
- command -v afl-fuzz >/dev/null 2>&1
- if [ $? != 0 ] ; then
-  log $L_WAR "afl-fuzz not found - disabling fuzzing"
-  enable_fuzzing=0
- else
-  mkdir tmpafi
-  mkdir tmpafo
-
-  echo "void" > tmpafi/void.mp4
-  $GNU_TIMEOUT 3.0 afl-fuzz -d -i tmpafi -o tmpafo MP4Box -h > /dev/null
-  if [ $? != 0 ] ; then
-   log $L_WAR "afl-fuzz not properly configure:"
-   afl-fuzz -d -i tmpafi -o tmpafo MP4Box -h
-   exit
-  else
-   log $L_INF "afl-fuzz found and OK - enabling fuzzing with duration $fuzz_duration"
-  fi
-  rm -rf tmpaf*
- fi
-fi
-
 echo ""
 
 #reassign our default programs
@@ -587,8 +540,6 @@ test_begin ()
  test_skip=0
  result=""
  TEST_NAME=$1
- fuzz_test=$fuzz_all
- is_fuzz_test=0
  reference_hash_valid="$HASH_DIR/$TEST_NAME-valid-hash"
 
  log $L_DEB "Starting test $TEST_NAME"
@@ -847,8 +798,8 @@ shopt -s nullglob
   if [ $generate_hash = 1 ] ; then
     log $L_DEB "Test $TEST_NAME $nb_subtests subtests and $nb_test_hash hashes"
     nb_hashes=$((nb_test_hash + nb_test_hash))
-  	#only allow no hash if only one subtest or fuzzing
-    if [ $subtest_idx -gt 1 ] && [ $nb_hashes -lt $subtest_idx ] && [ $is_fuzz_test = 0 ]; then
+  	#only allow no hash if only one subtest
+    if [ $subtest_idx -gt 1 ] && [ $nb_hashes -lt $subtest_idx ] ; then
      log $L_ERR "Test $TEST_NAME has too few hash tests: $nb_hashes for $nb_subtests subtests - please fix"
      result="NOT ENOUGH HASHES"
     else
@@ -895,55 +846,6 @@ shopt -s nullglob
 shopt -u nullglob
 }
 
-do_fuzz()
-{
-  cmd="$2"
-  fuzz="@@"
-  fuzz_cmd=${cmd/$1/$fuzz}
-  file_ext="${1##*.}"
-  orig_path=`pwd`
-  tests_gen=0
-  log $L_DEB "Fuzzing file $1 with command line $fuzz_cmd"
-
-  fuzz_res_dir="$LOCAL_OUT_DIR/fuzzing/$TEST_NAME_$SUBTEST_NAME/$fuzz_sub_idx"
-  fuzz_temp_dir="$LOCAL_OUT_DIR/fuzzing/$TEST_NAME_$SUBTEST_NAME/$fuzz_sub_idx/temp"
-  mkdir -p "$fuzz_res_dir"
-  mkdir -p "$fuzz_temp_dir/in/"
-  mkdir -p "$fuzz_temp_dir/out/"
-
-  cp $1 "$fuzz_temp_dir/in/"
-  cd $fuzz_temp_dir
-
-  $GNU_TIMEOUT $fuzz_duration afl-fuzz -d -i "in/" -o "out/" $fuzz_cmd
-  if [ $? = 0 ] ; then
-   if [ $no_fuzz_cleanup = 0 ] ; then
-    #rename all crashes and hangs
-    cd out/crashes
-    ls | cat -n | while read n f; do mv "$f" "$fuzz_res_dir/crash_$n.$file_ext"; done
-    cd ../hangs
-    ls | cat -n | while read n f; do mv "$f" "$fuzz_res_dir/hang_$n.$file_ext"; done
-    cd ../..
-    rm -f "$fuzz_res_dir/readme.txt"
-   fi
-  fi
-
-  cd "$orig_path"
-
-  if [ $no_fuzz_cleanup = 0 ] ; then
-   rm -rf $fuzz_temp_dir
-
-   tests_gen=`ls $fuzz_res_dir | wc -w`
-   if [ $no_fuzz_cleanup != 0 ] ; then
-    tests_gen=1
-   fi
-
-   if [ $tests_gen = 0 ] ; then
-    rm -rf $fuzz_res_dir
-   else
-    echo "Generated with afl-fuzz -d $fuzz_cmd" > "$fuzz_res_dir/readme.txt"
-   fi
-  fi
-}
 
 #@do_test execute the command line given $1 using GNU time and store stats with return value, command line ($1) and subtest name ($2)
 ret=0
@@ -980,46 +882,6 @@ do_test ()
  stat_subtest="$INTERN_TEMP_DIR/$TEST_NAME-stats-$subtest_idx-$2.sh"
  SUBTEST_NAME=$2
 
- if [ $fuzz_test = 1 ] ; then
-   is_fuzz_test=1
- fi
-
- if [ $enable_fuzzing = 0 ] ; then
-  fuzz_test=0
- fi
-
- #fuzzing on: check all args, detect ones matching input files in $maindir and fuzz them
- #note that this is not perfect since the command line may modify an existing MP4
- #so each successfull afl-fuzz test (not call!) will modify the input...
- if [ $fuzz_test != 0 ] ; then
-  fuzz_dir="$LOCAL_OUT_DIR/fuzzing/$TEST_NAME_$SUBTEST_NAME/"
-  mkdir -p fuzz_dir
-  fuzz_sub_idx=1
-  for word in $1 ; do
-   is_file_arg=0
-   case "$word" in
-     $main_dir/*)
-      is_file_arg=1;;
-   esac
-
-   if [ $is_file_arg != 0 ] ; then
-    fuzz_src=${word%:*}
-    if [ -f $fuzz_src ] ; then
-      do_fuzz "$fuzz_src" "$1"
-      fuzz_sub_idx=$((fuzz_sub_idx + 1))
-    fi
-   fi
-  done
-
-  if [ $no_fuzz_cleanup = 0 ] ; then
-   crashes=`ls $fuzz_dir | wc -w`
-   if [ $crashes = 0 ] ; then
-    rm -rf $fuzz_dir
-   fi
-  fi
-
-  #we still run the subtest in fuzz mode, since further subtests may use the output of this test
- fi
 
 echo "" > $log_subtest
 echo "*** Subtest \"$2\": executing \"$1\" ***" >> $log_subtest
