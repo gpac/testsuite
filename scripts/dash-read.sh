@@ -46,7 +46,10 @@ start=0
 dash_test "ondemand" "http://download.tsi.telecom-paristech.fr/gpac/DASH_CONFORMANCE/TelecomParisTech/mp4-onDemand/mp4-onDemand-mpd-V.mpd" 1
 
 dur=4
-dash_test "live" "https://livesim.dashif.org/livesim/mup_30/testpic_2s/Manifest.mpd" 0
+
+#this test is commented due to clock drift in livesim to be further investigated - we test live dash through our httpout tests
+#dash_test "live" "https://livesim.dashif.org/livesim/mup_30/testpic_2s/Manifest.mpd" 0
+
 dash_test "live-timeline" "http://vm2.dashif.org/livesim-dev/segtimeline_1/testpic_6s/Manifest.mpd" 0
 
 dash_test "hls" "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8 -broken-cert" 1
