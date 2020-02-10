@@ -76,19 +76,21 @@ test_end
 
 test_begin "gpac-alias"
 if [ $test_skip != 1 ] ; then
+#do NOT use $GPAC since it may be passed with no config
+
 #test expand
-$GPAC -alias='test src=@{+1:N} inspect'":log=$TEMP_DIR/logs.txt" -aliasdoc='test some doc' 2> /dev/null
-do_test "$GPAC test $MEDIA_DIR/auxiliary_files/logo.jpg $MEDIA_DIR/auxiliary_files/logo.png" "gpac-alias-expand"
+gpac -for-test -mem-track -alias='test src=@{+1:N} inspect'":log=$TEMP_DIR/logs.txt" -aliasdoc='test some doc' 2> /dev/null
+do_test "gpac -for-test -mem-track test $MEDIA_DIR/auxiliary_files/logo.jpg $MEDIA_DIR/auxiliary_files/logo.png" "gpac-alias-expand"
 do_hash_test $TEMP_DIR/logs.txt  "inspect-res"
 
 #test regular
-$GPAC -alias='test src=@{1} inspect:log=src=@{N-1}' -aliasdoc='test some doc' 2> /dev/null
-do_test "$GPAC test $MEDIA_DIR/auxiliary_files/logo.jpg -k $TEMP_DIR/logs.txt -loop=2" "gpac-alias-nargs"
+gpac -for-test -mem-track -alias='test src=@{1} inspect:log=src=@{N-1}' -aliasdoc='test some doc' 2> /dev/null
+do_test "gpac -for-test -mem-track test $MEDIA_DIR/auxiliary_files/logo.jpg -k $TEMP_DIR/logs.txt -loop=2" "gpac-alias-nargs"
 do_hash_test $TEMP_DIR/logs.txt  "inspect-res2"
 
 #test list
-$GPAC -alias='test flist:srcs=@{-:N-1} inspect:log=src=@{N}' -aliasdoc='test some doc' 2> /dev/null
-do_test "$GPAC -threads=-1 test $MEDIA_DIR/auxiliary_files/logo.jpg $MEDIA_DIR/auxiliary_files/logo.png $TEMP_DIR/logs.txt" "gpac-alias-list"
+gpac -for-test -mem-track -alias='test flist:srcs=@{-:N-1} inspect:log=src=@{N}' -aliasdoc='test some doc' 2> /dev/null
+do_test "gpac -for-test -mem-track -threads=-1 test $MEDIA_DIR/auxiliary_files/logo.jpg $MEDIA_DIR/auxiliary_files/logo.png $TEMP_DIR/logs.txt" "gpac-alias-list"
 do_hash_test $TEMP_DIR/logs.txt  "inspect-res3"
 
 fi
