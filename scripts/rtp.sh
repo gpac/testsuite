@@ -72,8 +72,9 @@ rtp_test "aac" $mp4file "" ""
 rtp_test "latm" $mp4file ":latm" ":nat_keepalive=500"
 #rm $mp4file > /dev/null
 
-$MP4BOX -crypt $MEDIA_DIR/encryption/isma.xml $mp4file 2> /dev/null
-rtp_test "aac-crypted" $mp4file "inspect_only" ""
+mp4file_crypt="$MYTMP/aac_crypted.mp4"
+$MP4BOX -crypt $MEDIA_DIR/encryption/isma.xml $mp4file -out $mp4file_crypt 2> /dev/null
+rtp_test "aac-crypted" $mp4file_crypt "inspect_only" ""
 
 mp4file="$MYTMP/mp3.mp4"
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/count_english.mp3:dur=1 -new $mp4file 2> /dev/null
