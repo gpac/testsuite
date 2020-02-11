@@ -170,6 +170,53 @@ do_hash_test $TEMP_DIR/file2.mpd "dash-tpl"
 test_end
 }
 
+
+test_http_byteranges()
+{
+test_begin "http-byteranges"
+if [ $test_skip = 1 ] ; then
+ return
+fi
+#make a 3sec dash
+$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=3.0 -new $TEMP_DIR/source.mp4 2> /dev/null
+$MP4BOX -dash 1000 -profile onDemand -out $TEMP_DIR/file.mpd $TEMP_DIR/source.mp4 2> /dev/null
+
+do_test "$GPAC httpout:port=8080:rdirs=$TEMP_DIR -runfor=5000 -logs=dash:http@debug" "http-server" &
+sleep 0.01
+
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i http://localhost:8080/file.mpd inspect:allp:deep:test=network:interleave=false:log=$myinspect -logs=dash:http@debug -lu" "dash-read"
+do_hash_test $myinspect "inspect"
+
+test_end
+}
+
+
+test_http_dashpush()
+{
+test_begin "http-dashpush"
+if [ $test_skip = 1 ] ; then
+ return
+fi
+
+$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac -new $TEMP_DIR/source.mp4 2> /dev/null
+
+do_test "$GPAC  -runfor=5000 httpout:port=8080:wdir=$TEMP_DIR -logs=http@debug" "http-server" &
+sleep .1
+
+do_test "$MP4BOX -run-for 3000 -dash-live 1000 -subdur 1000 -profile live $TEMP_DIR/source.mp4 -out http://localhost:8080/live.mpd:hmode=push -logs=http@debug" "dash_push"
+
+wait
+
+do_hash_test $TEMP_DIR/source_dash3.m4s "dash-seg3"
+
+if [ -f $TEMP_DIR/source_dash1.m4s ] ; then
+ result="HTTP DELETE failed on segment 1"
+fi
+
+test_end
+}
+
 #test server mode
 test_http_server
 #test server mode directory listing
@@ -183,5 +230,11 @@ test_http_source
 #test low latency push
 test_http_origin
 
+#test ondemand dash served (for byte ranges)
+test_http_byteranges
+
 #test dash with raw format on http (for seg size messages)
 test_http_dashraw
+
+#test live dash output to http with PUT and DELETE
+test_http_dashpush
