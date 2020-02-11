@@ -134,8 +134,9 @@ $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=3.4 -new $TEMP_DIR/so
 do_test "$GPAC -i $TEMP_DIR/source.mp4 reframer:rt=on @ -o http://localhost:8080/live.mpd:gpac:rdirs=$TEMP_DIR --sutc --cdur=0.1 --asto=0.9 --dmode=dynamic -logs=http@debug -lu" "http-origin" &
 sleep 0.01
 
+#inspect the first segment we get
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i http://localhost:8080/live.mpd inspect:dur=2:allp:deep:test=network:interleave=false:log=$myinspect -logs=dash:http@debug -lu" "dash-read"
+do_test "$GPAC -i http://localhost:8080/live.mpd inspect:dur=1:allp:deep:test=network:interleave=false:log=$myinspect -logs=dash:http@debug -lu" "dash-read"
 
 #we don't run the hash on windows, the VM is just too slow to launch the processes and we end up missing one segment ...
 if [ $GPAC_OSTYPE != "win32" ] && [ $GPAC_OSTYPE != "win64" ] ; then
