@@ -102,4 +102,7 @@ test_end
 # Storage
 single_test "$GPAC $MEDIA_DIR/jsf/storage.js" "jsf-storage"
 
+# DOM APIs
+single_test "$GPAC $MEDIA_DIR/jsf/dom_api.js" "jsf-DOMAPI"
+
 

@@ -82,7 +82,7 @@ test_decoder "hevc-ffdec" $MEDIA_DIR/auxiliary_files/counter.hvc "test.yuv" "-bl
 
 #test hevc decode to raw using openhevc
 if [ -n "$ohevcdec" ] ; then
-test_decoder "hevc-ohevc" $MEDIA_DIR/auxiliary_files/counter.hvc "test.yuv" "-blacklist=vtbdec,nvdec,ffdec" 0
+test_decoder "hevc-ohevc" $MEDIA_DIR/auxiliary_files/counter.hvc "test.yuv" "-blacklist=vtbdec,nvdec,ffdec -logs=codec@info" 0
 
 test_decoder "hevc-ohevc-nocopy" $MEDIA_DIR/auxiliary_files/counter.hvc "test.yuv" "-blacklist=vtbdec,nvdec,ffdec --no_copy" 0
 fi
