@@ -197,7 +197,7 @@ test_end
 }
 
 
-test_http_dashpush()
+test_http_dashpush_live()
 {
 test_begin "http-dashpush"
 if [ $test_skip = 1 ] ; then
@@ -222,6 +222,47 @@ fi
 test_end
 }
 
+
+test_http_dashpush_vod()
+{
+test_begin "http-dashpush-vod"
+if [ $test_skip = 1 ] ; then
+ return
+fi
+
+$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=4 -new $TEMP_DIR/source.mp4 2> /dev/null
+
+do_test "$GPAC  -runfor=5000 httpout:port=8080:wdir=$TEMP_DIR -logs=http@debug" "http-server" &
+sleep .1
+
+#we are in test mode which triggers cache=true (no sidx patching), force cache=false to test on the fly patching of sidx
+do_test "$MP4BOX -dash 1000 -profile onDemand $TEMP_DIR/source.mp4 -out http://localhost:8080/live.mpd:hmode=push:cache=false -logs=http@debug" "dash_push"
+
+wait
+
+do_hash_test $TEMP_DIR/source_dashinit.mp4 "dash-vod"
+
+test_end
+}
+
+
+test_https_server()
+{
+test_begin "https-server"
+if [ $test_skip = 1 ] ; then
+ return
+fi
+
+do_test "$GPAC httpout:port=8080:quit:rdirs=$MEDIA_DIR:cert=$MEDIA_DIR/tls/localhost.crt:key=$MEDIA_DIR/tls/localhost.key" "https-server" &
+sleep .1
+
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i https://localhost:8080/auxiliary_files/enst_audio.aac inspect:allp:deep:test=network:interleave=false:log=$myinspect$3 -graph -stats" "client-inspect"
+do_hash_test $myinspect "inspect"
+test_end
+
+}
+
 #test server mode
 test_http_server
 #test server mode directory listing
@@ -242,4 +283,10 @@ test_http_byteranges
 test_http_dashraw
 
 #test live dash output to http with PUT and DELETE
-test_http_dashpush
+test_http_dashpush_live
+
+#test live dash output to http with PUT and byte range update for SIDX
+test_http_dashpush_vod
+
+#test https server
+test_https_server
