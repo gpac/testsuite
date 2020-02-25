@@ -253,7 +253,7 @@ if [ $test_skip = 1 ] ; then
  return
 fi
 
-do_test "$GPAC httpout:port=8080:quit:rdirs=$MEDIA_DIR:cert=$MEDIA_DIR/tls/localhost.crt:key=$MEDIA_DIR/tls/localhost.key" "https-server" &
+do_test "$GPAC httpout:port=8080:quit:rdirs=$MEDIA_DIR:cert=$MEDIA_DIR/tls/localhost.crt:pkey=$MEDIA_DIR/tls/localhost.key" "https-server" &
 sleep .1
 
 myinspect=$TEMP_DIR/inspect.txt
