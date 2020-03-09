@@ -494,8 +494,8 @@ fi
 echo ""
 
 #reassign our default programs
-MP4BOX="MP4Box -noprog -for-test $base_args"
-GPAC="gpac $base_args -noprog -for-test -no-reassign"
+MP4BOX="MP4Box -noprog -for-test -old-arch $base_args"
+GPAC="gpac $base_args -noprog -for-test -old-arch -no-reassign"
 MP4CLIENT="MP4Client -noprog -strict-error $base_args"
 
 if [ "$gpac_profile" != "" ] ; then
