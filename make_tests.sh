@@ -1227,7 +1227,7 @@ do_ui_test()
 
 
 #start of our tests
-start=`$GNU_DATE +%s%N`
+start_ts=`$GNU_DATE +%s%N`
 start_date="$(date '+%d/%m/%Y %H:%M:%S')"
 
 if [ $generate_hash = 1 ] ; then
@@ -1246,8 +1246,8 @@ fi
 
 print_end()
 {
-end=`$GNU_DATE +%s%N`
-runtime=$((end-start))
+end_ts=`$GNU_DATE +%s%N`
+runtime=$((end_ts-start_ts))
 
 ms=$(($runtime / 1000000))
 secs=$(($ms / 1000))
@@ -1512,7 +1512,3 @@ fi
 
 
 finalize_make_test
-
-
-
-
