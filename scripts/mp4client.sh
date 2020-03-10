@@ -2,7 +2,7 @@
 single_test "$MP4CLIENT -fs -guid -run-for 2" "mp4client-gui"
 
 echo "bla" > $TEMP_DIR/test.mp4
-single_test "MP4Client -mem-track -for-test -no-reassign -guid -run-for 2 $TEMP_DIR/test.mp4" "mp4client-gui-urlerror"
+single_test "MP4Client -p=$gpac_profile -mem-track -for-test -no-reassign -guid -run-for 2 $TEMP_DIR/test.mp4" "mp4client-gui-urlerror"
 
 single_test "$MP4CLIENT -guid -rmt -rmt-ogl -run-for 2 -stats $MEDIA_DIR/auxiliary_files/sky.jpg" "mp4client-gui-stats"
 
@@ -39,6 +39,3 @@ do_test "$MP4CLIENT -for-test -no-save -size 100x100 -speed 2 -rtix $TEMP_DIR/lo
 
 fi
 test_end
-
-
-
