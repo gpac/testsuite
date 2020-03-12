@@ -104,7 +104,7 @@ test_end
 
 test_begin "gpac-units"
 if [ $test_skip != 1 ] ; then
-do_test "$GPAC -lu -logs=app@info:filter@debug -unit-tests -mem-track-stack" "units"
+do_test "$GPAC -p=0 -lu -logs=app@info:filter@debug -unit-tests -mem-track-stack" "units"
 fi
 test_end
 
