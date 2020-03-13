@@ -85,7 +85,7 @@ do_hash_test $TEMP_DIR/logs.txt  "inspect-res"
 
 #test regular
 gpac -for-test -mem-track -alias='test src=@{1} inspect:log=src=@{N-1}' -aliasdoc='test some doc' 2> /dev/null
-do_test "gpac -for-test -mem-track test $MEDIA_DIR/auxiliary_files/logo.jpg -k $TEMP_DIR/logs.txt -loop=2" "gpac-alias-nargs"
+do_test "gpac -for-test -mem-track test $MEDIA_DIR/auxiliary_files/logo.jpg -k $TEMP_DIR/logs.txt -sloop=2" "gpac-alias-nargs"
 do_hash_test $TEMP_DIR/logs.txt  "inspect-res2"
 
 #test list
