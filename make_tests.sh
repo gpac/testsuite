@@ -54,7 +54,9 @@ speed=1
 single_test_name=""
 keep_temp_dir=0
 store_video=0
+quick_mode=0
 gpac_profile=""
+skip_all_tests=0
 
 current_script=""
 
@@ -198,6 +200,8 @@ echo "  -play:                 executes playback tests (not all tests use playba
 echo "  -p=NAME:               sets execution profile of all gpac apps to NAME. Use '-p=0' to disable profiles from local storage (eg for parallel executions of test suite)"
 echo "  -test=NAME             only executes given test"
 echo "  -precommit             alias for -sync-before -git-hash -warn. Before commit/push, you should run ./make_tests -precommit"
+echo "  -quick                 only executes the first test of each script"
+
 echo "  SCRIPTS                only runs the scripts provided as arguments, by default runs everything in $SCRIPTS_DIR"
 echo "  -v:                    set verbose output"
 echo "  -h:                    print this help"
@@ -295,6 +299,9 @@ for i in $* ; do
   ;;
  "-play")
   do_playback=1;;
+"-quick")
+ quick_mode=1;;
+
  -test*)
   single_test_name="${i#-test=}"
   ;;
@@ -562,6 +569,14 @@ test_begin ()
   rm -rf $VIDEO_DIR/$TEST_NAME* 2> /dev/null
   test_skip=1
   return
+ fi
+
+ if [ $quick_mode != 0 ] ; then
+  if [ $skip_all_tests != 0 ] ; then
+   test_skip=1
+   return
+  fi
+  skip_all_tests=1
  fi
 
  if [ $check_only != 0 ] ; then
@@ -1483,9 +1498,10 @@ if [ $verbose = 1 ] ; then
  log $L_DEB "Source script: $i"
 fi
 current_script=$i
+skip_all_tests=0
 source $i
 cd $main_dir
-#break if error and error
+#break if error
 if [ $strict_mode = 1 ] ; then
  #wait for all tests to be done before checking error marker
  wait
