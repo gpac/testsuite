@@ -61,3 +61,30 @@ test_pipe "raw-gsf-mp4" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.mp4" "gs
 #raw file -> muxts | pipe | ts file
 test_pipe "raw-ts" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.ts" "ts" 0
 
+
+test_stdin_isom()
+{
+
+test_begin "pipe-std-isom-$1"
+
+if [ $test_skip  = 1 ] ; then
+return
+fi
+
+myinspect=$TEMP_DIR/inspect.txt
+$GPAC -i $2 -o stdout:ext=mp4$4 | $GPAC -i - inspect:deep:interleave=false:log=$myinspect
+res=$?
+
+if [ $res != 0 ] ; then
+ result="fail($res)"
+else
+ do_hash_test $myinspect "inspect"
+fi
+
+test_end
+
+}
+
+test_stdin_isom "prog" "$MEDIA_DIR/auxiliary_files/enst_video.h264" ""
+test_stdin_isom "frag" "$MEDIA_DIR/auxiliary_files/enst_video.h264" ":frag:cdur=1"
+
