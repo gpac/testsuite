@@ -263,6 +263,31 @@ test_end
 
 }
 
+
+
+test_http_server_push_pull()
+{
+test_begin "http-server-push-pull"
+if [ $test_skip = 1 ] ; then
+ return
+fi
+
+tmp_aac=$TEMP_DIR/test.aac
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac reframer @ -o $tmp_aac:dur=2" "make-input"
+
+do_test "$GPAC -runfor=4000 httpout:port=8080:quit:rdirs=$TEMP_DIR:wdir=$TEMP_DIR" "http-server" &
+sleep .1
+do_test "$GPAC -i $tmp_aac reframer:rt=on @ -o http://localhost:8080/live.mpd:hmode=push:dmode=dynamic" "dash-push" &
+sleep .1
+
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i http://localhost:8080/live.mpd inspect:dur=1:allp:deep:test=network:interleave=false:log=$myinspect" "client-inspect"
+do_hash_test $myinspect "inspect"
+test_end
+
+}
+
+
 #test server mode
 test_http_server
 #test server mode directory listing
@@ -290,3 +315,6 @@ test_http_dashpush_vod
 
 #test https server
 test_https_server
+
+#test http server + push instance + client
+test_http_server_push_pull

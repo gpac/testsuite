@@ -27,7 +27,7 @@ test_end
 
 }
 
-test_flist "codecs" "flist:dur=1/1:srcs=$MEDIA_DIR/auxiliary_files/logo.jpg,$MEDIA_DIR/auxiliary_files/logo.png" 0
+test_flist "codecs" "flist:fdur=1/1:srcs=$MEDIA_DIR/auxiliary_files/logo.jpg,$MEDIA_DIR/auxiliary_files/logo.png" 0
 
 #geenrate plist in current dir not in temp, since we put relative path in playlist
 plist=plist.m3u
@@ -51,7 +51,7 @@ echo "" > $plist
 echo "#repeat=24" >> $plist
 echo "$MEDIA_DIR/auxiliary_files/logo.jpg" >> $plist
 
-test_flist "params" "-i $plist:dur=1/1" 0
+test_flist "params" "-i $plist:fdur=1/1" 0
 
 test_flist "enum" "flist:srcs=$MEDIA_DIR/auxiliary_files/\*.jpg" 0
 

@@ -2,6 +2,10 @@
 
 test_begin "dash-xlink"
 
+if [ $test_skip  = 1 ] ; then
+return
+fi
+
 do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264:dur=2 -new $TEMP_DIR/remote.mp4" "dash-input-preparation"
 
 do_test "$MP4BOX -dash 1000 -profile live $TEMP_DIR/remote.mp4 -out $TEMP_DIR/remote.mpd" "dash-remote"
