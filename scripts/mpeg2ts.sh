@@ -49,3 +49,26 @@ do_hash_test "$TEMP_DIR/prog_20.ts" "prog_20"
 
 fi
 test_end
+
+srcfile=$EXTERNAL_MEDIA_DIR/m2ts/paff.ts
+
+test_begin "m2ts-paff"
+if [ $test_skip != 1 ] ; then
+
+insfile=$TEMP_DIR/dump.txt
+#inpect demuxed file in non-interleave mode (pid by pid), also dumps PCR
+do_test "$GPAC -i $srcfile inspect:interleave=false:deep:log=$insfile" "inspect"
+do_hash_test "$insfile" "inspect"
+
+#import with gpac
+dstfile="$TEMP_DIR/test-gpac.mp4"
+do_test "$GPAC -i $srcfile -o $dstfile" "import-gpac"
+do_hash_test "$dstfile" "import-gpac"
+
+#import with MP4Box
+dstfile="$TEMP_DIR/test-mp4box.mp4"
+do_test "$MP4BOX -add $srcfile -new $dstfile" "import-mp4box"
+do_hash_test "$dstfile" "import-mp4box"
+
+fi
+test_end
