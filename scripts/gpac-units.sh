@@ -44,6 +44,7 @@ single_test "$GPAC -ltf -h UTFilter" "gpac-unit-info"
 single_test "$GPAC -ha mp4mx" "gpac-mp4mx-ha"
 single_test "$GPAC -hx mp4mx" "gpac-mp4mx-hx"
 single_test "$GPAC -hh mp4mx" "gpac-mp4mx-hh"
+single_test "$GPAC -h mp4mx.alltk" "gpac-mp4mx-opt"
 single_test "$GPAC -hh core" "gpac-hh-core"
 single_test "$GPAC -mkl=test.unk" "gpac-lang-file"
 rm -f test.unk 2> /dev/null
