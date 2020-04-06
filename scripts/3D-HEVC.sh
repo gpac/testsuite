@@ -8,7 +8,7 @@ test_begin "3D-HEVC"
 
 do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/3D-HEVC/stream_bbb.bit:fmt=HEVC -new $TEMP_DIR/test.mp4" "import"
 
-ohevcdec=`$GPAC -h filters 2>&1 | grep ohevc`
+ohevcdec=`$GPAC -h ohevcdec 2>/dev/null | grep ohevc`
 
 #test openhevc decoding of stereo
 if [ -n "$ohevcdec" ] ; then

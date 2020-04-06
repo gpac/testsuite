@@ -43,7 +43,7 @@ do_hash_test_bin "$flipfile" "flipoff"
 
 #gpac -i $flipfile:size=128x128 vout
 
-nvdec=`$GPAC -h filters 2>&1 | grep nvdec`
+nvdec=`$GPAC -h nvdec 2>/dev/null | grep nvdec`
 
 if [ -n "$nvdec" ] ; then
 #test Frame interface with nvdec - todo, check with vtbdec. It may be triggered by nvdia decoder

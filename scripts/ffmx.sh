@@ -20,7 +20,7 @@ test_end
 }
 
 #check if we have libavfilter support
-ffmx=`$GPAC -h filters 2>&1 | grep ffmx`
+ffmx=`$GPAC -h ffmx 2>/dev/null | grep ffmx`
 if [ -n "$ffmx" ] ; then
 
 ffmx_test "mkv" "$MEDIA_DIR/auxiliary_files/enst_video.h264" ""

@@ -18,7 +18,7 @@ test_end
 }
 
 #check if we have libavfilter support
-ffavf=`$GPAC -h filters 2>&1 | grep ffavf`
+ffavf=`$GPAC -h ffavf 2>/dev/null | grep ffavf`
 if [ -n "$ffavf" ] ; then
 
 #video -> video filter test

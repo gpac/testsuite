@@ -32,13 +32,13 @@ test_end
 
 }
 
-nvdec=`$GPAC -h filters 2>&1 | grep nvdec`
-vtbdec=`$GPAC -h filters 2>&1 | grep vtbdec`
-ohevcdec=`$GPAC -h filters 2>&1 | grep ohevc`
-xviddec=`$GPAC -h filters 2>&1 | grep xvid`
-libaom=`gpac -hh ffdec:* 2>&1 | grep ffdec:libaom-av1`
-j2koj2k=`$GPAC -h filters 2>&1 | grep j2kdec`
-j2kff=`gpac -hh ffdec:* 2>&1 | grep ffdec:jpeg2000`
+nvdec=`$GPAC -h nvdec 2>/dev/null | grep nvdec`
+vtbdec=`$GPAC -h vtbdec 2>/dev/null | grep vtbdec`
+ohevcdec=`$GPAC -h ohevcdec 2>/dev/null | grep ohevc`
+xviddec=`$GPAC -h xviddec 2>/dev/null | grep xvid`
+libaom=`gpac -hh ffdec:* 2>/dev/null | grep ffdec:libaom-av1`
+j2koj2k=`$GPAC -h j2kdec 2>/dev/null | grep j2kdec`
+j2kff=`gpac -hh ffdec:* 2>/dev/null | grep ffdec:jpeg2000`
 
 
 #test png+alpha decode to raw

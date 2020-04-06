@@ -53,8 +53,8 @@ test_end
 
 }
 
-jpeg=`$GPAC -h filters 2>&1 | grep jpgenc`
-png=`$GPAC -h filters 2>&1 | grep pngenc`
+jpeg=`$GPAC -h jpgenc 2>/dev/null | grep jpgenc`
+png=`$GPAC -h pngenc 2>/dev/null | grep pngenc`
 
 x264ff=`gpac -hh ffenc:* 2>&1 | grep ffenc:libx264`
 j2kff=`gpac -hh ffenc:* 2>&1 | grep ffenc:jpeg2000`
