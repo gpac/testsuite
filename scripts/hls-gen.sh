@@ -16,6 +16,11 @@ do_hash_test "$TEMP_DIR/test-2-.mp4" "hls-init2"
 do_hash_test "$TEMP_DIR/test-1-10.m4s" "hls-seg1_10"
 do_hash_test "$TEMP_DIR/test-2-10.m4s" "hls-seg2_10"
 
+#check HLS playback
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i $TEMP_DIR/file.m3u8 inspect:deep:interleave=false:dur=2:log=$myinspect" "hls-play"
+do_hash_test "$myinspect" "hls-play"
+
 test_end
 
 
@@ -31,6 +36,11 @@ do_hash_test "$TEMP_DIR/file_1.m3u8" "hls-pl1"
 do_hash_test "$TEMP_DIR/file_2.m3u8" "hls-pl2"
 
 do_hash_test "$TEMP_DIR/file.mpd" "hls-mpd"
+
+#check HLS playback
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i $TEMP_DIR/file.m3u8 inspect:deep:interleave=false:dur=2:log=$myinspect" "hls-play"
+do_hash_test "$myinspect" "hls-play"
 
 test_end
 
