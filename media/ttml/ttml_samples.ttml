@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xmlns:ttp="http://www.w3.org/ns/ttml#parameter"
+    xmlns:tts="http://www.w3.org/ns/ttml#styling"
+    ttp:timeBase="media"
+    ttp:cellResolution="50 30"
+    xml:lang="de" xmlns="http://www.w3.org/ns/ttml">
+	  <head>
+		    <styling>
+			      <style xml:id="defaultStyle" tts:fontFamily="Verdana, Arial, Tiresias"
+                tts:fontSize="160%"
+                tts:lineHeight="125%"
+                tts:color="#ffffff"
+                tts:backgroundColor="#000000c2"
+                tts:textAlign="center"/>
+		    </styling>
+		    <layout>
+			      <region xml:id="bottom" tts:origin="10% 10%" tts:extent="80% 80%"
+                 tts:displayAlign="after"/>
+		    </layout>
+	  </head>
+	  <body>
+	    <div style="defaultStyle">
+		      <p begin="00:00:00.000" end="00:00:01.000" region="bottom">First line</p>
+		      <p begin="00:00:02.000" end="00:00:03.000" region="bottom">Test line<br/>break</p>
+		      <p begin="00:00:04.000" end="00:00:05.000" region="bottom">Test <i>italic</i> text</p>
+		      <p begin="00:00:06.000" end="00:00:07.000" region="bottom">Test <i>italic and <b>bold</b></i> text</p>
+		      <p begin="00:00:08.000" end="00:00:09.000" region="bottom">Test <i>italic and <br/> <b>bold</b> new</i> text</p>
+		      <p begin="00:00:10.000" end="00:00:11.000" region="bottom">Test <span>span element</span> text</p>
+	    </div>
+	  </body>
+</tt>
+
