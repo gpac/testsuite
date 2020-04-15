@@ -25,7 +25,7 @@ else
 
 #do a hash on inspect
 insfile=$TEMP_DIR/dump.txt
-do_test "$GPAC -i $dst_file $myinspect:log=$insfile" "inspect"
+do_test "$GPAC -i $dst_file $myinspect:log=$insfile:test=encx" "inspect"
 do_hash_test "$insfile" "inspect"
 
 fi
@@ -44,7 +44,7 @@ else
 
 #do a hash on inspect
 insfile=$TEMP_DIR/dump2.txt
-do_test "$GPAC -i $dst_file $myinspect:log=$insfile" "inspect-mp4"
+do_test "$GPAC -i $dst_file $myinspect:log=$insfile:test=encx" "inspect-mp4"
 do_hash_test "$insfile" "inspect-mp4"
 
 fi
@@ -91,7 +91,7 @@ if [ -n "$x264ff" ] ; then
 test_encoder "avc-ffenc" $MEDIA_DIR/auxiliary_files/count_video.cmp "test.264" "" "-blacklist=vtbdec,nvdec,ohevcdec" "::ls::x264-params=sync-lookahead=0::profile=baseline"
 fi
 
-#test MJ2 encode - we need to explicetly add the encoder, since the isom muxer can accept any input
+#test MJ2 encode - we need to explictly add the encoder, since the isom muxer can accept any input
 if [ -n "$j2kff" ] ; then
 test_encoder "j2k-ffenc" $MEDIA_DIR/auxiliary_files/count_video.cmp "test.mj2" "enc:c=j2k @" "-blacklist=vtbdec,nvdec,ohevcdec" ""
 fi
