@@ -13,7 +13,15 @@ do_test "$GPAC -no-reassign=no -i $2 reframer @ -o $dstfile -graph -stats" "mux"
 #not bit-exact across platforms, inspect
 
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC  -no-reassign=no -i $dstfile inspect:allp:deep:interleave=false:log=$myinspect$3"
+
+if [ $1 = "mkv" ] || [ $1 = "webm" ] ; then
+#we force FPS since some version old of libavformat do not expose FPS on webm/mkv
+dstarg="$dstfile:#FPS=25"
+else
+dstarg="$dstfile"
+fi
+
+do_test "$GPAC  -no-reassign=no -i $dstarg inspect:allp:deep:interleave=false:log=$myinspect$3"
 do_hash_test $myinspect "inspect"
 
 test_end
