@@ -71,13 +71,17 @@ bifs_test()
  #MP4 hint
  do_test "$MP4BOX -hint $mp4file" "MP4HINT"
 
- #MP4 sync generation
- do_test "$MP4BOX -mp4 -sync 1000 $srcfile" "mp4sync"
- do_hash_test $mp4file "mp4sync"
 
- #MP4 sync generation
- do_test "$MP4BOX -mp4 -sync 1000 $srcfile" "mp4shadow"
- do_hash_test $mp4file "mp4shadow"
+ #except on linux32 (rounding diffs)
+ if [ $GPAC_OSTYPE != "lin32" ] ; then
+  #MP4 sync generation
+  do_test "$MP4BOX -mp4 -sync 1000 $srcfile" "mp4sync"
+  do_hash_test $mp4file "mp4sync"
+
+  #MP4 sync-shadow generation
+  do_test "$MP4BOX -mp4 -shadow 1000 $srcfile" "mp4shadow"
+  do_hash_test $mp4file "mp4shadow"
+fi
 
  test_end
 }
