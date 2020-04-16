@@ -34,10 +34,17 @@ fi
 }
 
 
-graphics_test "bt2d-simple" "$MEDIA_DIR/bifs/bifs-2D-painting-material2D.bt" 1
-graphics_test "bt2d-texture" "$MEDIA_DIR/bifs/bifs-2D-texturing-imagetexture-shapes.bt" 1
+do_hash=1
+#we don't have the same 2D renderer precision on 32 and 64 bits, disable hashes for linux 32
+#note that we keep them for win32 since we run our tests on a 64 bit VM emuating 32 bit so no precision loss
+if [ $GPAC_OSTYPE == "lin32" ] ; then
+do_hash=0
+fi
+
+graphics_test "bt2d-simple" "$MEDIA_DIR/bifs/bifs-2D-painting-material2D.bt" $do_hash
+graphics_test "bt2d-texture" "$MEDIA_DIR/bifs/bifs-2D-texturing-imagetexture-shapes.bt" $do_hash
 
 #cannot do hash tests for 3D, GPUs will give different results...
 graphics_test "bt3d-simple" "$MEDIA_DIR/auxiliary_files/nefertiti.wrl" 0
 graphics_test "bt3d-texture" "$MEDIA_DIR/bifs/bifs-3D-texturing-box.bt" 0
-graphics_test "svg-simple" "$MEDIA_DIR/svg/Ghostscript_Tiger.svg" 1
+graphics_test "svg-simple" "$MEDIA_DIR/svg/Ghostscript_Tiger.svg" $do_hash
