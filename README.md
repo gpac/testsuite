@@ -2,7 +2,13 @@ This is the documentation for creating a new test in GPAC test suite.
 
 # Running the test suite
 
-To run the entire test suite, simply run `make_tests.sh` or use the Makefile task `make test_suite`.
+Before running the test suite, you should first synchronize external data not hosted in this repository:
+```./make_tests.sh -sync-media -clean```
+The external data is currently less than 300 MB.
+
+- to run the entire test suite, do `make_tests.sh` or use the Makefile task `make test_suite`.
+- to perform a quick run on the test suite, do `make_tests.sh -quick` : this will run only a subset of the tests.
+- to run a dedicated test (for example HLS generation test), do `make_tests.sh scripts/hls-gen.sh
 
 Running the test suite or a given test generates:
 - result/all_logs.txt: logs of all tests that were executed 
@@ -10,9 +16,12 @@ Running the test suite or a given test generates:
 
 The different options of make_tests.sh are given by the command:
 ```
-make_tests.sh -h
+./make_tests.sh -h
 ```
-In particular, tests are cached, so that only failed tests are re-launched when running the test suite. 
+
+It is important to notice that tests are cached, so that only failed tests are re-launched when running the test suite. You can clean the status of the entire test suite by using `./make_tests.sh -clean`, or the status of a given script (for example HLS generation test) by using `./make_tests.sh scripts/hls-gen.sh -clean`.
+
+
 
 # Writing a test
 GPAC test suite is composed of scripts written in the Bash language. Tests are placed in gpac/tests/scripts/. Each .sh file in that folder will be executed when running the entire test suite or may be run individually. To run a particular script, run `make_tests.sh ascript.sh`.
