@@ -2,6 +2,9 @@
 
 #note: the port used is 8080 since the testbot on linux will not allow 80
 
+#increase run time for tests on VM
+HTTP_SERVER_RUNFOR=6000
+
 test_http_server()
 {
 test_begin "http-server"
@@ -129,7 +132,7 @@ test_begin "http-origin"
 if [ $test_skip = 1 ] ; then
  return
 fi
-#make a 3sec
+#make a 3sec input
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=3.4 -new $TEMP_DIR/source.mp4 2> /dev/null
 do_test "$GPAC -i $TEMP_DIR/source.mp4 reframer:rt=on @ -o http://localhost:8080/live.mpd:gpac:rdirs=$TEMP_DIR --sutc --cdur=0.1 --asto=0.9 --dmode=dynamic -logs=http@debug -lu" "http-origin" &
 sleep 0.01
@@ -157,8 +160,8 @@ fi
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac -o http://localhost:8080/file1.mpd:gpac:rdirs=$TEMP_DIR:muxtype=raw:sfile:profile=main" "http-origin"
 do_hash_test $TEMP_DIR/file1.mpd "dash-sfile"
 
-#increase run time for win
-do_test "$GPAC -runfor=6000 httpout:port=8080:rdirs=$TEMP_DIR" "http-server" &
+#increase run time for tests on VM
+do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:rdirs=$TEMP_DIR" "http-server" &
 
 sleep 0.5
 
@@ -186,7 +189,8 @@ fi
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=3.0 -new $TEMP_DIR/source.mp4 2> /dev/null
 $MP4BOX -dash 1000 -profile onDemand -out $TEMP_DIR/file.mpd $TEMP_DIR/source.mp4 2> /dev/null
 
-do_test "$GPAC httpout:port=8080:rdirs=$TEMP_DIR -runfor=5000 -logs=dash:http@debug" "http-server" &
+#increase run time for tests on VM
+do_test "$GPAC httpout:port=8080:rdirs=$TEMP_DIR -runfor=$HTTP_SERVER_RUNFOR -logs=dash:http@debug" "http-server" &
 sleep 0.01
 
 myinspect=$TEMP_DIR/inspect.txt
@@ -206,7 +210,8 @@ fi
 
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac -new $TEMP_DIR/source.mp4 2> /dev/null
 
-do_test "$GPAC  -runfor=5000 httpout:port=8080:wdir=$TEMP_DIR -logs=http@debug" "http-server" &
+#increase run time for tests on VM
+do_test "$GPAC  -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:wdir=$TEMP_DIR -logs=http@debug" "http-server" &
 sleep .1
 
 do_test "$MP4BOX -run-for 3000 -dash-live 1000 -subdur 1000 -profile live $TEMP_DIR/source.mp4 -out http://localhost:8080/live.mpd:hmode=push -logs=http@debug" "dash_push"
@@ -232,7 +237,8 @@ fi
 
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=4 -new $TEMP_DIR/source.mp4 2> /dev/null
 
-do_test "$GPAC  -runfor=5000 httpout:port=8080:wdir=$TEMP_DIR -logs=http@debug" "http-server" &
+#increase run time for tests on VM
+do_test "$GPAC  -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:wdir=$TEMP_DIR -logs=http@debug" "http-server" &
 sleep .1
 
 #we are in test mode which triggers cache=true (no sidx patching), force cache=false to test on the fly patching of sidx
@@ -275,7 +281,8 @@ fi
 tmp_aac=$TEMP_DIR/test.aac
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac reframer @ -o $tmp_aac:dur=2" "make-input"
 
-do_test "$GPAC -runfor=4000 httpout:port=8080:quit:rdirs=$TEMP_DIR:wdir=$TEMP_DIR" "http-server" &
+#increase run time for tests on VM
+do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:quit:rdirs=$TEMP_DIR:wdir=$TEMP_DIR" "http-server" &
 sleep .1
 do_test "$GPAC -i $tmp_aac reframer:rt=on @ -o http://localhost:8080/live.mpd:hmode=push:dmode=dynamic" "dash-push" &
 sleep .1
