@@ -15,9 +15,19 @@ mydst=$TEMP_DIR/extract_\$num\$.$4
 #do_hash_test "$myinspect" "split"
 do_test "$GPAC -i $2 reframer$3 @ -o $mydst $5"  "split"
 
+#multi output file cases
 if [ $6 = 1 ] ; then
 do_hash_test "$TEMP_DIR/extract_1.$4" "split1"
 do_hash_test "$TEMP_DIR/extract_2.$4" "split2"
+
+#mkv case, don't check hash
+elif [ $6 = 2 ] ; then
+
+if [ ! -f "$TEMP_DIR/extract_0.$4" ] ; then
+result="MKV not present"
+fi
+
+#single output file cases
 else
 do_hash_test "$TEMP_DIR/extract_0.$4" "split"
 fi
@@ -29,7 +39,7 @@ test_end
 test_split "raw-single-range-to-mp4" $MEDIA_DIR/auxiliary_files/count_video.cmp ":xs=T00:00:02.500:xe=T00:00:04.500" "mp4" "" 0
 test_split "raw-single-range-to-fmp4" $MEDIA_DIR/auxiliary_files/count_video.cmp ":xs=T00:00:02.500:xe=T00:00:04.500" "mp4" "--store=frag" 0
 test_split "raw-single-range-to-ts" $MEDIA_DIR/auxiliary_files/count_video.cmp ":xs=T00:00:02.500:xe=T00:00:04.500" "ts" "--pcr_init=10000" 0
-test_split "raw-single-range-to-mkv" $MEDIA_DIR/auxiliary_files/count_video.cmp ":xs=T00:00:02.500:xe=T00:00:04.500" "mkv" "" 0
+test_split "raw-single-range-to-mkv" $MEDIA_DIR/auxiliary_files/count_video.cmp ":xs=T00:00:02.500:xe=T00:00:04.500" "mkv" "" 2
 
 test_split "raw-dual-range-to-mp4" $MEDIA_DIR/auxiliary_files/count_video.cmp ":xs=T00:00:02.500,T00:00:08.100:xe=T00:00:04.500,T00:00:09.500" "mp4" "" 0
 
