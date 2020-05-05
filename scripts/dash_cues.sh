@@ -42,6 +42,6 @@ $MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_openGOP_640x360_160kbps
 
 dash_cue_test_file "negctts"
 
-rm $mp4file
+#rm $mp4file
 
 
