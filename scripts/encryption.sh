@@ -35,6 +35,9 @@ fi
 if [ $dump_isma = 1 ] ; then
 ismadump="$TEMP_DIR/isamdump.xml"
 do_test "$MP4BOX -dcr $cryptfile -out $ismadump" "DumpIsma"
+
+hintfile="$TEMP_DIR/$1-crypted_hint.mp4"
+do_test "$MP4BOX -hint $cryptfile -out $hintfile" "HintIsma"
 fi
 
 
