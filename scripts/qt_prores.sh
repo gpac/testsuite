@@ -51,7 +51,7 @@ qt_prores_test ()
  #test -dnal
  dmpfile="$TEMP_DIR/test.xml"
  do_test "$MP4BOX -dnal 1 $1 -out $dmpfile" "ProResInspect"
- do_hash_test $dmpfile "inspect"
+ do_hash_test $dmpfile "inspectDNAL"
 
 
  test_end
