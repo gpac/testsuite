@@ -70,3 +70,7 @@ test_reframer "ogg" $EXTERNAL_MEDIA_DIR/import/dead_ogg.ogg "dead.mp4"
 test_reframer "m2ps" "$EXTERNAL_MEDIA_DIR/import/dead_mpg.mpg -blacklist=ffdmx" "dead.mp4"
 
 test_reframer "flac" $EXTERNAL_MEDIA_DIR/import/enst_audio.flac
+
+test_reframer "ac3" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3 -blacklist=ffdmx" "dump.mp4"
+test_reframer "eac3" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.eac3 -blacklist=ffdmx" "dump.mp4"
+
