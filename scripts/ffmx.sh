@@ -27,7 +27,7 @@ do_hash_test $myinspect "inspect"
 test_end
 }
 
-#check if we have libavfilter support
+#check if we have libavformat support
 ffmx=`$GPAC -h ffmx 2>/dev/null | grep ffmx`
 if [ -n "$ffmx" ] ; then
 
