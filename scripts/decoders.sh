@@ -114,7 +114,7 @@ if [ -n "$vtbdec" ] ; then
 test_decoder "h263-vtb" $EXTERNAL_MEDIA_DIR/import/bear_video.263 "test.yuv" "-blacklist=ffdec" 0
 fi
 
-test_decoder "qcp-ffdec" $EXTERNAL_MEDIA_DIR/import/count_english.qcp "test.pcm" "" 1
+test_decoder "qcp-ffdec" $EXTERNAL_MEDIA_DIR/import/counter_english.qcp "test.pcm" "" 1
 
 test_decoder "m1v-ffdec" $EXTERNAL_MEDIA_DIR/import/dead.m1v "test.yuv" "" 1
 
