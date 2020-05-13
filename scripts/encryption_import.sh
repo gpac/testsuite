@@ -13,6 +13,9 @@ $MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_640x360_192kbp
 
 do_test "$MP4BOX -add $mp4file:dur=20 -new $mp4file_short" "import"
 do_hash_test $mp4file_short "import"
+#test nhml full mode to check packet property dump
+do_test "$MP4BOX -nhml 1:full $mp4file_short" "full-nhml"
+do_hash_test $TEMP_DIR/crypted_short_track1.nhml "full-nhml"
 
 fragfile="$TEMP_DIR/crypted_frag.mp4"
 mp4file_short="$TEMP_DIR/crypted_frag_short.mp4"
