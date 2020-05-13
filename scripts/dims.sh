@@ -16,7 +16,10 @@ do_hash_test $TEMP_DIR/dims_track1.nhml "dims-export"
 #also try dims+compression
 dstfile=$TEMP_DIR/dimz.mp4
 do_test "$MP4BOX -add $MEDIA_DIR/svg/shapes-circle-01-t-compress.dml -new $dstfile" "dimz-import"
-do_hash_test $dstfile "dimz-import"
+#cannot hash due to zlib not producing same results everywhere
+if [ ! -f $dstfile ] ; then
+result="SVGZ import not present"
+fi
 
 #and try playback of compressed dims
 dumpfile=$TEMP_DIR/dump.png
