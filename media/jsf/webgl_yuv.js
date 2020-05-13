@@ -13,21 +13,31 @@ filter.set_help("This filter provides testing of gpac's WebGL bindings");
 filter.set_cap({id: "StreamType", value: "Video", inout: true} );
 filter.set_cap({id: "CodecID", value: "raw", inout: true} );
 
-let use_depth = false;
+filter.set_arg({ name: "depth", desc: "output depth rather than color", type: GF_PROP_BOOL, def: "false"} );
+
 let use_primary = false;
 let width=600;
 let height=400;
 let ipid=null;
 let opid=null;
-let gl = new WebGLContext(width, height, {depth: use_depth?"texture":true, primary: use_primary});
 let nb_frames=0;
 let pix_fmt = '';
 let programInfo = null;
 
-let pck_tx = gl.createTexture('vidTx');
-let img_tx = gl.createTexture('imgTx');
-img_tx.upload(new Texture("../auxiliary_files/logo.png", true));
-pck_tx.pbo = false;
+let gl = null;
+let pck_tx = null;
+let img_tx = null;
+let buffers = null;
+
+filter.initialize = function() {
+
+  gl = new WebGLContext(width, height, {depth: filter.depth ? "texture" : true, primary: use_primary});
+  pck_tx = gl.createTexture('vidTx');
+  img_tx = gl.createTexture('imgTx');
+  img_tx.upload(new Texture("../auxiliary_files/logo.png", true));
+  pck_tx.pbo = false;
+  buffers = initBuffers(gl);
+}
 
 filter.configure_pid = function(pid) {
 
@@ -82,7 +92,7 @@ filter.process = function()
 	gl.activate(false);
 
 	//create packet from webgl framebuffer
-	let opck = opid.new_packet(gl, () => { filter.frame_pending=false; }, use_depth );
+	let opck = opid.new_packet(gl, () => { filter.frame_pending=false; }, filter.depth );
 	this.frame_pending = true;
   opck.copy_props(ipck);
 
@@ -142,8 +152,6 @@ function setupProgram(gl, vsSource, fsSource)
   };
 }
 
-
- const buffers = initBuffers(gl);
 
 
 function initBuffers(gl) {

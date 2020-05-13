@@ -22,7 +22,6 @@ let pid;
 let gl = new WebGLContext(width, height);
 
 filter.initialize = function() {
-print('ok ');
 
 this.set_cap({id: "StreamType", value: "Video", output: true} );
 this.set_cap({id: "CodecID", value: "raw", ouput: true} );
@@ -92,9 +91,14 @@ void main() {
 const fsSource = `
 varying vec2 vTextureCoord;
 uniform sampler2D txSampler;
+uniform int alphaInt;
 void main(void) {
   vec4 col = texture2D(txSampler, vTextureCoord);
-  col.a = 1.0;
+  if (alphaInt==1) {
+      col.a = 0.1;
+  } else {
+      col.a = 1.0;
+  }
   gl_FragColor = col;
 }
 `;
@@ -111,6 +115,7 @@ const programInfo = {
       projectionMatrix: gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
       modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
       txSampler: gl.getUniformLocation(shaderProgram, 'txSampler'),
+      alphaInt: gl.getUniformLocation(shaderProgram, 'alphaInt'),
     },
 };
 
@@ -273,6 +278,8 @@ function drawScene(gl, programInfo, buffers) {
   gl.activeTexture(gl.TEXTURE0);
   gl.bindTexture(gl.TEXTURE_2D, texture);
   gl.uniform1i(programInfo.uniformLocations.txSampler, 0);
+  let alphas = [0];
+  gl.uniform1iv(programInfo.uniformLocations.alphaInt, alphas);
 
   //bind indices and draw
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indices);

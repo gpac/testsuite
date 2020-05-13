@@ -116,6 +116,20 @@ bifs_chunk_test()
  test_end
 }
 
+bifs_isomod_test()
+{
+ test_begin "bifs-isomod"
+
+ if [ $test_skip  = 1 ] ; then
+  return
+ fi
+
+ do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_video.h264 -isma -new $TEMP_DIR/res.mp4" "make-isma"
+ do_test "$MP4BOX -keep-ods -bt $TEMP_DIR/res.mp4" "dump-isma"
+ do_hash_test "$TEMP_DIR/res.bt" "dump-isma"
+
+ test_end
+}
 
 #test BT
 bifs_test $MEDIA_DIR/bifs/bifs-all.bt "bifs-all-bt" 1 0
@@ -130,4 +144,6 @@ bifs_test $MEDIA_DIR/bifs/bifs-all.xmt "bifs-all-xmt" 0 0
 bifs_test $MEDIA_DIR/bifs/bifs-isom.bt "bifs-all-isom" 1 1
 
 bifs_chunk_test
+
+bifs_isomod_test
 

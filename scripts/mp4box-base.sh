@@ -89,6 +89,7 @@ do_test "$MP4BOX -xnode ElevationGrid" "ElevationGrid"
 do_test "$MP4BOX -snodes" "Snodes"
 do_test "$MP4BOX -languages" "Languages"
 do_test "$MP4BOX -boxcov" "Boxes"
+do_test "$MP4BOX -grea" "ArgHelp"
 
 fi
 test_end
