@@ -13,6 +13,19 @@ do_hash_test $TEMP_DIR/dims_track1.nhml "dims-export"
 
 #DIMS hinting is disabled by default in gpac, do not test
 
+#also try dims+compression
+dstfile=$TEMP_DIR/dimz.mp4
+do_test "$MP4BOX -add $MEDIA_DIR/svg/shapes-circle-01-t-compress.dml -new $dstfile" "dimz-import"
+do_hash_test $dstfile "dimz-import"
+
+#and try playback of compressed dims
+dumpfile=$TEMP_DIR/dump.png
+do_test "$GPAC -i $dstfile -o $dumpfile" "dims-export"
+#no hash test, just check the file is here
+if [ ! -f $dumpfile ] ; then
+result="SVG dump not present"
+fi
+
 test_end
 
 
