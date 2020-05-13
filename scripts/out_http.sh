@@ -12,7 +12,7 @@ if [ $test_skip = 1 ] ; then
  return
 fi
 
-do_test "$GPAC httpout:port=8080:quit:rdirs=$MEDIA_DIR" "http-server" &
+do_test "$GPAC httpout:port=8080:quit:reqlog:rdirs=$MEDIA_DIR" "http-server" &
 sleep .1
 
 myinspect=$TEMP_DIR/inspect.txt

@@ -133,6 +133,8 @@ filter.configure_pid = function(pid)
 	filter.notify_failure(GF_OK);
 	filter.send_update(null, 'foo', 'bar', 0);
 	filter.make_sticky();
+	filter.prevent_blocking(false);
+	filter.block_eos(false);
 }
 
 filter.process = function()

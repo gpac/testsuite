@@ -70,5 +70,5 @@ rtsp_test_single "interleave" $MEDIA_DIR/auxiliary_files/enst_audio.aac " --tso=
 
 rtsp_test_server "regular" "rtsp://$IP/enst_audio.aac" " --tso=10000" " " 0
 rtsp_test_server "dynurl" "rtsp://$IP/@enst_audio.aac@enst_video.h264" " --tso=10000 --dynurl" "" 1
-rtsp_test_server "mcast" "rtsp://$IP/enst_audio.aac" " --tso=10000 --mcast=on" " --force_mcast=$MCASTIP " 0
+rtsp_test_server "mcast" "rtsp://$IP/enst_audio.aac" " --tso=10000 --mcast=mirror" " --force_mcast=$MCASTIP " 0
 

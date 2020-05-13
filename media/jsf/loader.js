@@ -32,6 +32,7 @@ filter.initialize = function() {
 			print(GF_LOG_ERROR, "Source setup failure " + e);
 			filter.src_f = null;
 		}
+		this.src_f.reset_source();
 	}
 	if (this.out != null) {
 			print(GF_LOG_ERROR, "output " + typeof this.out);
