@@ -48,6 +48,7 @@ single_test "$GPAC -h mp4mx.alltk" "gpac-mp4mx-opt"
 single_test "$GPAC -hh core" "gpac-hh-core"
 single_test "$GPAC -mkl=test.unk" "gpac-lang-file"
 rm -f test.unk 2> /dev/null
+single_test "$GPAC -h $MEDIA_DIR/jsf/inspect.js" "gpac-jsf-h"
 
 single_test "$GPAC -seps=123456 -p=myprofile -wc -we -wf -wfx -no-save" "gpac-filter-profile-full"
 single_test 'gpac -p=0 -hh mp4mx' "gpac-null-profile"
@@ -146,7 +147,7 @@ test_end
 
 test_begin "gpac-reporting"
 if [ $test_skip != 1 ] ; then
-do_test "$GPAC -i media/auxiliary_files/enst_video.h264 inspect -r -logs=filter@debug" "reports"
+do_test "$GPAC -i media/auxiliary_files/enst_video.h264 inspect -r -logs=filter@debug -dbg-edges" "reports"
 fi
 test_end
 
