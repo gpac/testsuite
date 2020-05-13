@@ -21,6 +21,15 @@ let pid;
 
 let gl = new WebGLContext(width, height);
 
+//for coverage, test FBO and RBO
+let obj = gl.createFramebuffer();
+if (obj)
+    gl.deleteFramebuffer(obj);
+
+obj = gl.createRenderbuffer();
+if (obj)
+    gl.deleteRenderbuffer(obj);
+
 filter.initialize = function() {
 
 this.set_cap({id: "StreamType", value: "Video", output: true} );
