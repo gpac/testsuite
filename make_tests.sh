@@ -1230,7 +1230,7 @@ do_ui_test()
   $MP4CLIENT -run-for $dur -size $dump_size $src -speed $speed -no-save -opt Validator:Mode=Play -opt Validator:Trace=$ui_stream 2>> $ALL_LOGS
   rv=$?
  fi
- #regular error, check if this is a negative test.
+ #regular error, check if this is a negative test
  if [ $rv != 0 ] ; then
   log $L_ERR "Error executing UI test for $FULL_SUBTEST (source file $src - test name $TEST_NAME)"
 #  if [ $strict_mode = 1 ] ; then
