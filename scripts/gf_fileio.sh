@@ -8,8 +8,9 @@ do_hash_test $TEMP_DIR/file.mpd  "mpd"
 do_hash_test $TEMP_DIR/enst_video_dashinit.mp4 "init"
 do_hash_test $TEMP_DIR/enst_video_dash1.m4s  "seg1"
 
+#inspect using a gfio input file and a gfio output log 
 insp=$TEMP_DIR/inspect.txt
-do_test "$GPAC -ib $TEMP_DIR/file.mpd inspect:deep:log=$insp" "fio-read"
+do_test "$GPAC -ib $TEMP_DIR/file.mpd inspect:deep:log=@gfo://$insp" "fio-read"
 do_hash_test $insp  "play"
 
 fi
