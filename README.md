@@ -29,7 +29,7 @@ It is important to notice that tests are cached, so that only failed tests are r
 GPAC test suite is composed of scripts written in the Bash language. Tests are placed in testsuite/scripts/. Each `.sh` file in that folder will be executed when running the entire test suite or may be run individually.
 
 Media files used in a test can be anywhere (local file, http URL).
-- the environmnent variable `$MEDIA_DIR` can be used to access to data located in testsuite/media (located n this repository). 
+- the environmnent variable `$MEDIA_DIR` can be used to access to data located in testsuite/media (located in this repository). 
 - the environmnent variable `$EXTERNAL_MEDIA_DIR` can be used to access to data located in testsuite/external_media (not hosted in this repository). 
 
 Scripts should use the `$TEMP_DIR` environment variable to get a directory where to place the file they generate.
@@ -55,7 +55,7 @@ In order to provide test caching and produce the unified test report for all the
 
 Each test has its own log file `$LOGS` in which you can write (a lot is already in there, such as test name/data and all stderr).
 
-Tests may be customized depending on the platform they run on. the environment variable `$GPAC_OSTYPE` can be used to test the binary version used; the currently defined values are `lin32`, `lin64`, `win32`, `win64`, `osx32`, `osx64` and `unknwon`.
+Tests may be customized depending on the platform they run on. the environment variable `$GPAC_OSTYPE` can be used to test the binary version used; the currently defined values are `lin32`, `lin64`, `win32`, `win64`, `osx32`, `osx64` and `unknown`.
 
 
 ## Simple Testing
@@ -254,8 +254,8 @@ Two arguments:
 - `FILE`: the command line to execute
 - `SUBTEST_NAME`: the subtest name as it appears in the logs and in the stats
 
-Performs UI event trace generation on $FILE for the subtest using MP4Client, for a running duration of $dump_dur and an output size $dump_size (see `begin_test`). 
-UI file is generated as $RULES_DIR/${basename $FILE.*}-$SUBTEST-ui.xml
+Performs UI event trace generation on `$FILE` for the subtest using MP4Client, for a running duration of `$dump_dur` and an output size `$dump_size` (see `begin_test`). 
+UI file is generated as `$RULES_DIR/${basename $FILE.*}-$SUBTEST-ui.xml`.
 
 A typical usage is:
 
