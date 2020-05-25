@@ -65,7 +65,7 @@ DEF_DUMP_SIZE="200x200"
 DEF_TIMEOUT=20
 
 #remote location of resource files: all media files, hash files and generated videos
-REFERENCE_DIR="http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/resources"
+REFERENCE_DIR="https://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/resources"
 #dir where all external media are stored
 EXTERNAL_MEDIA_DIR="$rel_main_dir/external_media"
 #dir where all hashes are stored
