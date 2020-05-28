@@ -20,6 +20,12 @@ mp4="$TEMP_DIR/file_ib.mp4"
 do_test "$GPAC -i $1 -o $mp4:xps_inband=all" "create-ib"
 do_hash_test $mp4 "create-ib"
 
+#test xps inband dashing
+do_test "$GPAC -i $mp4 -o $TEMP_DIR/file.mpd:profile=onDemand" "dash-ib"
+do_hash_test $TEMP_DIR/file.mpd "dash-ib-mpd"
+do_hash_test $TEMP_DIR/file_ib_dashinit.mp4 "dash-ib-seg"
+
+
 #test inspect to make sure we rebuild properly from inband files
 inspect="$TEMP_DIR/inspect.xml"
 do_test "$GPAC -i $mp4 inspect:deep:log=$inspect" "inspect"
