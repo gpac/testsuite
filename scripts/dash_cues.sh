@@ -5,6 +5,9 @@ dash_cue_test()
 {
 
 test_begin $1
+if [ $test_skip  = 1 ] ; then
+return
+fi
 
 do_test "$MP4BOX -dash 1000 -profile live -out $TEMP_DIR/file.mpd $mp4file -cues $2 -strict-cues" "dash"
 

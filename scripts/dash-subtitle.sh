@@ -1,6 +1,9 @@
 #!/bin/sh
 
 test_begin "dash-subt"
+if [ $test_skip  = 1 ] ; then
+return
+fi
 
 do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/subtitle.srt -new $TEMP_DIR/file.mp4" "dash-input-preparation"
 

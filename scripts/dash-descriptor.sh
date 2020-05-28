@@ -1,4 +1,7 @@
 test_begin "dash-descriptor"
+if [ $test_skip  = 1 ] ; then
+return
+fi
 
 do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264:dur=1 -new $TEMP_DIR/file.mp4" "dash-input-preparation"
 

@@ -1,5 +1,9 @@
 test_begin "dash-multiperiod"
 
+if [ $test_skip  = 1 ] ; then
+return
+fi
+
 do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_320x180_128kbps.264:dur=5 -new $TEMP_DIR/counter_video_180.mp4" "multiperiod-input-preparation_180"
 do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:dur=5 -new $TEMP_DIR/counter_audio.mp4" "multiperiod-input-preparation_audio"
 
