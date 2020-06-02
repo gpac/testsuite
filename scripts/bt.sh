@@ -83,6 +83,9 @@ bt_test ()
  #already done in bifs tests
  *all*.bt )
   return ;;
+ #already done in bifs+tx3g tests
+ *bifs_subs.bt )
+  return ;;
  *animationstream.bt )
   return ;;
  *animated-osmo4logo* )

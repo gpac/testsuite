@@ -1,0 +1,91 @@
+InitialObjectDescriptor {
+ objectDescriptorID 1
+ visualProfileLevelIndication 127
+ sceneProfileLevelIndication 1
+ graphicsProfileLevelIndication 1
+ ODProfileLevelIndication 1
+ esDescr [
+  ES_Descriptor {
+   ES_ID 1
+   decConfigDescr DecoderConfigDescriptor {
+    objectTypeIndication 1
+    streamType 3
+    bufferSizeDB 14
+    decSpecificInfo BIFSConfig {
+     nodeIDbits 1
+     isCommandStream true
+     pixelMetric true
+     pixelWidth 128
+     pixelHeight 128
+    }
+   }
+   slConfigDescr SLConfigDescriptor {
+    useAccessUnitStartFlag true
+    useAccessUnitEndFlag true
+    useTimeStampsFlag true
+    timeStampResolution 600
+    timeStampLength 32
+   }
+  }
+  ES_Descriptor {
+   ES_ID 2
+   OCR_ES_ID 1
+   decConfigDescr DecoderConfigDescriptor {
+    objectTypeIndication 1
+    streamType 1
+    bufferSizeDB 84
+   }
+   slConfigDescr SLConfigDescriptor {
+    useAccessUnitStartFlag true
+    useAccessUnitEndFlag true
+    useTimeStampsFlag true
+    timeStampResolution 600
+    timeStampLength 32
+   }
+  }
+ ]
+}
+
+OrderedGroup {
+ children [
+  Shape {
+   appearance Appearance {
+    texture MovieTexture {
+     url [od:20]
+    }
+   }
+   geometry Bitmap {}
+
+  }
+  AnimationStream {
+   url [od:30]
+  }
+ ]
+}
+
+
+RAP AT 0 {
+  UPDATE OD [
+   ObjectDescriptor {
+    objectDescriptorID 20
+    esDescr [
+     ES_Descriptor {
+      muxInfo MuxInfo {
+       fileName "../auxiliary_files/enst_video.h264"
+      }
+     }
+    ]
+   }
+   ObjectDescriptor {
+    objectDescriptorID 30
+    esDescr [
+     ES_Descriptor {
+      muxInfo MuxInfo {
+       fileName "../auxiliary_files/subtitle.srt"
+      }
+     }
+    ]
+   }
+  ]
+}
+
