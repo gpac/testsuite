@@ -44,6 +44,7 @@ test_reframer "mp3" $MEDIA_DIR/auxiliary_files/count_english.mp3
 test_reframer "avc" $MEDIA_DIR/auxiliary_files/enst_video.h264
 
 test_reframer "hevc" $MEDIA_DIR/auxiliary_files/counter.hvc
+test_reframer "hevc-novpsext" $MEDIA_DIR/auxiliary_files/counter.hvc:novpsext "test.hvc"
 
 test_reframer "av1-av1" $MEDIA_DIR/auxiliary_files/video.av1
 
