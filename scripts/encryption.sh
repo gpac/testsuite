@@ -38,8 +38,13 @@ do_test "$MP4BOX -dcr $cryptfile -out $ismadump" "DumpIsma"
 
 hintfile="$TEMP_DIR/$1-crypted_hint.mp4"
 do_test "$MP4BOX -hint $cryptfile -out $hintfile" "HintIsma"
+
+do_test "$MP4BOX -set-kms gpac:uri.isma $cryptfile -out $TEMP_DIR/isma_kms.mp4" "SetKMS"
+
 fi
 
+#do MP4Box -info
+do_test "$MP4BOX -info $cryptfile" "INFO"
 
 #do dash test
 do_test "$MP4BOX -dash 4000 -profile live -out $TEMP_DIR/test.mpd $cryptfile" "DASH"
