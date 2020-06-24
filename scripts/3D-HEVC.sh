@@ -27,4 +27,7 @@ test_begin "add-subsamples-HEVC"
 do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/3D-HEVC/stream_bbb.bit:fmt=HEVC:subsamples -new $TEMP_DIR/test.mp4" "add-subsamples-HEVC"
 do_hash_test $TEMP_DIR/test.mp4 "import"
 
+do_test "$MP4BOX -dash 2000 $TEMP_DIR/test.mp4 -profile onDemand -out  $TEMP_DIR/test.mpd" "dash-subsamples"
+do_hash_test $TEMP_DIR/test_dashinit.mp4 "dash-subsamples"
+
 test_end
