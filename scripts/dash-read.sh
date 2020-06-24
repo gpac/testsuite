@@ -55,3 +55,6 @@ dash_test "live-timeline" "http://vm2.dashif.org/livesim-dev/segtimeline_1/testp
 dash_test "hls" "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8 -broken-cert" 1
 
 dash_test "smooth" "http://amssamples.streaming.mediaservices.windows.net/69fbaeba-8e92-4740-aedc-ce09ae945073/AzurePromo.ism/manifest" 1
+
+#test no bitstream switching mode (reload of init segment at switch), forcing quality switch at each seg
+dash_test "NBS" "http://download.tsi.telecom-paristech.fr/gpac/DASH_CONFORMANCE/TelecomParisTech/mp4-live-1s/mp4-live-1s-mpd-V-NBS.mpd:gpac:auto_switch=1" 1

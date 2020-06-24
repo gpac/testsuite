@@ -28,3 +28,8 @@ if [ $GPAC_OSTYPE != "lin32" ] ; then
 test_http "aac-seek" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/regression_tests/auxiliary_files/enst_audio.aac" ":dur=2.0:start=2"
 fi
 
+# test MP4 with no cache
+test_http "mp4-nocache" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/mp4/counter_video_360.mp4:gpac:cache=none" ""
+
+# test fMP4 with no cache
+test_http "fmp4-nocache" "http://download.tsi.telecom-paristech.fr/gpac/DASH_CONFORMANCE/TelecomParisTech/mp4-onDemand/mp4-onDemand-h264bl_low.mp4:gpac:cache:none" ""

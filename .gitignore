@@ -1,2 +1,5 @@
 external_media/
 results/
+.DS_Store .AppleDouble .LSOverride
+*valid-hash
+
