@@ -46,6 +46,7 @@ do_hash_test $mp4file2 "mx"
 
 do_test "$MP4BOX -cprt supercopyright $mp4file" "cprt"
 do_hash_test $mp4file "cprt"
+do_test "$MP4BOX -info $mp4file" "cprt-info"
 
 mp4file="$TEMP_DIR/testco64.mp4"
 do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_video.h264 -co64 -new $mp4file" "add-co64"

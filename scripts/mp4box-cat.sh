@@ -8,7 +8,7 @@ return
 fi
 
 mp4file="$TEMP_DIR/test-addcat.mp4"
-do_test "$MP4BOX -add $2 -cat $2 -new $mp4file" "addcat"
+do_test "$MP4BOX -bo -add $2 -cat $2 -new $mp4file" "addcat"
 do_hash_test $mp4file "addcat"
 
 if [ $3 != 0 ] ; then

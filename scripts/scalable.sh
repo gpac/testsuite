@@ -20,6 +20,8 @@ $MP4BOX -add $1 -new $mp4file 2> /dev/null
 do_test "$MP4BOX -add "$1:svcmode=split" -new $splitfile" "Split"
 do_hash_test $splitfile "split"
 
+do_test "$MP4BOX -dnal 2 $splitfile" "dnal"
+
 do_test "$MP4BOX -add "$splitfile:svcmode=merge" -new $mergefile" "Merge"
 do_hash_test $mergefile "merge"
 
