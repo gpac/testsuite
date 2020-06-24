@@ -26,6 +26,10 @@ do_hash_test $mp4file "udta-track"
 do_test "$MP4BOX -dump-udta 1:GPAC $mp4file -out $binfile" "udta-track-dump"
 do_hash_test $binfile "udta-track-dump"
 
+mp4file="$TEMP_DIR/udtatrack2.mp4"
+do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/logo.png -udta 1:type=GPAC:box=$TEMP_DIR/udtatrack.mp4 -new $mp4file" "udta-box-track"
+do_hash_test $mp4file "udta-box-track"
+
 test_end
 
 
