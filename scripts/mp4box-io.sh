@@ -44,7 +44,6 @@ fi
 mp4_test ()
 {
  do_hint=1
- do_play=1
  do_hash=1
  do_dnal=0
  do_avi=0
@@ -96,8 +95,6 @@ mp4_test ()
   do_hint=0 ;;
  *.flac )
   do_hint=0 ;;
- *.qcp )
-  do_play=0 ;;
   #mpg, ogg and avi import is broken in master, disable hash until we move to filters
  *.mpg | *.ogg | *.avi)
   do_hash=0 ;;
@@ -109,7 +106,7 @@ mp4_test ()
   do_dnal=1;;
  #no support for hinting or playback yet
  *.ismt )
-  do_hint=0 && do_play=0 ;;
+  do_hint=0 ;;
  *.cmp )
   do_avi=1
  esac
@@ -169,6 +166,10 @@ fi
   do_test "$MP4BOX -avi $mp4file -out $TEMP_DIR/test.avi" "avi-dump"
   do_hash_test $TEMP_DIR/test.avi "avi-dump"
  fi
+
+ #also test the isobmf demuxer
+ do_test "$GPAC -i $mp4file inspect:deep:dur=1:log=$TEMP_DIR/inspect.txt" "mp4-inspect"
+ do_hash_test $TEMP_DIR/inspect.txt "mp4-inspect"
 
  test_end
 }

@@ -46,6 +46,21 @@ do_test "$GPAC -i $rawfile:sr=48000:ch=2 aout:speed=-10:vol=0" "reverse_play"
 
 fi
 
+case $1 in
+"pcm" | "s24" | "s32" | "flt" |"dbl" )
+#test isobmff pcm encapsulation
+do_test "$GPAC -i $rawfile:sr=48000:ch=2 -o $TEMP_DIR/pcm.mp4:ase=v1" "isobmff-write"
+if [ $GPAC_OSTYPE != "lin32" ] ; then
+do_hash_test "$TEMP_DIR/pcm.mp4" "isobmff-write"
+fi
+insfile=$TEMP_DIR/dump_isopcm.txt
+do_test "$GPAC -i $TEMP_DIR/pcm.mp4 inspect:deep:log=$insfile" "isobmff-read"
+do_hash_test "$insfile" "isobmff-read"
+;;
+esac
+
+
+
 test_end
 }
 
