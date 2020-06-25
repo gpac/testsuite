@@ -30,5 +30,6 @@ test_end
 }
 
 test_avimx "compressed" "" 1
+test_avimx "compressed-opendml" "--opendml_size=8000" 1
 #don't hash uncompressed file
 test_avimx "uncompressed" "-blacklist=vtbdec,nvdec reframer:raw @" 0
