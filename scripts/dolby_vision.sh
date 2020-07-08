@@ -10,4 +10,7 @@ do_test "$MP4BOX -dash 2000 $MEDIA_DIR/dolby_vision/dolby_vision_cenc.ismv -out 
 do_hash_test $TEMP_DIR/dolby_vision_cenc_dashinit.mp4 "dash-seg"
 do_hash_test $TEMP_DIR/dolby_vision_cenc_dash.mpd "dash-mpd"
 
+do_test "$MP4BOX -dnal 1 $MEDIA_DIR/dolby_vision/dolby_vision_cenc.ismv -out $TEMP_DIR/dolby_vision_cenc_1_nalu.xml" "dnal"
+do_hash_test $TEMP_DIR/dolby_vision_cenc_1_nalu.xml "cenc-dnal"
+
 test_end
