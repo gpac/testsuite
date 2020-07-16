@@ -1,4 +1,5 @@
 import * as evg from 'evg'
+import { Sys as sys } from 'gpaccore'
 
 /*
 Specify this script to control from JS the session (path can be absolute or relative):
@@ -16,13 +17,10 @@ session.set_rmt_fun( (text)=> {
 
 session.rmt_send("Loaded !");
 
-session.prompt_input();
-session.prompt_string(1);
-
 let i=0;
-for (i=1; i < args.length; i++) {
-	if (args[i].startsWith("-f=") ) {
-		let f = session.add_filter(args[i].substring(3));
+for (i=1; i < sys.args.length; i++) {
+	if (sys.args[i].startsWith("-f=") ) {
+		let f = session.add_filter(sys.args[i].substring(3));
 		f.iname = 'f'+i;
 		continue;
 	}
