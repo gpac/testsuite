@@ -27,7 +27,9 @@ sys.prompt_echo_off(true, true);
 sys.prompt_echo_off(false, true);
 sys.prompt_code(sys.GF_CONSOLE_RED);
 let ts = sys.prompt_size();
-print('window size is ' + ts.w + 'x' + ts.h);
+if (ts) {
+	print('window size is ' + ts.w + 'x' + ts.h);
+}
 sys.prompt_code(sys.GF_CONSOLE_RESET);
 
 sys.error_string(-1);
