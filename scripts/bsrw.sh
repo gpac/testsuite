@@ -17,9 +17,9 @@ test_end
 }
 
 #sar rewrite tests
-test_bsrw "sar-avc" $MEDIA_DIR/auxiliary_files/enst_video.h264 ":sar=16:9"
-test_bsrw "sar-hevc" $MEDIA_DIR/auxiliary_files/counter.hvc ":sar=16:9"
-test_bsrw "sar-m4v" $MEDIA_DIR/auxiliary_files/count_video.cmp ":sar=4:3:m4vpl=90"
+test_bsrw "sar-avc" $MEDIA_DIR/auxiliary_files/enst_video.h264 ":sar=16/9"
+test_bsrw "sar-hevc" $MEDIA_DIR/auxiliary_files/counter.hvc ":sar=16/9"
+test_bsrw "sar-m4v" $MEDIA_DIR/auxiliary_files/count_video.cmp ":sar=4/3:m4vpl=90"
 #AVC profile rewrite tests
 test_bsrw "prof-avc" $MEDIA_DIR/auxiliary_files/enst_video.h264 ":prof=90:pcomp=3:lev=10"
 #AVC and HEVC SEI removal tests
@@ -32,5 +32,5 @@ if [ $EXTERNAL_MEDIA_AVAILABLE = 0 ] ; then
 fi
 
 #SAR rewrite on prores, test clrp/txchar and mxcoef with integer values
-test_bsrw "sar-prores" "$EXTERNAL_MEDIA_DIR/qt_prores/prores422.mov#video" ":sar=16:9:clrp=2:txchar=3:mxcoef=2"
+test_bsrw "sar-prores" "$EXTERNAL_MEDIA_DIR/qt_prores/prores422.mov#video" ":sar=16/9:clrp=2:txchar=3:mxcoef=2"
 
