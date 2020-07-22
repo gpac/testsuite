@@ -9,27 +9,33 @@ if [ $test_skip = 1 ] ; then
  return
 fi
 
+if [ $4 = 1 ] ; then
+tmode="netx"
+else
+tmode="network"
+fi
+
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i $2 inspect:allp:deep:test=network:interleave=false:log=$myinspect$3 -graph -stats"
+do_test "$GPAC -i $2 inspect:allp:deep:test=$tmode:interleave=false:log=$myinspect$3 -graph -stats"
 do_hash_test $myinspect "inspect"
 
 test_end
 
 }
 
-test_http "mp4-simple" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/mp4/counter_video_360.mp4" ""
+test_http "mp4-simple" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/mp4/counter_video_360.mp4" "" 0
 
-test_http "mp4-seek" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/mp4/counter_video_360.mp4" ":dur=2.0:start=10"
+test_http "mp4-seek" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/mp4/counter_video_360.mp4" ":dur=2.0:start=10" 0
 
-test_http "aac-simple" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/regression_tests/auxiliary_files/enst_audio.aac" ""
+test_http "aac-simple" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/regression_tests/auxiliary_files/enst_audio.aac" "" 0
 
 #on linux 32 bit we for now disable the aac seek, since the rounding of (start) and indexes in file gives a slightly different cts
 if [ $GPAC_OSTYPE != "lin32" ] ; then
-test_http "aac-seek" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/regression_tests/auxiliary_files/enst_audio.aac" ":dur=2.0:start=2"
+test_http "aac-seek" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/regression_tests/auxiliary_files/enst_audio.aac" ":dur=2.0:start=2" 0
 fi
 
 # test MP4 with no cache
-test_http "mp4-nocache" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/mp4/counter_video_360.mp4:gpac:cache=none" ""
+test_http "mp4-nocache" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/mp4/counter_video_360.mp4:gpac:cache=none" "" 0
 
 # test fMP4 with no cache
-test_http "fmp4-nocache" "http://download.tsi.telecom-paristech.fr/gpac/DASH_CONFORMANCE/TelecomParisTech/mp4-onDemand/mp4-onDemand-h264bl_low.mp4:gpac:cache=none" ""
+test_http "fmp4-nocache" "http://download.tsi.telecom-paristech.fr/gpac/DASH_CONFORMANCE/TelecomParisTech/mp4-onDemand/mp4-onDemand-h264bl_low.mp4:gpac:cache=none" "" 1
