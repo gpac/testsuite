@@ -1,8 +1,8 @@
 #!/bin/sh
 
-#todo - rewrite this test completely ...
 
 test_begin "hls"
+if [ $test_skip != 1 ] ; then
 
 m3u8file=$EXTERNAL_MEDIA_DIR/hls/index.m3u8
 mpdfile=$EXTERNAL_MEDIA_DIR/hls/file.mpd
@@ -24,4 +24,5 @@ myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i $mpdfile inspect:allp:deep:interleave=false:log=$myinspect -stats -graph" "inspect"
 do_hash_test $myinspect "inspect"
 
+fi
 test_end

@@ -1,6 +1,7 @@
 #!/bin/sh
 
 test_begin "hls-gen-files"
+if [ $test_skip != 1 ] ; then
 
 $MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264 -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac -new $TEMP_DIR/file.mp4 2> /dev/null
 
@@ -21,10 +22,12 @@ myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i $TEMP_DIR/file.m3u8 inspect:deep:interleave=false:dur=2:log=$myinspect" "hls-play"
 do_hash_test "$myinspect" "hls-play"
 
+fi
 test_end
 
 
 test_begin "hls-gen-byteranges"
+if [ $test_skip != 1 ] ; then
 
 $MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264 -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac -new $TEMP_DIR/file.mp4 2> /dev/null
 
@@ -42,5 +45,19 @@ myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i $TEMP_DIR/file.m3u8 inspect:deep:interleave=false:dur=2:log=$myinspect" "hls-play"
 do_hash_test "$myinspect" "hls-play"
 
+fi
+test_end
+
+
+
+
+test_begin "hls-gen-groups"
+if [ $test_skip != 1 ] ; then
+
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264 -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:#Language=fra:#HLSGroup=AudioALT:#Representation=Soustitres -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:#Language=eng:#HLSGroup=AudioALT:#Representation=Subtitles -o $TEMP_DIR/file.m3u8" "hls-groups"
+
+do_hash_test "$TEMP_DIR/file.m3u8" "hls-master"
+
+fi
 test_end
 

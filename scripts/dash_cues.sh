@@ -35,13 +35,13 @@ done
 
 #this set of test has one error when using counter_cues_cts_broken.xml
 mp4file=$TEMP_DIR/file.mp4
-$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_openGOP_640x360_160kbps.264 -new $mp4file 2> 0
+$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_openGOP_640x360_160kbps.264 -new $mp4file 2> /dev/null
 
 dash_cue_test_file "edits"
 
 #this set of test has one error when using counter_cues_cts_broken.xml and one when using counter_cues_cts.xml because we have negctts
 #so cts no longer match
-$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_openGOP_640x360_160kbps.264:negctts -new $mp4file 2> 0
+$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_openGOP_640x360_160kbps.264:negctts -new $mp4file 2> /dev/null
 
 dash_cue_test_file "negctts"
 
