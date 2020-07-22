@@ -32,4 +32,4 @@ fi
 test_http "mp4-nocache" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/mp4/counter_video_360.mp4:gpac:cache=none" ""
 
 # test fMP4 with no cache
-test_http "fmp4-nocache" "http://download.tsi.telecom-paristech.fr/gpac/DASH_CONFORMANCE/TelecomParisTech/mp4-onDemand/mp4-onDemand-h264bl_low.mp4:gpac:cache:none" ""
+test_http "fmp4-nocache" "http://download.tsi.telecom-paristech.fr/gpac/DASH_CONFORMANCE/TelecomParisTech/mp4-onDemand/mp4-onDemand-h264bl_low.mp4:gpac:cache=none" ""
