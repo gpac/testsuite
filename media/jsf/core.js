@@ -6,9 +6,6 @@ import { File as File } from 'gpaccore'
 
 _gpac_log_name="";
 
-if (typeof filter != "undefined") filter.disable();
-else print("this is not a filter");
-
 function bufferToHex(buffer) {
     var s = '', h = '0123456789ABCDEF';
     (new Uint8Array(buffer)).forEach((v) => { s += h[v >> 4] + h[v & 15]; });
