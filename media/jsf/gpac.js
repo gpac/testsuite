@@ -97,7 +97,10 @@ session.post_task( ()=> {
  		f.ipid_props(0, (name, type, val) => { print('ipid prop ' + name + ' type ' + type + ' val ' + val);})
  		print("source for pid is filter " + f.ipid_source(0).name);
  	}
- 	if (f.nb_opid) f.opid_props(0, (name, type, val) => { print('opid prop ' + name + ' type ' + type + ' val ' + val);})
+ 	if (f.nb_opid) {
+ 		f.opid_props(0, (name, type, val) => { print('opid prop ' + name + ' type ' + type + ' val ' + val);})
+ 		print("num dest for pid " + f.opid_sinks(0).length);
+ 	}
 
 	if (!f.nb_opid && !f.nb_ipid) all_connected = false;
 
