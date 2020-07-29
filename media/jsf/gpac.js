@@ -10,12 +10,29 @@ gpac -js=sess.js -rmt [your args]
 */
 print("Hello GPAC !");
 
+let all_filters = [];
+
+
 session.set_rmt_fun( (text)=> {
 	print("rmt says " + text);
 	session.rmt_send("yep !");
 });
 
 session.rmt_send("Loaded !");
+
+session.set_new_filter_fun( (f) => {
+		print("new filter " + f.name);
+		f.iname = "JS"+f.name;
+		all_filters.push(f);
+} ); 
+
+session.set_del_filter_fun( (f) => {
+	print("delete filter " + f.iname);
+	let idx = all_filters.indexOf(f);
+	if (idx>=0)
+		all_filters.splice (idx, 1);
+}); 
+
 
 let i=0;
 for (i=1; i < sys.args.length; i++) {
@@ -48,6 +65,7 @@ session.post_task( ()=> {
  let i;
  for (i=0; i<session.nb_filters; i++) {
  	let f = session.get_filter(i);
+ 	if (f.is_destroyed()) continue;
  	print("# f.name: " + f.name);
  	for(let propertyName in f) {
  		print("f." + propertyName + " : " + f[propertyName]);
