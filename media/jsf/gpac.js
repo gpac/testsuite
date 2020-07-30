@@ -19,6 +19,7 @@ session.set_rmt_fun( (text)=> {
 });
 
 session.rmt_send("Loaded !");
+session.rmt_sampling = false;
 
 session.set_new_filter_fun( (f) => {
 		print("new filter " + f.name);
@@ -32,6 +33,10 @@ session.set_del_filter_fun( (f) => {
 	if (idx>=0)
 		all_filters.splice (idx, 1);
 }); 
+
+session.set_event_fun( (evt) => {
+print("evt " + evt.name);
+});
 
 
 let i=0;
@@ -138,6 +143,11 @@ session.post_task( ()=> {
  	print("will insert after " + f.name);
  	remove_f.remove();
  	f.insert("inspect");
+
+	let f_evt = new FilterEvent(GF_FEVT_USER);
+	f_evt.ui_type = GF_EVENT_SET_CAPTION;
+	f_evt.caption = "removed + insert";
+	session.fire_event(f_evt);
  }
 
 
