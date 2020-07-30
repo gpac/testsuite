@@ -12,6 +12,7 @@ print("Hello GPAC !");
 
 let all_filters = [];
 
+session.reporting(true);
 
 session.set_rmt_fun( (text)=> {
 	print("rmt says " + text);
