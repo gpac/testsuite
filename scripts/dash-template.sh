@@ -10,8 +10,12 @@ fi
 
 do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264 -new $TEMP_DIR/file.mp4" "dash-input-preparation"
 
-#test bandwidth, time and init
+if [ $5 = 1 ] ; then
+do_test "$MP4BOX -dash 1000 -out $TEMP_DIR/file.mpd $2 $TEMP_DIR/file.mp4:id=v1 $TEMP_DIR/file.mp4:id=v2" "$1-dash"
+else
 do_test "$MP4BOX -dash 1000 -out $TEMP_DIR/file.mpd $TEMP_DIR/file.mp4$2" "$1-dash"
+fi
+
 
 do_hash_test $TEMP_DIR/file.mpd "$1-hash-mpd"
 
@@ -28,10 +32,13 @@ test_end
 
 }
 
-base_test "dash-template-bandwidth-time" ":bandwidth=600000 -profile live -segment-name test-\$Bandwidth\$-\$Time%05d\$\$Init=is\$" "test-600000-is.mp4" "test-600000-01000.m4s"
+base_test "dash-template-bandwidth-time" ":bandwidth=600000 -profile live -segment-name test-\$Bandwidth\$-\$Time%05d\$\$Init=is\$" "test-600000-is.mp4" "test-600000-01000.m4s" 0
 
-base_test "dash-template-repid-number" ":id=myrep -profile live -segment-name test-\$RepresentationID\$-\$Number%d\$" "test-myrep-.mp4" "test-myrep-10.m4s"
+base_test "dash-template-repid-number" ":id=myrep -profile live -segment-name test-\$RepresentationID\$-\$Number%d\$" "test-myrep-.mp4" "test-myrep-10.m4s" 0
 
-base_test "dash-template-baseurl-global-path" ":id=myrep -base-url some_dir/ -profile live -segment-name \$Path=some_dir/\$test-\$RepresentationID\$-\$Number%d\$" "some_dir/test-myrep-.mp4" "some_dir/test-myrep-10.m4s"
+base_test "dash-template-baseurl-global-path" ":id=myrep -base-url some_dir/ -profile live -segment-name \$Path=some_dir/\$test-\$RepresentationID\$-\$Number%d\$" "some_dir/test-myrep-.mp4" "some_dir/test-myrep-10.m4s" 0
 
-base_test "dash-template-baseurl-rep-path" ":id=myrep:baseURL=some_dir/ -profile live -segment-name \$Path=some_dir/\$test-\$RepresentationID\$-\$Number%d\$" "some_dir/test-myrep-.mp4" "some_dir/test-myrep-10.m4s"
+base_test "dash-template-baseurl-rep-path" ":id=myrep:baseURL=some_dir/ -profile live -segment-name \$Path=some_dir/\$test-\$RepresentationID\$-\$Number%d\$" "some_dir/test-myrep-.mp4" "some_dir/test-myrep-10.m4s" 0
+
+
+base_test "dash-template-repid-dir-nbs" " -bs-switching no -profile live -segment-name \$RepresentationID\$/\$Number%d\$\$init=i\$" "v2/i.mp4" "v2/10.m4s" 1
