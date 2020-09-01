@@ -18,16 +18,21 @@ do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/count_video.cmp:chapfile=$EXTER
 
 do_hash_test $mp4file "chap-zoom"
 
-do_test "$MP4BOX -dump-chap $mp4file -out $ofile" "dump-zoom"
+do_test "$MP4BOX -dump-chap-zoom $mp4file -out $ofile" "dump-zoom"
 do_hash_test $ofile "dump-zoom"
 
+do_test "$MP4BOX -dump-chap-ogg $mp4file -out $ofile" "dump-ogg"
+do_hash_test $ofile "dump-ogg"
+
+do_test "$MP4BOX -dump-chap $mp4file -out $ofile" "dump-ttxt"
+do_hash_test $ofile "dump-ttxt"
 
 do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/count_video.cmp:chapfile=$EXTERNAL_MEDIA_DIR/chapters/chapters.txt -new $mp4file" "chap-file"
 
 do_hash_test $mp4file "chap-file"
 
 ofile="$TEMP_DIR/chap.txt"
-do_test "$MP4BOX -dump-chap $mp4file -out $ofile" "dump-chap"
+do_test "$MP4BOX -dump-chap-zoom $mp4file -out $ofile" "dump-chap"
 do_hash_test $ofile "dump-chap"
 
 test_end
