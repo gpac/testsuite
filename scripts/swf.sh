@@ -48,5 +48,5 @@ test_swf $i
 first_run=0
 done
 
-rm $MEDIA_DIR/swf/*.mp3 2>1 > /dev/null
-rm $MEDIA_DIR/swf/*.jpg 2>1 > /dev/null
+rm $MEDIA_DIR/swf/*.mp3 2> /dev/null
+rm $MEDIA_DIR/swf/*.jpg 2> /dev/null

@@ -88,3 +88,4 @@ test_end
 test_stdin_isom "prog" "$MEDIA_DIR/auxiliary_files/enst_video.h264" ""
 test_stdin_isom "frag" "$MEDIA_DIR/auxiliary_files/enst_video.h264" ":frag:cdur=1"
 
+rm gpac_pipe 2> /dev/null
