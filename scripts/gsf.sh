@@ -22,7 +22,7 @@ if [ "$1" != "av" ] ; then
 do_hash_test "$dst_file" "gsf-mux"
 fi
 
-do_test "$GPAC -i $dst_file$4 inspect:allp:deep:interleave=false:log=$myinspect -graph" "gsf-demux"
+do_test "$GPAC -strict-error -i $dst_file$4 inspect:allp:deep:interleave=false:log=$myinspect -graph" "gsf-demux"
 do_hash_test $myinspect "gsf-demux"
 
 test_end
@@ -47,3 +47,37 @@ test_gsf "crypted-pattern" "-i $MEDIA_DIR/auxiliary_files/enst_video.h264" ":IV=
 
 #source test filter with all props
 test_gsf "props-check" "-ltf UTSource:gsftest" ":crate=2.0:skp=FPS:sigbo" ""
+
+
+test_gsf_file()
+{
+
+test_begin "gsf-$1"
+
+if [ $test_skip  = 1 ] ; then
+return
+fi
+
+dst_file=$TEMP_DIR/dump.gsf
+
+myinspect=$TEMP_DIR/inspect.txt
+
+do_test "$GPAC $2 gsfmx$3 @ -o $dst_file -graph -logs=container@debug"  "gsf-mux"
+
+#do not hash the mux for AV: gsf mux does not guarantee the order of the stream declaration, nor the packets / stream order. We however hash the demux result
+if [ "$1" != "av" ] ; then
+do_hash_test "$dst_file" "gsf-mux"
+fi
+
+do_test "$GPAC -i $dst_file gsfdmx @ inspect:allp:deep:interleave=false:log=$myinspect$4 -graph" "gsf-demux"
+do_hash_test $myinspect "gsf-demux"
+
+test_end
+
+}
+
+#raw avc file to dash
+test_gsf_file "fileonly" "-i $MEDIA_DIR/auxiliary_files/enst_video.h264" ":dst=manifest.mpd" ":raw"
+
+#raw avc file to dash mixed file+streams
+test_gsf_file "filemixed" "-i $MEDIA_DIR/auxiliary_files/enst_video.h264" ":dst=manifest.mpd:mixed" ":raw"
