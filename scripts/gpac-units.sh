@@ -171,6 +171,12 @@ do_hash_test $TEMP_DIR/insp.txt  "gpac-inspect"
 fi
 test_end
 
+test_begin "gpac-custom-filter"
+if [ test_skip != 1 ] ; then
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 -lcf" "custom"
+fi
+test_end
+
 
 single_test "$GPAC -ltf UTSource:cov UTFilter:cov UTSink:cov" "gpac-filter-dump_props"
 
