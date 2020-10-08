@@ -107,6 +107,12 @@ mp4_test ()
  #no support for hinting or playback yet
  *.ismt )
   do_hint=0 ;;
+ *.mhas )
+  do_hint=0 ;;
+ *.ac3 )
+  do_hint=0 ;;
+ *.eac3 )
+  do_hint=0 ;;
  *.cmp )
   do_avi=1
  esac
@@ -190,6 +196,10 @@ mp4box_tests ()
  done
 
   mp4_test $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3
+
+  mp4_test $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.eac3
+
+  mp4_test $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas
 
 
 }

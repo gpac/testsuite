@@ -75,3 +75,9 @@ test_reframer "flac" $EXTERNAL_MEDIA_DIR/import/enst_audio.flac
 test_reframer "ac3" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3 -blacklist=ffdmx" "dump.mp4"
 test_reframer "eac3" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.eac3 -blacklist=ffdmx" "dump.mp4"
 
+
+test_reframer "mhas-mha1" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas --mpha" "dump.mp4"
+test_reframer "mhas-mhm1" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas" "dump.mp4"
+#test MHAS rewriter
+test_reframer "mha1-to-mhm1" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas --mpha" "dump.mhas"
+
