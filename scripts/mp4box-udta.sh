@@ -30,6 +30,11 @@ mp4file="$TEMP_DIR/udtatrack2.mp4"
 do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/logo.png -udta 1:type=GPAC:box=$TEMP_DIR/udtatrack.mp4 -new $mp4file" "udta-box-track"
 do_hash_test $mp4file "udta-box-track"
 
+
+mp4file="$TEMP_DIR/udtatrackstr.mp4"
+do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac -udta 1:type=name:str=My_Super_Name -new $mp4file" "udta-track-str"
+do_hash_test $mp4file "udta-track-str"
+
 test_end
 
 

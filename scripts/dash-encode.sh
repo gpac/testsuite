@@ -87,9 +87,29 @@ if [ $test_skip = 0 ] ; then
 mp4file=$TEMP_DIR/source.mp4
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_video.h264 -new $mp4file 2> /dev/null
 
-do_test "$MP4BOX -dash 1000 -profile live -out $TEMP_DIR/file.mpd $mp4file:@@enc:c=avc:fintra=1" "dash"
+do_test "$MP4BOX -dash 1000 -profile live -out $TEMP_DIR/file.mpd $mp4file:@enc:c=avc:fintra=1" "dash"
 do_hash_test $TEMP_DIR/file.mpd "mpd"
 do_hash_test $TEMP_DIR/source_dashinit.mp4 "init-seg"
+
+#we don't want to test encoder result so hash the inspect timing, dts only: CTS and SAP might change due to reference frame selection by encoder
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i $TEMP_DIR/file.mpd inspect:allp:interleave=false:fmt=%pn%-%dts%%lf%:log=$myinspect"
+do_hash_test $myinspect "inspect"
+
+fi
+test_end
+
+
+test_begin "dash-encode-mp4box-multi"
+if [ $test_skip = 0 ] ; then
+mp4file=$TEMP_DIR/source.mp4
+$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_video.h264  -add $MEDIA_DIR/auxiliary_files/enst_audio.aac -new $mp4file 2> /dev/null
+
+do_test "$MP4BOX -dash 1000 -profile live -out $TEMP_DIR/file.mpd $mp4file#video:@ffsws:osize=64x64@enc:c=avc:fintra=1:b=100k@@ffsws:osize=128x128@enc:c=avc:fintra=1:b=200k $mp4file#audio -fgraph" "dash"
+do_hash_test $TEMP_DIR/file.mpd "mpd"
+do_hash_test $TEMP_DIR/source_dash_track1_init_rep1.mp4 "init-seg-vid-rep1"
+do_hash_test $TEMP_DIR/source_dash_track1_init_rep2.mp4 "init-seg-vid-rep2"
+do_hash_test $TEMP_DIR/source_dash_track2_init.mp4 "init-seg-aud"
 
 #we don't want to test encoder result so hash the inspect timing, dts only: CTS and SAP might change due to reference frame selection by encoder
 myinspect=$TEMP_DIR/inspect.txt
