@@ -50,7 +50,7 @@ def my_exec(self):
 		stats = f.get_statistics()
 		print('#'+str(i+1)+ ': ' + f.name + ' nb_ipid: ' + str(f.nb_ipid) + ' nb_opid: ' + str(f.nb_opid) + ' nb tasks: ' + str(stats.nb_tasks_done) );
 		if (stats.status != None):
-			print('  status: ' + str(stats.status, 'utf-8') )
+			print('  status: ' + stats.status.decode('utf-8') )
 		if (f.nb_ipid):
 			print('Enumerating input pid props: ')
 			f.ipid_enum_props(0, self)
