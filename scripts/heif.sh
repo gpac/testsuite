@@ -8,6 +8,7 @@ heif_file="$TEMP_DIR/file.heic"
 do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/counter.hvc:hdlr=pict:@@reframer:saps=1 -ab heic -new $heif_file" "create-heif"
 
 do_hash_test $heif_file "create-heif"
+
 fi
 
 
@@ -30,6 +31,10 @@ do_test "$GPAC -i $heif_file -o $TEMP_DIR/item_\$ItemID\$.hvc:clone" "dump-heif-
 
 do_hash_test $TEMP_DIR/item_1.hvc "dump-item1"
 do_hash_test $TEMP_DIR/item_10.hvc "dump-item10"
+
+dump_file="$TEMP_DIR/dump.hvc"
+do_test "$MP4BOX -dump-item 1:path=$dump_file $heif_file" "dump-mp4box"
+do_hash_test $dump_file "dump-mp4box"
 
 
 # -let's have some fun and extract the items as track (we don't transcode here, to do so use .png or .jpg extensions)
