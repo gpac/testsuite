@@ -1,13 +1,13 @@
 
 pyth=""
-if [ -x "$(command -v python)" ]; then
-pyth="python"
-elif [ -x "$(command -v Python)" ]; then
-pyth="Python"
-elif [ -x "$(command -v python3)" ]; then
+if [ -x "$(command -v python3)" ]; then
 pyth="python3"
 elif [ -x "$(command -v Python3)" ]; then
 pyth="Python3"
+elif [ -x "$(command -v python)" ]; then
+pyth="python"
+elif [ -x "$(command -v Python)" ]; then
+pyth="Python"
 fi
 
 if [ -z $pyth ] ; then
@@ -47,6 +47,9 @@ cur_path=`pwd`
 cd $rel_main_dir
 cd ..
 path=`pwd`
+if [[ $(uname -s) == "CYGWIN_NT"* ]] && [ -x "$(command -v cygpath)" ]; then
+	path="$(cygpath -m $path)"
+fi
 cd $cur_path
 
 #test all bifs
