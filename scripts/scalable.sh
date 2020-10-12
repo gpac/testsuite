@@ -36,7 +36,7 @@ fi
 
 #decode and dump 2 frames
 case $1 in
-*sxc*)
+*svc*)
  do_test "$GPAC -blacklist=nvdec,vtbdec,ffdec,ohevcdec -i $splitfile -o $splitdump:sstart=8:send=9" "decode"
  #commented for now, issue in the decoder
  #do_hash_test "$splitdump" "decode"
