@@ -38,7 +38,7 @@ test_end
 #test JSFilter as loader of filters, using a sink destination and a sink filter
 test_begin "jsf-load-dest"
 if [ $test_skip != 1 ] ; then
-do_test "$GPAC $MEDIA_DIR/jsf/loader.js:in=$MEDIA_DIR/auxiliary_files/enst_video.h264:out=$TEMP_DIR/dump.264:f=inspect" "jsf-load-dest"
+do_test "$GPAC $MEDIA_DIR/jsf/loader.js:in=$MEDIA_DIR/auxiliary_files/enst_video.h264:out=$TEMP_DIR/dump.264::f=inspect:allp" "jsf-load-dest"
 do_hash_test $TEMP_DIR/dump.264 "jsf-load-dest"
 fi
 test_end

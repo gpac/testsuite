@@ -19,7 +19,7 @@ do_test "$GPAC -i $iff_file inspect:log=$myinspect" "single-item"
 do_hash_test $myinspect "single-item"
 
 myinspect=$TEMP_DIR/inspect2.txt
-do_test "$GPAC -i $iff_file:itt inspect:log=$myinspect" "single-pid"
+do_test "$GPAC -i $iff_file:itt inspect:allp:log=$myinspect" "single-pid"
 do_hash_test $myinspect "single-pid"
 
 
