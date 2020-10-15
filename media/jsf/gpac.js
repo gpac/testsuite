@@ -36,7 +36,8 @@ session.set_del_filter_fun( (f) => {
 }); 
 
 session.set_event_fun( (evt) => {
-print("evt " + evt.name);
+	if (evt.type != GF_FEVT_USER) return 0;
+	print("evt " + evt.name);
 });
 
 
