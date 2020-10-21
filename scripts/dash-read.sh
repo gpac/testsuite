@@ -55,6 +55,9 @@ dash_test "live-timeline" "https://livesim.dashif.org/livesim/segtimeline_1/test
 dash_test "hls" "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8 -broken-cert" 1
 
 dash_test "smooth" "http://amssamples.streaming.mediaservices.windows.net/69fbaeba-8e92-4740-aedc-ce09ae945073/AzurePromo.ism/manifest" 1
+#VOD test seq without tfxd
+dash_test "smooth-no-tfxd" "https://test.playready.microsoft.com/smoothstreaming/SSWSS720H264/SuperSpeedway_720.ism/manifest -broken-cert" 1
+
 
 #test no bitstream switching mode (reload of init segment at switch), forcing quality switch at each seg
 dash_test "NBS" "http://download.tsi.telecom-paristech.fr/gpac/DASH_CONFORMANCE/TelecomParisTech/mp4-live-1s/mp4-live-1s-mpd-V-NBS.mpd:gpac:auto_switch=1" 1

@@ -30,22 +30,6 @@ test_end
 
 }
 
-smooth_play_test()
-{
-test_begin "smooth-play-$1"
- if [ $test_skip  = 1 ] ; then
-  return
- fi
-
-logs=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i $2 inspect:deep:interleave=false:test=network:log=$logs" "run"
-do_hash_test $logs "hash"
-
-test_end
-}
-
-smooth_play_test "vod" "http://amssamples.streaming.mediaservices.windows.net/69fbaeba-8e92-4740-aedc-ce09ae945073/AzurePromo.ism/manifest"
-
 
 if [ $EXTERNAL_MEDIA_AVAILABLE = 0 ] ; then
  return
