@@ -116,3 +116,6 @@ single_test "$GPAC -js=$MEDIA_DIR/jsf/gpac.js -xopt -f=inspect -f=src=$MEDIA_DIR
 
 # GPAC JS controler API with custom filter
 single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 -js=$MEDIA_DIR/jsf/gpac_custom_filter.js" "jsf-GPACJS-Custom"
+
+# GPAC JS controler API with custom DASH algo
+single_test "$GPAC -js=$MEDIA_DIR/jsf/custom_dash_bind.js" "jsf-DASH-custom"
