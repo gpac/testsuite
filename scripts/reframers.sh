@@ -81,3 +81,6 @@ test_reframer "mhas-mhm1" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas" "
 #test MHAS rewriter
 test_reframer "mha1-to-mhm1" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas --mpha" "dump.mhas"
 
+
+test_reframer "usac" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.usac" "dump.mp4"
+

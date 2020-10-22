@@ -201,6 +201,8 @@ mp4box_tests ()
 
   mp4_test $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas
 
+  mp4_test $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.usac
+
 
 }
 
