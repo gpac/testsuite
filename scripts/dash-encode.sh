@@ -52,7 +52,7 @@ do_hash_test $TEMP_DIR/enst_video_dashinit_rep2.mp4 "init-v2"
 
 #we don't want to test encoder result so hash the inspect timing, dts only: CTS and SAP might change due to reference frame selection by encoder
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i $TEMP_DIR/file.mpd inspect:allp:interleave=false:fmt=%pn%-%dts%%lf%:log=$myinspect"
+do_test "$GPAC -i $TEMP_DIR/file.mpd  --auto_switch=1 inspect:allp:interleave=false:fmt=%pn%-%dts%%lf%:log=$myinspect"
 do_hash_test $myinspect "inspect"
 
 fi
@@ -75,7 +75,7 @@ do_hash_test $TEMP_DIR/count_english_dashinit.mp4 "init-a"
 
 #we don't want to test encoder result so hash the inspect timing, dts only: CTS and SAP might change due to reference frame selection by encoder
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i $TEMP_DIR/file.mpd inspect:allp:interleave=false:fmt=%pn%-%dts%%lf%:log=$myinspect"
+do_test "$GPAC -i $TEMP_DIR/file.mpd --auto_switch=1 inspect:allp:interleave=false:fmt=%pn%-%dts%%lf%:log=$myinspect"
 do_hash_test $myinspect "inspect"
 
 fi
