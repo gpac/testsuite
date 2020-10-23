@@ -53,6 +53,12 @@ single_test "$GPAC -h $MEDIA_DIR/jsf/inspect.js" "gpac-jsf-h"
 single_test "$GPAC -seps=123456 -p=myprofile -wc -we -wf -wfx -no-save" "gpac-filter-profile-full"
 single_test 'gpac -p=0 -hh mp4mx' "gpac-null-profile"
 
+single_test "$GPAC -h colors" "gpac-colors"
+single_test "$GPAC -hx colr" "gpac-h-description"
+single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/logo.png --colr" "gpac-suggestarg"
+
+
+
 test_begin "gpac-link-dir"
 if [ $test_skip != 1 ] ; then
 do_test "$GPAC  -k -i $MEDIA_DIR/auxiliary_files/logo.jpg @0 inspect:log=$TEMP_DIR/insp.txt @1 -o $TEMP_DIR/test.jpg -stats -graph -runfor=500" "gpac-exec"
@@ -176,6 +182,7 @@ if [ test_skip != 1 ] ; then
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 -lcf" "custom"
 fi
 test_end
+
 
 
 single_test "$GPAC -ltf UTSource:cov UTFilter:cov UTSink:cov" "gpac-filter-dump_props"

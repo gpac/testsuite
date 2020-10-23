@@ -93,6 +93,7 @@ do_test "$MP4BOX -snodes" "Snodes"
 do_test "$MP4BOX -languages" "Languages"
 do_test "$MP4BOX -boxcov" "Boxes"
 do_test "$MP4BOX -grea" "ArgHelp"
+do_test "$MP4BOX -hx grea" "ArgHelpDesc"
 
 fi
 test_end
