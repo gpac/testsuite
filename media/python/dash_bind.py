@@ -27,8 +27,8 @@ if logs:
 #gpac.set_args(sys.argv)
 
 class MyCustomDASHAlgo:
-	def on_period_reset(self):
-		print('period reset')
+	def on_period_reset(self, type):
+		print('period reset type ' + str(type))
 
 	def on_new_group(self, group):
 		print('new group ' + str(group.idx) + ' qualities ' + str(len(group.qualities)) + ' codec ' + group.qualities[0].codec);
@@ -37,6 +37,11 @@ class MyCustomDASHAlgo:
 		print('We are adapting on group ' + str(group.idx) )
 		print('' + str(stats))
 		return 0
+
+	def on_download_monitor(self, group, stats):
+		print('download monitor group ' + str(group.idx) + ' stats ' + str(stats) );
+		return -1
+
 
 mydash = MyCustomDASHAlgo()
 

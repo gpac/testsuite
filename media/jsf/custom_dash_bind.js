@@ -42,12 +42,18 @@ dashin.new_group = function (group)
 	this.groups.push(group);
 }
 
-dashin.period_reset = function ()
+dashin.period_reset = function (type)
 {
-	print("Period reset !");
-	this.groups = [];
+	print("Period reset type " + type);
+	if (!type)
+		this.groups = [];
 }
 
+dashin.download_monitor = function (group_idx, stats)
+{
+	print("Group " + group_idx + " download stats: " + JSON.stringify(stats));
+	return -1;
+}
 
 session.add_filter("src=https://download.tsi.telecom-paristech.fr/gpac/DASH_CONFORMANCE/TelecomParisTech/mp4-live-1s/mp4-live-1s-mpd-AV-BS.mpd");
 
