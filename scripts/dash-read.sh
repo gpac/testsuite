@@ -15,7 +15,7 @@ return
 fi
 
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i $2 $inspectfilter:dur=$dur:start=$start:log=$myinspect" "read"
+do_test "$GPAC -i $2 $inspectfilter:dur=$dur:start=$start:buffer=10000:log=$myinspect" "read"
 
 if [ $3 != 0 ] ; then
 do_hash_test $myinspect "read"
