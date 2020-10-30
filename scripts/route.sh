@@ -89,7 +89,49 @@ test_end
 }
 
 
+atsc_dashing ()
+{
+
+test_begin "route_atsc_dashing"
+if [ $test_skip = 1 ] ; then
+return
+fi
+
+#start receiver
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i atsc://:nbcached=1 $inspectfilter:dur=1:log=$myinspect -logs=route@debug" "receive" &
+
+#start sender, dash only 4s in dynamic MPD mode
+src=$MEDIA_DIR/auxiliary_files/counter.hvc
+do_test "$GPAC -i $src:#ClampDur=6 dasher:profile=live:dmode=dynamic @ -o atsc://" "send"
+
+test_end
+}
+
+atsc_dashing_rec ()
+{
+
+test_begin "route_atsc_dashing_rec"
+if [ $test_skip = 1 ] ; then
+return
+fi
+
+#start receiver
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -r -i atsc://:odir=$TEMP_DIR:max_segs=4:tsidbg=10" "receive" &
+
+#start sender, dash only 4s in dynamic MPD mode
+src=$MEDIA_DIR/auxiliary_files/counter.hvc
+do_test "$GPAC -i $src:#ClampDur=6 dasher:profile=live:dmode=dynamic @ -o atsc://" "send"
+
+test_end
+}
+
+
 route_dashing
 route_dash_filemode
 route_dash_ll
 route_dash_ll_filemode
+atsc_dashing
+atsc_dashing_rec
+
