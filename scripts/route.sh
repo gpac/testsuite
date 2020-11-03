@@ -128,10 +128,33 @@ test_end
 }
 
 
+route_dash_ll_filemode_push ()
+{
+
+test_begin "route_dash_ll_filemode_push"
+if [ $test_skip = 1 ] ; then
+return
+fi
+
+#start sender from akamai LL
+src=https://akamaibroadcasteruseast.akamaized.net/cmaf/live/657078/akasource/out.mpd
+do_test "$GPAC -i $src dashin:filemode @ -o route://225.1.1.0:6000/:llmode:runfor=10000 -logs=route@info" "send" &
+
+#start HTTP server
+do_test "$GPAC httpout:port=8080:rdirs=$TEMP_DIR:wdir=$TEMP_DIR:reqlog=PUT -runfor=8000" "server" &
+
+#start receiver: get route MPD, open in filemode and push files to server using PUT
+do_test "$GPAC -i route://225.1.1.0:6000 dashin:filemode @ -o http://127.0.0.1:8080/live.mpd --hmode=push -runfor=6000 -logs=route:dash@info" "receive"
+
+test_end
+}
+
+
 route_dashing
 route_dash_filemode
 route_dash_ll
 route_dash_ll_filemode
 atsc_dashing
 atsc_dashing_rec
+route_dash_ll_filemode_push
 
