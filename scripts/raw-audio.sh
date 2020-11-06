@@ -54,7 +54,8 @@ if [ $GPAC_OSTYPE != "lin32" ] ; then
 do_hash_test "$TEMP_DIR/pcm.mp4" "isobmff-write"
 fi
 insfile=$TEMP_DIR/dump_isopcm.txt
-do_test "$GPAC -i $TEMP_DIR/pcm.mp4 inspect:deep:log=$insfile" "isobmff-read"
+#disable crc test for lin32, only check isom structure
+do_test "$GPAC -i $TEMP_DIR/pcm.mp4 inspect:deep:log=$insfile:test=nocrc" "isobmff-read"
 do_hash_test "$insfile" "isobmff-read"
 ;;
 esac
