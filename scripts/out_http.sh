@@ -282,7 +282,7 @@ tmp_aac=$TEMP_DIR/test.aac
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac reframer @ -o $tmp_aac:dur=2" "make-input"
 
 #increase run time for tests on VM
-do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:quit:rdirs=$TEMP_DIR:wdir=$TEMP_DIR" "http-server" &
+do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:rdirs=$TEMP_DIR:wdir=$TEMP_DIR" "http-server" &
 sleep .1
 do_test "$GPAC -i $tmp_aac reframer:rt=on @ -o http://localhost:8080/live.mpd:hmode=push:dmode=dynamic" "dash-push" &
 sleep .1
