@@ -64,8 +64,8 @@ myinspect=$TEMP_DIR/inspect.txt
 
 do_test "$GPAC $2 gsfmx$3 @ -o $dst_file -graph -logs=container@debug"  "gsf-mux"
 
-#do not hash the mux for AV: gsf mux does not guarantee the order of the stream declaration, nor the packets / stream order. We however hash the demux result
-if [ "$1" != "av" ] ; then
+#rounding diff on linux for packet durations (expressed in ms), do not hash
+if [ $GPAC_OSTYPE != "lin32" ] ; then
 do_hash_test "$dst_file" "gsf-mux"
 fi
 
