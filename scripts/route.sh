@@ -99,7 +99,7 @@ fi
 
 #start receiver
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i atsc://:nbcached=1 $inspectfilter:dur=1:log=$myinspect -logs=route@debug" "receive" &
+do_test "$GPAC -i atsc://:nbcached=3 $inspectfilter:dur=1:log=$myinspect -logs=route@debug" "receive" &
 
 #start sender, dash only 4s in dynamic MPD mode
 src=$MEDIA_DIR/auxiliary_files/counter.hvc
