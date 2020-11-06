@@ -47,6 +47,7 @@ mp4_test ()
  do_hash=1
  do_dnal=0
  do_avi=0
+ no_btrt=0
 
  #ignore xlst & others, no hinting for images
  case $1 in
@@ -95,6 +96,10 @@ mp4_test ()
   do_hint=0 ;;
  *.flac )
   do_hint=0 ;;
+
+ *109.avi )
+  do_hash=0
+  no_btrt=1 ;;
   #mpg, ogg and avi import is broken in master, disable hash until we move to filters
  *.mpg | *.ogg | *.avi)
   do_hash=0 ;;
@@ -114,7 +119,9 @@ mp4_test ()
  *.eac3 )
   do_hint=0 ;;
  *.cmp )
-  do_avi=1
+  do_avi=1 ;;
+ *.amr )
+  no_btrt=1 ;;
  esac
 
  name=$(basename $1)
@@ -174,7 +181,12 @@ fi
  fi
 
  #also test the isobmf demuxer
- do_test "$GPAC -i $mp4file inspect:deep:dur=1:log=$TEMP_DIR/inspect.txt" "mp4-inspect"
+ insopts=""
+ if [ $no_btrt != 0 ] ; then
+ insopts=":nobr"
+ fi
+
+ do_test "$GPAC -i $mp4file inspect$insopts:deep:dur=1:log=$TEMP_DIR/inspect.txt" "mp4-inspect"
  do_hash_test $TEMP_DIR/inspect.txt "mp4-inspect"
 
  test_end
