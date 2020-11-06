@@ -66,9 +66,10 @@ testarg1="$testarg hevcmerge @ -o $TEMP_DIR/merge_all_low.hvc -graph"
 do_test "$testarg1" "merge-all-low"
 do_hash_test "$TEMP_DIR/merge_all_low.hvc" "merge-all-low"
 
-testarg2="$testarg hevcmerge @ inspect:test=network:allp:deep:interleave=false:log=$myinspect -graph"
-do_test "$testarg2" "merge-all-low-inspect"
-do_hash_test $myinspect "merge-all-low-inspect"
+#test commented - the above hash is enough to test the merger, and we have no guarantee of PID order at input of hevcmerge which changes the name of the output PID !
+#testarg2="$testarg hevcmerge @ inspect:test=network:allp:deep:interleave=false:log=$myinspect -graph"
+#do_test "$testarg2" "merge-all-low-inspect"
+#do_hash_test $myinspect "merge-all-low-inspect"
 
 test_end
 
