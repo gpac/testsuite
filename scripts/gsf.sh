@@ -70,7 +70,11 @@ do_hash_test "$dst_file" "gsf-mux"
 fi
 
 do_test "$GPAC -i $dst_file gsfdmx @ inspect:allp:deep:interleave=false:log=$myinspect$4 -graph" "gsf-demux"
+
+#rounding diff on linux for packet durations (expressed in ms), do not hash
+if [ $GPAC_OSTYPE != "lin32" ] ; then
 do_hash_test $myinspect "gsf-demux"
+fi
 
 test_end
 
