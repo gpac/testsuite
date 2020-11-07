@@ -144,7 +144,7 @@ do_test "$GPAC -i $src dashin:filemode @ -o route://225.1.1.0:6000/:llmode:runfo
 do_test "$GPAC httpout:port=8080:rdirs=$TEMP_DIR:wdir=$TEMP_DIR:reqlog=PUT -runfor=8000 -req-timeout=10000" "server" &
 
 #start receiver: get route MPD, open in filemode and push files to server using PUT
-do_test "$GPAC -i route://225.1.1.0:6000 dashin:filemode @ -o http://127.0.0.1:8080/live.mpd --hmode=push -runfor=6000 -logs=route:dash@info" "receive"
+do_test "$GPAC -i route://225.1.1.0:6000 dashin:filemode @ -o http://127.0.0.1:8080/live.mpd --hmode=push -runfor=6000 -req-timeout=2000 -logs=route:dash@info" "receive"
 
 wait
 
