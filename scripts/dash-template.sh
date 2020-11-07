@@ -41,4 +41,4 @@ base_test "dash-template-baseurl-global-path" ":id=myrep -base-url some_dir/ -pr
 base_test "dash-template-baseurl-rep-path" ":id=myrep:baseURL=some_dir/ -profile live -segment-name \$Path=some_dir/\$test-\$RepresentationID\$-\$Number%d\$" "some_dir/test-myrep-.mp4" "some_dir/test-myrep-10.m4s" 0
 
 
-base_test "dash-template-repid-dir-nbs" " -bs-switching no -profile live -segment-name \$RepresentationID\$/\$Number%d\$\$init=i\$" "v2/i.mp4" "v2/10.m4s" 1
+base_test "dash-template-repid-dir-nbs" " -bs-switching no -profile live -segment-name \$RepresentationID\$/\$Number%d\$\$Init=i\$" "v2/i.mp4" "v2/10.m4s" 1
