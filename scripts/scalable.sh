@@ -37,10 +37,15 @@ fi
 #decode and dump 2 frames
 case $1 in
 *svc*)
- do_test "$GPAC -blacklist=nvdec,vtbdec,ffdec,ohevcdec -i $splitfile -o $splitdump:sstart=8:send=9" "decode"
- #commented for now, issue in the decoder
- #do_hash_test "$splitdump" "decode"
- do_play_test "split" "$splitdump:size=704x576";;
+#openSVC broken on win32
+ if [ $GPAC_OSTYPE != "win32" ] ; then
+  do_test "$GPAC -blacklist=nvdec,vtbdec,ffdec,ohevcdec -i $splitfile -o $splitdump:sstart=8:send=9" "decode"
+  #commented for now, issue in the decoder
+  #do_hash_test "$splitdump" "decode"
+  do_play_test "split" "$splitdump:size=704x576"
+ fi
+ ;;
+ 
 *shvc*)
  do_test "$GPAC -blacklist=nvdec,vtbdec,ffdec -i $splitfile -o $splitdump:sstart=8:send=9" "decode"
  do_hash_test "$splitdump" "decode"
