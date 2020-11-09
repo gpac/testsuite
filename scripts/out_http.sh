@@ -13,7 +13,8 @@ if [ $test_skip = 1 ] ; then
 fi
 
 do_test "$GPAC httpout:port=8080:quit:reqlog:rdirs=$MEDIA_DIR" "http-server" &
-sleep .1
+#sleep half a sec to make sure the server is up and running
+sleep .5
 
 myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i http://localhost:8080/auxiliary_files/enst_audio.aac inspect:allp:deep:test=network:interleave=false:log=$myinspect$3 -graph -stats" "client-inspect"
@@ -35,7 +36,8 @@ mkdir $TEMP_DIR/mydir
 touch $TEMP_DIR/mydir/other.txt
 
 do_test "$GPAC httpout:port=8080:quit:dlist:rdirs=$TEMP_DIR" "http-server-dlist" &
-sleep .1
+#sleep half a sec to make sure the server is up and running
+sleep .5
 
 do_test "$MP4BOX -wget http://localhost:8080/ $TEMP_DIR/listing.txt" "mp4box-get"
 found=`grep file.txt $TEMP_DIR/listing.txt`
@@ -48,7 +50,7 @@ if [ "$found" = "" ] ; then
 fi
 
 do_test "$GPAC httpout:port=8080:quit:dlist:rdirs=$TEMP_DIR" "http-server-dlist" &
-sleep .1
+sleep .5
 
 do_test "$MP4BOX -wget http://localhost:8080/mydir/ $TEMP_DIR/listing2.txt" "mp4box-get2"
 found=`grep other.txt $TEMP_DIR/listing2.txt`
@@ -68,7 +70,8 @@ if [ $test_skip = 1 ] ; then
 fi
 
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac -o http://localhost:8080/live.aac:gpac:hold" "http-sink" &
-sleep .1
+#sleep half a sec to make sure the server is up and running
+sleep .5
 
 myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i http://localhost:8080/live.aac inspect:allp:deep:test=network:interleave=false:log=$myinspect$3 -logs=http@debug" "client-inspect"
@@ -88,7 +91,8 @@ if [ $test_skip = 1 ] ; then
 fi
 
 do_test "$GPAC httpout:port=8080:quit:wdir=$TEMP_DIR" "http-server-rec" &
-sleep .1
+#sleep half a sec to make sure the server is up and running
+sleep .5
 
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac -o http://localhost:8080/mydir/test.aac:gpac:hmode=push" "http-push"
 
@@ -111,7 +115,8 @@ if [ $test_skip = 1 ] ; then
 fi
 
 do_test "$GPAC httpout:port=8080:quit:hmode=source -o $TEMP_DIR/mydir/test.aac" "http-source" &
-sleep .1
+#sleep half a sec to make sure the server is up and running
+sleep .5
 
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac -o http://localhost:8080/test.aac:gpac:hmode=push" "http-push"
 
@@ -135,7 +140,8 @@ fi
 #make a 3sec input
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=3.4 -new $TEMP_DIR/source.mp4 2> /dev/null
 do_test "$GPAC -i $TEMP_DIR/source.mp4 reframer:rt=on @ -o http://localhost:8080/live.mpd:gpac:rdirs=$TEMP_DIR --sutc --cdur=0.1 --asto=0.9 --dmode=dynamic -logs=http@debug -lu" "http-origin" &
-sleep 0.01
+#sleep to make sure the server is running, but not too long to make sure the client tunes on live edge at first set (otherwise hash will fail)
+sleep 0.25
 
 #inspect the first segment we get
 myinspect=$TEMP_DIR/inspect.txt
@@ -163,6 +169,7 @@ do_hash_test $TEMP_DIR/file1.mpd "dash-sfile"
 #increase run time for tests on VM
 do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:rdirs=$TEMP_DIR" "http-server" &
 
+#sleep half a sec to make sure the server is up and running
 sleep 0.5
 
 myinspect=$TEMP_DIR/inspect.txt
@@ -191,7 +198,8 @@ $MP4BOX -dash 1000 -profile onDemand -out $TEMP_DIR/file.mpd $TEMP_DIR/source.mp
 
 #increase run time for tests on VM
 do_test "$GPAC httpout:port=8080:rdirs=$TEMP_DIR -runfor=$HTTP_SERVER_RUNFOR -logs=dash:http@debug" "http-server" &
-sleep 0.01
+#sleep half a sec to make sure the server is up and running
+sleep 0.5
 
 myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i http://localhost:8080/file.mpd inspect:allp:deep:test=network:interleave=false:log=$myinspect -logs=dash:http@debug -lu" "dash-read"
@@ -212,7 +220,8 @@ $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac -new $TEMP_DIR/source.mp4
 
 #increase run time for tests on VM
 do_test "$GPAC  -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:wdir=$TEMP_DIR -logs=http@debug" "http-server" &
-sleep .1
+#sleep half a sec to make sure the server is up and running
+sleep .5
 
 do_test "$MP4BOX -run-for 3000 -dash-live 1000 -subdur 1000 -profile live $TEMP_DIR/source.mp4 -out http://localhost:8080/live.mpd:hmode=push -logs=http@debug" "dash_push"
 
@@ -239,7 +248,8 @@ $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=4 -new $TEMP_DIR/sour
 
 #increase run time for tests on VM
 do_test "$GPAC  -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:wdir=$TEMP_DIR -logs=http@debug" "http-server" &
-sleep .1
+#sleep half a sec to make sure the server is up and running
+sleep .5
 
 #we are in test mode which triggers vodcache=true (no sidx patching), force vodcache=false to test on the fly patching of sidx
 do_test "$MP4BOX -dash 1000 -profile onDemand $TEMP_DIR/source.mp4 -out http://localhost:8080/live.mpd:hmode=push:vodcache=false -logs=http@debug" "dash_push"
@@ -260,7 +270,8 @@ if [ $test_skip = 1 ] ; then
 fi
 
 do_test "$GPAC httpout:port=8080:quit:rdirs=$MEDIA_DIR:cert=$MEDIA_DIR/tls/localhost.crt:pkey=$MEDIA_DIR/tls/localhost.key" "https-server" &
-sleep .1
+#sleep half a sec to make sure the server is up and running
+sleep .5
 
 myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i https://localhost:8080/auxiliary_files/enst_audio.aac inspect:allp:deep:test=network:interleave=false:log=$myinspect$3 -graph -stats" "client-inspect"
@@ -283,9 +294,11 @@ do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac reframer @ -o $tmp_a
 
 #increase run time for tests on VM
 do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:rdirs=$TEMP_DIR:wdir=$TEMP_DIR" "http-server" &
-sleep .1
+#sleep half a sec to make sure the server is up and running
+sleep .5
 do_test "$GPAC -i $tmp_aac reframer:rt=on @ -o http://localhost:8080/live.mpd:hmode=push:dmode=dynamic" "dash-push" &
-sleep .1
+#sleep to make sure the push origin is running, but not too long to make sure the client tunes on live edge at first set (otherwise hash will fail)
+sleep .25
 
 myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i http://localhost:8080/live.mpd inspect:dur=1:allp:deep:test=network:interleave=false:log=$myinspect" "client-inspect"
