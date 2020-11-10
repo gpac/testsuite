@@ -1,4 +1,3 @@
-import ctypes as ct
 import datetime
 import types
 import sys
@@ -45,7 +44,7 @@ class MyCustomDASHAlgo:
 
 mydash = MyCustomDASHAlgo()
 
-#define a custom filter
+#define a custom filter session
 class MyFilterSession(gpac.FilterSession):
 	def __init__(self, flags=0, blacklist=None, nb_threads=0, sched_type=0):
 		gpac.FilterSession.__init__(self, flags, blacklist, nb_threads, sched_type)

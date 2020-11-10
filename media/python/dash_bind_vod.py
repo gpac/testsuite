@@ -1,4 +1,3 @@
-import ctypes as ct
 import datetime
 import types
 import sys

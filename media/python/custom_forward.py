@@ -1,4 +1,3 @@
-import ctypes as ct
 import datetime
 import libgpac as gpac
 import sys
