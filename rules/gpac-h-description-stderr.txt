@@ -1,0 +1,2 @@
+Failed to load filter colr: no such filter registry
+
