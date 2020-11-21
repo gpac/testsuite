@@ -36,7 +36,9 @@ py_test()
 
  do_test "$pyth $testfile" "run"
 
+if [ $keep_temp_dir != 1 ] ; then
  rm $testfile 2> /dev/null
+fi
 
  test_end
 }
