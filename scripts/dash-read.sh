@@ -1,3 +1,4 @@
+
 #!/bin/sh
 inspectfilter="inspect:allp:deep:interleave=false:test=noprop:fmt=%dts%-%cts%-%sap%%lf%"
 dur=10
@@ -12,6 +13,11 @@ test_begin "dash-read-$1"
 
 if [ $test_skip = 1 ] ; then
 return
+fi
+
+#server is really not fast from time to time, we increase the timeout to 40s...
+if [ $1 == "hls" ] ; then
+test_timeout=40
 fi
 
 myinspect=$TEMP_DIR/inspect.txt
@@ -52,7 +58,8 @@ dur=4
 
 dash_test "live-timeline" "https://livesim.dashif.org/livesim/segtimeline_1/testpic_2s/Manifest.mpd" 0
 
-dash_test "hls" "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8 -broken-cert -logs=dash:http@debug" 1
+#HLS: certificate names mismatch (so use -broken-cert) and use low quality (highest is 8Mbps, may timeout)
+dash_test "hls" "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8 --start_with=min_bw -broken-cert" 1
 
 dash_test "smooth" "http://amssamples.streaming.mediaservices.windows.net/69fbaeba-8e92-4740-aedc-ce09ae945073/AzurePromo.ism/manifest" 1
 #VOD test seq without tfxd
