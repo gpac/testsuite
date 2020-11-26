@@ -5,14 +5,12 @@ test_begin "hls"
 if [ $test_skip != 1 ] ; then
 
 m3u8file=$EXTERNAL_MEDIA_DIR/hls/index.m3u8
-mpdfile=$EXTERNAL_MEDIA_DIR/hls/file.mpd
+mpdfile=$EXTERNAL_MEDIA_DIR/hls/file1.mpd
 
 do_test "$MP4BOX -mpd $m3u8file -out $mpdfile" "convert"
 do_hash_test "$mpdfile" "convert"
 
-rm -rf $mpdfile
-
-mpdfile=$TEMP_DIR/file.mpd
+mpdfile=$TEMP_DIR/file2.mpd
 do_test "$MP4BOX -mpd $m3u8file -out $mpdfile" "convert-baseurl"
 if [ $keep_temp_dir != 1 ] ; then
  do_hash_test "$mpdfile" "convert-baseurl"
