@@ -6,6 +6,7 @@
 HTTP_SERVER_RUNFOR=6000
 
 source=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_640x360_192kbps.264
+source2=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264
 
 
 test_hlsll_gen()
@@ -41,18 +42,38 @@ if [ $test_skip = 1 ] ; then
 fi
 
 #run 6s (source is 30, we dashing only 6 but we need RT regulation for low latency check)
-do_test "$GPAC -runfor=6000 -i $source:#ClampDur=6 reframer:rt=on @ -o http://127.0.0.1:8080/live.m3u8:segdur=2:cdur=0.2:dmode=dynamic:rdirs=$TEMP_DIR:reqlog=GET:hlsll=$2" "server" &
+do_test "$GPAC -runfor=8000 -i $source:#ClampDur=6 reframer:rt=on @ -o http://127.0.0.1:8080/live.m3u8:segdur=2:cdur=0.2:dmode=dynamic:rdirs=$TEMP_DIR:reqlog=GET:hlsll=$2" "server" &
 #sleep 500ms to make sure the server is up and running
 sleep .5
 
 #grab 4s of content, hash result
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i http://127.0.0.1:8080/live.m3u8$3 inspect:deep:test=network:dur=4:log=$myinspect" "client"
+do_test "$GPAC -i http://127.0.0.1:8080/live.m3u8$3 inspect:deep:test=network:dur=4:log=$myinspect -logs=dash@debug" "client"
 do_hash_test $myinspect "inspect"
 
 test_end
 }
 
+
+test_hlsll_server_dual()
+{
+test_begin "llhls-server-dual-$1"
+if [ $test_skip = 1 ] ; then
+ return
+fi
+
+#run 6s (source is 30, we dashing only 6 but we need RT regulation for low latency check)
+do_test "$GPAC -runfor=8000 -i $source:#ClampDur=6:#Bitrate=200k  -i $source2:#ClampDur=6:#Bitrate=500k reframer:rt=on @ -o http://127.0.0.1:8080/live.m3u8:segdur=1:cdur=0.2:dmode=dynamic:rdirs=$TEMP_DIR:reqlog=GET$2" "server" &
+#sleep 500ms to make sure the server is up and running
+sleep .5
+
+#grab 4s of content, hash result
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i http://127.0.0.1:8080/live.m3u8$3 --auto_switch=1 inspect:deep:test=network:dur=4:fmt=%dts%-%cts%%lf%:log=$myinspect" "client"
+do_hash_test $myinspect "inspect"
+
+test_end
+}
 
 
 #test simple generation, no server
@@ -66,3 +87,19 @@ test_hlsll_server "ranges" "br" ""
 
 #test low latency access using byte ranges for segment parts, NOT merging parts
 test_hlsll_server "ranges-nomerge" "br" ":gpac:llhls_merge=no"
+
+#test regular HLS+files, no low latency in 2 qualities with client switching quality every segment
+test_hlsll_server_dual "noll" "" ""
+
+#test low latency access using files for segment parts, 2 qualities with client switching quality every segment
+test_hlsll_server_dual "sf" ":hlsll=sf" ""
+
+#test low latency access using byte ranges, merging parts into a single open byte range, 2 qualities with client switching quality every segment
+test_hlsll_server_dual "br" ":hlsll=br" ""
+
+#test low latency access using byte ranges, NOT merging parts, 2 qualities with client switching quality every segment
+test_hlsll_server_dual "br-nomerge" ":hlsll=br" ":gpac:llhls_merge=no"
+
+
+
+
