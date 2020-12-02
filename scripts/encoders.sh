@@ -101,7 +101,7 @@ fi
 #audio encoder tests
 test_encoder "mp3-ffenc" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.mp3" "" "" ""
 
-test_encoder "aac-ffenc" $MEDIA_DIR/auxiliary_files/count_french.mp3 "test.aac" "" "" ":ffc=aac"
+test_encoder "aac-ffenc" $MEDIA_DIR/auxiliary_files/count_french.mp3 "test.aac" "" "" ":c=aac"
 
 test_encoder "ac3-ffenc" $MEDIA_DIR/auxiliary_files/count_french.mp3 "test.ac3" "" "" ""
 
