@@ -40,7 +40,7 @@ myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i route://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect" "receive" &
 
 #start sender, reading from dash session
-do_test "$GPAC -i $TEMP_DIR/live.mpd dashin:filemode @ -o route://225.1.1.0:6000/" "send"
+do_test "$GPAC -i $TEMP_DIR/live.mpd dashin:forward=file @ -o route://225.1.1.0:6000/" "send"
 
 test_end
 }
@@ -77,7 +77,7 @@ fi
 
 #start sender from akamai LL
 src=https://akamaibroadcasteruseast.akamaized.net/cmaf/live/657078/akasource/out.mpd
-do_test "$GPAC -i $src dashin:filemode @ -o route://225.1.1.0:6000/:llmode:runfor=10000 -logs=route@debug" "send" &
+do_test "$GPAC -i $src dashin:forward=file @ -o route://225.1.1.0:6000/:llmode:runfor=10000 -logs=route@debug" "send" &
 
 sleep 1
 #start receiver
@@ -138,13 +138,13 @@ fi
 
 #start sender from akamai LL
 src=https://akamaibroadcasteruseast.akamaized.net/cmaf/live/657078/akasource/out.mpd
-do_test "$GPAC -i $src dashin:filemode @ -o route://225.1.1.0:6000/:llmode:runfor=10000 -logs=route@info" "send" &
+do_test "$GPAC -i $src dashin:forward=file @ -o route://225.1.1.0:6000/:llmode:runfor=10000 -logs=route@info" "send" &
 
 #start HTTP server
 do_test "$GPAC httpout:port=8080:rdirs=$TEMP_DIR:wdir=$TEMP_DIR:reqlog=PUT -runfor=8000 -req-timeout=10000" "server" &
 
 #start receiver: get route MPD, open in filemode and push files to server using PUT
-do_test "$GPAC -i route://225.1.1.0:6000 dashin:filemode @ -o http://127.0.0.1:8080/live.mpd --hmode=push -runfor=6000 -req-timeout=2000 -logs=route:dash@info" "receive"
+do_test "$GPAC -i route://225.1.1.0:6000 dashin:forward=file @ -o http://127.0.0.1:8080/live.mpd --hmode=push -runfor=6000 -req-timeout=2000 -logs=route:dash@info" "receive"
 
 wait
 
