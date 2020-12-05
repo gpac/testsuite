@@ -24,3 +24,24 @@ do_hash_test $myinspect "inspect"
 
 fi
 test_end
+
+
+test_hls_crypt()
+{
+test_begin "hls-crypt-$1"
+if [ $test_skip != 1 ] ; then
+
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_640x360_192kbps.264:#ClampDur=6:#Bitrate=200k cecrypt:cfile=$MEDIA_DIR/encryption/$2 @ -o $TEMP_DIR/live.m3u8" "crypt"
+
+do_hash_test $TEMP_DIR/live_1.m3u8 "playlist"
+do_hash_test $TEMP_DIR/counter_30s_I25_baseline_640x360_192kbps_dashinit.mp4 "init"
+do_hash_test $TEMP_DIR/counter_30s_I25_baseline_640x360_192kbps_dash1.m4s "seg1"
+do_hash_test $TEMP_DIR/counter_30s_I25_baseline_640x360_192kbps_dash3.m4s "seg3"
+
+fi
+test_end
+}
+
+test_hls_crypt "cbcs" "cbcs_const.xml"
+test_hls_crypt "cbcs-roll" "cbcs_const_roll.xml"
+

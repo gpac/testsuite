@@ -63,6 +63,12 @@ crypto_test_file()
 {
 
 for drm in $MEDIA_DIR/encryption/*.xml ; do
+
+case $drm in
+*cbcs_const_roll* )
+  continue ;;
+esac
+
 #vp9 only supports ctr for now
 if [ $1 == "vp9" ] ; then
  case $drm in
