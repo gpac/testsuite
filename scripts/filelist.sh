@@ -53,6 +53,6 @@ echo "$MEDIA_DIR/auxiliary_files/logo.jpg" >> $plist
 
 test_flist "params" "-i $plist:fdur=1/1" 0
 
-test_flist "enum" "flist:srcs=$MEDIA_DIR/auxiliary_files/\*.jpg" 0
+test_flist "enum" "flist:srcs=$MEDIA_DIR/auxiliary_files/\*.jpg:fsort=name" 0
 
 rm $plist

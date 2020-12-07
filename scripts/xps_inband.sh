@@ -32,7 +32,7 @@ do_test "$GPAC -i $mp4 inspect:deep:log=$inspect" "inspect"
 do_hash_test $inspect "inspect"
 
 #test NULL decoding - we unfortunately still have some random bugs with vtbdec and hevc, blacklist
-do_test "$GPAC -i $i -o null:ext=yuv -blacklist=vtbdec,nvdec" "decode"
+do_test "$GPAC -i $i -o null:ext=yuv -blacklist=vtbdec,nvdec,ohevcdec" "decode"
 
 #test xps in band + oob creation
 mp4="$TEMP_DIR/file_both.mp4"

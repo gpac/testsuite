@@ -65,22 +65,22 @@ test_end
 single_test "$GPAC $MEDIA_DIR/jsf/evg_src.js:cov inspect:deep" "jsf-evg-src"
 
 # EVG overlay
-single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -blacklist=vtbdec,nvdec $MEDIA_DIR/jsf/evg_overlay.js @ inspect:deep" "jsf-evg-overlay"
+single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -blacklist=vtbdec,nvdec,ohevcdec $MEDIA_DIR/jsf/evg_overlay.js @ inspect:deep" "jsf-evg-overlay"
 
 # WebGL generator
 single_test "$GPAC $MEDIA_DIR/jsf/webgl.js inspect:deep" "jsf-webgl-src"
 
 # WebGL using video input
-single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -blacklist=vtbdec,nvdec $MEDIA_DIR/jsf/webgl_yuv.js @ inspect:deep" "jsf-webgl-video"
+single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -blacklist=vtbdec,nvdec,ohevcdec $MEDIA_DIR/jsf/webgl_yuv.js @ inspect:deep" "jsf-webgl-video"
 
 # WebGL using video input and outputing depth
-single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -blacklist=vtbdec,nvdec $MEDIA_DIR/jsf/webgl_yuv.js:depth @ inspect:deep" "jsf-webgl-video-depth"
+single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -blacklist=vtbdec,nvdec,ohevcdec $MEDIA_DIR/jsf/webgl_yuv.js:depth @ inspect:deep" "jsf-webgl-video-depth"
 
 # EVG-3D generator
 single_test "$GPAC $MEDIA_DIR/jsf/soft3d.js inspect:deep" "jsf-soft3d"
 
 # EVG-3D overlay
-single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -blacklist=vtbdec,nvdec $MEDIA_DIR/jsf/soft3d_overlay.js @ inspect:deep" "jsf-soft3d-overlay"
+single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -blacklist=vtbdec,nvdec,ohevcdec $MEDIA_DIR/jsf/soft3d_overlay.js @ inspect:deep" "jsf-soft3d-overlay"
 
 # EVG-3D misc coverage
 single_test "$GPAC $MEDIA_DIR/jsf/soft3d_cov.js inspect:deep" "jsf-soft3d-cov"
