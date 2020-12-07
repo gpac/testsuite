@@ -301,7 +301,7 @@ function do_coverage()
 
 	let pt2 = mx1.apply({x:0, y:0, z:0});
 	mx1.ortho(-100, 100, 100, -100, -100, 100);
-	mx2.lookat( {x: 0, y:0, z:0}, {x: 0, y:1, z:0}, {x: 0, y:0, z:-10} );
+	mx2.lookat( {x: 0, y:0, z:0}, {x: 0, y:0, z:-10}, {x: 0, y:1, z:0});
 
 	//canvas
 	let cnv = new evg.Canvas(32, 32, 'rgb');
@@ -319,7 +319,7 @@ function do_coverage()
 	cnv.fill(atxp);
 
 	let aproj = new evg.Matrix().perspective(Math.PI/4, 1.0, 1, 100);
-	let amv = new evg.Matrix().lookat(0, 0, -10, 0, 1, 0, 0, 0, 0);
+	let amv = new evg.Matrix().lookat({x: 0, y:0, z:0}, {x: 0, y:0, z:-10}, {x: 0, y:1, z:0});
 	aproj.add(amv);
 	cnv.matrix3d = aproj;
 	apath.reset().rectangle(0, 0, 200, 200);

@@ -273,7 +273,7 @@ OrderedGroup {
    		}
    		function set_cursor(value, timestamp) {
    			set_time(value, timestamp);
-   			if (duration<0) return;
+   			if (duration<=0) return;
    			if (ctrl.mediaSpeed && isDown != 1) {
    				if (value>duration) value = duration;
    				pos = value;
@@ -282,9 +282,10 @@ OrderedGroup {
    			}
    		}
    		function set_seek(myval, timestamp) {
-   			if (duration<0) return;
-   			pos = myval[0]; 
-   			pos /= bar.size.x;pos += 0.5;
+   			if (duration<=0) return;
+
+   			pos = myval.x; 
+   			pos /= bar.size.x; pos += 0.5;
    			if (pos>1) pos = 0;
    			curSeek = duration;
    			curSeek *= pos;

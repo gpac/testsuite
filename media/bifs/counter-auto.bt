@@ -111,6 +111,9 @@ DEF ROOT OrderedGroup {
         field SFNode label USE LABEL
 
     url ["vrmlscript:
+        import {scene} from 'scenejs';
+        globalThis.gpac = scene;
+        
         var fps = gpac.sim_fps;
         var width = 480;
         var height = 360;
@@ -136,6 +139,7 @@ DEF ROOT OrderedGroup {
 //            alert('frame is ' + num_frame);
 
             var angle = mPI/2 - 2*mPI*num_frame/fps;
+            print('angle is ' + angle);
             var x = 100 * Math.cos(angle);
             var y = 100 * Math.sin(angle);
             coords.point[3] = new SFVec2f(x, y);

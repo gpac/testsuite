@@ -527,6 +527,7 @@ function initialize() {
  myvar=-myvar;
  myvar|=myvar;
  myvar^=myvar;
+ myvar=8;
  myvar%=myvar;
  myvar=myvar%2;
  myvar=myvar ? 0 : 1;
