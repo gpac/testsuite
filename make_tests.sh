@@ -201,6 +201,7 @@ echo "  -p=NAME:               sets execution profile of all gpac apps to NAME. 
 echo "  -test=NAME             only executes given test"
 echo "  -precommit             alias for -sync-before -git-hash -warn. Before commit/push, you should run ./make_tests -precommit"
 echo "  -quick                 only executes the first test of each script"
+echo "  -timeout=SECONDS       sets the timeout for each test command (default: 20)"
 
 echo "  SCRIPTS                only runs the scripts provided as arguments, by default runs everything in $SCRIPTS_DIR"
 echo "  -v:                    set verbose output"
@@ -314,6 +315,9 @@ for i in $* ; do
   sync_media
   sync_hash
   log_after_fail=1
+  ;;
+ -timeout=*)
+  DEF_TIMEOUT="${i#-timeout=}"
   ;;
  "-h")
   print_usage
