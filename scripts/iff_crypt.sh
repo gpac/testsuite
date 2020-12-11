@@ -9,6 +9,9 @@ if [ $test_skip  = 1 ] ; then
  return
 fi
 
+#cleanup everything in case we don't run with temp dir, otherwise we will get errors renaming files in -crypt
+rm -f $TEMP_DIR/* 2> /dev/null
+ 
 mp4="$TEMP_DIR/vid_cryp.mp4"
 iff="$TEMP_DIR/img_src.heif"
 decryp="$TEMP_DIR/img_decryp.heif"
