@@ -30,6 +30,21 @@ myinspect=$TEMP_DIR/inspect-sf.txt
 do_test "$GPAC -i $TEMP_DIR/live_br.m3u8 inspect:deep:dur=1:log=$myinspect" "inspect-sf"
 do_hash_test $myinspect "inspect-sf"
 
+do_test "$GPAC -i $source:#ClampDur=4 -o $TEMP_DIR/live_brsf.m3u8:segdur=2:cdur=0.2:dmode=dynamic:llhls=brsf" "gen-brsf"
+do_hash_test $TEMP_DIR/live_brsf.m3u8 "manifest1-brsf"
+do_hash_test $TEMP_DIR/live_brsf_1.m3u8 "chilpl1-brsf"
+do_hash_test $TEMP_DIR/live_brsf_IF.m3u8 "manifest2-brsf"
+do_hash_test $TEMP_DIR/live_brsf_1_IF.m3u8 "chilpl2-brsf"
+
+myinspect=$TEMP_DIR/inspect-brsf-br.txt
+do_test "$GPAC -i $TEMP_DIR/live_brsf.m3u8 inspect:deep:dur=1:log=$myinspect" "inspect-brsf-br"
+do_hash_test $myinspect "inspect-brsf-br"
+
+myinspect=$TEMP_DIR/inspect-brsf-sf.txt
+do_test "$GPAC -i $TEMP_DIR/live_brsf_IF.m3u8 inspect:deep:dur=1:log=$myinspect" "inspect-brsf-sf"
+do_hash_test $myinspect "inspect-brsf-sf"
+
+
 test_end
 
 }
