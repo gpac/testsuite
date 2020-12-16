@@ -67,6 +67,10 @@ for drm in $MEDIA_DIR/encryption/*.xml ; do
 case $drm in
 *cbcs_const_roll* )
   continue ;;
+*mkey* )
+  continue ;;
+*subs* )
+  continue ;;
 esac
 
 #vp9 only supports ctr for now
@@ -86,6 +90,8 @@ if [ $1 == "vp9" ] ; then
  	continue ;;
  *clear_stsd* )
  	continue ;;
+ *roll_rap* )
+ 	continue ;;
  esac
 elif [ $1 != "avc" ] ; then
  case $drm in
@@ -94,6 +100,8 @@ elif [ $1 != "avc" ] ; then
  *forceclear* )
  	continue ;;
  *clear_stsd* )
+ 	continue ;;
+ *roll_rap* )
  	continue ;;
  esac
 fi

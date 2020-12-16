@@ -65,6 +65,10 @@ case $drm in
   continue ;;
 *rap* )
   continue ;;
+*mkey* )
+  continue ;;
+*subs* )
+  continue ;;
 esac
 
 name=$(basename $drm)
