@@ -15,12 +15,12 @@ do_hash_test $iff_file "create-iff-video"
 
 #create a heif with sample 163 as main sample, copying the sample
 iff_self="$TEMP_DIR/img_self.heic"
-do_test "$MP4BOX -add-image self:tk=1:samp=163 $iff_file -out $iff_self" "create-iff-self"
+do_test "$MP4BOX -add-image tk=1:samp=163 $iff_file -out $iff_self" "create-iff-self"
 do_hash_test $iff_self "create-iff-self"
 
-#create a heif with sample 163 as main sample, referencing the sample
+#create a heif with sample 163 as main sample, referencing the sample, not specifying the track (default to first video found)
 iff_ref="$TEMP_DIR/img_ref.heic"
-do_test "$MP4BOX -add-image ref:tk=1:samp=163 $iff_file -out $iff_ref" "create-iff-ref"
+do_test "$MP4BOX -add-image ref:samp=163 $iff_file -out $iff_ref" "create-iff-ref"
 do_hash_test $iff_ref "create-iff-ref"
 
 #remux a heif with sample ref
