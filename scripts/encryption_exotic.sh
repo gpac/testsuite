@@ -63,3 +63,4 @@ test_end
 
 test_encrypt_mkey "base" "mkey_base.xml"
 test_encrypt_mkey "roll" "mkey_roll.xml"
+test_encrypt_mkey "subs" "mkey_subs.xml"
