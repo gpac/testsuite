@@ -97,7 +97,7 @@ do_test "$MP4BOX -add-derived-image :type=grid:id=1:image-pixi=8,8,8:rotation=90
 do_hash_test $dst "grid_2x3_192x128_rotate"
 
 dst=$TEMP_DIR/grid_2x3_192x128_mirror.avif
-do_test "$MP4BOX -add-derived-image :type=grid:id=1:image-pixi=8,8,8:image-size=192x128:image-grid-size=2x3:ref=dimg,2:ref=dimg,3:ref=dimg,4:ref=dimg,5:ref=dimg,6:ref=dimg,7:primary -add-image $src:id=2 -add-image $src:id=3 -add-image $src:id=4 -add-image $src:id=5 -add-image $src:id=6 -add-image $src:id=7 -ab avif -ab miaf -new $dst" "grid_2x3_192x128_mirror"
+do_test "$MP4BOX -add-derived-image :type=grid:id=1:image-pixi=8,8,8:mirror-axis=vertical:image-size=192x128:image-grid-size=2x3:ref=dimg,2:ref=dimg,3:ref=dimg,4:ref=dimg,5:ref=dimg,6:ref=dimg,7:primary -add-image $src:id=2 -add-image $src:id=3 -add-image $src:id=4 -add-image $src:id=5 -add-image $src:id=6 -add-image $src:id=7 -ab avif -ab miaf -new $dst" "grid_2x3_192x128_mirror"
 do_hash_test $dst "grid_2x3_192x128_mirror"
 
 dst=$TEMP_DIR/grid_2x3_192x128_clap.avif
