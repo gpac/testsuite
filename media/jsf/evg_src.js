@@ -116,7 +116,7 @@ filter.process = function()
 	}
 	let pck = pid.new_packet(osize);
 
-	//basic red formating of buffer
+	//basic red formatting of buffer
 /*
 	let pixbuf = new Uint8Array(pck.data);
 	for (let i=0; i<osize; i+= 3) {
