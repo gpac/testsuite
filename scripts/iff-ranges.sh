@@ -30,5 +30,4 @@ do_test "$MP4BOX -add-image $SRCFILE:time=2-8/3 -ab heic -new $iff_file" "iff-ra
 do_hash_test $iff_file "iff-range-step"
 
 
-
 test_end
