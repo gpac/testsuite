@@ -59,7 +59,7 @@ fi
 src_file=$2
 dst_file=$TEMP_DIR/$3
 
-#start udp reciever first, with 2s timeout - if we test out of order / drop, skip receiver
+#start udp receiver first, with 2s timeout - if we test out of order / drop, skip receiver
 if [ -z $6 ] ; then
 do_test "$GPAC -i udp://$4:timeout=1000 -o $dst_file -graph"  "in"  &
 

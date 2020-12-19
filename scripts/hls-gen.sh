@@ -71,3 +71,13 @@ do_hash_test "$TEMP_DIR/file.m3u8" "hls-master"
 fi
 test_end
 
+test_begin "hls-gen-trick-intra-only"
+if [ $test_skip != 1 ] ; then
+
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264:FID1 reframer:saps=1:FID=2 -o $TEMP_DIR/file.m3u8:SID=1,2" "hls-trick-intra"
+
+do_hash_test "$TEMP_DIR/file.m3u8" "hls-master"
+
+fi
+test_end
+
