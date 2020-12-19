@@ -37,5 +37,5 @@ fi
 # test MP4 with no cache
 test_http "mp4-nocache" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/mp4/counter_video_360.mp4:gpac:cache=none" "" 0
 
-# test fMP4 with no cache
-test_http "fmp4-nocache" "http://download.tsi.telecom-paristech.fr/gpac/DASH_CONFORMANCE/TelecomParisTech/mp4-onDemand/mp4-onDemand-h264bl_low.mp4:gpac:cache=none" "" 1
+# test fMP4 with no cache - we force a small block size to avoid different behaviours in VMs resulting in HAS_SYNC property being sent at different times
+test_http "fmp4-nocache" "http://download.tsi.telecom-paristech.fr/gpac/DASH_CONFORMANCE/TelecomParisTech/mp4-onDemand/mp4-onDemand-h264bl_low.mp4:gpac:cache=none:block_size=1024" "" 1
