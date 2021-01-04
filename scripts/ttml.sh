@@ -28,6 +28,7 @@ ttml_test "$MEDIA_DIR/ttml/ebu-ttd_timing_overlapping.ttml"
 ttml_test "$MEDIA_DIR/ttml/ttml_samples.ttml"
 ttml_test "$MEDIA_DIR/ttml/ebu-ttd_regions.ttml"
 ttml_test "$MEDIA_DIR/ttml/ebu-ttd_timing_overlapping_inv.ttml"
+ttml_test "$MEDIA_DIR/ttml/ebu-ttd_metrics.ttml"
 
 
 
