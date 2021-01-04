@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xmlns:ttp="http://www.w3.org/ns/ttml#parameter"
+    xmlns:tts="http://www.w3.org/ns/ttml#styling"
+    ttp:timeBase="media"
+    ttp:cellResolution="50 30">
+	  <head>
+		    <styling>
+			      <style xml:id="defaultStyle" tts:fontFamily="Verdana, Arial, Tiresias"
+                tts:fontSize="160%"
+                tts:lineHeight="125%"
+                tts:color="#ffffff"
+                tts:backgroundColor="#000000c2"
+                tts:textAlign="center"/>
+		    </styling>
+		    <layout>
+			      <region xml:id="bottom" tts:origin="10% 10%" tts:extent="80% 80%"
+                 tts:displayAlign="after"/>
+		    </layout>
+	  </head>
+	  <body>
+		    <div style="defaultStyle">
+		      <p begin="00:00:00.000" end="00:00:01.000" region="bottom">
+		    	<image src="../auxiliary_files/logo.png" type="image/png"/>
+   		      </p>	
+
+		      <p begin="00:00:02.000" end="00:00:03.000" region="bottom">
+		    	<image>
+		    		<source>
+						<data type="image/png" length="119">
+			              iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+			              YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY2BgYAAAAAQAAVzN/2kAAAAASUVORK5CYII=
+			            </data>
+		    		</source>
+            	</image>
+   		      </p>	
+
+		      <p begin="00:00:04.000" end="00:00:05.000" region="bottom">
+		    	<image>
+		    		<source  src="../auxiliary_files/logo.png" type="image/png"/>
+            	</image>
+   		      </p>	
+		      <p begin="00:00:06.000" end="00:00:07.000" region="bottom">
+		    	<image>
+		    		<source  src="../auxiliary_files/logo.png" type="image/png"/>
+            	</image>
+		    	<image>
+		    		<source>
+						<data type="image/png" length="119">
+			              iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+			              YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY2BgYAAAAAQAAVzN/2kAAAAASUVORK5CYII=
+			            </data>
+		    		</source>
+            	</image>
+   		      </p>	
+		    </div>
+	  </body>
+</tt>
+

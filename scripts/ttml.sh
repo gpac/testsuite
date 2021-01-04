@@ -34,7 +34,10 @@ ttml_test "$MEDIA_DIR/ttml/ttml_samples.ttml" ""
 ttml_test "$MEDIA_DIR/ttml/ebu-ttd_regions.ttml" ""
 ttml_test "$MEDIA_DIR/ttml/ebu-ttd_timing_overlapping_inv.ttml" ""
 ttml_test "$MEDIA_DIR/ttml/ebu-ttd_metrics.ttml" ""
-ttml_test "$MEDIA_DIR/ttml/ebu-ttd_metrics.ttml:sopt:sttml" "single-sample"
+ttml_test "$MEDIA_DIR/ttml/ebu-ttd_metrics.ttml:sopt:ttml_single" "single-sample"
+
+ttml_test "$MEDIA_DIR/ttml/ttml_images.ttml:sopt:ttml_embed" "embed-sample"
+ttml_test "$MEDIA_DIR/ttml/ttml_images_head.ttml:sopt:ttml_embed" "embed-head-sample"
 
 
 
