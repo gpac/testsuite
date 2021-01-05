@@ -48,3 +48,4 @@ ttml_test "$MEDIA_DIR/ttml/ttml_images_head.ttml:sopt:ttml_embed" "embed-head-sa
 
 
 
+ttml_test "$MEDIA_DIR/ttml/ebu-ttd_sample.ttml:sopt:ttml_zero=T00:00:30.000" "zero" 1
