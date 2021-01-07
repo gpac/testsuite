@@ -21,7 +21,7 @@ wait
 #hash the final MPD (written as  static)
 do_hash_test $TEMP_DIR/file.mpd "hash-mpd"
 
-#hash 3rd segment of video and audio, making sur the tfdt is correct
+#hash 3rd segment of video and audio, making sure the tfdt is correct
 do_hash_test $TEMP_DIR/file_dash_track1_2.m4s "hash-seg2-video"
 do_hash_test $TEMP_DIR/file_dash_track2_2.m4s "hash-seg2-audio"
 
