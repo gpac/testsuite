@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xmlns:ttp="http://www.w3.org/ns/ttml#parameter"
+    xmlns:tts="http://www.w3.org/ns/ttml#styling"
+    ttp:timeBase="media"
+    ttp:tickRate="1000"
+    ttp:frameRate="25"
+    ttp:frameRateMultiplier="1000 1001"
+    ttp:subFrameRate="1"
+    ttp:cellResolution="50 30"
+    xml:lang="de" xmlns="http://www.w3.org/ns/ttml">
+	  <head>
+		    <styling>
+			      <style xml:id="defaultStyle" tts:fontFamily="Verdana, Arial, Tiresias"
+                tts:fontSize="160%"
+                tts:lineHeight="125%"
+                tts:color="#ffffff"
+                tts:backgroundColor="#000000c2"
+                tts:textAlign="center"/>
+		    </styling>
+		    <layout>
+			      <region xml:id="bottom" tts:origin="10% 10%" tts:extent="80% 80%"
+                 tts:displayAlign="after"/>
+		    </layout>
+	  </head>
+	  <body>
+		    <div style="defaultStyle">
+			      <p begin="0t" end="1400t" region="bottom" xml:id="sub1">00:00:00.000<br/>00:00:01.400</p>
+			      <p begin="51f" end="75.0f" region="bottom" xml:id="sub2">00:00:02.040<br/>00:00:03.000</p>
+			      <p begin="4200ms" end="4800ms" region="bottom" xml:id="sub3">00:00:04.200<br/>00:00:04.800</p>
+			      <p begin="5s" end="6s" region="bottom" xml:id="sub3">00:00:05.000<br/>00:00:06.000</p>
+			      <p begin="1m" end="1m" region="bottom" xml:id="sub3">00:01:00.000<br/>00:02:00.000</p>
+			      <p begin="1h" end="2h" region="bottom" xml:id="sub3">01:00:00.000<br/>02:00:00.000</p>
+		    </div>
+	  </body>
+</tt>
+
