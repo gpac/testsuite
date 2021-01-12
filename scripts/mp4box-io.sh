@@ -96,6 +96,8 @@ mp4_test ()
   do_hint=0 ;;
  *.flac )
   do_hint=0 ;;
+ *.mlp )
+  do_hint=0 ;;
 
  *109.avi )
   do_hash=0
