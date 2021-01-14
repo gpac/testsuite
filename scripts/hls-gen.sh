@@ -74,10 +74,14 @@ test_end
 test_begin "hls-gen-trick-intra-only"
 if [ $test_skip != 1 ] ; then
 
-do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264:FID1 reframer:saps=1:FID=2 -o $TEMP_DIR/file.m3u8:dual:SID=1,2" "hls-trick-intra"
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264:FID=1 reframer:saps=1:FID=2 -o $TEMP_DIR/file.m3u8:dual:SID=1,2" "hls-trick-intra"
 
 do_hash_test "$TEMP_DIR/file.m3u8" "hls-master"
-do_hash_test "$TEMP_DIR/file.mpd"  "hls-mpd"
+do_hash_test "$TEMP_DIR/file_1.m3u8" "hls-pl1"
+do_hash_test "$TEMP_DIR/file_2.m3u8" "hls-pl2"
+do_hash_test "$TEMP_DIR/file.mpd" "hls-mpd"
+do_hash_test "$TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track1_10.m4s" "seg10_reg"
+do_hash_test "$TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track2_10.m4s" "seg10_intra"
 
 fi
 test_end
