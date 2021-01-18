@@ -1,12 +1,13 @@
 #!/bin/sh
 
-mp4file=$TEMP_DIR/test.mp4
-
 test_begin "meta"
 
  if [ $test_skip  = 1 ] ; then
   return
  fi
+
+mp4file=$TEMP_DIR/test.mp4
+
 
 do_test "$MP4BOX -set-meta Metadata:id=0 $EXTERNAL_MEDIA_DIR/item/counter_noItems1.mp4 -out $mp4file" "set0"
 do_hash_test $mp4file "set0"

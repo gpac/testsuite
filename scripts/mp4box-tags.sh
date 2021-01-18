@@ -33,6 +33,10 @@ mp4file="$TEMP_DIR/test.mp4"
 do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac -new $mp4file -itags $tags" "create"
 do_hash_test $mp4file "create"
 
+clean="$TEMP_DIR/clean.mp4"
+do_test "$MP4BOX -itags clear $mp4file -out $clean" "clean"
+do_hash_test $clean "clean"
+
 fi
 test_end
 
