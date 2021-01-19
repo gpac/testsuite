@@ -49,7 +49,7 @@ my_test_with_hash "$MP4BOX -lang 1=eng $TEMP_DIR/file.mp4 -out $output" "track-3
 
 rm $output 2> /dev/null
 my_test_with_hash "$MP4BOX -lang 1=en-US $TEMP_DIR/file.mp4 -out $output" "track-2-2-char"
-my_test_with_hash "$MP4BOX -lang 2=en-US $output" "second-track"
+my_test_with_hash "$MP4BOX -no-inplace -lang 2=en-US $output" "second-track"
 
 rm $output 2> /dev/null
 my_test_with_hash "$MP4BOX -add $TEMP_DIR/file.mp4#1:lang=en -new $output" "param-2-char"

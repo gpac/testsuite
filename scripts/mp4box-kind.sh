@@ -21,104 +21,104 @@ my_test_with_hash "$MP4BOX -kind all=myKindScheme $TEMP_DIR/file.mp4 -out $outpu
 $MP4BOX -info $output 2> /dev/null
 $MP4BOX -diso $output 2> /dev/null
 
-my_test_with_hash "$MP4BOX -kind-rem all=myKindScheme $output" "kind-all-scheme-rem"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem all=myKindScheme $output" "kind-all-scheme-rem"
 
-my_test_with_hash "$MP4BOX -kind-rem all=myKindScheme $output" "kind-all-scheme-rem-twice"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem all=myKindScheme $output" "kind-all-scheme-rem-twice"
 
 rm $output 2> /dev/null
 my_test_with_hash "$MP4BOX -kind all=myKindScheme=myKindValue $TEMP_DIR/file.mp4 -out $output" "kind-all-scheme-value"
 
-my_test_with_hash "$MP4BOX -kind-rem all=myKindScheme=myKindValue $output" "kind-all-scheme-value-rem"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem all=myKindScheme=myKindValue $output" "kind-all-scheme-value-rem"
 
 rm $output 2> /dev/null
 do_test "$MP4BOX -kind all=myKindScheme=myKindValue2 $TEMP_DIR/file.mp4 -out $output" "kind-all-scheme-value-multiple-1"
-do_test "$MP4BOX -kind all=myKindScheme=myKindValue $output" "kind-all-scheme-value-multiple-2"
-my_test_with_hash "$MP4BOX -kind all=myKindScheme $output" "kind-all-scheme-value-multiple-3"
+do_test "$MP4BOX -no-inplace -kind all=myKindScheme=myKindValue $output" "kind-all-scheme-value-multiple-2"
+my_test_with_hash "$MP4BOX -no-inplace -kind all=myKindScheme $output" "kind-all-scheme-value-multiple-3"
 
-my_test_with_hash "$MP4BOX -kind-rem all=myKindScheme=myKindValue $output" "kind-all-multiple-rem-1"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem all=myKindScheme=myKindValue $output" "kind-all-multiple-rem-1"
 
-my_test_with_hash "$MP4BOX -kind-rem all=myKindScheme $output" "kind-all-rem-scheme"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem all=myKindScheme $output" "kind-all-rem-scheme"
 
 rm $output 2> /dev/null
 my_test_with_hash "$MP4BOX -kind all=urn:gpac:kindScheme=myKindValue $TEMP_DIR/file.mp4 -out $output" "kind-all-scheme-with-column"
 
-my_test_with_hash "$MP4BOX -kind-rem all=urn:gpac:kindScheme=myKindValue  $output" "kind-all-scheme-with-column-rem"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem all=urn:gpac:kindScheme=myKindValue  $output" "kind-all-scheme-with-column-rem"
 
 rm $output 2> /dev/null
 my_test_with_hash "$MP4BOX -kind all=myFirstKindScheme $TEMP_DIR/file.mp4 -out $output" "kind-all-2-schemes-1"
-my_test_with_hash "$MP4BOX -kind all=mySecondKindScheme $output" "kind-all-2-schemes-2"
+my_test_with_hash "$MP4BOX -no-inplace -kind all=mySecondKindScheme $output" "kind-all-2-schemes-2"
 
-my_test_with_hash "$MP4BOX -kind-rem all=myFirstKindScheme $output" "kind-all-2-schemes-rem-1"
-my_test_with_hash "$MP4BOX -kind-rem all=mySecondKindScheme $output" "kind-all-2-schemes-rem-2"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem all=myFirstKindScheme $output" "kind-all-2-schemes-rem-1"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem all=mySecondKindScheme $output" "kind-all-2-schemes-rem-2"
 
 rm $output 2> /dev/null
 my_test_with_hash "$MP4BOX -kind all=myFirstKindScheme $TEMP_DIR/file.mp4 -out $output" "kind-all-same-scheme-1"
-my_test_with_hash "$MP4BOX -kind all=myFirstKindScheme $output" "kind-all-same-scheme-2"
+my_test_with_hash "$MP4BOX -no-inplace -kind all=myFirstKindScheme $output" "kind-all-same-scheme-2"
 
 rm $output 2> /dev/null
 my_test_with_hash "$MP4BOX -kind all=myFirstKindScheme=myKindValue $TEMP_DIR/file.mp4 -out $output" "kind-all-same-scheme-value-1"
-my_test_with_hash "$MP4BOX -kind all=myFirstKindScheme=myKindValue $output" "kind-all-same-scheme-value-2"
+my_test_with_hash "$MP4BOX -no-inplace -kind all=myFirstKindScheme=myKindValue $output" "kind-all-same-scheme-value-2"
 
 rm $output 2> /dev/null
 my_test_with_hash "$MP4BOX -kind myKindScheme $TEMP_DIR/file.mp4 -out $output" "kind-scheme"
 
-my_test_with_hash "$MP4BOX -kind-rem myKindScheme $output" "kind-scheme-rem"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem myKindScheme $output" "kind-scheme-rem"
 
-my_test_with_hash "$MP4BOX -kind-rem myKindScheme $output" "kind-scheme-rem-twice"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem myKindScheme $output" "kind-scheme-rem-twice"
 
 rm $output 2> /dev/null
 my_test_with_hash "$MP4BOX -kind myKindScheme=myKindValue $TEMP_DIR/file.mp4 -out $output" "kind-scheme-value"
 
-my_test_with_hash "$MP4BOX -kind-rem myKindScheme=myKindValue $output" "kind-scheme-value-rem"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem myKindScheme=myKindValue $output" "kind-scheme-value-rem"
 
 rm $output 2> /dev/null
 do_test "$MP4BOX -kind myKindScheme=myKindValue2 $TEMP_DIR/file.mp4 -out $output" "kind-scheme-value-multiple-1"
-do_test "$MP4BOX -kind myKindScheme=myKindValue $output" "kind-scheme-value-multiple-2"
-my_test_with_hash "$MP4BOX -kind myKindScheme $output" "kind-scheme-value-multiple-3"
+do_test "$MP4BOX -no-inplace -kind myKindScheme=myKindValue $output" "kind-scheme-value-multiple-2"
+my_test_with_hash "$MP4BOX -no-inplace -kind myKindScheme $output" "kind-scheme-value-multiple-3"
 
-my_test_with_hash "$MP4BOX -kind-rem myKindScheme=myKindValue $output" "kind-multiple-rem-1"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem myKindScheme=myKindValue $output" "kind-multiple-rem-1"
 
-my_test_with_hash "$MP4BOX -kind-rem myKindScheme $output" "kind-rem-scheme"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem myKindScheme $output" "kind-rem-scheme"
 
 rm $output 2> /dev/null
 my_test_with_hash "$MP4BOX -kind urn:gpac:kindScheme=myKindValue $TEMP_DIR/file.mp4 -out $output" "kind-scheme-with-column"
 
-my_test_with_hash "$MP4BOX -kind-rem urn:gpac:kindScheme=myKindValue  $output" "kind-scheme-with-column-rem"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem urn:gpac:kindScheme=myKindValue  $output" "kind-scheme-with-column-rem"
 
 rm $output 2> /dev/null
 do_test "$MP4BOX -kind myFirstKindScheme $TEMP_DIR/file.mp4 -out $output" "kind-2-schemes-1"
-my_test_with_hash "$MP4BOX -kind mySecondKindScheme $output" "kind-2-schemes-2"
+my_test_with_hash "$MP4BOX -no-inplace -kind mySecondKindScheme $output" "kind-2-schemes-2"
 
-do_test "$MP4BOX -kind-rem myFirstKindScheme $output" "kind-2-schemes-rem-1"
-my_test_with_hash "$MP4BOX -kind-rem mySecondKindScheme $output" "kind-2-schemes-rem-2"
+do_test "$MP4BOX -no-inplace -kind-rem myFirstKindScheme $output" "kind-2-schemes-rem-1"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem mySecondKindScheme $output" "kind-2-schemes-rem-2"
 
 rm $output 2> /dev/null
 my_test_with_hash "$MP4BOX -kind myFirstKindScheme $TEMP_DIR/file.mp4 -out $output" "kind-same-scheme-1"
-my_test_with_hash "$MP4BOX -kind myFirstKindScheme $output" "kind-same-scheme-1"
+my_test_with_hash "$MP4BOX -no-inplace -kind myFirstKindScheme $output" "kind-same-scheme-1"
 
 rm $output 2> /dev/null
 my_test_with_hash "$MP4BOX -kind myFirstKindScheme=myKindValue $TEMP_DIR/file.mp4 -out $output" "kind-same-scheme-value-1"
-my_test_with_hash "$MP4BOX -kind myFirstKindScheme=myKindValue $output" "kind-same-scheme-value-2"
+my_test_with_hash "$MP4BOX -no-inplace -kind myFirstKindScheme=myKindValue $output" "kind-same-scheme-value-2"
 
 rm $output 2> /dev/null
 my_test_with_hash "$MP4BOX -kind 1=myKindScheme $TEMP_DIR/file.mp4 -out $output" "kind-track-scheme"
-my_test_with_hash "$MP4BOX -kind-rem 1=myKindScheme $output" "kind-track-scheme-rem"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem 1=myKindScheme $output" "kind-track-scheme-rem"
 
 rm $output 2> /dev/null
 my_test_with_hash "$MP4BOX -kind 1=myKindScheme=myKindValue $TEMP_DIR/file.mp4 -out $output" "kind-track-scheme-value"
-my_test_with_hash "$MP4BOX -kind-rem 1=myKindScheme=myKindValue $output" "kind-track-scheme-value-rem"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem 1=myKindScheme=myKindValue $output" "kind-track-scheme-value-rem"
 
 rm $output 2> /dev/null
 do_test "$MP4BOX -kind 1=myKindScheme $TEMP_DIR/file.mp4 -out $output" "kind-track-2-schemes-1"
-my_test_with_hash "$MP4BOX -kind 1=mySecondKindScheme $output" "kind-track-2-schemes-2"
-my_test_with_hash "$MP4BOX -kind-rem 1=myKindScheme $output" "kind-track-2-schemes-rem-1"
-my_test_with_hash "$MP4BOX -kind-rem 1=mySecondKindScheme $output" "kind-track-2-schemes-rem-2"
+my_test_with_hash "$MP4BOX -no-inplace -kind 1=mySecondKindScheme $output" "kind-track-2-schemes-2"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem 1=myKindScheme $output" "kind-track-2-schemes-rem-1"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem 1=mySecondKindScheme $output" "kind-track-2-schemes-rem-2"
 
 rm $output 2> /dev/null
 my_test_with_hash "$MP4BOX -kind 1=mySecondKindScheme $TEMP_DIR/file.mp4 -out $output" "kind-track-2-schemes-2-tracks-1"
-my_test_with_hash "$MP4BOX -kind 2=mySecondKindScheme $output" "kind-track-2-schemes-2-tracks-2"
-my_test_with_hash "$MP4BOX -kind-rem 1=mySecondKindScheme $output" "kind-track-2-schemes-2-tracks-rem-1"
-my_test_with_hash "$MP4BOX -kind-rem 2=mySecondKindScheme $output" "kind-track-2-schemes-2-tracks-rem-2"
+my_test_with_hash "$MP4BOX -no-inplace -kind 2=mySecondKindScheme $output" "kind-track-2-schemes-2-tracks-2"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem 1=mySecondKindScheme $output" "kind-track-2-schemes-2-tracks-rem-1"
+my_test_with_hash "$MP4BOX -no-inplace -kind-rem 2=mySecondKindScheme $output" "kind-track-2-schemes-2-tracks-rem-2"
 
 rm $output 2> /dev/null
 rm $TEMP_DIR/out2.mp4 2> /dev/null
