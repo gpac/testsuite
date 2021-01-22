@@ -1,6 +1,5 @@
 #!/bin/sh
 
-output=$TEMP_DIR/output.mp4
 
 my_test_with_hash ()
 {
@@ -14,6 +13,8 @@ test_begin "mp4box-kind"
  if [ $test_skip  = 1 ] ; then
   return
  fi
+
+output=$TEMP_DIR/output.mp4
 
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_video.h264:dur=1 -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=1 -new $TEMP_DIR/file.mp4 2> /dev/null
 
@@ -149,9 +150,6 @@ my_test_with_hash "$MP4BOX -add $TEMP_DIR/file.mp4#1:kind=myKindScheme=myKindVal
 ## concat of same kinds, of different kinds
 ## fragmentation/segmentation preserves kinds
 ## dash uses kinds
-
-rm $TEMP_DIR/file.mp4 2> /dev/null
-rm $output 2> /dev/null
 
 test_end
 
