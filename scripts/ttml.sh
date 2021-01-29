@@ -46,6 +46,8 @@ ttml_test "$MEDIA_DIR/ttml/ebu-ttd_metrics.ttml:sopt:ttml_dur=0" "single-sample"
 ttml_test "$MEDIA_DIR/ttml/ttml_images.ttml:sopt:ttml_embed" "embed-sample" 1
 ttml_test "$MEDIA_DIR/ttml/ttml_images_head.ttml:sopt:ttml_embed" "embed-head-sample" 1
 
+ttml_test "$MEDIA_DIR/ttml/empty.ttml" "" 1
+
 
 
 ttml_test "$MEDIA_DIR/ttml/ebu-ttd_sample.ttml:sopt:ttml_zero=T00:00:30.000" "zero" 1
