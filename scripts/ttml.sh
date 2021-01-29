@@ -41,7 +41,7 @@ ttml_test "$MEDIA_DIR/ttml/ttml_samples.ttml" "" 0
 ttml_test "$MEDIA_DIR/ttml/ebu-ttd_regions.ttml" "" 0
 ttml_test "$MEDIA_DIR/ttml/ebu-ttd_timing_overlapping_inv.ttml" "" 0
 ttml_test "$MEDIA_DIR/ttml/ebu-ttd_metrics.ttml" "" 1
-ttml_test "$MEDIA_DIR/ttml/ebu-ttd_metrics.ttml:sopt:ttml_single" "single-sample" 0
+ttml_test "$MEDIA_DIR/ttml/ebu-ttd_metrics.ttml:sopt:ttml_dur=0" "single-sample" 0
 
 ttml_test "$MEDIA_DIR/ttml/ttml_images.ttml:sopt:ttml_embed" "embed-sample" 1
 ttml_test "$MEDIA_DIR/ttml/ttml_images_head.ttml:sopt:ttml_embed" "embed-head-sample" 1
@@ -49,3 +49,37 @@ ttml_test "$MEDIA_DIR/ttml/ttml_images_head.ttml:sopt:ttml_embed" "embed-head-sa
 
 
 ttml_test "$MEDIA_DIR/ttml/ebu-ttd_sample.ttml:sopt:ttml_zero=T00:00:30.000" "zero" 1
+
+
+ttml_test_cat  ()
+{
+
+ test_begin "ttml-cat"
+ if [ $test_skip  = 1 ] ; then
+  return
+ fi
+
+#note that the resulting file is not a valid TTML because we use two time-overlaping docs as source
+#the tes is only intended to check ttml single doc mode from playlist for adding or dashing
+src1=$MEDIA_DIR/ttml/ebu-ttd_sample.ttml
+src2=$MEDIA_DIR/ttml/ebu-ttd_sample_span.ttml
+pl=pl.m3u
+mp4file=$TEMP_DIR/file.mp4
+
+echo "$src1:ttml_dur=30k" > $pl
+echo "$src2:ttml_dur=20k" >> $pl
+
+do_test "$MP4BOX -add $pl -new $mp4file" "import"
+do_hash_test $mp4file "import"
+
+#dasu using inband cues, each input in playlist resulting in a media segment
+do_test "$MP4BOX -dash 1000 -profile onDemand -out $TEMP_DIR/vod.mpd $pl:sigcues" "dash-cues"
+do_hash_test $TEMP_DIR/ebu-ttd_sample_dashinit.mp4 "dash"
+
+rm $pl
+
+test_end
+}
+
+
+ttml_test_cat
