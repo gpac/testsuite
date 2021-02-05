@@ -84,3 +84,5 @@ test_reframer "mha1-to-mhm1" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas
 
 test_reframer "usac" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.usac" "dump.mp4"
 
+test_reframer "aac71" "$EXTERNAL_MEDIA_DIR/mc_audio/aac_7.1.aac" "dump.aac"
+test_reframer "aac71brd" "$EXTERNAL_MEDIA_DIR/mc_audio/aac_7.1_brd.aac" "dump.aac"

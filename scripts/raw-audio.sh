@@ -9,8 +9,8 @@ return
 fi
 
 rawfile=$TEMP_DIR/raw.$1
-#test dumping to the given format
-do_test "$GPAC -i $mp4file -o $rawfile" "dump-$1"
+#test dumping to the given format - use faad
+do_test "$GPAC -blacklist=ffdec -i $mp4file -o $rawfile" "dump-$1"
 
 #on linux 32 bit we for now disable the hashes, they all differ due to different float/double precision
 if [ $GPAC_OSTYPE != "lin32" ] ; then
