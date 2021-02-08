@@ -15,10 +15,10 @@ if [ $3 != 0 ] ; then
 #avilib does not always give the same binary output, we cannot hash the result but we hash the inspect of the file
 #do_hash_test $dstfile "mux"
 
-do_test "$MP4BOX -aviraw video $dstfile" "aviraw-video"
-do_hash_test $TEMP_DIR/test_video.cmp "aviraw-video"
-do_test "$MP4BOX -aviraw audio $dstfile" "aviraw-audio"
-do_hash_test $TEMP_DIR/test_audio.mp3 "aviraw-audio"
+do_test "$MP4BOX -raw video $dstfile" "aviraw-video"
+do_hash_test $TEMP_DIR/test.cmp "aviraw-video"
+do_test "$MP4BOX -raw audio $dstfile" "aviraw-audio"
+do_hash_test $TEMP_DIR/test.mp3 "aviraw-audio"
 fi
 
 myinspect=$TEMP_DIR/inspect.txt

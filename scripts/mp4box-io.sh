@@ -46,7 +46,6 @@ mp4_test ()
  do_hint=1
  do_hash=1
  do_dnal=0
- do_avi=0
  no_btrt=0
 
  #ignore xlst & others, no hinting for images
@@ -120,8 +119,6 @@ mp4_test ()
   do_hint=0 ;;
  *.eac3 )
   do_hint=0 ;;
- *.cmp )
-  do_avi=1 ;;
  *.amr )
   no_btrt=1 ;;
  esac
@@ -175,11 +172,6 @@ fi
 
  if [ $do_hint != 0 ] ; then
   hint_test $mp4file &
- fi
-
- if [ $do_avi != 0 ] ; then
-  do_test "$MP4BOX -avi $mp4file -out $TEMP_DIR/test.avi" "avi-dump"
-  do_hash_test $TEMP_DIR/test.avi "avi-dump"
  fi
 
  #also test the isobmf demuxer
