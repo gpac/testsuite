@@ -11,7 +11,8 @@ filter.set_help("This filter provides a very simple javascript test for XHR");
 
 filter.set_arg({name: "url", desc: "URL to get", type: GF_PROP_STRING} );
 filter.set_arg({name: "sax", desc: "parse using sax", type: GF_PROP_BOOL, def: "false"} );
-
+//this will force the filter API to stay alive
+filter.set_cap({id: "StreamType", value: "File", output: true} );
 
 //just do an XHR and exit, no process/configure pid 
 filter.initialize = function() {
@@ -35,15 +36,15 @@ function do_xhr()
  };
  filter.xhr.onerror = function() {
   print(GF_LOG_ERROR, "Request failed");
-};
-filter.xhr.onreadystatechange = function() {
+ };
+ filter.xhr.onreadystatechange = function() {
   print(`XHR state ${this.readyState}`);
   if (this.readyState != 4) return;
 
   print(`headers: ${this.getAllResponseHeaders()}`);
   let h = this.getResponseHeader('Server');
 
-};
+ };
 
  if (filter.url) {
 	 filter.xhr.open("GET", filter.url);
@@ -59,8 +60,8 @@ filter.xhr.onreadystatechange = function() {
  filter.xhr.send();	
 
  if (filter.url && !filter.sax) {
-	filter.xhr.wait(10);
 	filter.xhr.abort();
  }
+
 }
 

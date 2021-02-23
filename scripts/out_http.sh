@@ -5,9 +5,12 @@
 #increase run time for tests on VM
 HTTP_SERVER_RUNFOR=6000
 
+ORIG_GPAC="$GPAC"
+TESTSUF=""
+
 test_http_server()
 {
-test_begin "http-server"
+test_begin "http$TESTSUF-server"
 if [ $test_skip = 1 ] ; then
  return
 fi
@@ -26,7 +29,7 @@ test_end
 
 test_http_server_dlist()
 {
-test_begin "http-server-dlist"
+test_begin "http$TESTSUF-server-dlist"
 if [ $test_skip = 1 ] ; then
  return
 fi
@@ -64,7 +67,7 @@ test_end
 
 test_http_server_sink()
 {
-test_begin "http-server-sink"
+test_begin "http$TESTSUF-server-sink"
 if [ $test_skip = 1 ] ; then
  return
 fi
@@ -85,7 +88,7 @@ test_end
 
 test_http_push()
 {
-test_begin "http-push"
+test_begin "http$TESTSUF-push"
 if [ $test_skip = 1 ] ; then
  return
 fi
@@ -109,7 +112,7 @@ test_end
 
 test_http_source()
 {
-test_begin "http-source"
+test_begin "http$TESTSUF-source"
 if [ $test_skip = 1 ] ; then
  return
 fi
@@ -133,7 +136,7 @@ test_end
 
 test_http_origin()
 {
-test_begin "http-origin"
+test_begin "http$TESTSUF-origin"
 if [ $test_skip = 1 ] ; then
  return
 fi
@@ -157,7 +160,7 @@ test_end
 
 test_http_dashraw()
 {
-test_begin "http-dashraw"
+test_begin "http$TESTSUF-dashraw"
 if [ $test_skip = 1 ] ; then
  return
 fi
@@ -187,7 +190,7 @@ test_end
 
 test_http_byteranges()
 {
-test_begin "http-byteranges"
+test_begin "http$TESTSUF-byteranges"
 if [ $test_skip = 1 ] ; then
  return
 fi
@@ -210,7 +213,7 @@ test_end
 
 test_http_dashpush_live()
 {
-test_begin "http-dashpush"
+test_begin "http$TESTSUF-dashpush"
 if [ $test_skip = 1 ] ; then
  return
 fi
@@ -239,7 +242,7 @@ test_end
 
 test_http_dashpush_vod()
 {
-test_begin "http-dashpush-vod"
+test_begin "http$TESTSUF-dashpush-vod"
 if [ $test_skip = 1 ] ; then
  return
 fi
@@ -264,7 +267,7 @@ test_end
 
 test_https_server()
 {
-test_begin "https-server"
+test_begin "http"$TESTSUF"s-server"
 if [ $test_skip = 1 ] ; then
  return
 fi
@@ -284,7 +287,7 @@ test_end
 
 test_http_server_push_pull()
 {
-test_begin "http-server-push-pull"
+test_begin "http$TESTSUF-server-push-pull"
 if [ $test_skip = 1 ] ; then
  return
 fi
@@ -308,6 +311,8 @@ test_end
 
 }
 
+do_tests()
+{
 
 #test server mode
 test_http_server
@@ -339,3 +344,29 @@ test_https_server
 
 #test http server + push instance + client
 test_http_server_push_pull
+
+}
+
+
+#check if we have libavformat support
+has_h2=`$GPAC -hx core 2>/dev/null | grep no-h2`
+if [ -n "$has_h2" ] ; then
+
+GPAC="$ORIG_GPAC -no-h2"
+TESTSUF=""
+
+do_tests
+
+GPAC="$ORIG_GPAC"
+TESTSUF="2"
+
+do_tests
+
+
+else
+
+do_tests
+
+fi
+
+

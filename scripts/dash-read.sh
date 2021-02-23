@@ -59,7 +59,13 @@ dur=4
 dash_test "live-timeline" "https://livesim.dashif.org/livesim/segtimeline_1/testpic_2s/Manifest.mpd" 0
 
 #HLS: certificate names mismatch (so use -broken-cert) and use low quality (highest is 8Mbps, may timeout)
-dash_test "hls" "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8 --start_with=min_bw -broken-cert -logs=dash:http:author:network@debug" 1
+hls_opts="-broken-cert"
+has_h2=`$GPAC -hx core 2>/dev/null | grep no-h2`
+if [ -n "$has_h2" ] ; then
+hls_opts="$hls_opts -no-h2"
+fi
+
+dash_test "hls" "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8 --start_with=min_bw $hls_opts -logs=dash:http:author:network@debug" 1
 
 dash_test "smooth" "http://amssamples.streaming.mediaservices.windows.net/69fbaeba-8e92-4740-aedc-ce09ae945073/AzurePromo.ism/manifest" 1
 #VOD test seq without tfxd
