@@ -16,7 +16,7 @@ tmode="network"
 fi
 
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i $2 inspect:allp:deep:test=$tmode:interleave=false:log=$myinspect$3 -graph -stats"
+do_test "$GPAC -i $2 inspect:allp:deep:test=$tmode:interleave=false:log=$myinspect$3 -graph -stats -clean-cache"
 do_hash_test $myinspect "inspect"
 
 test_end

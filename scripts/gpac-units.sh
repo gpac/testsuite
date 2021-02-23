@@ -183,6 +183,12 @@ do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 -lcf" "custom"
 fi
 test_end
 
+test_begin "gpac-mod-dirs"
+if [ test_skip != 1 ] ; then
+do_test "$GPAC -mod-dirs=$TEMP_DIR -h modules" "mod-dirs"
+fi
+test_end
+
 
 
 single_test "$GPAC -ltf UTSource:cov UTFilter:cov UTSink:cov" "gpac-filter-dump_props"
