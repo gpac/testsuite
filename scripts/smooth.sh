@@ -50,3 +50,12 @@ do_hash_test $TEMP_DIR/test.mpd "convert"
 
 fi
 test_end
+
+test_begin "piff-cenc-dual"
+if [ $test_skip != 1 ] ; then
+
+do_test "$MP4BOX -decrypt $EXTERNAL_MEDIA_DIR/smooth/piff_drm.xml $EXTERNAL_MEDIA_DIR/smooth/231526562.ismv -out $TEMP_DIR/test.mp4" "decrypt"
+do_hash_test $TEMP_DIR/test.mp4 "decrypt"
+
+fi
+test_end
