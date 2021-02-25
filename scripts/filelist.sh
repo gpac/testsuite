@@ -52,7 +52,25 @@ echo "#repeat=24" >> $plist
 echo "$MEDIA_DIR/auxiliary_files/logo.jpg" >> $plist
 
 test_flist "params" "-i $plist:fdur=1/1" 0
+rm $plist
 
 test_flist "enum" "flist:srcs=$MEDIA_DIR/auxiliary_files/\*.jpg:fsort=name" 0
 
+
+
+plist=plist-filters.m3u
+echo "" > $plist
+echo "$MEDIA_DIR/auxiliary_files/enst_video.h264 @ reframer:saps=1" >> $plist
+
+test_flist "filters" "-i $plist" 0
 rm $plist
+
+
+plist=plist-filters-dual.m3u
+echo "" > $plist
+echo "$MEDIA_DIR/auxiliary_files/enst_video.h264 @ reframer:saps=1 @-1" >> $plist
+
+test_flist "filters-dual" "-i $plist" 0
+rm $plist
+
+
