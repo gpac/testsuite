@@ -292,7 +292,7 @@ if [ $test_skip = 1 ] ; then
  return
 fi
 
-tmp_aac=$TEMP_DIR/test.aac
+tmp_aac=$TEMP_DIR/test.mp4
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac reframer @ -o $tmp_aac:dur=2" "make-input"
 
 #increase run time for tests on VM
