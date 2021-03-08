@@ -74,11 +74,11 @@ echo "$src2:ttml_dur=20k" >> $pl
 do_test "$MP4BOX -add $pl -new $mp4file" "import"
 do_hash_test $mp4file "import"
 
-#dasu using inband cues, each input in playlist resulting in a media segment
+#dash using inband cues, each input in playlist resulting in a media segment
 do_test "$MP4BOX -dash 1000 -profile onDemand -out $TEMP_DIR/vod.mpd $pl:sigcues" "dash-cues"
 do_hash_test $TEMP_DIR/ebu-ttd_sample_dashinit.mp4 "dash"
 
-rm $pl
+mv $pl $TEMP_DIR
 
 test_end
 }
