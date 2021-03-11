@@ -33,4 +33,5 @@ deps_test $MEDIA_DIR/auxiliary_files/enst_video.h264
 
 deps_test $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_640x360_192kbps.264
 deps_test $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_openGOP_640x360_160kbps.264
+deps_test $EXTERNAL_MEDIA_DIR/counter/counter_1280_720_I_25_tiled_1mb.hevc
 
