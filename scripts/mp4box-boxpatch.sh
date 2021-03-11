@@ -30,6 +30,15 @@ do_test "$MP4BOX -inter 0 -patch $MEDIA_DIR/boxpatch/box_add_root.xml $mp4file2 
 do_hash_test $mp4file1 "add-box-root-streamable"
 
 
+
+dst="$TEMP_DIR/broken.mp4"
+do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_video.h264 -patch $MEDIA_DIR/boxpatch/hdlr_rem.xml -new $dst" "rem-hdlr"
+do_hash_test $dst "rem-hdlr"
+
+dst2="$TEMP_DIR/fixed.mp4"
+do_test "$MP4BOX -no-check -patch $MEDIA_DIR/boxpatch/hdlr_add.xml $dst -out $dst2" "patch-hdlr"
+do_hash_test $dst "patch-hdlr"
+
 test_end
 
 

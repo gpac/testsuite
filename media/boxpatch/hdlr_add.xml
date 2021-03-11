@@ -1,0 +1,16 @@
+
+<GPACBOXES>
+<Box path="trak.mdia.mdhd+">
+<BS id="size" bits="32" value="33" /><!-- box size is 4+4+4+4+3*4+1-->
+<BS id="type" fcc="hdlr" />
+<BS id="version" bits="24" value="0" />
+<BS id="flags" bits="8" value="0" />
+<BS id="pre_defined" bits="32" value="0" />
+<BS id="handler_type" fcc="vide" />
+<BS id="reserved1" bits="32" value="0" />
+<BS id="reserved2" bits="32" value="0" />
+<BS id="reserved3" bits="32" value="0" />
+<BS id="name" bits="8" value="0" />
+</Box>
+</GPACBOXES>
+
