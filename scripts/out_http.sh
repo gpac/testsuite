@@ -348,7 +348,7 @@ test_http_server_push_pull
 }
 
 
-#check if we have libavformat support
+#check if we have nghttp2 support
 has_h2=`$GPAC -hx core 2>/dev/null | grep no-h2`
 if [ -n "$has_h2" ] ; then
 

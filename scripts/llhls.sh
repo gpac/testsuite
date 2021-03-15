@@ -8,6 +8,12 @@ HTTP_SERVER_RUNFOR=6000
 source=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_640x360_192kbps.264
 source2=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264
 
+#check if we have nghttp2 support
+has_h2=`$GPAC -hx core 2>/dev/null | grep no-h2`
+if [ -n "$has_h2" ] ; then
+GPAC="$GPAC -no-h2"
+fi
+
 
 test_llhls_gen()
 {
