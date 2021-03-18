@@ -27,7 +27,7 @@ test_end
 
 }
 
-test_resample "$EXTERNAL_MEDIA_DIR/import//aac_vbr_51_128k.aac" ":ch=2" ":ch=2:sr=22050"
-test_resample "$MEDIA_DIR/auxiliary_files/enst_audio.aac" ":sr=22050" ":ch=2:sr=22050"
+test_resample "$EXTERNAL_MEDIA_DIR/import//aac_vbr_51_128k.aac" ":och=2" ":ch=2:sr=22050"
+test_resample "$MEDIA_DIR/auxiliary_files/enst_audio.aac" ":osr=22050" ":ch=2:sr=22050"
 
 
