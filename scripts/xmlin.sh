@@ -72,7 +72,7 @@ test_end
 # Testing SWF conversion as SVG and import as 'stxt' stream
 test_begin "xmlin-swf-stxt"
 
-do_test "$MP4BOX -add $MEDIA_DIR/xmlin4/anim.swf:fmt=svg -new $TEMP_DIR/text-stxt-svg.mp4" "import"
+do_test "$MP4BOX -add $MEDIA_DIR/xmlin4/anim.swf -new $TEMP_DIR/text-stxt-svg.mp4" "import"
 do_hash_test $TEMP_DIR/text-stxt-svg.mp4 "import"
 
 rm -f $TEMP_DIR/test.svg
