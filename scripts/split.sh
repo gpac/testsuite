@@ -78,3 +78,30 @@ test_split "bifs-dual-ranges-to-mp4" $src ":xs=T00:00:02.500,T00:00:08.100:xe=T0
 test_split "bifs-dual-ranges-to-fmp4" $src ":xs=T00:00:02.500,T00:00:08.100:xe=T00:00:04.500,T00:00:09.500:splitrange" "mp4" "--store=frag" 1
 test_split "bifs-dur" $src ":xs=D2000" "mp4" "" 1
 test_split "bifs-size" $src ":xs=S100k" "mp4" "" 1
+
+test_split "raw-startonly" $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264 ":xs=0,10.0,18.0:splitrange" "mp4" "" 1
+
+test_split_props()
+{
+
+test_begin "split-$1"
+
+if [ $test_skip  = 1 ] ; then
+return
+fi
+
+dst=$TEMP_DIR/split.mpd
+
+do_test "$GPAC -i $2 reframer$3 @ -o $dst"  "split"
+do_hash_test $dst "split"
+
+inspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i $dst inspect:deep:interleave=false:log=$inspect" "inspect"
+do_hash_test "$inspect" "split"
+
+
+test_end
+}
+
+
+test_split_props "props" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264" ":xs=0,10.0,25.0:xe=5.0,15.0:props=#Period=P1,#Period=P2,#Period=P3"
