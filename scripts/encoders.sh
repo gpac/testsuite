@@ -117,3 +117,34 @@ do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/raw/raw.rgb:size=128x128 enc:c=png @ -o $d
 do_hash_test "$dst" "encode"
 fi
 test_end
+
+
+#audio encoding round-trip
+test_encoder_art()
+{
+
+test_begin "encoder-art-$1"
+
+if [ $test_skip  = 1 ] ; then
+return
+fi
+
+dst=$TEMP_DIR/enc.mp4
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/raw/raw_2s.pcm:ch=2:sr=44100 enc:c=$2 @ -o $dst" "encode"
+do_hash_test "$dst" "encode"
+
+dec=$TEMP_DIR/dec.pcm
+do_test "$GPAC -i $dst -o $dec -blacklist=maddec,faad" "decode-ff"
+do_hash_test "$dec" "decode-ff"
+
+dec_noff=$TEMP_DIR/dec_noff.pcm
+do_test "$GPAC -i $dst -o $dec_noff -blacklist=ffdec" "decode-noff"
+do_hash_test "$dec_noff" "decode-noff"
+
+
+test_end
+}
+
+
+test_encoder_art "aac" "aac"
+test_encoder_art "mp3" "mp3"
