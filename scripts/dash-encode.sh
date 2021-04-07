@@ -118,3 +118,28 @@ do_hash_test $myinspect "inspect"
 
 fi
 test_end
+
+
+test_begin "dash-encode-aac-mperiod"
+if [ $test_skip = 0 ] ; then
+
+src=$TEMP_DIR/source.pcm
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac resample:osr=48k:och=1 @ -o $src" "mkpcm"
+do_hash_test "$src" "mkpcm"
+
+src=$TEMP_DIR/source.pcm:sr=48k:ch=1
+
+dst=$TEMP_DIR/pcont/manifest.mpd
+
+do_test "$GPAC -i $src:FID=GEN:#ClampDur=9.6:#m=m1 reframer:SID=GEN:xs=0,9.6,19.2::props=#PStart=0,#PStart=9.6:#m=m2,#PStart=19.2:#m=m3 @ enc:c=aac:FID=A1 @ -o  $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$" "dash-pcont"
+do_hash_test $dst "mpd-pcont"
+
+
+dst=$TEMP_DIR/reprime/manifest.mpd
+
+do_test "$GPAC -i $src:FID=GEN:#ClampDur=9.6 reframer:SID=GEN:xs=0:props=#PStart=0:#m=m1 @ enc:c=aac:FID=A1 reframer:SID=GEN:xs=9.6:props=#PStart=9.6:#m=m2 @ enc:c=aac:FID=A2 reframer:SID=GEN:xs=19.2:props=#PStart=19.2:#m=m3 @ enc:c=aac:FID=A3 -o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$:SID=A1,A2,A3" "dash-reprime"
+do_hash_test $dst "mpd-reprime"
+
+
+fi
+test_end
