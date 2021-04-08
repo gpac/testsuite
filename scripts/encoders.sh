@@ -131,22 +131,24 @@ fi
 
 dst=$TEMP_DIR/enc.mp4
 do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/raw/raw_2s.pcm:ch=2:sr=44100 enc:c=$2 @ -o $dst" "encode"
-do_hash_test "$dst" "encode"
+
+#do hashes on decoded PCM inspect as decoders/encoders may give varying results
+inspect=$TEMP_DIR/enc_inspect.txt
+do_test "$GPAC -i $dst inspect:deep:fmt=%dts%-%cts%%lf%:log=$inspect" "inspect-enc"
+do_hash_test "$inspect" "encode"
 
 dec=$TEMP_DIR/dec.pcm
 do_test "$GPAC -i $dst -o $dec -blacklist=maddec,faad" "decode-ff"
 
-#do hash on decoded PCM inspect as decoders/encoders may give varying results
 inspect=$TEMP_DIR/dec_inspect.txt
-do_test "$GPAC -i $dec:ch=2:sr=44100 inspect:deep:log=$inspect" "inspect-ff"
+do_test "$GPAC -i $dec:ch=2:sr=44100 inspect:deep:fmt=%dts%-%cts%-%size%%lf%:log=$inspect" "inspect-ff"
 do_hash_test "$inspect" "decode-ff"
 
 dec=$TEMP_DIR/dec_noff.pcm
 do_test "$GPAC -i $dst -o $dec -blacklist=ffdec" "decode-noff"
 
-#do hash on decoded PCM inspect as decoders/encoders may give varying results
 inspect=$TEMP_DIR/dec_noff_inspect.txt
-do_test "$GPAC -i $dec:ch=2:sr=44100 inspect:deep:log=$inspect" "inspect-ff"
+do_test "$GPAC -i $dec:ch=2:sr=44100 inspect:deep:fmt=%dts%-%cts%-%size%%lf%:log=$inspect" "inspect-ff"
 do_hash_test "$inspect" "decode-noff"
 
 test_end
