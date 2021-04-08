@@ -135,12 +135,19 @@ do_hash_test "$dst" "encode"
 
 dec=$TEMP_DIR/dec.pcm
 do_test "$GPAC -i $dst -o $dec -blacklist=maddec,faad" "decode-ff"
-do_hash_test "$dec" "decode-ff"
 
-dec_noff=$TEMP_DIR/dec_noff.pcm
-do_test "$GPAC -i $dst -o $dec_noff -blacklist=ffdec" "decode-noff"
-do_hash_test "$dec_noff" "decode-noff"
+#do hash on decoded PCM inspect as decoders/encoders may give varying results
+inspect=$TEMP_DIR/dec_inspect.txt
+do_test "$GPAC -i $dec:ch=2:sr=44100 inspect:deep:log=$inspect" "inspect-ff"
+do_hash_test "$inspect" "decode-ff"
 
+dec=$TEMP_DIR/dec_noff.pcm
+do_test "$GPAC -i $dst -o $dec -blacklist=ffdec" "decode-noff"
+
+#do hash on decoded PCM inspect as decoders/encoders may give varying results
+inspect=$TEMP_DIR/dec_noff_inspect.txt
+do_test "$GPAC -i $dec:ch=2:sr=44100 inspect:deep:log=$inspect" "inspect-ff"
+do_hash_test "$inspect" "decode-noff"
 
 test_end
 }
