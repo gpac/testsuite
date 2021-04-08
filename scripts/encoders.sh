@@ -134,7 +134,7 @@ do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/raw/raw_2s.pcm:ch=2:sr=44100 enc:c=$2 @ -o
 
 #do hashes on decoded PCM inspect as decoders/encoders may give varying results
 inspect=$TEMP_DIR/enc_inspect.txt
-do_test "$GPAC -i $dst inspect:deep:fmt=%dts%-%cts%%lf%:log=$inspect" "inspect-enc"
+do_test "$GPAC -i $dst inspect:deep:fmt=%dts%-%cts%%lf%:test=encx:log=$inspect" "inspect-enc"
 do_hash_test "$inspect" "encode"
 
 dec=$TEMP_DIR/dec.pcm
