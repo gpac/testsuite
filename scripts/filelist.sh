@@ -11,8 +11,17 @@ fi
 
 myinspect=$TEMP_DIR/inspect.txt
 
+if [ $3 = 4 ] ; then
+
+do_test "$GPAC $2 inspect:allp:deep:interleave=false:log=$myinspect:fmt=%pn%-%dts%-%cts%-%rap%-%size%%lf% -graph -stats -logs=app@debug" "inspect"
+do_hash_test $myinspect "inspect"
+
+else
+
 do_test "$GPAC $2 inspect:allp:deep:interleave=false:log=$myinspect -graph -stats -logs=app@debug" "inspect"
 do_hash_test $myinspect "inspect"
+
+fi
 
 if [ $3 = 1 ] ; then
 dump=$TEMP_DIR/dump.rgb
@@ -175,7 +184,7 @@ echo "#raw out=2 in=4" > $plist
 echo "$MEDIA_DIR/auxiliary_files/enst_audio.aac" >> $plist
 echo "$MEDIA_DIR/auxiliary_files/count_english.mp3" >> $plist
 
-test_flist "splice-raw-2sr" "-i $plist" 2
+test_flist "splice-raw-2sr" "-i $plist" 4
 mv $plist $TEMP_DIR
 
 #raw audio, 2 config, keep
@@ -184,7 +193,7 @@ echo "#raw out=2 in=4 keep" > $plist
 echo "$MEDIA_DIR/auxiliary_files/enst_audio.aac" >> $plist
 echo "$MEDIA_DIR/auxiliary_files/count_english.mp3" >> $plist
 
-test_flist "splice-raw-2sr-keep" "-i $plist" 2
+test_flist "splice-raw-2sr-keep" "-i $plist" 4
 mv $plist $TEMP_DIR
 
 
