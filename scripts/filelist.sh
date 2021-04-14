@@ -149,13 +149,15 @@ test_flist "splice-start" "-i $plist" 2
 mv $plist $TEMP_DIR
 
 
+#Raw audio tests, only do inspect on timing, no crc nor decoded payload hases
+
 #raw audio, same config
 plist=pl_splice_ra.m3u
 echo "#raw out=2 in=4" > $plist
 echo "$MEDIA_DIR/auxiliary_files/enst_audio.aac" >> $plist
 echo "$MEDIA_DIR/auxiliary_files/enst_audio.aac" >> $plist
 
-test_flist "splice-raw" "-i $plist" 2
+test_flist "splice-raw" "-i $plist" 4
 mv $plist $TEMP_DIR
 
 #raw audio, same config, mark only
@@ -163,7 +165,7 @@ plist=pl_splice_ra_mark.m3u
 echo "#raw out=2 in=4 mark" > $plist
 echo "$MEDIA_DIR/auxiliary_files/enst_audio.aac" >> $plist
 
-test_flist "splice-raw-mark" "-i $plist" 2
+test_flist "splice-raw-mark" "-i $plist" 4
 mv $plist $TEMP_DIR
 
 #raw audio, same config, keep
@@ -172,7 +174,7 @@ echo "#raw out=2 in=4 keep" > $plist
 echo "$MEDIA_DIR/auxiliary_files/enst_audio.aac" >> $plist
 echo "$MEDIA_DIR/auxiliary_files/enst_audio.aac" >> $plist
 
-test_flist "splice-raw-keep" "-i $plist" 2
+test_flist "splice-raw-keep" "-i $plist" 4
 mv $plist $TEMP_DIR
 
 
