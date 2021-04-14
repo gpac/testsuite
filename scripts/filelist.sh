@@ -11,8 +11,17 @@ fi
 
 myinspect=$TEMP_DIR/inspect.txt
 
+if [ $3 = 4 ] ; then
+
+do_test "$GPAC $2 inspect:allp:deep:interleave=false:log=$myinspect:fmt=%pn%-%dts%-%cts%-%rap%-%size%%lf% -graph -stats -logs=app@debug" "inspect"
+do_hash_test $myinspect "inspect"
+
+else
+
 do_test "$GPAC $2 inspect:allp:deep:interleave=false:log=$myinspect -graph -stats -logs=app@debug" "inspect"
 do_hash_test $myinspect "inspect"
+
+fi
 
 if [ $3 = 1 ] ; then
 dump=$TEMP_DIR/dump.rgb
@@ -48,7 +57,7 @@ test_end
 test_flist "codecs" "flist:fdur=1/1:srcs=$MEDIA_DIR/auxiliary_files/logo.jpg,$MEDIA_DIR/auxiliary_files/logo.png" 0
 
 #generate plist in current dir not in temp, since we put relative path in playlist
-plist=plist.m3u
+plist=pl_swap.m3u
 
 echo "" > $plist
 #check decoder swapping (flist->png->ffsws to flist->m4v->ffsws)
@@ -63,7 +72,7 @@ test_flist "filter-swap" "-i $plist" 1
 mv $plist $TEMP_DIR
 
 
-plist=plist-params.m3u
+plist=pl_params.m3u
 echo "" > $plist
 #check decoder swapping (flist->png->ffsws to flist->m4v->ffsws)
 echo "#repeat=24" >> $plist
@@ -76,7 +85,7 @@ test_flist "enum" "flist:srcs=$MEDIA_DIR/auxiliary_files/\*.jpg:fsort=name" 0
 
 
 
-plist=plist-filters.m3u
+plist=pl_filters.m3u
 echo "" > $plist
 echo "$MEDIA_DIR/auxiliary_files/enst_video.h264 @ reframer:saps=1" >> $plist
 
@@ -84,7 +93,7 @@ test_flist "filters" "-i $plist" 0
 mv $plist $TEMP_DIR
 
 
-plist=plist-filters-dual.m3u
+plist=pl_filters-dual.m3u
 echo "" > $plist
 echo "$MEDIA_DIR/auxiliary_files/enst_video.h264 @ reframer:saps=1 @-1" >> $plist
 
@@ -138,4 +147,58 @@ echo "$MEDIA_DIR/auxiliary_files/enst_video.h264 && $MEDIA_DIR/auxiliary_files/e
 
 test_flist "splice-start" "-i $plist" 2
 mv $plist $TEMP_DIR
+
+
+#Raw audio tests, only do inspect on timing, no crc nor decoded payload hases
+
+#raw audio, same config
+plist=pl_splice_ra.m3u
+echo "#raw out=2 in=4" > $plist
+echo "$MEDIA_DIR/auxiliary_files/enst_audio.aac" >> $plist
+echo "$MEDIA_DIR/auxiliary_files/enst_audio.aac" >> $plist
+
+test_flist "splice-raw" "-i $plist" 4
+mv $plist $TEMP_DIR
+
+#raw audio, same config, mark only
+plist=pl_splice_ra_mark.m3u
+echo "#raw out=2 in=4 mark" > $plist
+echo "$MEDIA_DIR/auxiliary_files/enst_audio.aac" >> $plist
+
+test_flist "splice-raw-mark" "-i $plist" 4
+mv $plist $TEMP_DIR
+
+#raw audio, same config, keep
+plist=pl_splice_ra_keep.m3u
+echo "#raw out=2 in=4 keep" > $plist
+echo "$MEDIA_DIR/auxiliary_files/enst_audio.aac" >> $plist
+echo "$MEDIA_DIR/auxiliary_files/enst_audio.aac" >> $plist
+
+test_flist "splice-raw-keep" "-i $plist" 4
+mv $plist $TEMP_DIR
+
+
+
+
+#raw audio, 2 configs
+plist=pl_splice_ra_2sr.m3u
+echo "#raw out=2 in=4" > $plist
+echo "$MEDIA_DIR/auxiliary_files/enst_audio.aac" >> $plist
+echo "$MEDIA_DIR/auxiliary_files/count_english.mp3" >> $plist
+
+test_flist "splice-raw-2sr" "-i $plist" 4
+mv $plist $TEMP_DIR
+
+#raw audio, 2 config, keep
+plist=pl_splice_ra_2sr_keep.m3u
+echo "#raw out=2 in=4 keep" > $plist
+echo "$MEDIA_DIR/auxiliary_files/enst_audio.aac" >> $plist
+echo "$MEDIA_DIR/auxiliary_files/count_english.mp3" >> $plist
+
+test_flist "splice-raw-2sr-keep" "-i $plist" 4
+mv $plist $TEMP_DIR
+
+
+
+
 
