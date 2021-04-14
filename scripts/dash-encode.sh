@@ -131,7 +131,7 @@ src=$TEMP_DIR/source.pcm:sr=48k:ch=1
 
 dst=$TEMP_DIR/pcont/manifest.mpd
 
-do_test "$GPAC -i $src:FID=GEN:#ClampDur=9.6:#m=m1 reframer:SID=GEN:xs=0,9.6,19.2::props=#PStart=0,#PStart=9.6:#m=m2,#PStart=19.2:#m=m3 @ enc:c=aac:b=69k:FID=A1 @ -o  $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$" "dash-pcont"
+do_test "$GPAC -i $src:FID=GEN:#ClampDur=9.6:#m=m1 reframer:SID=GEN:xs=0,9.6,19.2::props=#PStart=0,#PStart=9.6:#m=m2,#PStart=19.2:#m=m3 @ enc:c=aac:b=69k @ -o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$" "dash-pcont"
 do_hash_test $dst "mpd-pcont"
 
 
@@ -140,6 +140,37 @@ dst=$TEMP_DIR/reprime/manifest.mpd
 do_test "$GPAC -i $src:FID=GEN:#ClampDur=9.6 reframer:SID=GEN:xs=0:props=#PStart=0:#m=m1 @ enc:c=aac:b=69k:FID=A1 reframer:SID=GEN:xs=9.6:props=#PStart=9.6:#m=m2 @ enc:c=aac:b=69k:FID=A2 reframer:SID=GEN:xs=19.2:props=#PStart=19.2:#m=m3 @ enc:c=aac:b=69k:FID=A3 -o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$:SID=A1,A2,A3" "dash-reprime"
 do_hash_test $dst "mpd-reprime"
 
+
+fi
+test_end
+
+
+test_begin "dash-encode-avc-mperiod"
+if [ $test_skip = 0 ] ; then
+
+src=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_320x180_128kbps.264
+
+dst=$TEMP_DIR/pcont/manifest.mpd
+do_test "$GPAC -i $src @ enc:c=avc:fintra=1.920:FID=GEN:#ClampDur=9.6:#m=m1 reframer:SID=GEN:xs=0,9.6,19.2::props=#PStart=0,#PStart=9.6:#m=m2,#PStart=19.2:#m=m3 @ -o $dst:stl:segdur=1.920:profile=onDemand:template='$m$_$Type$_$Number$'"
+do_hash_test $dst "mpd-pcont"
+
+fi
+test_end
+
+
+test_begin "dash-encode-aac-avc-mperiod"
+if [ $test_skip = 0 ] ; then
+
+srca=$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac
+srcv=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_320x180_128kbps.264
+dst=$TEMP_DIR/source.mp4
+do_test "$GPAC -i $srca @ resample:osr=48k:och=1 @ enc:c=aac:FID=GENA -i $srcv @ enc:c=avc:fintra=1.920:FID=GENV -o $dst:SID=GENA,GENV" "mkavsource"
+do_hash_test "$src" "mkavsource"
+
+src=$dst
+dst=$TEMP_DIR/pcont/manifest.mpd
+do_test "$GPAC -i $src:FID=GEN:#ClampDur=9.6:#m=m1 @ enc:c=avc:fintra=1.920:FID=GENV @1 enc:c=aac:FID=GENA reframer:SID=GENA,GENV:xs=0,9.6,19.2::props=#PStart=0,#PStart=9.6:#m=m2,#PStart=19.2:#m=m3 @ -o $dst:stl:segdur=1.920:profile=onDemand:template='$m$_$Type$_$Number$'"
+do_hash_test $dst "mpd-pcont"
 
 fi
 test_end
