@@ -151,7 +151,7 @@ if [ $test_skip = 0 ] ; then
 src=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_320x180_128kbps.264
 
 dst=$TEMP_DIR/manifest.mpd
-do_test "$GPAC -i $src @ enc:c=avc:fintra=1.920:FID=GEN:#ClampDur=9.6:#m=m1 reframer:SID=GEN:xs=0,9.6,19.2::props=#PStart=0,#PStart=9.6:#m=m2,#PStart=19.2:#m=m3 @ -o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$"
+do_test "$GPAC -i $src @ enc:c=avc:fintra=1.920:FID=GEN:#ClampDur=9.6:#m=m1 reframer:SID=GEN:xs=0,9.6,19.2::props=#PStart=0,#PStart=9.6:#m=m2,#PStart=19.2:#m=m3 @ -o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$" "dash"
 do_hash_test $dst "mpd-pcont"
 
 fi
@@ -161,16 +161,54 @@ test_end
 test_begin "dash-encode-aac-avc-mperiod"
 if [ $test_skip = 0 ] ; then
 
-srca=$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:#Delay=-1024
+srca=$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:gfloc:#Delay=-1024
 srcv=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_320x180_128kbps.264
-dst=$TEMP_DIR/source.mp4
-do_test "$GPAC -i $srca @ resample:osr=48k:och=1 @ enc:c=aac:FID=GENA -i $srcv @ enc:c=avc:fintra=1.920:FID=GENV -o $dst:SID=GENA,GENV" "mkavsource"
-do_hash_test "$src" "mkavsource"
 
-src=$dst
-dst=$TEMP_DIR/manifest.mpd
-do_test "$GPAC -i $src:FID=GEN:#ClampDur=9.6:#m=m1 @ enc:c=avc:fintra=1.920:FID=GENV @1 enc:c=aac:FID=GENA reframer:SID=GENA,GENV:xs=0,9.6,19.2::props=#PStart=0,#PStart=9.6:#m=m2,#PStart=19.2:#m=m3 @ -o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$"
+#test splicing input in 3 periods, all should have period-continuity
+dst=$TEMP_DIR/pcont/manifest.mpd
+do_test "$GPAC -i $srca @ resample:osr=48k:och=1 @ enc:c=aac:FID=GENA -i $srcv @ enc:c=avc:fintra=1.920:FID=GENV reframer:#ClampDur=9.6:SID=GENA,GENV:xs=0,9.6,19.2::props=#PStart=0:#m=m1,#PStart=9.6:#m=m2,#PStart=19.2:#m=m3 @ -o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$" "dash-pcont"
 do_hash_test $dst "mpd-pcont"
+
+
+#test splicing input in 2 periods, the second period shall not have period-continuity
+dst=$TEMP_DIR/pdisc/manifest.mpd
+do_test "$GPAC -i $srca @ resample:osr=48k:och=1 @ enc:c=aac:FID=GENA -i $srcv @ enc:c=avc:fintra=1.920:FID=GENV reframer:#ClampDur=9.6:SID=GENA,GENV:xs=0,19.2::props=#PStart=0:#m=m1,#PStart=9.6:#m=m2 @ -o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$" "dash-pdisc"
+do_hash_test $dst "mpd-pdisc"
 
 fi
 test_end
+
+
+
+test_begin "dash-encode-aac-avc-mperiod-splice"
+if [ $test_skip = 0 ] ; then
+
+srca=$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:gfloc:#Delay=-1024
+srcv=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_320x180_128kbps.264
+
+#test splicing input in 2 periods, inserting a third independent content in the middle, there should be period-continuity between first and third
+dst=$TEMP_DIR/pcont/manifest.mpd
+do_test "$GPAC -i $srca @ resample:osr=48k:och=1 @ enc:c=aac:FID=GENA1 -i $srcv @ enc:c=avc:fintra=1.920:FID=GENV1 reframer:#ClampDur=9.6:FID=RF1:SID=GENA1,GENV1:xs=0,9.6::props=#PStart=0:#m=m1,#PStart=19.2:#m=m3 \
+-i $srca @ resample:osr=48k:och=1 @ enc:c=aac:FID=GENA2 -i $srcv @ enc:c=avc:fintra=1.920:FID=GENV2 reframer:#ClampDur=9.6:FID=RF2:SID=GENA2,GENV2:xs=9.6:#PStart=9.6:#m=m2:#BUrl=http://ROMAIN \
+-o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$:SID=RF1,RF2" "dash-pcont"
+do_hash_test $dst "mpd-pcont"
+
+
+#test splicing input in 2 periods, inserting a third independent content in the middle, there should NOT be period-continuity between first and third
+dst=$TEMP_DIR/pdisc/manifest.mpd
+do_test "$GPAC -i $srca @ resample:osr=48k:och=1 @ enc:c=aac:FID=GENA1 -i $srcv @ enc:c=avc:fintra=1.920:FID=GENV1 reframer:#ClampDur=9.6:FID=RF1:SID=GENA1,GENV1:xs=0,19.2::props=#PStart=0:#m=m1,#PStart=19.2:#m=m3 \
+-i $srca @ resample:osr=48k:och=1 @ enc:c=aac:FID=GENA2 -i $srcv @ enc:c=avc:fintra=1.920:FID=GENV2 reframer:#ClampDur=9.6:FID=RF2:SID=GENA2,GENV2:xs=9.6:#PStart=9.6:#m=m2:#BUrl=http://ROMAIN \
+-o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$:SID=RF1,RF2" "dash-pdisc"
+do_hash_test $dst "mpd-pdisc"
+
+fi
+test_end
+
+
+
+
+
+
+
+
+
