@@ -81,6 +81,13 @@ test_split "bifs-size" $src ":xs=S100k" "mp4" "" 1
 
 test_split "raw-startonly" $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264 ":xs=0,10.0,18.0:splitrange" "mp4" "" 1
 
+#create simple MP4 with video and audio
+src=$TEMP_DIR/src.mp4
+$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_main_1280x720_512kbps.264 -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:#Delay=-1024 -o $src 2>/dev/null
+#test sample-accurate range extraction, this should give us exactly one second of audio and video in output
+test_split "seek" $src ":xs=30/25:xe=55/25:xround=seek" "mp4" "" 0
+
+
 test_split_props()
 {
 
