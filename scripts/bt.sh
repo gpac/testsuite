@@ -138,7 +138,7 @@ esac
  #check for extern proto, and make MP4 out of lib
  if [ $extern_proto = 1 ] ; then
   libfile="${btfile%.*}-lib.bt"
-  do_test "$MP4BOX -mp4 $libfile" "Proto-lib-BT->MP4"
+  $MP4BOX -mp4 $libfile 2> /dev/null
   libfile="${btfile%.*}-lib.mp4"
  fi
 

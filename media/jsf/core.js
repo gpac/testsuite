@@ -221,6 +221,7 @@ function test_file()
 	file.close();
 
 	sys.del('mytest/myfile2.txt');
+    sys.rmdir('mytest');
 
 }
 

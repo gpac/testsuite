@@ -92,14 +92,14 @@ do_test "gpac -for-test -mem-track test $MEDIA_DIR/auxiliary_files/logo.jpg $MED
 do_hash_test $TEMP_DIR/logs.txt  "inspect-res"
 
 #test regular
-gpac -for-test -mem-track -alias='test src=@{1} inspect:log=src=@{N-1}' -aliasdoc='test some doc' 2> /dev/null
-do_test "gpac -for-test -mem-track test $MEDIA_DIR/auxiliary_files/logo.jpg -k $TEMP_DIR/logs.txt -sloop=2" "gpac-alias-nargs"
-do_hash_test $TEMP_DIR/logs.txt  "inspect-res2"
+gpac -for-test -mem-track -alias='test src=@{1} inspect:log=@{N-1}' -aliasdoc='test some doc' 2> /dev/null
+do_test "gpac -for-test -mem-track test $MEDIA_DIR/auxiliary_files/logo.jpg -k $TEMP_DIR/logs2.txt -sloop=2" "gpac-alias-nargs"
+do_hash_test $TEMP_DIR/logs2.txt  "inspect-res2"
 
 #test list
-gpac -for-test -mem-track -alias='test flist:srcs=@{-:N-1} inspect:log=src=@{N}' -aliasdoc='test some doc' 2> /dev/null
-do_test "gpac -for-test -mem-track -threads=-1 test $MEDIA_DIR/auxiliary_files/logo.jpg $MEDIA_DIR/auxiliary_files/logo.png $TEMP_DIR/logs.txt" "gpac-alias-list"
-do_hash_test $TEMP_DIR/logs.txt  "inspect-res3"
+gpac -for-test -mem-track -alias='test flist:srcs=@{-:N-1} inspect:log=@{N}' -aliasdoc='test some doc' 2> /dev/null
+do_test "gpac -for-test -mem-track -threads=-1 test $MEDIA_DIR/auxiliary_files/logo.jpg $MEDIA_DIR/auxiliary_files/logo.png $TEMP_DIR/logs3.txt" "gpac-alias-list"
+do_hash_test $TEMP_DIR/logs3.txt  "inspect-res3"
 
 fi
 test_end
