@@ -35,7 +35,7 @@ if [ $test_skip = 1 ] ; then
 fi
 
 touch $TEMP_DIR/file.txt
-mkdir $TEMP_DIR/mydir
+mkdir -p $TEMP_DIR/mydir
 touch $TEMP_DIR/mydir/other.txt
 
 do_test "$GPAC httpout:port=8080:quit:dlist:rdirs=$TEMP_DIR" "http-server-dlist" &
@@ -368,5 +368,3 @@ else
 do_tests
 
 fi
-
-
