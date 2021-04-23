@@ -39,3 +39,35 @@ test_split "avc" $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_320x180_12
 test_split "aac" $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac
 
 
+test_split_av()
+{
+test_begin "mp4box-split-av"
+if [ "$test_skip" = 1 ] ; then
+return
+fi
+
+mp4file="$TEMP_DIR/src.mp4"
+#create AV file video B-frames and AAC priming of 1 frame
+do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_main_320x180_128kbps.264 -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:sopt:#Delay=-1024 -new $mp4file" "mksrc"
+do_hash_test $mp4file "mksrc"
+
+dst="$TEMP_DIR/splitx.mp4"
+do_test "$MP4BOX -splitx 2.7:4.2 $mp4file -out $dst" "splitx"
+do_hash_test $dst "splitx"
+
+dst="$TEMP_DIR/splitz.mp4"
+do_test "$MP4BOX -splitz 2.7:4.2 $mp4file -out $dst" "splitz"
+do_hash_test $dst "splitz"
+
+dst="$TEMP_DIR/splitg.mp4"
+do_test "$MP4BOX -splitg 2.7:4.2 $mp4file -out $dst" "splitg"
+do_hash_test $dst "splitg"
+
+dst="$TEMP_DIR/splitf.mp4"
+do_test "$MP4BOX -splitf 2.7:4.2 $mp4file -out $dst" "splitf"
+do_hash_test $dst "splitf"
+
+test_end
+}
+
+test_split_av
