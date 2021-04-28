@@ -51,18 +51,22 @@ mp4file="$TEMP_DIR/src.mp4"
 do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_main_320x180_128kbps.264 -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:sopt:#Delay=-1024 -new $mp4file" "mksrc"
 do_hash_test $mp4file "mksrc"
 
+#result is 2.0->4.2
 dst="$TEMP_DIR/splitx.mp4"
 do_test "$MP4BOX -splitx 2.7:4.2 $mp4file -out $dst" "splitx"
 do_hash_test $dst "splitx"
 
+#result is 3.0->5
 dst="$TEMP_DIR/splitz.mp4"
 do_test "$MP4BOX -splitz 2.7:4.2 $mp4file -out $dst" "splitz"
 do_hash_test $dst "splitz"
 
+#result is 2.0->5.0
 dst="$TEMP_DIR/splitg.mp4"
 do_test "$MP4BOX -splitg 2.7:4.2 $mp4file -out $dst" "splitg"
 do_hash_test $dst "splitg"
 
+#result is 2.7->4.2
 dst="$TEMP_DIR/splitf.mp4"
 do_test "$MP4BOX -splitf 2.7:4.2 $mp4file -out $dst" "splitf"
 do_hash_test $dst "splitf"
