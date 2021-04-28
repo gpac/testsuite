@@ -23,8 +23,8 @@ test_bsrw "sar-m4v" $MEDIA_DIR/auxiliary_files/count_video.cmp ":sar=4/3:m4vpl=9
 #AVC profile rewrite tests
 test_bsrw "prof-avc" $MEDIA_DIR/auxiliary_files/enst_video.h264 ":prof=90:pcomp=3:lev=10"
 #AVC and HEVC SEI removal tests
-test_bsrw "nosei-avc" $MEDIA_DIR/auxiliary_files/enst_video.h264 ":remsei"
-test_bsrw "nosei-hevc" $MEDIA_DIR/auxiliary_files/counter.hvc ":remsei"
+test_bsrw "nosei-avc" $MEDIA_DIR/auxiliary_files/enst_video.h264 ":rmsei"
+test_bsrw "nosei-hevc" $MEDIA_DIR/auxiliary_files/counter.hvc ":rmsei"
 
 
 if [ $EXTERNAL_MEDIA_AVAILABLE = 0 ] ; then
