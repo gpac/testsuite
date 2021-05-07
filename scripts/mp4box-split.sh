@@ -71,6 +71,22 @@ dst="$TEMP_DIR/splitf.mp4"
 do_test "$MP4BOX -splitf 2.7:4.2 $mp4file -out $dst" "splitf"
 do_hash_test $dst "splitf"
 
+
+#result is 2.0->4.2
+dst="$TEMP_DIR/splitx-flat.mp4"
+do_test "$MP4BOX -splitx 2.7:4.2 $mp4file -out $dst -flat" "splitx-flat"
+do_hash_test $dst "splitx-flat"
+
+#result is 2.0->4.2
+dst="$TEMP_DIR/splitx-frag.mp4"
+do_test "$MP4BOX -splitx 2.7:4.2 $mp4file -out $dst -frag 500" "splitx-frag"
+do_hash_test $dst "splitx-frag"
+
+#result is 2.0->4.2
+dst="$TEMP_DIR/splitx-fast.mp4"
+do_test "$MP4BOX -splitx 2.7:4.2 $mp4file -out $dst -newfs" "splitx-fast"
+do_hash_test $dst "splitx-fast"
+
 test_end
 }
 
