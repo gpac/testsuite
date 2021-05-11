@@ -37,7 +37,7 @@ ts_test "temi2" "-i $mp4file" ":first_pts=90k:temi=#PV#T1000#I100#L#4"
 
 ts_test "pcr" "-i $mp4file" ":max_pcr=40:pcr_only:pcr_offset=30000:flush_rap"
 
-ts_test "sdt" "-i $mp4file" ":name=GPACTest:provider:GPAC:sdt_rate=500"
+ts_test "sdt" "-i $mp4file" ":name=GPACTest:provider=GPAC:sdt_rate=500"
 
 ts_test "srt" "-i $MEDIA_DIR/auxiliary_files/subtitle.srt" ""
 
