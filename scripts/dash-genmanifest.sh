@@ -28,7 +28,7 @@ do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_640x3
 do_test "$MP4BOX -dash 2000 -profile live $TEMP_DIR/source.mp4 -out $TEMP_DIR/test.mpd" "dash"
 
 plist=$TEMP_DIR/input.txt
-echo "source_dashinit.mp4" > $plist
+echo "source_dashinit.mp4:sigfrag" > $plist
 echo "source_dash1.m4s" >> $plist
 echo "source_dash2.m4s" >> $plist
 echo "source_dash3.m4s" >> $plist
