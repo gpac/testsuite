@@ -12,7 +12,16 @@ fi
 #we don't check CRC as we will likely not be bit-exact (codecs, afvilter behavior on various platforms/version)
 myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC $2 @ inspect:interleave=false:deep:fmt=%pn%-%dts%-%cts%-%sap%-%size%%lf%:log=$myinspect$3 -graph -stats -blacklist=vtbdec,nvdec$4" "inspect"
+
+
+#a2v-cfg hash test in winXX different from osx due tu different handing of fps and cts in libavfilter, do not hash
+if [ $1 == "a2v-cfg" ] ; then
+if [ $GPAC_OSTYPE != "win32" ] && [ $GPAC_OSTYPE != "win64" ]  ; then
 do_hash_test $myinspect "inspect"
+fi
+else
+do_hash_test $myinspect "inspect"
+fi
 
 test_end
 }
