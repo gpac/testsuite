@@ -29,5 +29,10 @@ do_test "$MP4BOX -inter 500 $iff_ref -out $iff_ref_remux" "remux-iff-ref"
 do_hash_test $iff_ref_remux "remux-iff-ref"
 
 
+#remove track from a heif with sample ref
+iff_ref_remtk="$TEMP_DIR/img_ref_remtk.heic"
+do_test "$MP4BOX -rem 1 $iff_ref -out $iff_ref_remtk" "remux-iff-remtk"
+do_hash_test $iff_ref_remtk "remux-iff-remtk"
+
 
 test_end
