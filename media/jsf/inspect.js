@@ -166,6 +166,7 @@ filter.process = function()
 				pid.clear_eos(false);
 				pid.check_caps();
 				pid.discard_block();
+				let clone = pck.clone()
 			}
 	
 			print(GF_LOG_INFO, "PID" + pid.name + " PCK" + pid.nb_pck + " DTS " + pck.dts + " CTS " + pck.cts + " SAP " + pck.sap + " size " + pck.size);
