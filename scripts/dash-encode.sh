@@ -125,9 +125,13 @@ if [ $test_skip = 0 ] ; then
 
 src=$TEMP_DIR/source.pcm
 do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac resample:osr=48k:och=1 @ -o $src" "mkpcm"
-do_hash_test "$src" "mkpcm"
-
 src=$TEMP_DIR/source.pcm:sr=48k:ch=1
+
+#do not hash directly, decode diff may happen - hash inspect with no CRC
+insp=$TEMP_DIR/sr_inspect.txt
+do_test "$GPAC -i $src inspect:deep:test=nocrc:log=$insp" "mkpcm-inspect"
+do_hash_test $insp "mkpcm-inspect"
+
 
 dst=$TEMP_DIR/pcont/manifest.mpd
 
