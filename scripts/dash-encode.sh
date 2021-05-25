@@ -135,13 +135,14 @@ do_hash_test $insp "mkpcm-inspect"
 
 dst=$TEMP_DIR/pcont/manifest.mpd
 
-do_test "$GPAC -i $src:FID=GEN:#ClampDur=9.6:#m=m1 reframer:SID=GEN:xs=0,9.6,19.2::props=#PStart=0,#PStart=9.6:#m=m2,#PStart=19.2:#m=m3 @ enc:c=aac:b=69k @ -o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$" "dash-pcont"
+#also test mpd timescale for segment list and pto
+do_test "$GPAC -i $src:FID=GEN:#ClampDur=9.6:#m=m1 reframer:SID=GEN:xs=0,9.6,19.2::props=#PStart=0,#PStart=9.6:#m=m2,#PStart=19.2:#m=m3 @ enc:c=aac:b=69k @ -o $dst:stl:segdur=1.920:timescale=1000:template=\$m\$_\$Type\$_\$Number\$" "dash-pcont"
 do_hash_test $dst "mpd-pcont"
 
 
 dst=$TEMP_DIR/reprime/manifest.mpd
 
-do_test "$GPAC -i $src:FID=GEN:#ClampDur=9.6 reframer:SID=GEN:xs=0:props=#PStart=0:#m=m1 @ enc:c=aac:b=69k:FID=A1 reframer:SID=GEN:xs=9.6:props=#PStart=9.6:#m=m2 @ enc:c=aac:b=69k:FID=A2 reframer:SID=GEN:xs=19.2:props=#PStart=19.2:#m=m3 @ enc:c=aac:b=69k:FID=A3 -o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$:SID=A1,A2,A3" "dash-reprime"
+do_test "$GPAC -i $src:FID=GEN:#ClampDur=9.6 reframer:SID=GEN:xs=0:props=#PStart=0:#m=m1 @ enc:c=aac:b=69k:FID=A1 reframer:SID=GEN:xs=9.6:props=#PStart=9.6:#m=m2 @ enc:c=aac:b=69k:FID=A2 reframer:SID=GEN:xs=19.2:props=#PStart=19.2:#m=m3 @ enc:c=aac:b=69k:FID=A3 -o $dst:stl:segdur=1.920:template=\$m\$_\$Type\$_\$Number\$:SID=A1,A2,A3" "dash-reprime"
 do_hash_test $dst "mpd-reprime"
 
 
@@ -155,7 +156,7 @@ if [ $test_skip = 0 ] ; then
 src=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_320x180_128kbps.264
 
 dst=$TEMP_DIR/manifest.mpd
-do_test "$GPAC -i $src @ enc:c=avc:fintra=1.920:FID=GEN:#ClampDur=9.6:#m=m1 reframer:SID=GEN:xs=0,9.6,19.2::props=#PStart=0,#PStart=9.6:#m=m2,#PStart=19.2:#m=m3 @ -o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$" "dash"
+do_test "$GPAC -i $src @ enc:c=avc:fintra=1.920:FID=GEN:#ClampDur=9.6:#m=m1 reframer:SID=GEN:xs=0,9.6,19.2::props=#PStart=0,#PStart=9.6:#m=m2,#PStart=19.2:#m=m3 @ -o $dst:stl:segdur=1.920:template=\$m\$_\$Type\$_\$Number\$" "dash"
 do_hash_test $dst "mpd-pcont"
 
 fi
@@ -170,13 +171,13 @@ srcv=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_320x180_128kbps.264
 
 #test splicing input in 3 periods, all should have period-continuity
 dst=$TEMP_DIR/pcont/manifest.mpd
-do_test "$GPAC -i $srca @ resample:osr=48k:och=1 @ enc:c=aac:FID=GENA -i $srcv @ enc:c=avc:fintra=1.920:FID=GENV reframer:#ClampDur=9.6:SID=GENA,GENV:xs=0,9.6,19.2::props=#PStart=0:#m=m1,#PStart=9.6:#m=m2,#PStart=19.2:#m=m3 @ -o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$" "dash-pcont"
+do_test "$GPAC -i $srca @ resample:osr=48k:och=1 @ enc:c=aac:FID=GENA -i $srcv @ enc:c=avc:fintra=1.920:FID=GENV reframer:#ClampDur=9.6:SID=GENA,GENV:xs=0,9.6,19.2::props=#PStart=0:#m=m1,#PStart=9.6:#m=m2,#PStart=19.2:#m=m3 @ -o $dst:stl:segdur=1.920:template=\$m\$_\$Type\$_\$Number\$" "dash-pcont"
 do_hash_test $dst "mpd-pcont"
 
 
 #test splicing input in 2 periods, the second period shall not have period-continuity
 dst=$TEMP_DIR/pdisc/manifest.mpd
-do_test "$GPAC -i $srca @ resample:osr=48k:och=1 @ enc:c=aac:FID=GENA -i $srcv @ enc:c=avc:fintra=1.920:FID=GENV reframer:#ClampDur=9.6:SID=GENA,GENV:xs=0,19.2::props=#PStart=0:#m=m1,#PStart=9.6:#m=m2 @ -o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$" "dash-pdisc"
+do_test "$GPAC -i $srca @ resample:osr=48k:och=1 @ enc:c=aac:FID=GENA -i $srcv @ enc:c=avc:fintra=1.920:FID=GENV reframer:#ClampDur=9.6:SID=GENA,GENV:xs=0,19.2::props=#PStart=0:#m=m1,#PStart=9.6:#m=m2 @ -o $dst:stl:segdur=1.920:template=\$m\$_\$Type\$_\$Number\$" "dash-pdisc"
 do_hash_test $dst "mpd-pdisc"
 
 fi
@@ -194,7 +195,7 @@ srcv=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_320x180_128kbps.264
 dst=$TEMP_DIR/pcont/manifest.mpd
 do_test "$GPAC -i $srca @ resample:osr=48k:och=1 @ enc:c=aac:FID=GENA1 -i $srcv @ enc:c=avc:fintra=1.920:FID=GENV1 reframer:#ClampDur=9.6:FID=RF1:SID=GENA1,GENV1:xs=0,9.6::props=#PStart=0:#m=m1,#PStart=19.2:#m=m3 \
 -i $srca @ resample:osr=48k:och=1 @ enc:c=aac:FID=GENA2 -i $srcv @ enc:c=avc:fintra=1.920:FID=GENV2 reframer:#ClampDur=9.6:FID=RF2:SID=GENA2,GENV2:xs=9.6:#PStart=9.6:#m=m2:#BUrl=http://ROMAIN \
--o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$:SID=RF1,RF2" "dash-pcont"
+-o $dst:stl:segdur=1.920:template=\$m\$_\$Type\$_\$Number\$:SID=RF1,RF2" "dash-pcont"
 do_hash_test $dst "mpd-pcont"
 
 
@@ -202,7 +203,7 @@ do_hash_test $dst "mpd-pcont"
 dst=$TEMP_DIR/pdisc/manifest.mpd
 do_test "$GPAC -i $srca @ resample:osr=48k:och=1 @ enc:c=aac:FID=GENA1 -i $srcv @ enc:c=avc:fintra=1.920:FID=GENV1 reframer:#ClampDur=9.6:FID=RF1:SID=GENA1,GENV1:xs=0,19.2::props=#PStart=0:#m=m1,#PStart=19.2:#m=m3 \
 -i $srca @ resample:osr=48k:och=1 @ enc:c=aac:FID=GENA2 -i $srcv @ enc:c=avc:fintra=1.920:FID=GENV2 reframer:#ClampDur=9.6:FID=RF2:SID=GENA2,GENV2:xs=9.6:#PStart=9.6:#m=m2:#BUrl=http://ROMAIN \
--o $dst:stl:segdur=1.920:profile=onDemand:template=\$m\$_\$Type\$_\$Number\$:SID=RF1,RF2" "dash-pdisc"
+-o $dst:stl:segdur=1.920:template=\$m\$_\$Type\$_\$Number\$:SID=RF1,RF2" "dash-pdisc"
 do_hash_test $dst "mpd-pdisc"
 
 fi
