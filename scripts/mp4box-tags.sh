@@ -50,3 +50,16 @@ do_hash_test $mp4file "create"
 do_test "$MP4BOX -info $mp4file" "info"
 fi
 test_end
+
+
+
+test_begin "mp4box-opus-tags"
+if [ "$test_skip" != 1 ] ; then
+
+mp4file="$TEMP_DIR/test.mp4"
+do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/misc/36-11-pictures.opus -new $mp4file" "create"
+do_hash_test $mp4file "create"
+
+do_test "$MP4BOX -info $mp4file" "info"
+fi
+test_end
