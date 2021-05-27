@@ -34,5 +34,19 @@ iff_ref_remtk="$TEMP_DIR/img_ref_remtk.heic"
 do_test "$MP4BOX -rem 1 $iff_ref -out $iff_ref_remtk" "remux-iff-remtk"
 do_hash_test $iff_ref_remtk "remux-iff-remtk"
 
+#add item
+iff_ref_add_cp="$TEMP_DIR/img_ref_add_copy.heic"
+do_test "$MP4BOX -add-image it=1 $iff_ref_remtk -out $iff_ref_add_cp" "add-img-copy"
+do_hash_test $iff_ref_add_cp "add-img-copy"
+
+#add item ref
+iff_ref_add_ref="$TEMP_DIR/img_ref_add_ref.heic"
+do_test "$MP4BOX -add-image it=1:ref $iff_ref_remtk -out $iff_ref_add_ref" "add-img-ref"
+do_hash_test $iff_ref_add_ref "add-img-ref"
+
+#remove item ref
+iff_ref_rem_ref="$TEMP_DIR/img_ref_rem_ref.heic"
+do_test "$MP4BOX -rem-image 1 $iff_ref_add_ref -out $iff_ref_rem_ref" "rem-img-ref"
+do_hash_test $iff_ref_rem_ref "rem-img-ref"
 
 test_end
