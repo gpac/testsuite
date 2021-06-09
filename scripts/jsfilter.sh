@@ -119,3 +119,6 @@ single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 -js=$MEDIA_DIR/
 
 # GPAC JS controler API with custom DASH algo
 single_test "$GPAC -js=$MEDIA_DIR/jsf/custom_dash_bind.js" "jsf-DASH-custom"
+
+# GPAC JS process exec and worker (QJS libc module)
+single_test "$GPAC -js=$MEDIA_DIR/jsf/worker_exec.js" "jsf-worker-exec"
