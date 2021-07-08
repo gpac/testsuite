@@ -84,7 +84,8 @@ filter.process = function()
 
   /*create a canvas for our output data if first time, otherwise reassign internal canvas data*/
   if (!this.canvas) {
-    this.canvas = new evg.Canvas3D(width, height, filter.pfmt, pck.data);
+    this.canvas = new evg.Canvas(width, height, filter.pfmt, pck.data);
+    this.canvas.enable_3d();
     this.canvas.depth_buffer = new ArrayBuffer(width * height * 4);
     setup_shader();
   } else {    

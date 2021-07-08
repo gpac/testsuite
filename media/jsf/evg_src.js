@@ -305,6 +305,9 @@ function do_coverage()
 
 	//canvas
 	let cnv = new evg.Canvas(32, 32, 'rgb');
+	cnv.level = GF_RASTER_HIGH_QUALITY;
+	let lev = cnv.level;
+
 	let c = cnv.centered;
 	cnv.clear('yellow');
 	let resY = cnv.toYUV(1.0, 0.0, 0.0);
@@ -356,6 +359,7 @@ function do_coverage()
 	cnv.fill(atxp);
 
 	cnv = new evg.Canvas(32, 32, 'argb');
+	cnv.enable_threading(1);
 	cnv.matrix = mx;
 	cnv.path = text;
 	let myb = new evg.SolidBrush();
@@ -374,7 +378,8 @@ function do_coverage()
 	let pix = tx2.get_pixelf(0.001, 0.004);
 
 	//canvas3d
-	cnv = new evg.Canvas3D(32, 32, 'rgb');
+	cnv = new evg.Canvas(32, 32, 'rgb');
+	cnv.enable_3d();
 	cnv.clear('yellow');
 	resY = cnv.toYUV(1.0, 0.0, 0.0);
 	resR = cnv.toRGB(resY);
