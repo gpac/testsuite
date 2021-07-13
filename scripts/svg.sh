@@ -52,7 +52,7 @@ do_test "$GPAC -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts -cfg=Validato
 
  do_play_test "$2-play" "$v_args" "$a_args"
 
- do_test "$MP4BOX -stat $1" "stats"
+ do_test "$MP4BOX -nstat $1" "stats"
 
 
 test_end

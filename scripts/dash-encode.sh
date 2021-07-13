@@ -105,7 +105,7 @@ if [ $test_skip = 0 ] ; then
 mp4file=$TEMP_DIR/source.mp4
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_video.h264  -add $MEDIA_DIR/auxiliary_files/enst_audio.aac -new $mp4file 2> /dev/null
 
-do_test "$MP4BOX -dash 1000 -profile live -out $TEMP_DIR/file.mpd $mp4file#video:@ffsws:osize=64x64@enc:c=avc:fintra=1:b=100k@@ffsws:osize=128x128@enc:c=avc:fintra=1:b=200k $mp4file#audio -fgraph" "dash"
+do_test "$MP4BOX -dash 1000 -profile live -out $TEMP_DIR/file.mpd $mp4file#video:@ffsws:osize=64x64@enc:c=avc:fintra=1:b=100k@@ffsws:osize=128x128@enc:c=avc:fintra=1:b=200k $mp4file#audio -graph" "dash"
 do_hash_test $TEMP_DIR/file.mpd "mpd"
 do_hash_test $TEMP_DIR/source_dash_track1_init_rep1.mp4 "init-seg-vid-rep1"
 do_hash_test $TEMP_DIR/source_dash_track1_init_rep2.mp4 "init-seg-vid-rep2"

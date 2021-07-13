@@ -32,7 +32,7 @@ src=$MEDIA_DIR/auxiliary_files/counter.hvc
 src2=$MEDIA_DIR/auxiliary_files/count_english.mp3
 
 #using raw bitstream output format in live profile
-dash_exotic_test "raw-live" "$src -profile live --muxtype=raw -fgraph -fstat" 1 1
+dash_exotic_test "raw-live" "$src -profile live --muxtype=raw -graph -stats" 1 1
 #using raw bitstream output format in onDemand profile
 dash_exotic_test "raw-ondemand" "$src -profile onDemand --muxtype=raw" 1 1
 #using raw bitstream output format in main profile, file list
