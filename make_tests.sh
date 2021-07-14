@@ -46,6 +46,7 @@ enable_timeout=0
 skip_next_hash_test=0
 do_playback=0
 do_clean=0
+quiet=0
 do_clean_hash=0
 check_only=0
 disable_hash=0
@@ -135,6 +136,10 @@ L_DEB=4
 
 log()
 {
+ if [ $quiet = 1 ]; then
+  return;
+ fi
+
  if [ $TERM = "cygwin" ]; then
 
   if [ $1 = $L_ERR ]; then
@@ -206,6 +211,7 @@ echo "  -timeout=SECONDS       sets the timeout for each test command (default: 
 
 echo "  SCRIPTS                only runs the scripts provided as arguments, by default runs everything in $SCRIPTS_DIR"
 echo "  -v:                    set verbose output"
+echo "  -quiet:                only print each test result"
 echo "  -h:                    print this help"
 }
 
@@ -303,6 +309,9 @@ for i in $* ; do
   do_playback=1;;
 "-quick")
  quick_mode=1;;
+
+"-quiet")
+ quiet=1;;
 
  -test*)
   single_test_name="${i#-test=}"
@@ -1266,6 +1275,11 @@ fi
 
 print_end()
 {
+
+  if [ $quiet = 1 ]; then
+   return;
+  fi
+
 end_ts=`$GNU_DATE +%s%N`
 runtime=$((end_ts-start_ts))
 
