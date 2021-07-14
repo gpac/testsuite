@@ -385,5 +385,95 @@ function do_coverage()
 	resR = cnv.toRGB(resY);
     cnv.depth_buffer = new ArrayBuffer(32 * 32 * 4);
     let db = cnv.depth_buffer;
+
+    //canvas2D with shader
+	cnv = new evg.Canvas(32, 32, 'rgb');
+	apath.reset();
+	apath.rectangle(0, 0, 32, 32);
+	let shader = cnv.new_shader(GF_EVG_SHADER_FRAGMENT);
+    shader.push('fragColor', '=', [1.0, 0.0, 0.0, 1.0] );
+	cnv.fragment = shader;
+    cnv.path = apath;
+    cnv.fill();
+
+    //canvas2D with shader wide
+	let cnv2 = new evg.Canvas(32, 32, 'yuvl');
+	cnv2.fragment = shader;
+    cnv2.path = apath;
+    cnv2.fill();
+
+    //multi texture ops
+	cnv = new evg.Canvas(32, 32, 'rgb');
+	apath.add_path( new evg.Path().rectangle(0, 0, 16, 16) );
+	apath.zero_fill = true;
+    cnv.path = apath;
+    cnv2.path = apath;
+	cnv2.shader = null;
+
+    //odd/even fill
+    cnv.fill(GF_EVG_OPERAND_ODD_FILL, tx, tx2);
+
+    //mix
+    cnv.fill(GF_EVG_OPERAND_MIX, 0.5, tx, tx2);
+    cnv2.fill(GF_EVG_OPERAND_MIX, 0.5, tx, tx2);
+
+    //mix+alpha
+    cnv.fill(GF_EVG_OPERAND_MIX_ALPHA, 0.5, tx, tx2);
+    cnv2.fill(GF_EVG_OPERAND_MIX_ALPHA, 0.5, tx, tx2);
+
+    //replace alpha using alpha component
+    cnv.fill(GF_EVG_OPERAND_REPLACE_ALPHA, 0, tx, tx2);
+    cnv2.fill(GF_EVG_OPERAND_REPLACE_ALPHA, 0, tx, tx2);
+    //replace alpha using red component
+    cnv.fill(GF_EVG_OPERAND_REPLACE_ALPHA, 1, tx, tx2);
+    cnv2.fill(GF_EVG_OPERAND_REPLACE_ALPHA, 1, tx, tx2);
+    //replace alpha using green component
+    cnv.fill(GF_EVG_OPERAND_REPLACE_ALPHA, 2, tx, tx2);
+    cnv2.fill(GF_EVG_OPERAND_REPLACE_ALPHA, 2, tx, tx2);
+    //replace alpha using blue component
+    cnv.fill(GF_EVG_OPERAND_REPLACE_ALPHA, 3, tx, tx2);
+    cnv2.fill(GF_EVG_OPERAND_REPLACE_ALPHA, 3, tx, tx2);
+
+
+    //replace 1-alpha using alpha component
+    cnv.fill(GF_EVG_OPERAND_REPLACE_ONE_MINUS_ALPHA, 0, tx, tx2);
+    cnv2.fill(GF_EVG_OPERAND_REPLACE_ONE_MINUS_ALPHA, 0, tx, tx2);
+    //replace alpha using red component
+    cnv.fill(GF_EVG_OPERAND_REPLACE_ONE_MINUS_ALPHA, 1, tx, tx2);
+    cnv2.fill(GF_EVG_OPERAND_REPLACE_ONE_MINUS_ALPHA, 1, tx, tx2);
+    //replace alpha using green component
+    cnv.fill(GF_EVG_OPERAND_REPLACE_ONE_MINUS_ALPHA, 2, tx, tx2);
+    cnv2.fill(GF_EVG_OPERAND_REPLACE_ONE_MINUS_ALPHA, 2, tx, tx2);
+    //replace alpha using blue component
+    cnv.fill(GF_EVG_OPERAND_REPLACE_ONE_MINUS_ALPHA, 3, tx, tx2);
+    cnv2.fill(GF_EVG_OPERAND_REPLACE_ONE_MINUS_ALPHA, 3, tx, tx2);
+
+
+    //mix tx1 and tx2 using alpha component of tx2 as mix
+    cnv.fill(GF_EVG_OPERAND_MIX_DYN, 0, tx, tx2, tx2);
+    cnv2.fill(GF_EVG_OPERAND_MIX_DYN, 0, tx, tx2, tx2);
+    //mix tx1 and tx2 using red component of tx2 as mix
+    cnv.fill(GF_EVG_OPERAND_MIX_DYN, 1, tx, tx2, tx2);
+    cnv2.fill(GF_EVG_OPERAND_MIX_DYN, 1, tx, tx2, tx2);
+    //mix tx1 and tx2 using green component of tx2 as mix
+    cnv.fill(GF_EVG_OPERAND_MIX_DYN, 2, tx, tx2, tx2);
+    cnv2.fill(GF_EVG_OPERAND_MIX_DYN, 2, tx, tx2, tx2);
+    //mix tx1 and tx2 using blue component of tx2 as mix
+    cnv.fill(GF_EVG_OPERAND_MIX_DYN, 3, tx, tx2, tx2);
+    cnv2.fill(GF_EVG_OPERAND_MIX_DYN, 3, tx, tx2, tx2);
+
+    //mix+alpha tx1 and tx2 using alpha component of tx2 as mix
+    cnv.fill(GF_EVG_OPERAND_MIX_DYN_ALPHA, 0, tx, tx2, tx2);
+    cnv2.fill(GF_EVG_OPERAND_MIX_DYN_ALPHA, 0, tx, tx2, tx2);
+    //mix tx1 and tx2 using red component of tx2 as mix
+    cnv.fill(GF_EVG_OPERAND_MIX_DYN_ALPHA, 1, tx, tx2, tx2);
+    cnv2.fill(GF_EVG_OPERAND_MIX_DYN_ALPHA, 1, tx, tx2, tx2);
+    //mix tx1 and tx2 using green component of tx2 as mix
+    cnv.fill(GF_EVG_OPERAND_MIX_DYN_ALPHA, 2, tx, tx2, tx2);
+    cnv2.fill(GF_EVG_OPERAND_MIX_DYN_ALPHA, 2, tx, tx2, tx2);
+    //mix tx1 and tx2 using blue component of tx2 as mix
+    cnv.fill(GF_EVG_OPERAND_MIX_DYN_ALPHA, 3, tx, tx2, tx2);
+    cnv2.fill(GF_EVG_OPERAND_MIX_DYN_ALPHA, 3, tx, tx2, tx2);
+
 }
 
