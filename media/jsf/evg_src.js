@@ -391,18 +391,22 @@ function do_coverage()
 	apath.reset();
 	apath.rectangle(0, 0, 32, 32);
 	let shader = cnv.new_shader(GF_EVG_SHADER_FRAGMENT);
-    shader.push('fragColor', '=', [1.0, 0.0, 0.0, 1.0] );
+    shader.push('fragYUVA', 'samplerYUV', tx, 'txCoordi');
 	cnv.fragment = shader;
     cnv.path = apath;
     cnv.fill();
 
     //canvas2D with shader wide
 	let cnv2 = new evg.Canvas(32, 32, 'yuvl');
+	let tx_w = new evg.Texture(cnv2);
+	shader.push(); //reset
+	shader.push('fragColor', 'sampler', tx_w, 'txCoordi');
+	shader.push('fragYUVA', 'samplerYUV', tx_w, 'txCoordi');
 	cnv2.fragment = shader;
     cnv2.path = apath;
     cnv2.fill();
 
-    //multi texture ops
+    //multi texture ops    
 	cnv = new evg.Canvas(32, 32, 'rgb');
 	apath.add_path( new evg.Path().rectangle(0, 0, 16, 16) );
 	apath.zero_fill = true;
@@ -416,6 +420,10 @@ function do_coverage()
     //mix
     cnv.fill(GF_EVG_OPERAND_MIX, 0.5, tx, tx2);
     cnv2.fill(GF_EVG_OPERAND_MIX, 0.5, tx, tx2);
+
+    //mix with solid color
+    cnv.fill(GF_EVG_OPERAND_MIX, 0.5, tx, brush);
+
 
     //mix+alpha
     cnv.fill(GF_EVG_OPERAND_MIX_ALPHA, 0.5, tx, tx2);
