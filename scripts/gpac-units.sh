@@ -189,6 +189,13 @@ do_test "$GPAC -mod-dirs=$TEMP_DIR -h modules" "mod-dirs"
 fi
 test_end
 
+test_begin "gpac-step-mode"
+if [ test_skip != 1 ] ; then
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -step -i $MEDIA_DIR/auxiliary_files/enst_video.h264 inspect:deep:log=$myinspect" "inspect"
+do_hash_test $myinspect  "inspect"
+fi
+test_end
 
 
 single_test "$GPAC -ltf UTSource:cov UTFilter:cov UTSink:cov" "gpac-filter-dump_props"
