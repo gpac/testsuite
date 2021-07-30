@@ -58,7 +58,7 @@ let rad = new evg.RadialGradient();
 rad.set_points(0.0, 0.0, 10.0, 10.0, 15.0, 15.0);
 rad.set_stop(0.0, 'red');
 rad.set_stopf(1.0, 0.0, 0.0, 1.0, 0.5);
-rad.mode = GF_GRADIENT_MODE_STREAD;
+rad.mode = GF_GRADIENT_MODE_SPREAD;
 /*create a color matrix transfering blue component to green*/
 let cmx = new evg.ColorMatrix();
 cmx.bb = 0;
