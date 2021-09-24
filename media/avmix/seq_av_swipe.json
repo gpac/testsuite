@@ -1,0 +1,27 @@
+[
+{
+ "_comment":"Test swipe transition between sources of a sequence",
+ "type": "config", "live": 0, "vsize": "320x180"
+},
+
+{ "id": "seq1", "seq":
+ [
+  { "id":"s1", "src": [
+	{"in": "../auxiliary_files/enst_video.h264"},
+	{"in": "../auxiliary_files/enst_audio.aac"}
+   ], "start": 1, "stop": 3},
+  { "id":"s2", "src": [
+   {"in": "../auxiliary_files/counter.hvc"},
+   {"in": "../auxiliary_files/count_english.mp3"}
+  ], "start": 4, "stop": 6}
+ ],
+ "transition": {
+	"type": "swipe",
+	"dur": 1,
+	"fun": "ratio = Math.sin(ratio * Math.PI/2);"
+ }
+},
+
+{"sources": ["seq1"]}
+
+]

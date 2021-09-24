@@ -1,0 +1,8 @@
+[
+{
+ "_comment":"Test forcing of output pixel format",
+ "type": "config", "live": 1, "vsize": "0x0", "maxdur":2
+},
+
+{ "id": "COUNT", "src": [{"in": "../auxiliary_files/enst_audio.aac"}], "start": 1, "stop": 2}
+]

@@ -1,0 +1,13 @@
+[
+{ "_comment":"Test playlist reload apppending a source in a sequence",
+	"type": "config", "live": 0, "vsize": "128x128",
+	"reload_tests": ["pl_reload_seq.json.1"]
+},
+
+{"id": "seq1", "seq":
+ [
+	{ "src": [{"in": "../auxiliary_files/enst_video.h264"}], "start": 0, "stop": 1}
+ ]
+},
+{"id": "scene1", "sources": ["seq1"]}
+]

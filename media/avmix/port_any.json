@@ -1,0 +1,13 @@
+[
+{ "_comment":"Test input through any port",
+	"type": "config", "live": 0, "vsize": "128x128"
+},
+
+{"id": "seq1", "seq":
+ [
+	{ "src": [{"in": "gpac -i media/auxiliary_files/enst_video.h264 -o pipe://gpac_pipe:ext=gsf", "port": "pipe://gpac_pipe:mkp", "raw": false}], "start": 0, "stop": 2}
+ ]
+},
+{"id": "scene1", "sources": ["seq1"]}
+
+]

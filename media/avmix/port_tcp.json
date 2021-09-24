@@ -1,0 +1,13 @@
+[
+{ "_comment":"Test compressed input through TCP socket",
+	"type": "config", "live": 0, "vsize": "128x128"
+},
+
+{"id": "seq1", "seq":
+ [
+	{ "src": [{"in": "../auxiliary_files/enst_video.h264", "port": "tcp", "raw": false}], "start": 0, "stop": 2}
+ ]
+},
+{"id": "scene1", "sources": ["seq1"]}
+
+]

@@ -1,0 +1,12 @@
+[
+{ "_comment":"Test path creation in JS",
+	"type": "config", "live": 0, "vsize": "128x128"
+},
+
+{"id": "seq1", "seq":
+ [
+	{ "src": [{"in": "../auxiliary_files/enst_video.h264"}], "start": 1, "stop": 2}
+ ]
+},
+{"sources": ["seq1"], "x": 0, "y": 0, "width": 100 , "height": 100, "shape": "this.path.rectangle(0, 0, this.sw, this.sh, true); var el = new evg.Path().ellipse(0, 0, this.sw, this.sh/3); this.path.add_path(el);"}
+]

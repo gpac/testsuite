@@ -1,0 +1,14 @@
+[
+{ "_comment":"Test timer",
+	"type": "config", "live": 0, "vsize": "128x128",
+	"reload_tests": ["pl_reload_seq_1.json"]
+},
+
+{"id": "seq1", "seq":
+ [
+	{ "src": [{"in": "../auxiliary_files/enst_video.h264"}], "start": 0, "stop": 1},
+	{ "src": [{"in": "../auxiliary_files/counter.hvc"}], "start": 0, "stop": 1}
+ ]
+},
+{"id": "scene1", "sources": ["seq1"]}
+]

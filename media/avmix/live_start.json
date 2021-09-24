@@ -1,0 +1,13 @@
+[
+{ "_comment":"Test sequence start and stop time (UTC) in live",
+	"type": "config", "live": 1, "vsize": "128x128", "maxdur":5
+},
+
+{"id": "seq1", "start": 2, "stop":4, "seq":
+ [
+	{ "src": [{"in": "../auxiliary_files/enst_video.h264"}], "start": 0, "stop": 3}
+ ]
+},
+{"id": "scene1", "sources": ["seq1"]}
+
+]

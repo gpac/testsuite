@@ -1,0 +1,13 @@
+[
+{ "_comment":"Test input pipe abort in live",
+	"type": "config", "live": 1, "vsize": "128x128", "maxdur": 3
+},
+
+{"id": "seq1", "seq":
+ [
+	{ "src": [{"in": "../auxiliary_files/enst_video.h264", "port": "pipe", "opts":"-runfors=1000"}], "start": 0, "stop": 2}
+ ]
+},
+{"id": "scene1", "sources": ["seq1"]}
+
+]

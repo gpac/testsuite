@@ -1,0 +1,13 @@
+[
+{ "_comment":"Test input pipe not responding in live",
+	"type": "config", "live": 1, "vsize": "128x128", "maxdur":3
+},
+
+{"id": "seq1", "seq":
+ [
+	{ "src": [{"in": "../auxiliary_files/enst_video.h264", "port": "pipe", "opts":"-runforl=1000"}], "start": 0, "stop": 3}
+ ]
+},
+{"id": "scene1", "sources": ["seq1"], "x":0}
+
+]

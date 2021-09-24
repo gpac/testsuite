@@ -1,0 +1,13 @@
+[
+{ "_comment":"Test reuse of a copy of input packet as initialized canvas and draw rectangle above it",
+	"type": "config", "live": 0, "vsize": "128x128"
+},
+
+{"id": "seq1", "seq":
+ [
+	{ "src": [{"in": "../auxiliary_files/enst_video.h264"}], "start": 1, "stop": 2}
+ ]
+},
+{"sources": ["seq1"]},
+{"x": 30, "y": 30, "width": 60 , "height": 60, "alpha": 0.75, "rx": 10, "ry": 10, "fill": "orange"}
+]

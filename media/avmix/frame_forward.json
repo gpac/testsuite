@@ -1,0 +1,6 @@
+[
+{ "_comment":"Test direct forward of input packet to output if nothing drawn",
+ "type": "config", "live": 0, "vsize": "128x128"
+},
+{ "id": "COUNT", "src": [{"in": "../auxiliary_files/enst_video.h264"}], "start": 1, "stop": 2}
+]

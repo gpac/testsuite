@@ -1,0 +1,8 @@
+[
+{
+ "_comment":"Test forcing of output pixel format",
+ "type": "config", "live": 0, "vsize": "128x128", "pfmt":"rgb", "dynpfmt":"off"
+},
+
+{ "id": "COUNT", "src": [{"in": "../auxiliary_files/enst_video.h264"}], "start": 1, "stop": 2}
+]
