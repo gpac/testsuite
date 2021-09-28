@@ -12,7 +12,7 @@
    ], "start": 1, "stop": 3},
   { "id":"s2", "src": [
    {"in": "../auxiliary_files/counter.hvc"},
-   {"in": "../auxiliary_files/count_english.mp3"}
+   {"in": "../../external_media/raw/raw_2s.pcm"}
   ], "start": 4, "stop": 6}
  ],
  "transition": {

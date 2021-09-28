@@ -1,6 +1,6 @@
 [
 { "_comment":"Test uncompressed input through pipe",
-	"type": "config", "live": 0, "vsize": "128x128"
+	"type": "config", "live": 0, "vsize": "128x128", "maxdur": 1.9
 },
 
 {"id": "seq1", "seq":
