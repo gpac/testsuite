@@ -5,7 +5,7 @@
 
 {"id": "seq1", "seq":
  [
-	{ "src": [{"in": "../auxiliary_files/enst_video.h264", "port": "pipe", "opts":"-runfors=1000"}], "keep_alive": true, "seek": true, "start": 0, "stop": 4}
+	{ "src": [{"in": "../auxiliary_files/enst_video.h264", "port": "pipe", "opts":"-runfors=1000 -blacklist=vtbdec,ohevcdec,nvdec,osvcdec"}], "keep_alive": true, "seek": true, "start": 0, "stop": 4}
  ]
 },
 {"id": "scene1", "sources": ["seq1"]}
