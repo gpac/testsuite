@@ -16,6 +16,9 @@ case $1 in
 # we therefore generate the inspect with no crc
  *live_port_* )
   ins_ext=":test=nocrc";;
+#live_start depends on loading speed time of source, we may have one or two extra frames before the source is loaded, so inspect with no crc
+ *live_start* )
+  ins_ext=":test=nocrc";;
 esac
 
 myinspect=$TEMP_DIR/inspect.txt

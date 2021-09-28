@@ -8,7 +8,7 @@
  [
   { "id":"s1", "src": [
 	{"in": "../auxiliary_files/enst_video.h264"},
-	{"in": "../auxiliary_files/enst_audio.aac"}
+	{"in": "../../external_media/raw/raw_3s_48k.pcm:sr=48k"}
    ], "start": 1, "stop": 3},
   { "id":"s2", "src": [
    {"in": "../auxiliary_files/counter.hvc"},
