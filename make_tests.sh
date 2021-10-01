@@ -373,7 +373,7 @@ if [ $do_clean != 0 ] ; then
  rm -rf $INTERN_TEMP_DIR/* 2> /dev/null
  if [ "${#url_arg[@]}" -eq 0 ] ; then
   echo "Deleting cache (logs, stats and videos)"
-  rm -rf $LOGS_DIR/* > /dev/null
+  find "$main_dir/$LOGS_DIR/" -mindepth 1 -delete > /dev/null
   rm -rf $VIDEO_DIR/* 2> /dev/null
   exit
  fi
