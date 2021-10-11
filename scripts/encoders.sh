@@ -59,6 +59,8 @@ png=`$GPAC -h pngenc 2>/dev/null | grep pngenc`
 x264ff=`gpac -hh ffenc:* 2>&1 | grep ffenc:libx264`
 j2kff=`gpac -hh ffenc:* 2>&1 | grep ffenc:jpeg2000`
 
+mp3=`gpac -hh ffenc:* 2>&1 | grep ffenc:libmp3lame`
+
 #video encoder tests
 
 #test png encode
@@ -99,7 +101,10 @@ fi
 
 
 #audio encoder tests
+test_encoder "mp2-ffenc" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.mp2" "" "" ""
+if [ -n "$mp3" ] ; then
 test_encoder "mp3-ffenc" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.mp3" "" "" ""
+fi
 
 test_encoder "aac-ffenc" $MEDIA_DIR/auxiliary_files/count_french.mp3 "test.aac" "" "" ":c=aac"
 
