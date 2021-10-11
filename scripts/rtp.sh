@@ -40,7 +40,11 @@ else
 
 #a bit of fun: we export to native, isobmf, ts and DASH at the same time
 #for TS dump, we need no pcr offset (or at least no random value init, so use 0), and single AU per pes otherwise we may have different execution results depending on how fast packets are received
+if [ "$1" = "mp3" ] ; then
+dump_native=$TEMP_DIR/dump.mp2
+else
 dump_native=$TEMP_DIR/dump.$1
+fi
 dump_mp4=$TEMP_DIR/dump.mp4
 dump_ts=$TEMP_DIR/dump.ts
 dump_mpd=$TEMP_DIR/dump.mpd

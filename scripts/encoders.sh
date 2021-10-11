@@ -161,4 +161,4 @@ test_end
 
 
 test_encoder_art "aac" "aac"
-test_encoder_art "mp3" "mp3"
+test_encoder_art "mp3" "mp2"

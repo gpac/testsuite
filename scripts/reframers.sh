@@ -39,7 +39,7 @@ test_reframer "aac" $MEDIA_DIR/auxiliary_files/enst_audio.aac
 
 test_reframer "latm" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.latm"
 
-test_reframer "mp3" $MEDIA_DIR/auxiliary_files/count_english.mp3
+test_reframer "mp3" $MEDIA_DIR/auxiliary_files/count_english.mp3 "test.mp2"
 
 test_reframer "avc" $MEDIA_DIR/auxiliary_files/enst_video.h264
 

@@ -18,7 +18,7 @@ if [ $3 != 0 ] ; then
 do_test "$MP4BOX -raw video $dstfile" "aviraw-video"
 do_hash_test $TEMP_DIR/test.cmp "aviraw-video"
 do_test "$MP4BOX -raw audio $dstfile" "aviraw-audio"
-do_hash_test $TEMP_DIR/test.mp3 "aviraw-audio"
+do_hash_test $TEMP_DIR/test.mp2 "aviraw-audio"
 fi
 
 myinspect=$TEMP_DIR/inspect.txt
