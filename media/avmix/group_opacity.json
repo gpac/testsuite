@@ -1,0 +1,19 @@
+[
+{
+ "_comment":"Test group opacity",
+ "type": "config", "live": 0, "vsize": "320x180"
+},
+
+{ "id": "seq1", "seq":
+ [
+  { "src": [{"in": "../auxiliary_files/counter.hvc"}], "start": 2, "stop": 4}
+ ]
+},
+
+{"sources": ["seq1"]},
+{"opacity":0.5, "scenes": [
+	{"width": 30, "height": 30, "shape": "rect", "fill": "red"},
+	{"width": 10, "height": 10, "shape": "rect", "fill": "blue"}
+]}
+
+]

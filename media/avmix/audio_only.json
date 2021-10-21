@@ -1,6 +1,6 @@
 [
 {
- "_comment":"Test forcing of output pixel format",
+ "_comment":"Test audio only output",
  "type": "config", "live": 0, "vsize": "0x0"
 },
 

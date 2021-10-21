@@ -1,0 +1,17 @@
+[
+{
+ "_comment":"Test group reference",
+ "type": "config", "live": 0, "vsize": "320x180"
+},
+
+{ "id": "seq1", "seq":
+ [
+  { "src": [{"in": "../auxiliary_files/enst_video.h264"}], "start": 1, "stop": 2}
+ ]
+},
+
+{"rotation":20, "reference": true, "width": 25, "height": 25, "scenes": [
+	{"sources": ["seq1"], "pad_color": "black"}
+]}
+
+]

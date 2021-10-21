@@ -1,0 +1,22 @@
+[
+{ "_comment":"Test clear with target area and cliper",
+	"type": "config", "live": 0, "vsize": "256x256"
+},
+
+{"id": "seq1", "seq":
+ [
+	{ "src": [{"in": "../auxiliary_files/enst_video.h264"}], "start": 1, "stop": 2}
+ ]
+},
+
+{"js": "clear", "color": "black"},
+{"js": "clear", "color": "white", "x": 20, "width": 60, "height": 60},
+{"id":"c1", "js": "clip", "width": 50, "height": 50, "active": true},
+{"id": "scene1", "sources": ["seq1"], "keep_ar":false, "blit": false, "active": true},
+
+{"start": 0, "loop": true, "dur": 0.5, "keys": [0, 0.5, 1], "anims": [
+	{"values": [0, 45, 0], "targets": ["c1@rotation"]}
+]
+}
+
+]

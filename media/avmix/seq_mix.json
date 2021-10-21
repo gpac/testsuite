@@ -3,10 +3,10 @@
 	"type": "config", "live": 0, "vsize": "128x128"
 },
 
-{"id": "seq1", "seq": [ { "src": [{"in": "../auxiliary_files/enst_video.h264"}], "start": 1, "stop": 2} ]},
+{"id": "seq1", "seq": [ { "src": [{"in": "../auxiliary_files/enst_video.h264"}], "start": 4, "stop": 5} ]},
 {"id": "seq2", "seq": [ { "src": [{"in": "../auxiliary_files/counter.hvc"}], "start": 1, "stop": 2} ]},
 
-{"id": "scene1", "sources": ["seq1", "seq2"], "mix": {"type": "mix"} },
+{"id": "scene1", "sources": ["seq1", "seq2"], "mix": {"type": "mix"}, "pad_color": "0x00FFFFFF"},
 
 {"start": 0, "loop": true, "dur": 0.5, "keys": [0, 0.5, 1], "anims": [
 	{"values": [0, 1, 0], "targets": ["scene1@mix_ratio"]}

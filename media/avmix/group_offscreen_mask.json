@@ -1,0 +1,21 @@
+[
+{
+ "_comment":"Test offscreen group used as shape.img source for alpha replacement",
+ "type": "config", "live": 0, "vsize": "320x180"
+},
+
+{ "id": "seq1", "seq":
+ [
+  { "src": [{"in": "../auxiliary_files/counter.hvc"}], "start": 2, "stop": 4}
+ ]
+},
+
+{"id": "og1", "offscreen": "mask", "width":50, "height":50, "scenes": [
+	{"width": 5, "height": 30, "shape": "rect", "fill": "red"},
+	{"width": 30, "height": 10, "shape": "rect", "fill": "blue", "alpha":0.5},
+	{"width": 15, "height": 20, "shape": "ellipse", "fill": "blue", "alpha":0.75}
+]},
+
+{"js":"clear", "color": "cyan"},
+{"sources": ["seq1"], "img": "og1", "replace": "a"}
+]

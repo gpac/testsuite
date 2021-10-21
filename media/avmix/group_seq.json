@@ -1,0 +1,19 @@
+[
+{
+ "_comment":"Test rotated group with sequence using a transition",
+ "type": "config", "live": 0, "vsize": "320x180"
+},
+
+{ "id": "seq1", "seq":
+ [
+  { "src": [{"in": "../auxiliary_files/enst_video.h264"}], "start": 1, "stop": 2},
+  { "src": [{"in": "../auxiliary_files/counter.hvc"}], "start": 4, "stop": 5}
+ ],
+ "transition": { "type": "swipe", "mode": "squeeze", "from":"left", "dur": 1 }
+},
+
+{"rotation":20, "scenes": [
+{"sources": ["seq1"], "pad_color": "black"}
+]}
+
+]

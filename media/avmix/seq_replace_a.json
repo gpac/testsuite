@@ -1,0 +1,12 @@
+[
+{ "_comment":"Test using sequence as shape.img source for alpha replacement (use seq2 r/y as alpha for seq1)",
+	"type": "config", "live": 0, "vsize": "128x128"
+},
+
+{"id": "seq1", "seq": [ { "src": [{"in": "../auxiliary_files/enst_video.h264"}], "start": 4, "stop": 6} ]},
+{"id": "seq2", "seq": [ { "src": [{"in": "../auxiliary_files/counter.hvc"}], "start": 1, "stop": 2} ]},
+
+{"js": "clear", "color": "white"},
+{"id": "scene1", "sources": ["seq1"], "img": "seq2", "replace": "r"}
+
+]

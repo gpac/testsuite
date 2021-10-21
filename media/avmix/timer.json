@@ -8,10 +8,10 @@
 	{ "src": [{"in": "../auxiliary_files/enst_video.h264"}], "start": 1, "stop": 2}
  ]
 },
-{"id": "scene1", "sources": ["seq1"], "keep_ar":false},
+{"id": "scene1", "sources": ["seq1"], "keep_ar":false, "blit": false},
 
 {"start": 0, "loop": true, "dur": 0.5, "keys": [0, 0.5, 1], "anims": [
-	{"values": [0, 100, 0], "targets": ["scene1@x"]},
+	{"values": [0, 0, 0], "targets": ["scene1@x"]},
 	{"values": [100, 0, 100], "targets": ["scene1@width"]}
 ]
 }

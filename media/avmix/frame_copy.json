@@ -9,5 +9,5 @@
  ]
 },
 {"sources": ["seq1"]},
-{"x": 30, "y": 30, "width": 60 , "height": 60, "alpha": 0.75, "rx": 10, "ry": 10, "fill": "orange"}
+{"x": 10, "y": -10, "width": 60 , "height": 60, "alpha": 0.75, "rx": 10, "ry": 10, "fill": "orange"}
 ]
