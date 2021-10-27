@@ -18,7 +18,7 @@
  "transition": {
 	"type": "swipe",
 	"dur": 0.5,
-	"fun": "ratio = Math.sin(ratio * Math.PI/2);"
+	"fun": "return Math.sin(ratio * Math.PI/2);"
  }
 },
 
