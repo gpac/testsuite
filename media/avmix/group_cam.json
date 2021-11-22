@@ -1,0 +1,20 @@
+[
+{
+ "_comment":"Test camera and viewport setup",
+ "type": "config", "live": 0, "vsize": "320x180"
+},
+
+{ "id": "seq1", "seq":
+ [
+  { "src": [{"in": "../auxiliary_files/counter.hvc"}], "start": 0, "stop": 10}
+ ]
+},
+
+{"js": "clear", "color": "cyan"},
+{"fov": 60, "z": -50, "viewport": [-25, 0, 50, 100], "up": [0.5,1,0] , "scenes": [
+	{"id":"s1", "sources": ["seq1"], "pad_color": "black"}
+]},
+
+{"fov": 120, "z": -50, "viewport": [25, 0, 50, 100], "up": [-0.5,1,0] , "use": "s1"}
+
+]
