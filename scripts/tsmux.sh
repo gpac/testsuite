@@ -45,4 +45,6 @@ ts_test "webvtt" "-i $MEDIA_DIR/auxiliary_files/subtitle.srt:webvtt" ""
 
 ts_test "ac3" "-i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3" ""
 
+ts_test "vvc" "-i $EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc" ""
+
 rm $mp4file

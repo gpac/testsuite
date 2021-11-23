@@ -86,3 +86,5 @@ test_reframer "usac" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.usac" "dump.
 
 test_reframer "aac71" "$EXTERNAL_MEDIA_DIR/mc_audio/aac_7.1.aac" "dump.aac"
 test_reframer "aac71brd" "$EXTERNAL_MEDIA_DIR/mc_audio/aac_7.1_brd.aac" "dump.aac"
+
+test_reframer "vvc" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc" "dump.mp4"

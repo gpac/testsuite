@@ -133,12 +133,16 @@ crypto_test_file "hevc"
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/video.av1 -new $mp4file 2> /dev/null
 crypto_test_file "av1"
 
-rm -f $mp4file 2> /dev/null
-
-
 if [ $EXTERNAL_MEDIA_AVAILABLE = 0 ] ; then
  return
 fi
+
+#VVC
+$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc:dur=2 -new $mp4file 2> /dev/null
+crypto_test_file "vvc"
+
+rm -f $mp4file 2> /dev/null
+
 
 #test encryption of AVC with emul prev byte in non encrypted NAL
 test_begin "encryption-avc-ebp"

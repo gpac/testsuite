@@ -108,7 +108,7 @@ mp4_test ()
  *svc* )
   do_dnal=1
   do_hash=0 ;;
- *.avc | *.264 | *.h264 | *.hevc | *.hvc | *.265 | *.h265 )
+ *.avc | *.264 | *.h264 | *.hevc | *.hvc | *.265 | *.h265 | *.266 | *.h266 | *.vvc )
   do_dnal=1;;
  #no support for hinting or playback yet
  *.ismt )
@@ -208,6 +208,8 @@ mp4box_tests ()
   mp4_test $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas
 
   mp4_test $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.usac
+
+  mp4_test $EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc
 
 
 }
