@@ -53,10 +53,12 @@ single_test "$GPAC -h $MEDIA_DIR/jsf/inspect.js" "gpac-jsf-h"
 single_test "$GPAC -seps=123456 -p=myprofile -wc -we -wf -wfx -no-save" "gpac-filter-profile-full"
 single_test 'gpac -p=0 -hh mp4mx' "gpac-null-profile"
 
+single_test "$GPAC -h layouts" "gpac-layouts"
 single_test "$GPAC -h colors" "gpac-colors"
 single_test "$GPAC -hx colr" "gpac-h-description"
 single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/logo.png --colr" "gpac-suggestarg"
-
+single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/logo.png inspect --zzzzz" "gpac-suggestarg-unkn"
+single_test "$GPAC -h zzzzz" "gpac-h-unkn"
 
 
 test_begin "gpac-link-dir"

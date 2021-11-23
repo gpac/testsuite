@@ -24,5 +24,10 @@ do_hash_test $myinspect "inspect"
 do_test "$MP4BOX -dash 1000 -pssh m -profile dashavc264:live $TEMP_DIR/file.mp4#video $TEMP_DIR/file.mp4#audio -out $TEMP_DIR/file2.mpd" "dashing-cenc-pssh-mpd"
 do_hash_test $TEMP_DIR/file2.mpd "pssh-mpd"
 
+
+do_test "$MP4BOX -dash 1000 -sdtp-traf both -cp-location both -profile live $TEMP_DIR/file.mp4#video -out $TEMP_DIR/file3.mpd" "dashing-cenc-cploc"
+do_hash_test $TEMP_DIR/file3.mpd "pssh-cploc"
+
+
 test_end
 

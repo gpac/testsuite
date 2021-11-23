@@ -19,6 +19,16 @@ do_test "$MP4BOX -comp moof=cmof $mp4file -out $compfile" "comp"
 
 do_test "$MP4BOX -topsize moof $mp4file" "comp"
 
+
+mp4file="$TEMP_DIR/zmov.mp4"
+do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_320x180_128kbps.264:dur=10 -new -zmov $mp4file" "zmov"
+do_hash_test $mp4file "zmov"
+
+mp4file="$TEMP_DIR/xmov.mp4"
+do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_320x180_128kbps.264:dur=10 -new -xmov $mp4file" "xmov"
+do_hash_test $mp4file "xmov"
+
+
 test_end
 }
 

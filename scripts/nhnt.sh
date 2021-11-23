@@ -13,4 +13,8 @@ do_hash_test $TEMP_DIR/nhnt_track1.nhnt "nhnt"
 do_hash_test $TEMP_DIR/nhnt_track1.info "nhnt-info"
 do_hash_test $TEMP_DIR/nhnt_track1.media "nhnt-media"
 
+insp=$TEMP_DIR/inspect.txt
+do_test "GPAC -i $TEMP_DIR/nhnt_track1.nhnt inspect:deep:log=$insp" "nhnt-dmx"
+do_hash_test $insp "nhnt-dmx"
+
 test_end

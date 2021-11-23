@@ -100,3 +100,19 @@ do_hash_test $mp4file "forcecat"
 fi
 test_end
 
+
+
+test_begin "mp4box-cat-nalulen"
+if [ "$test_skip" != 1 ] ; then
+
+
+mp4file="$TEMP_DIR/file.mp4"
+MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_video.h264 -new $TEMP_DIR/t1.mp4 2> /dev/null
+MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_video.h264 --nal_length=2 -new $TEMP_DIR/t2.mp4 2> /dev/null
+
+do_test "$MP4BOX -cat $TEMP_DIR/t2.mp4 $TEMP_DIR/t1.mp4 -out $mp4file" "cat"
+do_hash_test $mp4file "cat"
+
+fi
+test_end
+
