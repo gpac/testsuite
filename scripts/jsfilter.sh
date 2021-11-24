@@ -122,3 +122,6 @@ single_test "$GPAC -js=$MEDIA_DIR/jsf/custom_dash_bind.js" "jsf-DASH-custom"
 
 # GPAC JS process exec and worker (QJS libc module)
 single_test "$GPAC -js=$MEDIA_DIR/jsf/worker_exec.js" "jsf-worker-exec"
+
+# check loading DASH algo from JS (not running anything)
+single_test "$GPAC dashin:algo=custom_dash" "jsf-dash"

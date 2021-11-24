@@ -37,3 +37,16 @@ ffmx_test "webm" "$EXTERNAL_MEDIA_DIR/import/counter_1280_720_I_25_500k.ivf" ""
 
 fi
 
+
+test_begin "ffmx-reconf"
+if [ $test_skip != 1 ] ; then
+
+echo "$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1920x1080_768kbps.264" > pl.m3u
+echo "$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264" >> pl.m3u
+
+dstfile=$TEMP_DIR/mux.mkv
+do_test "$GPAC -no-reassign=no -i pl.m3u -o $dstfile -graph -stats" "mux"
+mv pl.m3u $TEMP_DIR
+
+test_end
+fi

@@ -34,3 +34,5 @@ fi
 #SAR rewrite on prores, test clrp/txchar and mxcoef with integer values
 test_bsrw "sar-prores" "$EXTERNAL_MEDIA_DIR/qt_prores/prores422.mov#video" ":sar=16/9:clrp=2:txchar=3:mxcoef=2"
 
+test_bsrw "sar-vvc" $EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc ":sar=16/9"
+test_bsrw "nosei-vvc" $EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc ":rmsei"

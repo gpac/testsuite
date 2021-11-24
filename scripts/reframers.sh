@@ -76,7 +76,7 @@ test_reframer "ac3" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3 -blacklis
 test_reframer "eac3" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.eac3 -blacklist=ffdmx" "dump.mp4"
 
 
-test_reframer "mhas-mha1" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas --mpha" "dump.mp4"
+test_reframer "mhas-mha1" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas -logs=parser@debug --mpha" "dump.mp4"
 test_reframer "mhas-mhm1" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas" "dump.mp4"
 #test MHAS rewriter
 test_reframer "mha1-to-mhm1" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas --mpha" "dump.mhas"
@@ -88,3 +88,21 @@ test_reframer "aac71" "$EXTERNAL_MEDIA_DIR/mc_audio/aac_7.1.aac" "dump.aac"
 test_reframer "aac71brd" "$EXTERNAL_MEDIA_DIR/mc_audio/aac_7.1_brd.aac" "dump.aac"
 
 test_reframer "vvc" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc" "dump.mp4"
+
+#test bsdbg, for coverage
+test_begin "reframer-bsdbg"
+if [ $test_skip != 1 ] ; then
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 inspect:deep -logs=parser@debug --bsdbg=full"  "parse-avc"
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/video.av1 inspect:deep -logs=parser@debug --bsdbg=full"  "parse-av1"
+test_end
+fi
+
+
+#test raw PCM extraction for coverage
+test_begin "reframer-rawpcm"
+if [ $test_skip != 1 ] ; then
+file=$TEMP_DIR/dump.pcm
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/raw/raw_3s_48k.pcm reframer:xs=1:xe=2 @ -o $file"  "reframe"
+do_hash_test $file "reframe"
+test_end
+fi

@@ -199,6 +199,10 @@ test_flist "splice-raw-2sr-keep" "-i $plist" 4
 mv $plist $TEMP_DIR
 
 
+plist=pl_error.m3u
+echo "http://gpac.io/dummy" >> $plist
 
+single_test "$GPAC -i $plist inspect" "filelist-load-error"
+mv $plist $TEMP_DIR
 
 

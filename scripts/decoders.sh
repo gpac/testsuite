@@ -139,3 +139,26 @@ test_decoder "theora" $EXTERNAL_MEDIA_DIR/import/dead_ogg.ogg "test.yuv" "-black
 test_decoder "aac-faad-mc" $EXTERNAL_MEDIA_DIR/import/aac_vbr_51_128k.aac "test.pcm" "-blacklist=ffdec" 1
 
 test_decoder "flac-ffdec" $EXTERNAL_MEDIA_DIR/import/enst_audio.flac "test.pcm" "" 0
+
+#test config switch for openhevc
+if [ -n "$ohevcdec" ] ; then
+test_begin "decoder-ohevc-switch"
+if [ $test_skip != 1 ] ; then
+
+echo "#stop=2" > pl.m3u
+echo "$EXTERNAL_MEDIA_DIR/counter/counter_1280_720_I_25_tiled_1mb.hevc" >> pl.m3u
+echo "#stop=2" >> pl.m3u
+echo "$EXTERNAL_MEDIA_DIR/counter/counter_1280_720_I_25_untiled_200k.hevc" >> pl.m3u
+
+dst_file=$TEMP_DIR/dump.yuv
+do_test "$GPAC -i pl.m3u -o $dst_file -graph -stats"  "decoder"
+
+insp=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i $dst_file:size=1280x720 inspect:deep:log=$insp"  "inspect"
+do_hash_test "$insp" "decoder"
+
+test_end
+fi
+
+
+fi

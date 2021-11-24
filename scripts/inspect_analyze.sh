@@ -3,7 +3,7 @@ test_inspect()
 {
  name=$(basename $1)
  name=${name%.*}
- test_begin "inspect-$name"
+ test_begin "inspect-$name$4"
 
 if [ "$test_skip" = 1 ] ; then
  return
@@ -36,6 +36,9 @@ test_inspect $EXTERNAL_MEDIA_DIR/qt_prores/prores422.mov ":SID=#PID=11" "0"
 test_inspect $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3 "" "1"
 test_inspect $MEDIA_DIR/auxiliary_files/enstvid.ivf "" "1"
 test_inspect $EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc "" "1"
+test_inspect $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas "" "1" "-mha"
+test_inspect $EXTERNAL_MEDIA_DIR/import/counter_english.mlp "" "0"
+
 
 test_begin "inspect-info"
 if [ "$test_skip" != 1 ] ; then
