@@ -26,6 +26,14 @@ filter.initialize = function() {
 		print(GF_LOG_ERROR, "Missing output file name");
 		return GF_BAD_PARAM;
 	}
+	this.dummy = this.add_source("http://gpac.io/dummy");
+	if (this.dummy) {
+		this.dummy.on_setup_failure = function(e) {
+			filter.clear_error();
+			print(GF_LOG_ERROR, "Source setup failure " + e);
+			filter.dummy=null;
+		}
+	}
 	this.src_f = this.add_source(this.in);
 	if (this.src_f) {
 		this.src_f.on_setup_failure = function(e) {
@@ -33,6 +41,8 @@ filter.initialize = function() {
 			filter.src_f = null;
 		}
 		this.src_f.reset_source();
+		//for coverage
+		let fname = this.src_f.name;
 	}
 	if (this.out != null) {
 			print(GF_LOG_ERROR, "output " + typeof this.out);

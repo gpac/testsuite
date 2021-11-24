@@ -75,6 +75,8 @@ filter.configure_pid = function(pid)
 
 		if (this.fwd==true) {
 			pid.opid.set_prop(prop.name, prop.value);
+			//for coverage
+			pid.opid.ignore_blocking(false);
 		}
 	}
 
@@ -120,6 +122,10 @@ filter.configure_pid = function(pid)
 	filter.is_supported_mime('video/mp4');
 	filter.is_supported_source('http://foo.bar/test.mp4');
 	filter.update_status('Connected');
+
+	filter.lock(true);
+	filter.lock(false);
+	filter.set_blocking(false);
 
 	let evt = new FilterEvent(GF_FEVT_QUALITY_SWITCH);
 	filter.send_event(evt);
