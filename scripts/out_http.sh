@@ -293,16 +293,16 @@ if [ $test_skip = 1 ] ; then
 fi
 
 tmp_aac=$TEMP_DIR/test.mp4
-do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac reframer @ -o $tmp_aac:dur=2" "make-input"
+do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=2 -new $tmp_aac" "make-input"
 
 #increase run time for tests on VM
-do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:rdirs=$TEMP_DIR:wdir=$TEMP_DIR" "http-server" &
-#sleep half a sec to make sure the server is up and running
+do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:rdirs=$TEMP_DIR:wdir=$TEMP_DIR:reqlog=*" "http-server" &
+#sleep to make sure the server is up and running
 sleep .5
 
 do_test "$GPAC -i $tmp_aac reframer:rt=on @ -o http://127.0.0.1:8080/live.mpd:hmode=push:dmode=dynamic" "dash-push" &
 #sleep to make sure the push origin is running, but not too long to make sure the client tunes on live edge at first set (otherwise hash will fail)
-sleep .25
+sleep .3
 
 myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i http://127.0.0.1:8080/live.mpd inspect:dur=1:allp:deep:test=network:interleave=false:log=$myinspect" "client-inspect"

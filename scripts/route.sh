@@ -37,7 +37,7 @@ do_test "$GPAC -i $src:#ClampDur=4 -o $TEMP_DIR/live.mpd" "dash"
 
 #start receiver
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i route://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect" "receive" &
+do_test "$GPAC -i route://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect  -logs=route@info" "receive" &
 
 #start sender, reading from dash session
 do_test "$GPAC -i $TEMP_DIR/live.mpd dashin:forward=file @ -o route://225.1.1.0:6000/" "send"

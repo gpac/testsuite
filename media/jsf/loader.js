@@ -29,9 +29,9 @@ filter.initialize = function() {
 	this.dummy = this.add_source("http://gpac.io/dummy");
 	if (this.dummy) {
 		this.dummy.on_setup_failure = function(e) {
-			filter.clear_error();
 			print(GF_LOG_ERROR, "Source setup failure " + e);
 			filter.dummy=null;
+			return true;
 		}
 	}
 	this.src_f = this.add_source(this.in);

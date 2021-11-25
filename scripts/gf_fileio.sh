@@ -3,10 +3,10 @@
 test_begin "gf-fileio"
 if [ $test_skip != 1 ] ; then
 
-do_test "$GPAC -ib $MEDIA_DIR/auxiliary_files/enst_video.h264 -ob $TEMP_DIR/file.mpd" "fio-dash"
+do_test "$GPAC -ib $MEDIA_DIR/auxiliary_files/counter.hvc -ob $TEMP_DIR/file.mpd" "fio-dash"
 do_hash_test $TEMP_DIR/file.mpd  "mpd"
-do_hash_test $TEMP_DIR/enst_video_dashinit.mp4 "init"
-do_hash_test $TEMP_DIR/enst_video_dash1.m4s  "seg1"
+do_hash_test $TEMP_DIR/counter_dashinit.mp4 "init"
+do_hash_test $TEMP_DIR/counter_dash1.m4s  "seg1"
 
 #inspect using a gfio input file and a gfio output log 
 insp=$TEMP_DIR/inspect.txt
