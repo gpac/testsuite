@@ -67,6 +67,10 @@ do_hash_test "$TEMP_DIR/testrvc_info.xml" "add-rvc"
 mp4file="$TEMP_DIR/hdr.mp4"
 do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_video.h264 -hdr $MEDIA_DIR/auxiliary_files/hdr.xml -new $mp4file" "hdr"
 do_hash_test "$mp4file" "hdr"
+insp=$TEMP_DIR/insp.xml
+do_test "$GPAC -i $mp4file inspect:deep:analyze=bs:log=$insp" "hdr-insp"
+do_hash_test "$insp" "hdr-insp"
+
 
 cp $MEDIA_DIR/auxiliary_files/enst_video.h264 $TEMP_DIR/test.h264
 do_test "$MP4BOX -raw-cat $MEDIA_DIR/auxiliary_files/enst_video.h264 $TEMP_DIR/test.h264" "rawcat"

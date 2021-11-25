@@ -77,4 +77,24 @@ rtsp_test_server "regular" "rtsp://$IP/enst_audio.aac" " --tso=10000" " " 0
 rtsp_test_server "dynurl" "rtsp://$IP/@enst_audio.aac@enst_video.h264" " --tso=10000 --dynurl" "" 1
 rtsp_test_server "mcast" "rtsp://$IP/enst_audio.aac" " --tso=10000 --mcast=mirror" " --force_mcast=$MCASTIP " 0
 
-rtsp_test_server "error" "rtsp://$IP/enst_aud.aac" " --tso=10000 --mcast=mirror" " --force_mcast=$MCASTIP " 2
+
+rtsp_test_server_error ()
+{
+
+test_begin "rtsp-server-error"
+if [ $test_skip  = 1 ] ; then
+return
+fi
+
+#start rtsp server
+do_test "$GPAC -runfor=4000 rtspout:port=$PORT:mounts=$MEDIA_DIR/auxiliary_files/ --dynurl -stats" "server" &
+sleep 1
+
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i rtsp://$IP/?http://localhost/dummy inspect:deep:allp:dur=1/1:interleave=false:log=$myinspect -stats -graph" "dump"
+
+wait
+test_end
+}
+
+rtsp_test_server_error

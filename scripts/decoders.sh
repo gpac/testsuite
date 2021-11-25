@@ -151,7 +151,7 @@ echo "#stop=2" >> pl.m3u
 echo "$EXTERNAL_MEDIA_DIR/counter/counter_1280_720_I_25_untiled_200k.hevc" >> pl.m3u
 
 dst_file=$TEMP_DIR/dump.yuv
-do_test "$GPAC -i pl.m3u -o $dst_file -graph -stats"  "decoder"
+do_test "$GPAC -blacklist=vtbdec,ffdec,nvdec -i pl.m3u -o $dst_file -graph -stats"  "decoder"
 
 insp=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i $dst_file:size=1280x720 inspect:deep:log=$insp"  "inspect"
