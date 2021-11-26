@@ -1,0 +1,15 @@
+[
+{
+ "_comment":"Test sequence of sources with different ranges",
+ "type": "config", "live": 0, "vsize": "320x180", "gpu": "mix"
+},
+
+{ "id": "seq1", "seq":
+ [
+  { "src": [{"in": "../auxiliary_files/enst_video.h264"}], "start": 4, "stop": 6}
+ ]
+},
+
+{"sources": ["seq1"], "pad_color": "0x00FFFFFF"}
+
+]

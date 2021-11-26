@@ -3,12 +3,13 @@ avmix_test()
 name=$(basename $1)
 name=${name%%.*}
 
-test_begin "avmix-$name"
+test_begin "avmix-$name$2"
 
 if [ $test_skip  = 1 ] ; then
  return
 fi
 
+is_gpu=0
 ins_ext=""
 case $1 in
 #for live tests using ports, i.e. fork(), we cannot guarantee the time between fork and first frame received nor the speed of transfer
@@ -19,12 +20,28 @@ case $1 in
 #live_start depends on loading speed time of source, we may have one or two extra frames before the source is loaded, so inspect with no crc
  *live_start* )
   ins_ext=":test=nocrc";;
+ *gpu* )
+  is_gpu=1;;
 esac
 
-myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -blacklist=vtbdec,nvdec,ohevcdec,osvcdec -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts avmix:pl=$1 inspect:deep:interleave=0$ins_ext:log=$myinspect" "run"
+if [ $is_gpu = 0 ] ; then
 
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -blacklist=vtbdec,nvdec,ohevcdec,osvcdec -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts avmix:pl=$1$3 inspect:deep:interleave=0$ins_ext:log=$myinspect" "run"
 do_hash_test $myinspect "run"
+
+else
+
+dump=$TEMP_DIR/dump.rgb
+do_test "$GPAC -blacklist=vtbdec,nvdec,ohevcdec,osvcdec -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts avmix:pl=$1 -o $dump" "run"
+if [ ! -f $dump ] ; then
+  result="no output"
+fi
+
+
+
+fi
+
 
 do_play_test "play" "avmix:pl=$1" ""
 
@@ -32,6 +49,11 @@ test_end
 }
 
 for i in $MEDIA_DIR/avmix/*.json ; do
-avmix_test $i
+avmix_test $i "" ""
 done
 
+
+#audio tests
+avmix_test $MEDIA_DIR/avmix/audio_only.json "-s32" ":afmt=s32"
+avmix_test $MEDIA_DIR/avmix/audio_only.json "-flt" ":afmt=flt"
+avmix_test $MEDIA_DIR/avmix/audio_only.json "-dbl" ":afmt=dbl"

@@ -23,12 +23,17 @@ let gl = new WebGLContext(width, height);
 
 //for coverage, test FBO and RBO
 let obj = gl.createFramebuffer();
-if (obj)
+if (obj) {
+    gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, null);
     gl.deleteFramebuffer(obj);
+  }
 
 obj = gl.createRenderbuffer();
 if (obj)
     gl.deleteRenderbuffer(obj);
+
+//cov
+gl.pixelStorei(gl.UNPACK_ALIGNMENT, true);
 
 filter.initialize = function() {
 
@@ -302,6 +307,8 @@ const texture = loadTexture(gl);
 
 function loadTexture(gl) {
   const texture = gl.createTexture();
+  //for coverage
+  gl.textureName(texture);
   gl.bindTexture(gl.TEXTURE_2D, texture);
   const level = 0;
   const internalFormat = gl.RGBA;

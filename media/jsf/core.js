@@ -82,7 +82,7 @@ let res = sys.base64dec(buf);
 buf = sys.base16enc(ab);
 res = sys.base16dec(buf);
 
-print('' + sys.fcc_to_str(0xAABBCCDD) );
+print('4CC test: ' + sys.fcc_to_str(0xAABBCCDD) );
 
 sys.htonl(0xAABB);
 sys.htons(0xAABB);
@@ -103,7 +103,25 @@ let view = new Int32Array(ar);
 view[0] = 100;
 view[1] = 200;
 
+import('somemod.so').then(obj => { } ).catch(err => {  } );
+sys.sleep(0);
+sys.ntp_shift({'n': 1000000, 'd': 9000}, 120000);
+sys.exit(0, 0);
+sys.keyname(42);
+sys.get_event_type('keydown');
+sys.color_lerp('black', 'white', 0.5);
+sys.color_component('black', 0);
+sys.color_component('black', 1);
+sys.color_component('black', 2);
+sys.color_component('black', 3);
 
+sys.rect_intersect({x: 0, y: 0, w: 20, h: 20}, {x: 10, y: 10, w: 20, h: 20}  );
+
+try {
+sys.load_script('test.js');
+} catch (e) {
+
+}
 
 test_bs();
 test_file();

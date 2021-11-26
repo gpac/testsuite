@@ -279,6 +279,8 @@ function do_coverage()
 	apath.point_over(0, 0);
 	let rc = apath.bounds;
 
+	path.transform(mx2);
+
 	//text
 	let font = text.font;
 	apath = text.get_path();
@@ -292,6 +294,8 @@ function do_coverage()
 
 	let ab = new evg.SolidBrush();
 	ab.set_colorf(1.0, 0.0, 1.0, 1.0);
+	if (ab.solid_brush)
+		ab.get_color();
 
 	//matrix
 	let mx1 = new evg.Matrix();
@@ -357,6 +361,8 @@ function do_coverage()
 	mycmx.rr = 0.5;
 	atxp.cmx = mycmx; 
 	cnv.fill(atxp);
+	atxp.load("../auxiliary_files/logo.png", true);
+	atxp.set_named("toto");
 
 	cnv = new evg.Canvas(32, 32, 'argb');
 	cnv.enable_threading(1);
