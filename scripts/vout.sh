@@ -51,3 +51,30 @@ fi
 
 
 
+#vout coverage
+vout_cov ()
+{
+
+test_begin "vout-events"
+if [ $test_skip  = 1 ] ; then
+return
+fi
+
+mp4file=$TEMP_DIR/file.mp4
+$MP4BOX -add $EXTERNAL_MEDIA_DIR/scalable/shvc.265:dur=2:svcmode=splitnox -new $mp4file 2> /dev/null
+
+sdpfile=$TEMP_DIR/session.sdp
+do_test "$GPAC -i $mp4file aout vout -cfg=temp:vout_cov=yes  -blacklist=vtbdec,nvdec,ffdec" "vout-mp4"
+
+do_test "$GPAC -i $mp4file -o $sdpfile -runfor=10" "rtp" &
+do_test "$GPAC -i $sdpfile vout -cfg=temp:vout_cov=yes --udp_timeout=500 -blacklist=vtbdec,nvdec,ffdec" "vout-rtp"
+
+wait
+
+
+test_end
+
+}
+
+
+vout_cov
