@@ -144,7 +144,7 @@ do_test "$GPAC -i $src dashin:forward=file @ -o route://225.1.1.0:6000/:llmode:r
 do_test "$GPAC httpout:port=8080:rdirs=$TEMP_DIR:wdir=$TEMP_DIR:reqlog=PUT -runfor=8000 -req-timeout=10000" "server" &
 
 #start receiver: get route MPD, open in filemode and push files to server using PUT
-do_test "$GPAC -i route://225.1.1.0:6000 dashin:forward=file @ -o http://127.0.0.1:8080/live.mpd --hmode=push -runfor=6000 -req-timeout=2000 -logs=route:dash@info" "receive"
+do_test "$GPAC -i route://225.1.1.0:6000/:max_segs=10 dashin:forward=file @ -o http://127.0.0.1:8080/live.mpd --hmode=push -runfor=6000 -req-timeout=2000 -logs=route:dash@info" "receive"
 
 wait
 
@@ -153,6 +153,31 @@ n=${n#0}
 #we must have at least one mpd, 2 inits, 2 segment, and take into account dir listing (4 items)
 if [ $n -lt 9 ] ; then
 result="Session not correctly received"
+fi
+
+test_end
+}
+
+route_files ()
+{
+
+test_begin "route_files"
+if [ $test_skip = 1 ] ; then
+return
+fi
+
+src=$MEDIA_DIR/auxiliary_files/logo.png
+do_test "$GPAC -i $src @ -o route://225.1.1.0:6000/:runfor=4000 -logs=route@info" "send" &
+
+#start receiver: get route MPD, open in filemode and push files to server using PUT
+do_test "$GPAC -i route://225.1.1.0:6000/:gcache=false fout:dst=$TEMP_DIR/\$num\$:dynext=true -runfor=3000" "receive"
+
+wait
+
+$DIFF $MEDIA_DIR/auxiliary_files/logo.png $TEMP_DIR/0.png > /dev/null
+rv=$?
+if [ $rv != 0 ] ; then
+  result="source and recievd files differ"
 fi
 
 test_end
@@ -167,3 +192,4 @@ atsc_dashing
 atsc_dashing_rec
 route_dash_ll_filemode_push
 
+route_files
