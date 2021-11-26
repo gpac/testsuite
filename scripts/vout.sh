@@ -66,7 +66,9 @@ $MP4BOX -add $EXTERNAL_MEDIA_DIR/scalable/shvc.265:dur=2:svcmode=splitnox -new $
 sdpfile=$TEMP_DIR/session.sdp
 do_test "$GPAC -i $mp4file aout vout -cfg=temp:vout_cov=yes  -blacklist=vtbdec,nvdec,ffdec" "vout-mp4"
 
-do_test "$GPAC -i $mp4file -o $sdpfile -runfor=10" "rtp" &
+#we don't test streaming, just write sdp
+do_test "$GPAC -i $mp4file -o $sdpfile -runfor=100" "rtp"
+
 do_test "$GPAC -i $sdpfile vout -cfg=temp:vout_cov=yes --udp_timeout=500 -blacklist=vtbdec,nvdec,ffdec" "vout-rtp"
 
 wait
