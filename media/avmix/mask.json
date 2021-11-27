@@ -1,0 +1,18 @@
+[
+{
+ "_comment":"Test sequence of sources with different ranges",
+ "type": "config", "live": 0, "vsize": "320x180"
+},
+
+{ "id": "seq1", "seq":
+ [
+  { "src": [{"in": "../auxiliary_files/counter.hvc"}], "start": 0, "stop": 2}
+ ]
+},
+
+{"js" : "clear", "color": "cyan"},
+{"js" : "mask", "mode": "on"},
+{"width": 40, "height": 40, "shape": "ellipse", "fill": "white", "alpha": 0.5},
+{"js" : "mask", "mode": "use"},
+{"sources": ["seq1"], "pad_color": "0x00FFFFFF"}
+]

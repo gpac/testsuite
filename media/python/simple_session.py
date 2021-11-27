@@ -58,7 +58,7 @@ def my_exec(self):
 		if (f.nb_opid):
 			print('Enumerating output pid props: ')
 			f.opid_enum_props(0, self)
-			#print('Outputs for pid: ' + str(f.opid_sinks(0) ) )
+			print('Outputs for pid: ' + str(f.opid_sinks(0) ) )
 		args = f.all_args()
 		if args:
 			print('All args:\n' + '\n'.join([str(elem) for elem in args])   )

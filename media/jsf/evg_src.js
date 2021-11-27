@@ -363,6 +363,7 @@ function do_coverage()
 	cnv.fill(atxp);
 	atxp.load("../auxiliary_files/logo.png", true);
 	atxp.set_named("toto");
+	let amx = atxp.auto_mx;
 
 	cnv = new evg.Canvas(32, 32, 'argb');
 	cnv.enable_threading(1);
@@ -411,6 +412,7 @@ function do_coverage()
 	cnv2.fragment = shader;
     cnv2.path = apath;
     cnv2.fill();
+    let has_clip = cnv2.has_clipper;
 
     //multi texture ops    
 	cnv = new evg.Canvas(32, 32, 'rgb');
