@@ -1,0 +1,15 @@
+[
+{
+ "_comment":"Test perspective on scene with default viewport",
+ "type": "config", "live": 0, "vsize": "320x180", "pfmt": "yuvl"
+},
+
+{ "id": "seq1", "seq":
+ [
+  { "src": [{"in": "../auxiliary_files/counter.hvc"}], "start": 0, "stop": 1}
+ ]
+},
+
+{"js": "clear", "color": "cyan"},
+{"sources": ["seq1"], "axis": [1, 0, 0], "rotation": -45, "z": -40}
+]
