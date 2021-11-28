@@ -337,6 +337,7 @@ function do_coverage()
 	cnv.matrix = mx;
 	cnv.path = text;
 	cnv.fill(atxp);
+	let mask = cnv.mask_mode;
 
 	let txbuf = new ArrayBuffer(200);
 	atxp = new evg.Texture(2, 2, 'nv1l', txbuf, 4);
