@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     width="100%" height="100%" viewBox="0 0 800 600" >
+
+ <g id="grp">
+     <rect id="rec" x="100" y="100" width="100" height="50" fill="blue">
+            <animate id="anim" attributeName="width" />
+     </rect>
+     <path id="pth"/>
+
+ <script><![CDATA[
+    function on_load3(evt) {
+        alert('loaded3');
+    }
+    var svgNS = "http://www.w3.org/2000/svg";
+    var xlinkNS = "http://www.w3.org/1999/xlink";
+
+    let gi = document.getElementById("grp");
+    gi.addEventListener('load', function(evt) { alert('load_gr'); } );
+    gi.addEventListener('load', "on_load3" );
+  ]]>
+ </script>
+
+ </g>
+
+ <script>
+<![CDATA[
+    //SVG JS coverage
+    var svgNS = "http://www.w3.org/2000/svg";
+    var xlinkNS = "http://www.w3.org/1999/xlink";
+
+    let svg = document.documentElement;
+    let pth = document.getElementById("pth");
+    let grp = document.getElementById("grp");
+    let anim = document.getElementById("anim");
+    
+    let a;
+    a = document.defaultView;
+    svg.id = svg.id;
+    svg.currentScale = svg.currentScale;
+    svg.currentRotate = svg.currentRotate;
+    svg.currentTranslate = svg.currentTranslate;
+    svg.currentTime = svg.currentTime;
+    a = svg.viewport;
+    a = svg.isPaused;
+    a = svg.ownerSVGElement;
+    a = svg.correspondingElement;
+    a = svg.correspondingUseElement;
+    try {
+        Window.gotoLocation();
+    } catch (e) {}
+
+    try {
+        Window.parseXML('<elem />');
+    } catch (e) {}
+
+    a = svg.createSVGPoint();
+    a.x = a.x;
+    a.y = a.y;
+
+    a = svg.createSVGRGBColor(1, 0, 1);
+    a.red = a.red;
+    a.green = a.green;
+    a.blue = a.blue;
+    svg.setRGBColorTrait('viewport-fill', a);
+    grp.getBBox();
+    grp.getScreenCTM();
+    grp.getScreenBBox();
+    svg.getRGBColorTrait('viewport-fill');
+    svg.getFloatTrait('viewport-fill-opacity');
+    svg.setFloatTrait('viewport-fill-opacity', 1.0);
+    svg.getCurrentFocusedObject();
+    svg.getCurrentTime();
+    svg.getTrait('viewport-fill-opacity');
+    svg.setTrait('viewport-fill-opacity', 1.0);
+    svg.moveFocus(grp);
+    svg.setFocus(grp);
+
+    a = svg.createSVGPath();
+    a.moveTo(0, 0);
+    a.lineTo(1, 1);
+    a.quadTo(2, 1, 3, 0);
+    a.curveTo(4, 1, 5, -1, 6, 0);
+    a.numberOfSegments;
+    a.close();
+    pth.setPathTrait('d', a);
+    pth.getPathTrait('d');
+    pth.getTotalLength();
+    a.getSegment(0);
+    a.getSegment(1);
+    a.getSegment(2);
+    a.getSegment(3);
+    a.getSegment(4);
+    a.getSegmentParam(0, 0);
+    a.getSegmentParam(1, 0);
+    a.getSegmentParam(2, 0);
+    a.getSegmentParam(2, 1);
+    a.getSegmentParam(2, 2);
+    a.getSegmentParam(3, 0);
+    a.getSegmentParam(3, 1);
+    a.getSegmentParam(3, 2);
+    a.getSegmentParam(4, 0);
+
+    svg.createSVGMatrixComponents(1, 0, 0, 0, 1, 0);
+
+    a = svg.createSVGRect();
+    a.x = a.x;
+    a.y = a.y;
+    a.width = a.width;
+    a.height = a.height;
+    svg.setRectTrait('viewBox', a);
+
+
+    a = Window.hasFeature('test');
+    a = Window.connected;
+    a = Window.parent;
+    try {
+        Window.createConnection();
+    } catch (e) {
+
+    }
+
+    let m = grp.getMatrixTrait('transform');
+    let c = m.a; 
+    c = m.b;
+    c = m.c;
+    c = m.d;
+    c = m.e;
+    c = m.f;
+    m.a = 1; m.b = 0; m.c = 0;
+    m.d = 0; m.e = 1; m.f = 0;
+    m.getComponent(0);
+    m.getComponent(1);
+    m.getComponent(2);
+    m.getComponent(3);
+    m.getComponent(4);
+    m.getComponent(5);
+    m.mMultiply(m);
+    m.inverse();
+    m.mTranslate(0, 0);
+    m.mScale(1, 1);
+    m.mRotate(0);
+
+    grp.setMatrixTrait('transform', m);
+
+    anim.beginElementAt(0);
+    anim.beginElement(0);
+    anim.endElementAt(0);
+    anim.endElement(0);
+    anim.pauseElement();
+    anim.resumeElement();
+    anim.restartElement();
+    svg.setSpeed(2.0);
+
+    a = grp.correspondingElement;
+
+    function on_load(evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+        evt.stopImmediatePropagation();
+        alert('loaded');
+    }
+    function on_load2(evt) {
+        alert('loaded2');
+    }
+
+    //DOM JS coverage
+    try { document.strictErrorChecking = false; } catch (e) { }
+    grp.removeEventListener('load', 'on_load3');
+    a =  grp.previousSibling;
+    grp.localName;
+
+    a = grp.cloneNode();
+    a.setIdAttribute('grp2', true);
+    try { grp.normalize(); } catch (e) { }
+    grp.isSameNode(a);
+
+    a = pth.cloneNode();
+    grp.insertBefore(a, pth);
+    grp.removeChild(a);
+    grp.replaceChild(pth.cloneNode() , pth);
+
+    grp.hasAttribute('toto');
+    grp.hasAttributes();
+    grp.hasChildNodes();
+
+    grp.removeAttribute('fill');
+    a = document.createTextNode('toto');
+    a.namespaceURI;
+    a.data = a.data;
+    c = a.length;
+    a.isElementContentWhitespace;
+    a.wholeText;
+
+    //
+    a = document.createElementNS('test', 'urn:gpac');
+    a.setAttribute('foo', 'bar');
+    a.setAttribute('onclick', 'on_load2');
+
+  ]]>
+ </script>
+
+
+ <handler type="application/ecmascript" ev:event="load"> 
+    on_load(evt);
+</handler>
+
+ <handler id="hdl" type="application/ecmascript">on_load2</handler>
+ <ev:listener event="load" handler="#hdl"/> 
+
+ <handler type="application/ecmascript" ev:event="load">on_load3</handler>
+
+</svg>

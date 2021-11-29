@@ -1,0 +1,128 @@
+InitialObjectDescriptor {
+ objectDescriptorID 1
+ audioProfileLevelIndication 255
+ visualProfileLevelIndication 254
+ sceneProfileLevelIndication 1
+ graphicsProfileLevelIndication 1
+ ODProfileLevelIndication 1
+ esDescr [
+  ES_Descriptor {
+   ES_ID 1
+   decConfigDescr DecoderConfigDescriptor {
+    streamType 3
+    decSpecificInfo BIFSConfig {
+     isCommandStream true
+     pixelMetric true
+     pixelWidth 600
+     pixelHeight 400
+    }
+   }
+  }
+ ]
+}
+
+OrderedGroup {
+ children [
+  Background2D {
+   backColor 1 1 1
+  }
+  WorldInfo {
+   info ["This shows script sending eventOuts" "" "GPAC Regression Tests" "$Date: 2007-07-27 09:46:10 $ - $Revision: 1.2 $" "(C) 2002-2004 GPAC Team"]
+   title "Script eventOut test"
+  }
+  DEF TR Transform2D {
+   children [
+
+   ]
+  }
+  DEF SCRIPT Script {
+   field SFNode tr USE TR
+   url ["javascript:
+function initialize(value, timestamp) {
+
+let a = new SFVec2f(0, 0);
+print('' + a);
+a.add( new SFVec2f(0, 0) );
+a.subtract( new SFVec2f(0, 0) );
+a.multiply( 1 );
+a.divide( a.length() );
+a.negate();
+a.normalize();
+a.dot( new SFVec2f(0, 0) );
+
+a = new SFVec3f(0, 0, 0);
+a.x=0;
+a.y=0;
+a.z=0;
+print('' + a);
+a.add( new SFVec3f(0, 0, 0) );
+a.subtract( new SFVec3f(0, 0, 0) );
+a.negate();
+a.multiply(1);
+a.divide(a.length() );
+a.normalize();
+a.dot( new SFVec3f(0, 0, 0) );
+a.cross( new SFVec3f(0, 0, 0) );
+
+
+a = new MFBool(false);
+a = new SFRotation(0, 1, 0, 0);
+let c = a.xAxis;
+c = a.yAxis;
+c = a.zAxis;
+c = a.angle;
+a.xAxis=0;
+a.yAxis=1;
+a.zAxis=0;
+a.angle=0;
+a.setAxis( a.getAxis() );
+a.slerp(a, 0.5);
+
+a.inverse();
+c = new SFVec3f(0, 0, 0);
+print(''+c);
+a.multVec(c);
+a.multiply(a);
+
+a = new MFRotation( a );
+print('' + a);
+a = new MFTime(0);
+a = new MFVec3f(new SFVec3f(0,0,0) );
+
+a = new SFColor(1, 1, 1);
+print('' + a);
+let b = a.getHSV();
+a.setHSV(b[0], b[1], b[2]);
+
+a = new SFImage(1, 1, 1, new MFInt32(0) );
+print(''+a);
+b = a.x;
+a.x  = 1;
+
+a = Browser.getCurrentFrameRate();
+a = Browser.getCurrentSpeed();
+a = Browser.getElementById('TR');
+print('' + a);
+a.removeEventListener('onclick', null, null);
+
+a = Browser.getName();
+a = Browser.getVersion();
+a = Browser.getScript();
+a = Browser.getWorldURL();
+a = Browser.getProto();
+Browser.replaceWorld();
+Browser.setDescription('toto');
+Browser.createVrmlFromString('Group { }');
+
+try {
+    Browser.loadURL(null);
+} catch(e) {}
+
+
+}
+"   ]
+  }
+ ]
+}
+
+
