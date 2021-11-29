@@ -6,12 +6,15 @@ svg_test()
  name=${name%.*}
  do_hash=1
 
+nojs=":nojs"
  case $name in
  *video* )
   do_hash=0
   ;;
+ *udomjs* )
+  nojs=""
+  ;;
  esac
-
 
 # hash do not work on linux due to rounding errors of floats -> different rasterization
 if [ $GPAC_OSTYPE == "lin32" ] ; then
@@ -32,7 +35,7 @@ fi
  dump_size=192x192
 
  #note that we force using a GNU Free Font SANS to make sure we always use the same font on all platforms
-do_test "$GPAC -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts -cfg=Validator:Mode=Play -cfg=Validator:Trace=$RULES_DIR/svg-tests-ui.xml -blacklist=vtbdec,nvdec -i $1 compositor:nojs:osize=$dump_size:vfr:dur=$dump_dur:asr=44100:ach=2$compopt @ -o $RGB_DUMP @1 -o $PCM_DUMP" "dump"
+do_test "$GPAC -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts -cfg=Validator:Mode=Play -cfg=Validator:Trace=$RULES_DIR/svg-tests-ui.xml -blacklist=vtbdec,nvdec -i $1 compositor$nojs:osize=$dump_size:vfr:dur=$dump_dur:asr=44100:ach=2$compopt @ -o $RGB_DUMP @1 -o $PCM_DUMP" "dump"
 
  v_args=""
  if [ -f $RGB_DUMP ] ; then
