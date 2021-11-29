@@ -21,6 +21,10 @@ do_hash_test $TEMP_DIR/test.264 "tsdump-video"
 do_test "$MP4BOX -raw 101 $tsfile" "tsdump-audio"
 do_hash_test $TEMP_DIR/test.aac "tsdump-audio"
 
+
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264:#MuxIndex=2 -i $MEDIA_DIR/auxiliary_files/enst_audio.aac:#MuxIndex=1 -o $mp4file" "add-idx"
+do_hash_test $mp4file "add-idx"
+
 #check if we have libavformat support, if so test ts->mkv and mp4->mkv
 ffmx=`$GPAC -h ffmx 2>/dev/null | grep ffmx`
 if [ -n "$ffmx" ] ; then
