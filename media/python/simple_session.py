@@ -37,6 +37,11 @@ f2 = fs.load("inspect:deep")
 #enable status messages reporting
 fs.reporting(True);
 
+#coverage
+fs.http_max_bitrate = fs.http_max_bitrate;
+rate = fs.http_bitrate;
+fs.is_supported_source('not a valid url');
+
 #custom task callback for inspection of filters
 def my_exec(self):
 	if (self.session.last_task):

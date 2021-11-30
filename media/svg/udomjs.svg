@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" 
-     width="100%" height="100%" viewBox="0 0 800 600" >
+     width="100%" height="100%" viewBox="0 0 800 600" overflow="auto" overlay="none" playbackOrder="all" timelineBegin="onLoad" transformBehavior="pinned" g:test="test">
 
  <g id="grp">
      <rect id="rec" x="100" y="100" width="100" height="50" fill="blue">
-            <animate id="anim" attributeName="width" />
+            <animate id="anim" attributeName="width" begin="onload" end="onload"/>
      </rect>
      <path id="pth"/>
 
@@ -143,6 +143,7 @@
 
     grp.setMatrixTrait('transform', m);
 
+    anim.setAttribute('from', '0');
     anim.beginElementAt(0);
     anim.beginElement(0);
     anim.endElementAt(0);
@@ -185,6 +186,7 @@
     grp.hasChildNodes();
 
     grp.removeAttribute('fill');
+    svg.removeAttribute('g:test');
     a = document.createTextNode('toto');
     a.namespaceURI;
     a.data = a.data;
@@ -209,5 +211,10 @@
  <ev:listener event="load" handler="#hdl"/> 
 
  <handler type="application/ecmascript" ev:event="load">on_load3</handler>
-
+ <rect>
+     <discard/>
+ </rect>
+ <rect>
+     <set attributeName="fill" to="black" begin="0" end="0.1"/>
+ </rect>
 </svg>

@@ -6,11 +6,11 @@ single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 $MEDIA_DIR/jsf/
 single_test "$GPAC -h links $MEDIA_DIR/jsf/inspect.js" "jsf-inspect-links"
 
 
-#test JSFilter as filter, forwarding to inspect
+#test JSFilter as filter, forwarding to inspect, using threaded mode for coverage
 test_begin "jsf-inspect-fwd"
 insp=$TEMP_DIR/inspect.txt
 if [ $test_skip != 1 ] ; then
-do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 $MEDIA_DIR/jsf/inspect.js:fwd=true @ inspect:deep:log=$insp" "jsf-inspect-fwd"
+do_test "$GPAC -threads=1 -i $MEDIA_DIR/auxiliary_files/enst_video.h264 $MEDIA_DIR/jsf/inspect.js:fwd=true @ inspect:deep:log=$insp" "jsf-inspect-fwd"
 do_hash_test $insp  "jsf-inspect"
 fi
 test_end
@@ -49,6 +49,9 @@ single_test "$GPAC $MEDIA_DIR/jsf/loader.js:in=$MEDIA_DIR/auxiliary_files/enst_v
 
 # XHR test
 single_test "$GPAC $MEDIA_DIR/jsf/xhr.js" "jsf-xhr"
+
+# XHR arraybuffer test
+single_test "$GPAC $MEDIA_DIR/jsf/xhr.js:arb" "jsf-xhr-arb"
 
 # XHR SAX local
 test_begin "jsf-xhr-sax"

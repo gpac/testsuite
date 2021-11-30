@@ -118,6 +118,10 @@ try {
     Browser.loadURL(null);
 } catch(e) {}
 
+try {
+  parseXML('<elem />');
+} catch(e) {}
+
 
 }
 "   ]

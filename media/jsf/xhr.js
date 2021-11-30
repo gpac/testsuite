@@ -11,6 +11,7 @@ filter.set_help("This filter provides a very simple javascript test for XHR");
 
 filter.set_arg({name: "url", desc: "URL to get", type: GF_PROP_STRING} );
 filter.set_arg({name: "sax", desc: "parse using sax", type: GF_PROP_BOOL, def: "false"} );
+filter.set_arg({name: "arb", desc: "parse using array buffer", type: GF_PROP_BOOL, def: "false"} );
 //this will force the filter API to stay alive
 filter.set_cap({id: "StreamType", value: "File", output: true} );
 
@@ -27,6 +28,7 @@ function do_xhr()
  {
  	print('load status: ' + this.status);
  	if (! this.response) return;
+    if (filter.arb) return;
 
  	let doc = this.response.documentElement;
  	if (!doc) return;
@@ -47,7 +49,7 @@ function do_xhr()
  };
 
  if (filter.url) {
-	 filter.xhr.open("GET", filter.url);
+	 filter.xhr.open("GET", 'gpac://'+filter.url);
  } else {
 	 filter.xhr.open("GET", "http://download.tsi.telecom-paristech.fr/gpac/DASH_CONFORMANCE/TelecomParisTech/mp4-live-1s/mp4-live-1s-mpd-AV-NBS.mpd");
  }
@@ -55,7 +57,9 @@ function do_xhr()
  filter.xhr.setRequestHeader("x-gpac-test", "some-cool-value");
  filter.xhr.overrideMimeType('application/x-gpac');
  if (filter.sax) 
-	 filter.xhr.responseType = "sax";
+     filter.xhr.responseType = "sax";
+ if (filter.arb) 
+     filter.xhr.responseType = "arraybuffer";
 
  filter.xhr.send();	
 

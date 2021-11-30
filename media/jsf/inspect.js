@@ -160,19 +160,28 @@ filter.process = function()
 					pid.done_eos = true;
 					if (filter.fwd && pid.opid) {
 						pid.opid.eos = true;
+						//for coverage
 						pid.opid.remove();
 						pid.opid = null;
+						session.abort(GF_FS_FLUSH_ALL);
 					}
 				}
 				return;
 			}
 			pid.nb_pck++;
+			//coverage
 			if (pid.nb_pck==1) {
 				pid.get_buffer_occupancy();
 				pid.clear_eos(false);
 				pid.check_caps();
 				pid.discard_block();
-				let clone = pck.clone()
+				//this will be a direct ref, since the source packet is only used by us
+				let clone1 = pck.clone();
+
+				//this will force a frame copy, since the source packet is used twice (once by the packet, once by clone1)
+				let clone2 = pck.clone();
+				clone2.discard();
+
 			}
 	
 			print(GF_LOG_INFO, "PID" + pid.name + " PCK" + pid.nb_pck + " DTS " + pck.dts + " CTS " + pck.cts + " SAP " + pck.sap + " size " + pck.size);

@@ -306,17 +306,26 @@ function drawScene(gl, programInfo, buffers) {
 const texture = loadTexture(gl);
 
 function loadTexture(gl) {
-  const texture = gl.createTexture();
-  //for coverage
-  gl.textureName(texture);
-  gl.bindTexture(gl.TEXTURE_2D, texture);
+
   const level = 0;
   const internalFormat = gl.RGBA;
   const border = 0;
   const srcFormat = gl.RGBA; //ignored, overriden by texImage2D from object
   const srcType = gl.UNSIGNED_BYTE;  //ignored, overriden by texImage2D from object
+
+  //for coverage
+  let texture = gl.createTexture();
+  gl.textureName(texture);
+  gl.bindTexture(gl.TEXTURE_2D, texture);
   let tx = new Texture("../auxiliary_files/logo.jpg", true);
+  tx.set_named('test');
   gl.texImage2D(gl.TEXTURE_2D, level, internalFormat, srcFormat, srcType, tx);
+
+  texture = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  tx = new Texture("../auxiliary_files/logo.jpg", true);
+  gl.texImage2D(gl.TEXTURE_2D, level, internalFormat, srcFormat, srcType, tx);
+
   //for coverage
   gl.texSubImage2D(gl.TEXTURE_2D, level, 0, 0, srcFormat, srcType, tx);
 

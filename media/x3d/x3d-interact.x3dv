@@ -7,7 +7,7 @@ Group {
    info ["This shows position interpolation" "" "GPAC Regression Tests" "$Date: 2007-07-27 09:46:09 $ - $Revision: 1.3 $" "(C) 2002-2004 GPAC Team"]
    title "PositionInterpolator"
   }
-DEF TS TimeSensor {}
+DEF TS TimeSensor { loop TRUE startTime 0}
 
 DEF Filter BooleanFilter {
 }
@@ -40,6 +40,8 @@ ROUTE TS.fraction_changed TO ISequencer.set_fraction
 ROUTE TS.fraction_changed TO BSequencer.set_fraction
 ROUTE TS.isActive TO BSequencer.next
 ROUTE TS.isActive TO BSequencer.previous
+ROUTE TS.isActive TO ISequencer.next
+ROUTE TS.isActive TO ISequencer.previous
 ROUTE TS.isActive TO BToggler.set_boolean
 ROUTE TS.isActive TO TT.set_boolean
 ROUTE TS.isActive TO IT1.set_boolean
