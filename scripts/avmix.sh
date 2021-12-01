@@ -9,6 +9,7 @@ if [ $test_skip  = 1 ] ; then
  return
 fi
 
+skip_hash=0
 is_gpu=0
 ins_ext=""
 case $1 in
@@ -22,13 +23,42 @@ case $1 in
   ins_ext=":test=nocrc";;
  *gpu* )
   is_gpu=1;;
+ *group_cam* )
+  skip_hash=1;;
+ *group_seq* )
+  skip_hash=1;;
+ *pl_reload_timer* )
+  skip_hash=1;;
+ *script* )
+  skip_hash=1;;
+ *seq_v_persp* )
+  skip_hash=1;;
+ *timer* )
+  skip_hash=1;;
+ *seq_av_swipe* )
+  skip_hash=1;;
+ *seq_mix* )
+  skip_hash=1;;
+ *seq_replace_a* )
+  skip_hash=1;;
 esac
+
+#don't hash on lin32, decoder results are not exactly the same
+#for other we should have the same results, further checking needed
+if [ $GPAC_OSTYPE != "lin32" ] ; then
+	skip_hash=0
+fi
+
 
 if [ $is_gpu = 0 ] ; then
 
 myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -blacklist=vtbdec,nvdec,ohevcdec,osvcdec -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts avmix:pl=$1$3 inspect:deep:interleave=0$ins_ext:log=$myinspect" "run"
+
+if [ $skip_hash != 0 ] ; then
 do_hash_test $myinspect "run"
+fi
+
 
 else
 
