@@ -45,9 +45,11 @@ esac
 
 #don't hash on lin32, decoder results are not exactly the same
 #for other we should have the same results, further checking needed
-if [ $GPAC_OSTYPE != "lin32" ] ; then
-	skip_hash=0
-fi
+#if [ $GPAC_OSTYPE != "lin32" ] ; then
+#	skip_hash=0
+#fi
+
+skip_hash=0
 
 
 if [ $is_gpu = 0 ] ; then
@@ -55,7 +57,7 @@ if [ $is_gpu = 0 ] ; then
 myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -blacklist=vtbdec,nvdec,ohevcdec,osvcdec -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts avmix:pl=$1$3 inspect:deep:interleave=0$ins_ext:log=$myinspect" "run"
 
-if [ $skip_hash != 0 ] ; then
+if [ $skip_hash != 1 ] ; then
 do_hash_test $myinspect "run"
 fi
 
