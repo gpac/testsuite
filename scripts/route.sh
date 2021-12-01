@@ -26,21 +26,21 @@ test_end
 route_dash_filemode ()
 {
 
-test_begin "route_dash_filemode"
+test_begin "route_dash_filemode$1"
 if [ $test_skip = 1 ] ; then
 return
 fi
 
 #create dash
 src=$MEDIA_DIR/auxiliary_files/counter.hvc
-do_test "$GPAC -i $src:#ClampDur=4 -o $TEMP_DIR/live.mpd" "dash"
+do_test "$GPAC -i $src:#ClampDur=4 -o $TEMP_DIR/live.$2$3" "dash"
 
 #start receiver
 myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i route://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect  -logs=route@info" "receive" &
 
 #start sender, reading from dash session
-do_test "$GPAC -i $TEMP_DIR/live.mpd dashin:forward=file @ -o route://225.1.1.0:6000/" "send"
+do_test "$GPAC -i $TEMP_DIR/live.$2 dashin:forward=file @ -o route://225.1.1.0:6000/" "send"
 
 test_end
 }
@@ -185,7 +185,8 @@ test_end
 
 
 route_dashing
-route_dash_filemode
+route_dash_filemode "" "mpd" ""
+route_dash_filemode "-hls" "m3u8" ":muxtype=ts"
 route_dash_ll
 route_dash_ll_filemode
 atsc_dashing
