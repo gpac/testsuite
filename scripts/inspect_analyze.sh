@@ -63,7 +63,7 @@ test_end
 test_begin "inspect-fmt"
 if [ "$test_skip" != 1 ] ; then
 inspect="$TEMP_DIR/inspect.txt"
-do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/subtitle.srt inspect:deep:log=$inspect:fmt=%ddts%%t%%dcts%%t%%ctso%%t%%frame%%t%%lp%%t%%depo%%t%%depf%%t%%red%%t%%ck%%t%%pcr%%t%%pid.ID%%t%%StreamType%%t%%data%%t%%cr%%lf%" "inspect"
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/subtitle.srt inspect:deep:log=$inspect:fmt=%ddts%%t%%dcts%%t%%ctso%%t%%frame%%t%%lp%%t%%depo%%t%%depf%%t%%red%%t%%ck%%t%%pcr%%t%%pid.ID%%t%%StreamType%%t%%data%%lf%" "inspect"
 do_hash_test $inspect "inspect"
 
 fi
