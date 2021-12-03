@@ -67,6 +67,8 @@ for drm in $MEDIA_DIR/encryption/*.xml ; do
 case $drm in
 *cbcs_const_roll* )
   continue ;;
+*hls_saes* )
+  continue ;;
 *mkey* )
   continue ;;
 *subs* )

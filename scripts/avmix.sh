@@ -43,14 +43,10 @@ case $1 in
   skip_hash=1;;
 esac
 
-#don't hash on lin32, decoder results are not exactly the same
-#for other we should have the same results, further checking needed
-#if [ $GPAC_OSTYPE != "lin32" ] ; then
-#	skip_hash=0
-#fi
-
-skip_hash=0
-
+#don't hash these on lin32, float precision is not exactly the same
+if [ $GPAC_OSTYPE != "lin32" ] ; then
+	skip_hash=0
+fi
 
 if [ $is_gpu = 0 ] ; then
 
