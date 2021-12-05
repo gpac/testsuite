@@ -30,7 +30,7 @@ test_begin "dash-ts-mux-live"
 if [ $test_skip != 1 ] ; then
 
 #force a PCR init to avoid random PCR init value
-do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264:#Representation=1 -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:#Representation=1 -o $TEMP_DIR/file.mpd:segdur=4:m2ts --pcr_init=10000 --pcr_init=pes_pack=none" "ts-dash"
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264:#Representation=1 -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:#Representation=1 -o $TEMP_DIR/file.mpd:segdur=4:muxtype=ts --pcr_init=10000 --pcr_init=pes_pack=none" "ts-dash"
 
 #myinspect=$TEMP_DIR/inspect.txt
 #do_test "$GPAC -i $TEMP_DIR/file.mpd inspect:allp:deep:interleave=false:log=$myinspect"
@@ -46,7 +46,7 @@ test_begin "dash-ts-mux-vod"
 if [ $test_skip != 1 ] ; then
 
 #force a PCR init to avoid random PCR init value
-do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264:#Representation=1 -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:#Representation=1 -o $TEMP_DIR/file.mpd:segdur=4:m2ts:profile=onDemand --pcr_init=10000 --pcr_init=pes_pack=none" "ts-dash"
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264:#Representation=1 -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:#Representation=1 -o $TEMP_DIR/file.mpd:segdur=4:muxtype=ts:profile=onDemand --pcr_init=10000 --pcr_init=pes_pack=none" "ts-dash"
 
 #myinspect=$TEMP_DIR/inspect.txt
 #do_test "$GPAC -i $TEMP_DIR/file.mpd inspect:allp:deep:interleave=false:log=$myinspect"
@@ -63,7 +63,7 @@ test_begin "dash-ts-mux-sidx"
 if [ $test_skip != 1 ] ; then
 
 #force a PCR init to avoid random PCR init value
-do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264:#Representation=1 -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:#Representation=1 -o $TEMP_DIR/file.mpd:segdur=4:m2ts:profile=live:subs_sidx=5 --pcr_init=10000 --pcr_init=pes_pack=none" "ts-dash"
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264:#Representation=1 -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:#Representation=1 -o $TEMP_DIR/file.mpd:segdur=4:muxtype=ts:profile=live:subs_sidx=5 --pcr_init=10000 --pcr_init=pes_pack=none" "ts-dash"
 
 #myinspect=$TEMP_DIR/inspect.txt
 #do_test "$GPAC -i $TEMP_DIR/file.mpd inspect:allp:deep:interleave=false:log=$myinspect"
@@ -80,7 +80,7 @@ test_begin "dash-ts-split"
 if [ $test_skip != 1 ] ; then
 
 #force a PCR init to avoid random PCR init value
-do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264 -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac -o $TEMP_DIR/file.mpd:segdur=4:m2ts:profile=live --pcr_init=10000 --pcr_init=pes_pack=none" "ts-dash"
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264 -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac -o $TEMP_DIR/file.mpd:segdur=4:muxtype=ts:profile=live --pcr_init=10000 --pcr_init=pes_pack=none" "ts-dash"
 
 #myinspect=$TEMP_DIR/inspect.txt
 #do_test "$GPAC -i $TEMP_DIR/file.mpd inspect:allp:deep:interleave=false:log=$myinspect"

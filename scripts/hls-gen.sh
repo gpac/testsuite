@@ -64,7 +64,7 @@ test_end
 test_begin "hls-gen-ts"
 if [ $test_skip != 1 ] ; then
 
-do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264 -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:#Language=fra:#Representation=Soustitres -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:#Language=eng:#Representation=Subtitles -o $TEMP_DIR/file.m3u8:m2ts" "hls-m2ts"
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264 -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:#Language=fra:#Representation=Soustitres -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:#Language=eng:#Representation=Subtitles -o $TEMP_DIR/file.m3u8:muxtype=ts" "hls-m2ts"
 
 do_hash_test "$TEMP_DIR/file.m3u8" "hls-master"
 
