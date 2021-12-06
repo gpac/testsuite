@@ -311,6 +311,28 @@ test_end
 
 }
 
+
+test_http_server_mem()
+{
+test_begin "http$TESTSUF-server-mem-$1"
+if [ $test_skip = 1 ] ; then
+ return
+fi
+
+tmp_aac=$TEMP_DIR/test.mp4
+do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=3 -new $tmp_aac" "make-input"
+
+do_test "$GPAC -i $tmp_aac reframer:rt=on @ -o http://127.0.0.1:8080/live.$2:rdirs=gmem:dmode=dynamic$3" "dash-mem" &
+#sleep to make sure the push origin is running, but not too long to make sure the client tunes on live edge at first set (otherwise hash will fail)
+sleep .3
+
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i http://127.0.0.1:8080/live.$2 inspect:dur=2:allp:deep:test=network:interleave=false:log=$myinspect" "play"
+do_hash_test $myinspect "play"
+test_end
+
+}
+
 do_tests()
 {
 
@@ -344,6 +366,10 @@ test_https_server
 
 #test http server + push instance + client
 test_http_server_push_pull
+
+test_http_server_mem "dash" "mpd" ""
+test_http_server_mem "hls" "m3u8" ""
+test_http_server_mem "hls-ll-sf" "m3u8" ":llhls=sf:cdur=0.5"
 
 }
 
