@@ -128,3 +128,20 @@ single_test "$GPAC -js=$MEDIA_DIR/jsf/worker_exec.js" "jsf-worker-exec"
 
 # check loading DASH algo from JS (not running anything)
 single_test "$GPAC dashin:algo=custom_dash" "jsf-dash"
+
+
+
+
+
+#test JSFilter as loader of filters, using a sink destination and a sink filter
+test_begin "jsf-fileio"
+if [ $test_skip != 1 ] ; then
+do_test "$GPAC $MEDIA_DIR/jsf/fileio_write.js" "write"
+
+do_test "$GPAC $MEDIA_DIR/jsf/fileio_read.js -graph" "read"
+do_hash_test $LOCAL_OUT_DIR/temp/jsf-fileio/inspect.txt "read"
+
+fi
+test_end
+
+
