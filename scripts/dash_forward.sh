@@ -113,3 +113,46 @@ src1=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_320x180_128kbps.264:ba
 src2=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_640x360_192kbps.264:bandwidth=200000
 dash_forward_hls "twores"
 
+
+
+
+
+dash_merge_mperiod()
+{
+
+test_begin "dash_merge_mperiod"
+
+if [ $test_skip  = 1 ] ; then
+ return
+fi
+
+#first dash, segment templates with $Number
+do_test "$MP4BOX -dash 1000 -profile live -out $TEMP_DIR/dash1/file.mpd $src1:dur=4 $src_audio" "dash1"
+do_hash_test $TEMP_DIR/dash1/file.mpd "dash1"
+
+#second dash, using segment timeline and segment templates with $Time
+do_test "$MP4BOX -dash 1000 -profile live -out $TEMP_DIR/dash2/file.mpd $src2:dur=4 $src_audio --stl" "dash2"
+do_hash_test $TEMP_DIR/dash2/file.mpd "dash2"
+
+#merge manifests only: use sigfrag for manifest-only rewrite, and global --forward=segb so that all dashers forward segment boundaries and template info
+do_test "$GPAC -i $TEMP_DIR/dash1/file.mpd:#Period=1 -i $TEMP_DIR/dash2/file.mpd:#Period=2 -o $TEMP_DIR/merge.mpd:sigfrag --forward=segb" "merge"
+do_hash_test $TEMP_DIR/merge.mpd "merge"
+
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i $TEMP_DIR/merge.mpd inspect:deep:interleave=false:log=$myinspect" "inspect-merge"
+do_hash_test $myinspect "inspect-merge"
+
+#test we can merge a multi period and a single period - we can no longer use Period= since period IDs are already defined in merge.mpd
+#so we use period start orders instead
+do_test "$GPAC -i $TEMP_DIR/merge.mpd:#PStart=-1 -i $TEMP_DIR/dash1/file.mpd:#PStart=-2 -o $TEMP_DIR/remerge.mpd:sigfrag --forward=segb" "remerge"
+do_hash_test $TEMP_DIR/remerge.mpd "remerge"
+
+myinspect=$TEMP_DIR/inspect-merge.txt
+do_test "$GPAC -i $TEMP_DIR/remerge.mpd inspect:deep:interleave=false:log=$myinspect" "inspect-remerge"
+do_hash_test $myinspect "inspect-remerge"
+
+test_end
+
+}
+
+dash_merge_mperiod
