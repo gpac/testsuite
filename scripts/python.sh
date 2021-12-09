@@ -36,6 +36,17 @@ py_test()
 
  do_test "$pyth $testfile" "run"
 
+if [ "$name" == "fileio" ] ; then
+
+do_hash_test $LOCAL_OUT_DIR/temp/py_fileio/inspect-sf.txt "read"
+do_hash_test $LOCAL_OUT_DIR/temp/py_fileio/record.mp4 "record"
+do_hash_test $LOCAL_OUT_DIR/temp/py_fileio/dash/live.mpd "dash-mpd"
+do_hash_test $LOCAL_OUT_DIR/temp/py_fileio/dash/counter_dashinit.mp4 "dash-init"
+do_hash_test $LOCAL_OUT_DIR/temp/py_fileio/dash/counter_dash8.m4s "dash-seg8"
+do_hash_test $LOCAL_OUT_DIR/temp/py_fileio/inspect-dash.txt "read-dash"
+
+fi
+
 if [ $keep_temp_dir != 1 ] ; then
  rm $testfile 2> /dev/null
 fi
