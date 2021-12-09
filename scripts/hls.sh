@@ -81,3 +81,21 @@ test_hls_crypt_seg "block" ""
 test_hls_crypt_seg "fullfile" "--fullfile"
 
 
+test_hls_ext()
+{
+
+test_begin "hls-extensions"
+if [ $test_skip != 1 ] ; then
+
+manifest=$TEMP_DIR/file.m3u8
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc::#HLSMExt=vfoo,vbar=video::#HLSVExt=#fooVideo,#bar1=optVideo -i $MEDIA_DIR/auxiliary_files/count_english.mp3::#HLSMExt=afoo,abar=audio-en::#HLSVExt=#fooAudio,#bar1=optAudio  -o $manifest::hlsx=#SomeExt,#SomeOtherExt=true" "hls-ext"
+do_hash_test "$TEMP_DIR/file.m3u8" "hls-master"
+do_hash_test "$TEMP_DIR/file_1.m3u8" "hls-child1"
+do_hash_test "$TEMP_DIR/file_2.m3u8" "hls-child2"
+
+fi
+test_end
+
+}
+
+test_hls_ext
