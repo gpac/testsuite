@@ -38,12 +38,18 @@ py_test()
 
 if [ "$name" == "fileio" ] ; then
 
+if [ -d $LOCAL_OUT_DIR/temp/py_fileio ] ; then
+
 do_hash_test $LOCAL_OUT_DIR/temp/py_fileio/inspect-sf.txt "read"
 do_hash_test $LOCAL_OUT_DIR/temp/py_fileio/record.mp4 "record"
 do_hash_test $LOCAL_OUT_DIR/temp/py_fileio/dash/live.mpd "dash-mpd"
 do_hash_test $LOCAL_OUT_DIR/temp/py_fileio/dash/counter_dashinit.mp4 "dash-init"
 do_hash_test $LOCAL_OUT_DIR/temp/py_fileio/dash/counter_dash8.m4s "dash-seg8"
 do_hash_test $LOCAL_OUT_DIR/temp/py_fileio/inspect-dash.txt "read-dash"
+
+else
+echo "NumPy not present, skipping hashes"
+fi
 
 fi
 

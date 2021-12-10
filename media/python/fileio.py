@@ -4,6 +4,7 @@ import types
 import libgpac as gpac
 import os
 
+numpy_support=True
 try:
     import numpy as np
 except ImportError:
@@ -34,11 +35,11 @@ class MyFileIO:
 		self.file.close()
 		self.file=None
 
-	def write(self, np_arr):
+	def write(self, np_arr, _size):
 		self.file.write(np_arr)
 		return np.size(np_arr)
 
-	def read(self, np_array):
+	def read(self, np_array, _size):
 		tmp = np.fromfile(self.file, dtype=np.ubyte, count=np.size(np_array))
 		size = np.size(tmp)
 		np_array[:size] = tmp
