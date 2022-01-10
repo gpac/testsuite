@@ -94,7 +94,7 @@ If `-video`  option is specified when running the tests, encodes the result usin
 
 ## Aggregating tests
 When the results of several tests need to be aggregated, instead of using multiple `single_test` calls, sub-tests can be run within a test using the `do_test` function. 
-This is usefull when several tests require the generation of the same input file, for example.
+This is useful when several tests require the generation of the same input file, for example.
 
 A typical test with two subtests used in a batch will look like:
 ```
@@ -147,7 +147,7 @@ The error file is named:
 - `TESTNAME-SUBTEST_NAME-stderr.txt` for subtests run with `do_test`
 
 ## Customized test 
-To customize a test, a file named `$TESTNAME.sh` can be placed in the gpac/rules directory. It is called before the actual test is run and allows custom variables to be set or overriding a given variable in a batch of tests, while still using a single generic test function. Directories variables shall not be modified. Other variables of the test suite documented here are reset at the begining of each test.  
+To customize a test, a file named `$TESTNAME.sh` can be placed in the gpac/rules directory. It is called before the actual test is run and allows custom variables to be set or overriding a given variable in a batch of tests, while still using a single generic test function. Directories variables shall not be modified. Other variables of the test suite documented here are reset at the beginning of each test.  
 
 ## Testing and caching results
 In order to avoid running all tests again whenever one test fails, the GPAC testing environment caches previous test results. If an XML file corresponding to the test or subtest exists in the results folder, the test or subtest is not run. If you want to ignore previous results, use `make_tests.sh -clean` before running the test suite. If you only want to invalidate tests of a given script, use  `make_tests.sh -clean script.sh` 

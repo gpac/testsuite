@@ -23,7 +23,7 @@ deps_test ()
 
 #avc test
 deps_test $MEDIA_DIR/auxiliary_files/enst_video.h264
-#test not usefull, video doesn't have B slices so no frames are marked as discardable. We would need further ref pic list inspection for that
+#test not useful, video doesn't have B slices so no frames are marked as discardable. We would need further ref pic list inspection for that
 #deps_test $MEDIA_DIR/auxiliary_files/counter.hvc
 
  if [ $EXTERNAL_MEDIA_AVAILABLE = 0 ] ; then
