@@ -8,7 +8,7 @@ return
 fi
 
 #build single file with B-frames and audio. We test
-#cmfc, cmf2:  force spliting the input into different adaptation sets
+#cmfc, cmf2:  force splitting the input into different adaptation sets
 #cmf2: remove edit lists from video track and use negctts
 do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_main_1280x720_512kbps.264 -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac -new $TEMP_DIR/file.mp4" "dash-input-preparation"
 
