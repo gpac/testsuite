@@ -42,7 +42,7 @@ let txt_shader=null;
 filter.initialize = function() {
 
 this.set_cap({id: "StreamType", value: "Video", output: true} );
-this.set_cap({id: "CodecID", value: "raw", ouput: true} );
+this.set_cap({id: "CodecID", value: "raw", output: true} );
 
 pid = this.new_pid();
 pid.set_prop('StreamType', 'Visual');
