@@ -88,6 +88,12 @@ mp4_test ()
   do_dnal=1
   do_hint=0
   ;;
+ *enstvid.ivf )
+  do_hint=0 ;;
+ *counter_1280_720_I_25_500k.ivf )
+  do_hint=0 ;;
+ *vp80-00-comprehensive-017.ivf )
+  do_hint=0 ;;
  *.ivf )
   do_dnal=1
   do_hint=0 ;;

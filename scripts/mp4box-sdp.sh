@@ -6,7 +6,7 @@ return
 fi
 
 mp4file="$TEMP_DIR/sdp.mp4"
-do_test "$MP4BOX -fps 30 -add $MEDIA_DIR/auxiliary_files/counter.hvc -hint -add-sdp 'movie' -add-sdp 1001:'track'-new $mp4file" "sdp"
+do_test "$MP4BOX -fps 30 -add $MEDIA_DIR/auxiliary_files/counter.hvc -hint -add-sdp 'movie' -add-sdp 1001:'track' -new $mp4file" "sdp"
 do_hash_test $mp4file "sdp"
 
 mp4file="$TEMP_DIR/multi.mp4"
