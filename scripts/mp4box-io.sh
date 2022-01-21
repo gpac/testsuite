@@ -110,10 +110,8 @@ mp4_test ()
   #mpg, ogg and avi import is broken in master, disable hash until we move to filters
  *.mpg | *.ogg | *.avi)
   do_hash=0 ;;
-  #two many diffs in SVC import (sei, svc subseq PS) between old and new archs, we comment out hashing for now
  *svc* )
-  do_dnal=1
-  do_hash=0 ;;
+  do_dnal=1;;
  *.avc | *.264 | *.h264 | *.hevc | *.hvc | *.265 | *.h265 | *.266 | *.h266 | *.vvc )
   do_dnal=1;;
  #no support for hinting or playback yet
