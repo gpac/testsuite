@@ -71,6 +71,8 @@ case $drm in
   continue ;;
 *hls_saes* )
   continue ;;
+*tpl_* )
+  continue ;;
 esac
 
 name=$(basename $drm)

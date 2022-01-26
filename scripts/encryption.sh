@@ -73,6 +73,8 @@ case $drm in
   continue ;;
 *subs* )
   continue ;;
+*tpl_* )
+  continue ;;
 esac
 
 #vp9 only supports ctr for now

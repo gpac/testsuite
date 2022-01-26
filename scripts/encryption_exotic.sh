@@ -94,3 +94,39 @@ test_end
 }
 
 test_encrypt_multi_stsd
+
+
+
+#test encryption with master/leaf key
+test_encrypt_master_leaf()
+{
+test_begin "encryption-master-leaf"
+if [ $test_skip  = 1 ] ; then
+ return
+fi
+
+cfile=$TEMP_DIR/crypt.mp4
+dfile=$TEMP_DIR/decrypt.mp4
+ddfile=$TEMP_DIR/dashdecrypt.mp4
+mfile=$TEMP_DIR/dash/live.mpd
+cifile=$TEMP_DIR/dash/crypt_dashinit.mp4
+cffile=$TEMP_DIR/dash/crypt_dash10.m4s
+
+do_test "$GPAC -i $src cecrypt:cfile=$MEDIA_DIR/encryption/tpl_roll.xml @ -o $cfile" "encrypt"
+do_hash_test $cfile "encrypt"
+
+do_test "$MP4BOX -dash 1000 -profile live -out $mfile $cfile" "dash"
+do_hash_test $cifile "dash-init"
+do_hash_test $cffile "dash-seg"
+
+do_test "$MP4BOX -decrypt $cfile -out $dfile" "decrypt"
+do_hash_test $dfile "decrypt"
+
+#we need to inject dashin before cdcrypt as cdrypt only accept media pids and dashin only expose media pids caps as loaded filter
+do_test "$GPAC -i $mfile dashin @ cdcrypt @ -o $ddfile" "dashdecrypt"
+do_hash_test $ddfile "dashdecrypt"
+
+test_end
+}
+
+test_encrypt_master_leaf
