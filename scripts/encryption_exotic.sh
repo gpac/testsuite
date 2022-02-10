@@ -130,3 +130,30 @@ test_end
 }
 
 test_encrypt_master_leaf
+
+
+
+#test encryption with roll every 2 segments, 3 periods, middle one in clear
+test_encrypt_seg_roll()
+{
+test_begin "encryption-roll-seg"
+if [ $test_skip  = 1 ] ; then
+ return
+fi
+
+dst=$TEMP_DIR/live.mpd
+src=$TEMP_DIR/src.mp4
+$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_320x180_128kbps.264:dur=5 -new $src 2> /dev/null
+
+do_test "$GPAC -i $src:#Period=P1 -i $src:#Period=P2:#CryptInfo=clear -i $src:#Period=P3 dasher:gencues cecrypt:cfile=$MEDIA_DIR/encryption/roll_seg.xml -o $dst:template=\$Period\$_video_\$Number\$" "encrypt"
+do_hash_test $dst "encrypt"
+
+inspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i $dst inspect:deep:log=$inspect" "inspect"
+do_hash_test $inspect "inspect"
+
+
+test_end
+}
+
+test_encrypt_seg_roll
