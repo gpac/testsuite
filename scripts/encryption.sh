@@ -75,6 +75,10 @@ case $drm in
   continue ;;
 *tpl_* )
   continue ;;
+*roll_seg* )
+  continue ;;
+*roll_period* )
+  continue ;;
 esac
 
 #vp9 only supports ctr for now
