@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<NHNTStream version="1.0" timeScale="1000" mediaType="subt" mediaSubType="sbtt" mime_type="text/plain" text_encoding="utf-8">
+<NHNTSample DTS="0" isRAP="yes" mediaFile="first.xml">
+	<SAI type="GPAC" aux_info="0" group="true">
+		<BS value="0" bits="8"/>
+	</SAI>
+</NHNTSample>
+<NHNTSample DTS="10000" isRAP="yes" mediaFile="second.xml">
+</NHNTSample>
+<NHNTSample DTS="20000" isRAP="yes" mediaFile="last.xml" duration="10000">
+	<SAI type="GPAC" aux_info="0" group="true">
+		<BS value="1" bits="8"/>
+		<BS value="2" bits="32"/>
+	</SAI>
+</NHNTSample>
+</NHNTStream>
