@@ -213,7 +213,7 @@ test_end
 
 test_http_dashpush_live()
 {
-test_begin "http$TESTSUF-dashpush"
+test_begin "http$TESTSUF-dashpush$1"
 if [ $test_skip = 1 ] ; then
  return
 fi
@@ -226,7 +226,7 @@ do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:wdir=$TEMP_DIR --re
 #sleep half a sec to make sure the server is up and running
 sleep .5
 
-do_test "$MP4BOX -run-for 3000 -dash-live 1000 -subdur 1000 -profile live $TEMP_DIR/source.mp4 -out http://127.0.0.1:8080/live.mpd:hmode=push -logs=http@debug" "dash_push"
+do_test "$MP4BOX -run-for 3000 -dash-live 1000 -subdur 1000 -profile live $TEMP_DIR/source.mp4 -out http://127.0.0.1:8080/live.$2:hmode=push$3 -logs=http@debug" "dash_push"
 
 wait
 
@@ -356,7 +356,9 @@ test_http_byteranges
 test_http_dashraw
 
 #test live dash output to http with PUT and DELETE
-test_http_dashpush_live
+test_http_dashpush_live "" "mpd" ""
+test_http_dashpush_live "-hls" "m3u8" ""
+test_http_dashpush_live "-llhls" "m3u8" ":llhls=sf:seg_dur=2:cdur=1"
 
 #test live dash output to http with PUT and byte range update for SIDX
 test_http_dashpush_vod
