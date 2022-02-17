@@ -2,13 +2,23 @@
 <NHNTStream version="1.0" timeScale="1000" trackID="5" mediaType="subt" mediaSubType="stpp" auxiliaryMimeTypes="image/png" width="800" height="600" parNum="1" parDen="1" 
  xml_namespace="http://www.w3.org/ns/ttml" >
 <NHNTSample DTS="0" isRAP="yes" duration="2000">
-  <NHNTSubSample mediaFile="ebu-ttd_sample.ttml"/>
-  <NHNTSubSample mediaFile="../auxiliary_files/logo.png"/>
-  <NHNTSubSample mediaFile="../auxiliary_files/logo.png"/>
+  <BS mediaFile="ebu-ttd_sample.ttml"/>
+  <BS mediaFile="../auxiliary_files/logo.png"/>
+  <BS mediaFile="../auxiliary_files/logo.png"/>
+  <SubSamples>
+    <SubSample fsize="ebu-ttd_sample.ttml"/>
+    <SubSample fsize="../auxiliary_files/logo.png"/>
+    <SubSample fsize="../auxiliary_files/logo.png"/>
+  </SubSamples>
 </NHNTSample>
 <NHNTSample DTS="2000" isRAP="yes" duration="4000">
-  <NHNTSubSample mediaFile="ebu-ttd_sample.ttml"/>
-  <NHNTSubSample mediaFile="../auxiliary_files/logo.png"/>
-  <NHNTSubSample mediaFile="../auxiliary_files/logo.png"/>
+  <BS mediaFile="ebu-ttd_sample.ttml"/>
+  <BS mediaFile="../auxiliary_files/logo.png"/>
+  <BS mediaFile="../auxiliary_files/logo.png"/>
+  <SubSamples>
+    <SubSample fsize="ebu-ttd_sample.ttml"/>
+    <SubSample fsize="../auxiliary_files/logo.png"/>
+    <SubSample fsize="../auxiliary_files/logo.png"/>
+  </SubSamples>
 </NHNTSample>
 </NHNTStream>

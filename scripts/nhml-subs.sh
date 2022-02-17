@@ -52,13 +52,18 @@ do_hash_test $nhml_add "nhml-add"
 
 #check SAI/sgdp from mp4dmx regular mode
 myinspect="$TEMP_DIR/inspect.txt"
-do_test "$GPAC -i $nhml inspect:deep:full:log=$myinspect" "nhml-inspect"
+do_test "$GPAC -i $nhml inspect:deep:log=$myinspect" "nhml-inspect"
 do_hash_test $myinspect "nhml-inspect"
 
 #check SAI/sgdp from mp4dmx fragmented mode
 myinspect="$TEMP_DIR/inspect_frag.txt"
-do_test "$GPAC -i $nhml_frag inspect:deep:full:log=$myinspect" "nhml-inspect-frag"
+do_test "$GPAC -i $nhml_frag inspect:deep:log=$myinspect" "nhml-inspect-frag"
 do_hash_test $myinspect "nhml-inspect-frag"
+
+#check properties
+myinspect="$TEMP_DIR/inspect_raw.txt"
+do_test "$GPAC -i $2 inspect:deep:log=$myinspect" "inspect-raw"
+do_hash_test $myinspect "inspect-raw"
 
 test_end
 }
