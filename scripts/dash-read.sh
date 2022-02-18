@@ -65,7 +65,7 @@ if [ -n "$has_h2" ] ; then
 hls_opts="$hls_opts -no-h2"
 fi
 
-dash_test "hls" "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8 --start_with=min_bw $hls_opts -logs=dash:http:author:network@debug" 1
+dash_test "hls" "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8 --start_with=min_bw $hls_opts -logs=dash:http:network@debug" 1
 
 dash_test "smooth" "http://amssamples.streaming.mediaservices.windows.net/69fbaeba-8e92-4740-aedc-ce09ae945073/AzurePromo.ism/manifest" 1
 #VOD test seq without tfxd
