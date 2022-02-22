@@ -96,7 +96,7 @@ do_test "gpac -for-test -mem-track test $MEDIA_DIR/auxiliary_files/logo.jpg $MED
 do_hash_test $TEMP_DIR/logs.txt  "inspect-res"
 
 #test regular
-gpac -for-test -mem-track -alias='test src=@{1} inspect:log=@{N-1}' -aliasdoc='test some doc' 2> /dev/null
+gpac -for-test -mem-track -alias='test src=@{1} inspect:log=@{N}' -aliasdoc='test some doc' 2> /dev/null
 do_test "gpac -for-test -mem-track test $MEDIA_DIR/auxiliary_files/logo.jpg -k $TEMP_DIR/logs2.txt -sloop=2" "gpac-alias-nargs"
 do_hash_test $TEMP_DIR/logs2.txt  "inspect-res2"
 
