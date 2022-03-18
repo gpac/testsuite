@@ -32,7 +32,7 @@ ffmx=`$GPAC -h ffmx 2>/dev/null | grep ffmx`
 if [ -n "$ffmx" ] ; then
 
 ffmx_test "mkv" "$MEDIA_DIR/auxiliary_files/enst_video.h264" ""
-ffmx_test "ogg" "$EXTERNAL_MEDIA_DIR/import/dead_ogg.ogg" ":test=encode"
+ffmx_test "ogg" "$EXTERNAL_MEDIA_DIR/import/dead_ogg.ogg -blacklist=oggmx" ":test=encode"
 ffmx_test "webm" "$EXTERNAL_MEDIA_DIR/import/counter_1280_720_I_25_500k.ivf" ""
 
 fi

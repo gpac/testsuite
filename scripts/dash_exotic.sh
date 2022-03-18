@@ -46,6 +46,11 @@ dash_exotic_test "raw-nomux" "$src:id=1 $src2:id=1 -profile onDemand --muxtype=r
 #using ISOBMFF output format in live profile with custom extensions
 dash_exotic_test "raw-isobmf-mime" "$src -profile live --segext=raw --initext=raw --muxtype=mp4" 1 1
 
+#using ogg output format in live profile
+dash_exotic_test "ogg-live" "$EXTERNAL_MEDIA_DIR/import/dead_ogg.ogg -profile live --muxtype=ogg --stl" 1 1
+#using ogg output format in main, single file profile
+dash_exotic_test "ogg-main" "$EXTERNAL_MEDIA_DIR/import/dead_ogg.ogg -profile main --muxtype=ogg --sfile" 1 1
+
 
 #check if we have ffmpeg mux support
 ffmx=`$GPAC -h filters 2>&1 | grep ffmx`
