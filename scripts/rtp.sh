@@ -134,6 +134,11 @@ $MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3:dur=1 -new $mp4fi
 rtp_test "ac3" $mp4file "" ""
 #rm $mp4file > /dev/null
 
+mp4file="$MYTMP/eac3.mp4"
+$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.eac3:dur=1 -new $mp4file 2> /dev/null
+rtp_test "eac3" $mp4file "" ""
+#rm $mp4file > /dev/null
+
 mp4file="$MYTMP/qcelp.mp4"
 $MP4BOX -add $EXTERNAL_MEDIA_DIR/import/counter_english.qcp:dur=1 -new $mp4file 2> /dev/null
 rtp_test "qcp" $mp4file "inspect_only" ""
