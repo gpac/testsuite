@@ -48,6 +48,12 @@ if [ $GPAC_OSTYPE != "lin32" ] ; then
 	skip_hash=0
 fi
 
+#don't hash audio only, we don't have guarantee that frames will be of the same length
+case $1 in
+ *audio_only* )
+  skip_hash=1;;
+esac
+
 if [ $is_gpu = 0 ] ; then
 
 myinspect=$TEMP_DIR/inspect.txt
