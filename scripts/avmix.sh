@@ -51,7 +51,7 @@ fi
 if [ $is_gpu = 0 ] ; then
 
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -blacklist=vtbdec,nvdec,ohevcdec,osvcdec -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts avmix:pl=$1$3 inspect:deep:interleave=0$ins_ext:log=$myinspect" "run"
+do_test "$GPAC -blacklist=vtbdec,nvdec,ohevcdec,osvcdec,maddec,faad -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts avmix:pl=$1$3 inspect:deep:interleave=0$ins_ext:log=$myinspect" "run"
 
 if [ $skip_hash != 1 ] ; then
 do_hash_test $myinspect "run"
