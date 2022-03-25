@@ -49,8 +49,8 @@ test_resample2 "44k_96k" ":osr=96k" "mp4"
 test_resample2 "44k_24k" ":osr=24k" "mp4"
 test_resample2 "44k_22k" ":osr=22050" "mp4"
 
-test_resample2 "44k_48k_s32" ":osr=48k:ofmt=s32" "s32"
-test_resample2 "44k_22k_s32" ":osr=22050:ofmt=s32" "s32"
+test_resample2 "44k_48k_s32" ":osr=48k:osfmt=s32" "s32"
+test_resample2 "44k_22k_s32" ":osr=22050:osfmt=s32" "s32"
 
-test_resample2 "44k_96k_flt" ":osr=96k:ofmt=flt" "flt"
-test_resample2 "44k_24k_flt" ":osr=24k:ofmt=flt" "flt"
+test_resample2 "44k_96k_flt" ":osr=96k:osfmt=flt" "flt"
+test_resample2 "44k_24k_flt" ":osr=24k:osfmt=flt" "flt"
