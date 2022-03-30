@@ -20,18 +20,80 @@ test_end
 test_begin "mp4box-tags-file"
 if [ "$test_skip" != 1 ] ; then
 
-tags=$TEMP_DIR/tags.txt
-echo "artist=GPAC" > $tags
-echo "lyrics=Some lyrics " >> $tags
-echo "  on  " >> $tags
-echo "multiple" >> $tags
-echo "" >> $tags
-echo "lines" >> $tags
-echo "cust=Custom Tag" >> $tags
+tagfile="tags.txt"
+echo "title=A9nam-TEST-name
+artist=A9ART-TEST
+album_artist=aART-TEST-albumArtist
+album=A9alb-TEST
+group=A9grp-TEST-grouping
+composer=A9com-TEST
+writer=A9wrt-TEST
+conductor=A9con-TEST
+comment=A9cmt-TEST-comments
+genre=gnre-TEST-ID3 genre tag
+created=A9day-TEST-releaseDate
+track=A9trk-TEST
+tracknum=55
+disk=33
+tempo=tmpo- integer
+compilation=no
+show=tvsh-TEST-tvShow
+episode_id=tven-TEST-tvEpisodeID
+season=33
+episode=44
+network=tvnn-TEST-tvNetwork
+sdesc=desc-TEST-description
+ldesc=ldes-TEST-longDescription
+lyrics=A9lyr-TEST
+sort_name=sonm-TEST-sortName
+sort_artist=soar-TEST-sortArtist
+sort_album_artist=soaa-TEST-sortAlbumArtist
+sort_album=soal-TEST-sortAlbum
+sort_composer=soco-TEST-sortComposer
+sort_show=sosn-TEST-sortShow
+copyright=cprt-TEST
+tool=A9too-TEST-encodingTool
+encoder=A9enc-TEST-encodedBy
+pdate=purd-TEST-purchaseDate
+podcast=no
+url=purl-TEST-podcastURL
+keywords=kyyw-TEST
+category=catg-TEST
+hdvideo=hdvd- integer
+media=1
+rating=1
+gapless=yes
+art_director=A9ard-TEST
+arranger=A9arg-TEST
+lyricist=A9aut-TEST
+acknowledgement=A9cak-TEST
+song_description=A9des-TEST
+director=A9dir-TEST
+equalizer=A9equ-TEST
+liner=A9lnt-TEST
+record_company=A9mak-TEST
+original_artist=A9ope-TEST
+phono_rights=A9phg-TEST
+producer=A9prd-TEST
+performer=A9prf-TEST
+publisher=A9pub-TEST
+sound_engineer=A9sne-TEST
+soloist=A9sol-TEST
+credits=A9src-TEST
+thanks=A9thx-TEST
+online_info=A9url-TEST
+exec_producer=A9xpd-TEST
+cover=$MEDIA_DIR/auxiliary_files/logo.jpg" > $tagfile
+
 
 mp4file="$TEMP_DIR/test.mp4"
-do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac -new $mp4file -itags $tags" "create"
+do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=1 -new $mp4file -itags $tagfile" "create"
 do_hash_test $mp4file "create"
+
+do_test "$MP4BOX -disox $mp4file" "diso"
+do_hash_test $TEMP_DIR/test_info.xml "diso"
+
+mv $tagfile $TEMP_DIR
 
 clean="$TEMP_DIR/clean.mp4"
 do_test "$MP4BOX -itags clear $mp4file -out $clean" "clean"
@@ -63,3 +125,5 @@ do_hash_test $mp4file "create"
 do_test "$MP4BOX -info $mp4file" "info"
 fi
 test_end
+
+
