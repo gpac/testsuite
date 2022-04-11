@@ -79,6 +79,7 @@ filter.process = function()
 		if (this.opid.nb_pck>80)
 			pck.append("\nMore data at CTS " + pck.cts);
 	}
+	//first dts is 1 s, this tests edit lists
 	pck.dts = 1000*this.opid.nb_pck;
 	pck.dur = 1000;
 	pck.sap = GF_FILTER_SAP_1;

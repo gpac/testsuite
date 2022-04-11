@@ -70,6 +70,8 @@ mp4_test ()
  # mkv not supported in < 0.9.0
  *.mkv )
   return ;;
+ *.ssa )
+  return ;;
  *.jpg )
   do_hint=0 ;;
  *.jpeg )
