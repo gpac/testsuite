@@ -157,3 +157,28 @@ test_end
 }
 
 test_encrypt_seg_roll
+
+
+
+
+
+#test encryption with 2 sample entries
+test_encrypt_cenc_switch()
+{
+test_begin "encryption-cenc_switch"
+if [ $test_skip  = 1 ] ; then
+ return
+fi
+
+dst=$TEMP_DIR/enc.mp4
+src=$TEMP_DIR/src.mp4
+$MP4BOX -add $MEDIA_DIR/auxiliary_files/logo.png -cat $MEDIA_DIR/auxiliary_files/enst_video.h264 -new $src 2> /dev/null
+do_hash_test $src "import"
+
+do_test "$MP4BOX -crypt $MEDIA_DIR/encryption/ctr.xml $src -out $dst" "encrypt"
+do_hash_test $dst "encrypt"
+
+test_end
+}
+
+test_encrypt_cenc_switch
