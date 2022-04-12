@@ -26,7 +26,8 @@ done
 if [ -n "$ffmx" ] ; then
  dstfile="$TEMP_DIR/conv.mkv"
  do_test "$GPAC -i $2 -o $dstfile" "mkv"
- do_hash_test $dstfile "mkv"
+ #not bit-exact across platforms, use inspect only
+ #do_hash_test $dstfile "mkv"
 
  myinspect="$TEMP_DIR/inspect.txt"
  do_test "$GPAC -no-reassign=no -i $dstfile inspect:deep:log=$myinspect" "mkv-inspect"
