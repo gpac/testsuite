@@ -17,6 +17,8 @@ bifs_test()
  do_test "$MP4BOX -sclog -mp4 $srcfile" "mp4"
  do_hash_test $mp4file "mp4"
 
+ rm "${srcfile%.*}_enc.logs" 2> /dev/null
+
 
  #except on linux32 (rounding errors converting back from bifs)
  if [ $GPAC_OSTYPE != "lin32" ] ; then
@@ -43,6 +45,7 @@ bifs_test()
    do_test "$MP4BOX -diso $mp4file -out $TEMP_DIR/dump.xml" "diso"
    do_hash_test $TEMP_DIR/dump.xml "diso"
    test_end
+   rm $mp4file 2> /dev/null
    return
  fi
 
@@ -61,9 +64,9 @@ bifs_test()
  dump=$TEMP_DIR/stat.xml
  do_test "$MP4BOX -nstat $mp4file -out $dump" "stat"
  do_hash_test $dump "stat"
- dump=$TEMP_DIR/stats.xml
- do_test "$MP4BOX -nstats $mp4file -out $dump" "stats"
- do_hash_test $dump "stats"
+ dump2=$TEMP_DIR/stats.xml
+ do_test "$MP4BOX -nstats $mp4file -out $dump2" "stats"
+ do_hash_test $dump2 "stats"
 
  #we cannot statx this content, it contains self-destructing branches which are not supported in statx
  #do_test "$MP4BOX -nstatx $mp4file -std" "MP4STATX"
@@ -84,6 +87,9 @@ bifs_test()
 fi
 
  test_end
+
+ rm $mp4file 2> /dev/null
+
 }
 
 bifs_chunk_test()

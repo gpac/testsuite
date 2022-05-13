@@ -67,11 +67,12 @@ lsr_test ()
  if [ $GPAC_OSTYPE != "lin32" ] ; then
   do_hash_test $myinspect "inspect-saf"
  fi
+
  #this will sync everything, we can delete after
  test_end
 
-# rm $saffile 2> /dev/null
-# rm $mp4file 2> /dev/null
+ rm $saffile 2> /dev/null
+ rm $mp4file 2> /dev/null
 }
 
 

@@ -48,7 +48,7 @@ MP4Box -add $MEDIA_DIR\foo.bar $TEMP_DIR\foo.mp4
 or 
 ```
 #!/bin/sh
-MP4Client $MEDIA_DIR\foo.mp4
+gpac -play $MEDIA_DIR\foo.mp4
 ```
 
 In order to provide test caching and produce the unified test report for all the tests, with common timing, logging, etc, `make_tests.sh` defines several functions that should be used in a test.
@@ -79,7 +79,7 @@ single_test "MP4Box -add $MEDIA_DIR\foo.bar $TEMP_DIR\foo.mp4" test01
 or 
 ```
 #!/bin/sh
-single_test "MP4Client $MEDIA_DIR\foo.mp4" test02
+single_test "gpac -play $MEDIA_DIR\foo.mp4" test02
 ```
 
 ### do_play_test 
@@ -254,7 +254,7 @@ Two arguments:
 - `FILE`: the command line to execute
 - `SUBTEST_NAME`: the subtest name as it appears in the logs and in the stats
 
-Performs UI event trace generation on `$FILE` for the subtest using MP4Client, for a running duration of `$dump_dur` and an output size `$dump_size` (see `begin_test`). 
+Performs UI event trace generation on `$FILE` for the subtest using gpac, for a running duration of `$dump_dur` and an output size `$dump_size` (see `begin_test`). 
 UI file is generated as `$RULES_DIR/${basename $FILE.*}-$SUBTEST-ui.xml`.
 
 A typical usage is:

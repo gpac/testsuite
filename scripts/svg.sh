@@ -58,8 +58,8 @@ do_test "$GPAC -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts -cfg=Validato
  fi
 
  do_play_test "$2-play" "$v_args" "$a_args"
-
- do_test "$MP4BOX -nstat $1" "stats"
+stat_file=$TEMP_DIR/stats.xml
+ do_test "$MP4BOX -nstat $1 -out $stat_file" "stats"
 
 
 test_end

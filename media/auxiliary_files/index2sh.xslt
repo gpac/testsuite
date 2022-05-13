@@ -26,7 +26,6 @@
 if [ ! -e <xsl:value-of select = "@name"/>.mp4 ]; then MP4Box -mp4 <xsl:value-of select = "@name"/>.<xsl:value-of select = "@type"/>
 fi
             <xsl:if test = "snapshot">
-MP4Client -bmp <xsl:for-each select = "snapshot"><xsl:value-of select = "@time"/>-</xsl:for-each> <xsl:text> </xsl:text> <xsl:value-of select = "@name"/>.mp4 -2d
             </xsl:if>
             <xsl:if test = "not(@generate-html) or @generate-html != 'false'">
 echo "Creating HTML for <xsl:value-of select = "@name"/>"
@@ -44,7 +43,6 @@ if [ ! -e <xsl:value-of select = "@name"/>.xmt ]; then
 MP4Box -xmt <xsl:value-of select = "@name"/>.<xsl:value-of select = "@type"/>
 fi
             <xsl:if test = "snapshot">
-MP4Client -bmp <xsl:for-each select = "snapshot"><xsl:value-of select = "@time"/>-</xsl:for-each><xsl:text> </xsl:text><xsl:value-of select = "@name"/>.mp4<xsl:choose><xsl:when test = "@use3d = 'true'"> -3d</xsl:when><xsl:otherwise> -2d</xsl:otherwise></xsl:choose>
             </xsl:if>
             <xsl:if test = "not(@generate-html) or @generate-html != 'false'">
 echo "Creating HTML for <xsl:value-of select = "@name"/>"

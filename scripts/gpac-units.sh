@@ -136,7 +136,6 @@ test_begin "gpac-genmd"
 if [ $test_skip != 1 ] ; then
 do_test "$GPAC -genmd" "gpac-genmd"
 do_test "$MP4BOX -genmd" "mp4box-genmd"
-do_test "$MP4CLIENT -genmd" "mp4client-genmd"
 for i in *.md ; do
 if [ $i != "README.md" ] ; then
  rm $i
@@ -150,7 +149,6 @@ test_begin "gpac-genman"
 if [ $test_skip != 1 ] ; then
 do_test "$GPAC -genman" "gpac-genman"
 do_test "$MP4BOX -genman" "mp4box-genman"
-do_test "$MP4CLIENT -genman" "mp4client-genman"
 rm *.1
 fi
 test_end
