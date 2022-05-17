@@ -49,7 +49,7 @@ test_split "raw-dual-ranges-to-ts" $MEDIA_DIR/auxiliary_files/count_video.cmp ":
 
 test_split "raw-frames" $MEDIA_DIR/auxiliary_files/count_video.cmp ":xs=F100:xs=F200" "mp4" "" 0
 test_split "raw-sap" $MEDIA_DIR/auxiliary_files/count_video.cmp ":xs=SAP" "mp4" "" 1
-test_split "raw-dur" $MEDIA_DIR/auxiliary_files/count_video.cmp ":xs=D2000" "mp4" "" 1
+test_split "raw-dur" $MEDIA_DIR/auxiliary_files/count_video.cmp ":xs=D2" "mp4" "" 1
 test_split "raw-size" $MEDIA_DIR/auxiliary_files/count_video.cmp ":xs=S100k" "mp4" "" 1
 
 #create simple MP4 with both audio and video
@@ -58,7 +58,7 @@ $MP4BOX -add $MEDIA_DIR/auxiliary_files/count_video.cmp -add $MEDIA_DIR/auxiliar
 
 test_split "av-dual-ranges-to-mp4" $src ":xs=T00:00:02.500,T00:00:08.100:xe=T00:00:04.500,T00:00:09.500:splitrange" "mp4" "" 1
 test_split "av-dual-ranges-to-fmp4" $src ":xs=T00:00:02.500,T00:00:08.100:xe=T00:00:04.500,T00:00:09.500:splitrange" "mp4" "--store=frag" 1
-test_split "av-dur" $src ":xs=D2000" "mp4" "" 1
+test_split "av-dur" $src ":xs=D2" "mp4" "" 1
 test_split "av-size" $src ":xs=S100k" "mp4" "" 1
 
 #create simple MP4 with audio, video and subs
@@ -67,7 +67,7 @@ $MP4BOX -add $MEDIA_DIR/auxiliary_files/count_video.cmp -add $MEDIA_DIR/auxiliar
 
 test_split "avt-dual-ranges-to-mp4" $src ":xs=T00:00:02.500,T00:00:08.100:xe=T00:00:04.500,T00:00:09.500:splitrange" "mp4" "" 1
 test_split "avt-dual-ranges-to-fmp4" $src ":xs=T00:00:02.500,T00:00:08.100:xe=T00:00:04.500,T00:00:09.500:splitrange" "mp4" "--store=frag" 1
-test_split "avt-dur" $src ":xs=D2000" "mp4" "" 1
+test_split "avt-dur" $src ":xs=D2" "mp4" "" 1
 test_split "avt-size" $src ":xs=S100k" "mp4" "" 1
 
 #create simple MP4 with video and BIIFS/OD
@@ -76,7 +76,7 @@ $MP4BOX -add $MEDIA_DIR/auxiliary_files/count_video.cmp -isma -new $src 2>/dev/n
 
 test_split "bifs-dual-ranges-to-mp4" $src ":xs=T00:00:02.500,T00:00:08.100:xe=T00:00:04.500,T00:00:09.500:splitrange" "mp4" "" 1
 test_split "bifs-dual-ranges-to-fmp4" $src ":xs=T00:00:02.500,T00:00:08.100:xe=T00:00:04.500,T00:00:09.500:splitrange" "mp4" "--store=frag" 1
-test_split "bifs-dur" $src ":xs=D2000" "mp4" "" 1
+test_split "bifs-dur" $src ":xs=D2" "mp4" "" 1
 test_split "bifs-size" $src ":xs=S100k" "mp4" "" 1
 
 test_split "raw-startonly" $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264 ":xs=0,10.0,18.0:splitrange" "mp4" "" 1
