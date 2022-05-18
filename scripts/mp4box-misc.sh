@@ -50,6 +50,9 @@ do_test "$MP4BOX -cprt supercopyright $mp4file" "cprt"
 do_hash_test $mp4file "cprt"
 do_test "$MP4BOX -info $mp4file" "cprt-info"
 
+do_test "$MP4BOX -info video $mp4file" "info-name"
+do_test "$MP4BOX -info n1 $mp4file" "info-num"
+
 mp4file="$TEMP_DIR/testco64.mp4"
 do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_video.h264 -co64 -new $mp4file" "add-co64"
 do_hash_test $mp4file "add-co64"

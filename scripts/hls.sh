@@ -99,3 +99,22 @@ test_end
 }
 
 test_hls_ext
+
+test_hls_absu()
+{
+
+test_begin "hls-abs-url"
+if [ $test_skip != 1 ] ; then
+
+manifest=$TEMP_DIR/file.m3u8
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -i $MEDIA_DIR/auxiliary_files/count_english.mp3 -o $manifest:hls_absu=both:base=http://foo.com/bar/" "hls-ext"
+do_hash_test "$TEMP_DIR/file.m3u8" "hls-master"
+do_hash_test "$TEMP_DIR/file_1.m3u8" "hls-child1"
+do_hash_test "$TEMP_DIR/file_2.m3u8" "hls-child2"
+
+fi
+test_end
+
+}
+
+test_hls_absu
