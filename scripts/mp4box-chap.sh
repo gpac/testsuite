@@ -1,9 +1,7 @@
 
 
 test_begin "mp4box-chap"
-if [ "$test_skip" = 1 ] ; then
-return
-fi
+if [ "$test_skip" != 1 ] ; then
 
 mp4file="$TEMP_DIR/chap-stream.mp4"
 
@@ -40,5 +38,29 @@ do_test "$MP4BOX -dump-chap-zoom $mp4file -out $ofile" "dump-chap"
 do_hash_test $ofile "dump-chap"
 
 test_end
+fi
 
 
+test_begin "mp4box-chap-split"
+if [ "$test_skip" != 1 ] ; then
+
+mp4file="$TEMP_DIR/chap.mp4"
+plfile="pl.txt"
+echo '#chap="First Chapter"' > $plfile
+echo "$MEDIA_DIR/auxiliary_files/counter.hvc" >> $plfile
+echo '#chap="Second Chapter"' >> $plfile
+echo "$MEDIA_DIR/auxiliary_files/counter.hvc" >> $plfile
+echo '#chap="Third Chapter"' >> $plfile
+echo "$MEDIA_DIR/auxiliary_files/counter.hvc" >> $plfile
+
+do_test "$GPAC -i $plfile -o $mp4file" "chap-gen"
+do_hash_test $mp4file "chap-gen"
+mv $plfile $TEMP_DIR
+
+#test extraction of in middle of chapters
+splitfile="$TEMP_DIR/chap-split.mp4"
+do_test "$MP4BOX -splitx 15-25 $mp4file -out $splitfile" "chap-split"
+do_hash_test $splitfile "chap-split"
+
+test_end
+fi
