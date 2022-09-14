@@ -8,8 +8,14 @@ return
 fi
 
 dstfile="$TEMP_DIR/test.avi"
+if [ $3 != 0 ] ; then
+srcfile=$MEDIA_DIR/auxiliary_files/count_video.cmp
+else
+#issue with current ffmpeg with our old cmp test file on windows...
+srcfile=$MEDIA_DIR/auxiliary_files/enst_video.h264
+fi
 
-do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/count_video.cmp -i $MEDIA_DIR/auxiliary_files/count_english.mp3 $2 -o $dstfile" "mux"
+do_test "$GPAC -i $srcfile -i $MEDIA_DIR/auxiliary_files/count_english.mp3 $2 -o $dstfile" "mux"
 if [ $3 != 0 ] ; then
 
 #avilib does not always give the same binary output, we cannot hash the result but we hash the inspect of the file
