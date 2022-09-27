@@ -34,4 +34,12 @@ do_hash_test "$TEMP_DIR/decrypt_dashinit.mp4" "decrypt-init"
 do_test "$MP4BOX -decrypt $MEDIA_DIR/encryption/ctr.xml -init-seg $TEMP_DIR/dst_dashinit.mp4 $TEMP_DIR/dst_dash1.m4s -out $TEMP_DIR/decrypt_dash1.m4s" "decrypt-seg1"
 do_hash_test "$TEMP_DIR/decrypt_dash1.m4s" "decrypt-seg1"
 
+#same as above (decrypt init segment and produce init seg) using gpac
+do_test "$GPAC -i $TEMP_DIR/dst_dashinit.mp4 cdcrypt:cfile=$MEDIA_DIR/encryption/ctr.xml -o $TEMP_DIR/decrypt_dashinit2.mp4:frag:cmfc" "decrypt-init2"
+do_hash_test "$TEMP_DIR/decrypt_dashinit2.mp4" "decrypt-init2"
+
+#same as above (decrypt second segment and output as segment) using gpac
+do_test "$GPAC  --initseg=$TEMP_DIR/dst_dashinit.mp4 -i $TEMP_DIR/dst_dash2.m4s cdcrypt:cfile=$MEDIA_DIR/encryption/ctr.xml -o $TEMP_DIR/decrypt_dash2.m4s:frag:cmfc:noinit" "decrypt-seg2"
+do_hash_test "$TEMP_DIR/decrypt_dash2.m4s" "decrypt-seg2"
+
 test_end
