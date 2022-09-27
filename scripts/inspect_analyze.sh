@@ -21,13 +21,20 @@ do_test "$GPAC -i $1 inspect:deep:log=$inspect:analyze=full$2" "inspect-bs"
 do_hash_test $inspect "inspect-bs"
 fi
 
-if [ $3 = 2 ] ; then
 mp4file=$TEMP_DIR/file.mp4
+if [ $3 = 2 ] ; then
 $MP4BOX -add $1 -new $mp4file 2> /dev/null
 inspect="$TEMP_DIR/inspect_bs_mp4.xml"
 do_test "$GPAC -i $mp4file inspect:deep:log=$inspect:analyze=full$2" "inspect-bs-mp4"
 do_hash_test $inspect "inspect-bs-mp4"
+else
+$GPAC -i $1 -o $mp4file 2> /dev/null
 fi
+
+inspect="$TEMP_DIR/inspect_unframe.txt"
+do_test "$GPAC -i $mp4file @$2 unframer @ inspect:deep:log=$inspect" "inspect-unframer"
+do_hash_test $inspect "inspect-unframer"
+
 
 test_end
 
