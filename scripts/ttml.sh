@@ -16,7 +16,7 @@ fi
 
  mp4file=$TEMP_DIR/$name.mp4
 
- do_test "$MP4BOX -add $1 -new $mp4file" "import"
+ do_test "$MP4BOX -add $1 -new $mp4file --no_empty" "import"
  do_hash_test $mp4file "import"
 
 if [ $3 == 1 ] ; then
@@ -41,7 +41,7 @@ ttml_test "$MEDIA_DIR/ttml/ttml_samples.ttml" "" 0
 ttml_test "$MEDIA_DIR/ttml/ebu-ttd_regions.ttml" "" 0
 ttml_test "$MEDIA_DIR/ttml/ebu-ttd_timing_overlapping_inv.ttml" "" 0
 ttml_test "$MEDIA_DIR/ttml/ebu-ttd_metrics.ttml" "" 1
-ttml_test "$MEDIA_DIR/ttml/ebu-ttd_metrics.ttml:sopt:ttml_dur=0" "single-sample" 0
+ttml_test "$MEDIA_DIR/ttml/ebu-ttd_metrics.ttml:sopt:ttml_split=0" "single-sample" 0
 
 ttml_test "$MEDIA_DIR/ttml/ttml_images.ttml:sopt:ttml_embed" "embed-sample" 1
 ttml_test "$MEDIA_DIR/ttml/ttml_images_head.ttml:sopt:ttml_embed" "embed-head-sample" 1
@@ -68,8 +68,8 @@ src2=$MEDIA_DIR/ttml/ebu-ttd_sample_span.ttml
 pl=pl.m3u
 mp4file=$TEMP_DIR/file.mp4
 
-echo "$src1:ttml_dur=30k" > $pl
-echo "$src2:ttml_dur=20k" >> $pl
+echo "$src1:ttml_split=0:ttml_dur=30k" > $pl
+echo "$src2:ttml_split=0:ttml_dur=20k" >> $pl
 
 do_test "$MP4BOX -add $pl -new $mp4file" "import"
 do_hash_test $mp4file "import"

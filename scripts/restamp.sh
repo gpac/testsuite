@@ -7,9 +7,9 @@ if [ $test_skip  = 1 ] ; then
 	return
 fi
 
-mp4file=$TEMP_DIR/res.mp4
-do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 -i $MEDIA_DIR/auxiliary_files/enst_audio.aac restamp$2 -o $mp4file -graph -blacklist=vtbdec,nvdec,ohevcdec,osvcdec" "restamp"
-do_hash_test "$mp4file" "restamp"
+insp=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 -i $MEDIA_DIR/auxiliary_files/enst_audio.aac restamp$2 inspect:deep:interleave=0:log=$insp -graph" "restamp"
+do_hash_test "$insp" "restamp"
 
 test_end
 }
@@ -23,3 +23,5 @@ test_restamp "adelay" ":delay_a=9/10"
 test_restamp "rate" ":fps=-2"
 test_restamp "fps" ":fps=30000/1001:rawv=force"
 
+#set initial ts to 10s
+test_restamp "init" ":tsinit=10"
