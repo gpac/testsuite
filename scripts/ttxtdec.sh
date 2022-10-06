@@ -53,14 +53,14 @@ ttxt_clipframe()
  fi
 
  srcfile=$MEDIA_DIR/auxiliary_files/subtitle.srt
- dump=$TEMP_DIR/'dump_$Timescale$_$cts$_$dur$.png'
+ dump=$TEMP_DIR/'dump_$Timescale$_$cts$_$dur$_$CropOrigin$_$OriginalSize$.png'
 
  #test srt->png dump using clipframe (compositor output clipped to visual bounds) and packet props in pid template
  #we don't load the compositor explicitly here, just set a default output size (for text rendering) and clipframe on output png
  do_test "$GPAC -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts -i $srcfile -o $dump:osize=hd:timescale=1000:clipframe" "dump"
  #don't hash content on 32 bits, fp precision leads to different results
  if [ $GPAC_OSTYPE != "lin32" ] ; then
-  do_hash_test "$TEMP_DIR/dump_1000_5986_433.png" "dump"
+  do_hash_test "$TEMP_DIR/dump_1000_5986_433_708x923_1920x1080.png" "dump"
  fi
 
  test_end
