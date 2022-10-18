@@ -127,3 +127,44 @@ fi
 test_end
 
 
+test_begin "mp4box-qt-tags"
+if [ "$test_skip" != 1 ] ; then
+
+mp4file="$TEMP_DIR/test.mp4"
+do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac -new $mp4file" "create"
+do_hash_test $mp4file "create"
+
+do_test "$MP4BOX -tags io.gpac.test=SomeString $mp4file" "str"
+do_hash_test $mp4file "str"
+
+do_test "$MP4BOX -tags io.gpac.test2=32x32 $mp4file" "pt"
+do_hash_test $mp4file "pt"
+
+do_test "$MP4BOX -tags io.gpac.test3=32@32 $mp4file" "sz"
+do_hash_test $mp4file "sz"
+
+do_test "$MP4BOX -tags io.gpac.test4=32x32@32x32 $mp4file" "rect"
+do_hash_test $mp4file "rect"
+
+do_test "$MP4BOX -tags io.gpac.test5=s+32 $mp4file" "s32"
+do_hash_test $mp4file "s32"
+
+do_test "$MP4BOX -tags io.gpac.test6=1,1,1,1,1,1,1,1,1 $mp4file" "mx"
+do_hash_test $mp4file "s32"
+
+do_test "$MP4BOX -tags io.gpac.test7=$MEDIA_DIR/auxiliary_files/logo.png $mp4file" "img"
+do_hash_test $mp4file "img"
+
+
+do_test "$MP4BOX -tags io.gpac.test3= $mp4file" "rm"
+do_hash_test $mp4file "rm"
+
+#test with gpac
+mp4file="$TEMP_DIR/test-gpac.mp4"
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac:#qtt_io.gpac.test=10.0 -o $mp4file" "gpac"
+do_hash_test $mp4file "gpac"
+
+fi
+test_end
+
+
