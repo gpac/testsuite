@@ -14,7 +14,7 @@ dst_file_o=$TEMP_DIR/o-$3
 dst_file_i=$TEMP_DIR/i-$3
 
 #first do test with sending as server
-do_test "$GPAC -i $src_file -o tcp://127.0.0.1:1234:ext=$4:listen -graph"  "osrv-out" &
+do_test "$GPAC -i $src_file -o tcp://127.0.0.1:1234:listen:ext=$4 -graph"  "osrv-out" &
 
 sleep .1
 do_test "$GPAC -i tcp://127.0.0.1:1234:ext=$4 -o $dst_file_o -graph"  "osrv-in"
@@ -30,7 +30,7 @@ if [ $5 != 0 ] ; then
 fi
 
 #then do test with receiver as server
-do_test "$GPAC -i tcp://127.0.0.1:1234:ext=$4:listen -o $dst_file_i -graph"  "isrv-in" &
+do_test "$GPAC -i tcp://127.0.0.1:1234:listen:ext=$4 -o $dst_file_i -graph"  "isrv-in" &
 
 sleep .1
 do_test "$GPAC -i $src_file -o tcp://127.0.0.1:1234:ext=$4 -graph"  "isrv-out"
@@ -110,3 +110,10 @@ test_sock_udp "raw-gsf-mp4" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.mp4"
 
 #raw file | udp multicast | raw file
 test_sock_udp "raw-raw-mcast" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.aac" "234.0.0.1:1234:ext=aac" 1 ""
+
+
+config_poll=`gpac -hx core 2>&1 | grep poll`
+
+if [ -n "$config_poll" ] ; then
+test_sock_tcp "raw-raw-nopoll" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.aac" "aac -no-poll" 1
+fi

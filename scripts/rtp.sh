@@ -13,8 +13,14 @@ fi
 
 param=$3
 inspect_only=0
+send_only=0
 if [ "$3" = "inspect_only" ] ; then
 inspect_only=1
+param=""
+fi
+if [ "$3" = "send_only" ] ; then
+inspect_only=1
+send_only=1
 param=""
 fi
 
@@ -26,15 +32,20 @@ if [ $inspect_only = 1 ] ; then
 
 myinspect=$TEMP_DIR/inspect.txt
 
+if [ $send_only != 1 ] ; then
 do_test "$GPAC -for-test -runfor=2500 -i $TEMP_DIR/session.sdp:ifce=$IFCE inspect:deep:allp:log=$myinspect -stats -graph" "dump" &
 
 sleep 1
+fi
+
 #run without loop and tso=100000 to avoid a rand() that might impact TS rounding differently (hence slightly different durations->different hashes)
 do_test "$GPAC -i $2 -o $TEMP_DIR/session.sdp:loop=no:ip=$DST:ifce=$IFCE:tso=100000 -stats" "stream"
 
 wait
 
+if [ $send_only != 1 ] ; then
 do_hash_test $myinspect "dump-inspect"
+fi
 
 else
 
@@ -139,9 +150,10 @@ $MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.eac3:dur=1 -new $mp4f
 rtp_test "eac3" $mp4file "" ""
 #rm $mp4file > /dev/null
 
+# TODO: add support for qcelp depacketizer 
 mp4file="$MYTMP/qcelp.mp4"
 $MP4BOX -add $EXTERNAL_MEDIA_DIR/import/counter_english.qcp:dur=1 -new $mp4file 2> /dev/null
-rtp_test "qcp" $mp4file "inspect_only" ""
+rtp_test "qcp" $mp4file "send_only" ""
 #rm $mp4file > /dev/null
 
 mp4file="$MYTMP/avc.mp4"

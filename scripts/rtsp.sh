@@ -20,7 +20,7 @@ sleep 1
 
 myinspect=$TEMP_DIR/inspect.txt
 
-do_test "$GPAC -i rtsp://$IP/testsession inspect:deep:allp:dur=1/1:log=$myinspect $4 -stats -graph" "dump"
+do_test "$GPAC -i $4://$IP/testsession inspect:deep:allp:dur=1/1:log=$myinspect $5 -stats -graph" "dump"
 
 wait
 
@@ -45,7 +45,7 @@ sleep 1
 
 myinspect=$TEMP_DIR/inspect.txt
 
-do_test "$GPAC -i $2 inspect:deep:allp:dur=1/1:interleave=false:log=$myinspect $4 -stats -graph" "dump"
+do_test "$GPAC -i $2 inspect:deep:allp:dur=1/1:interleave=off:log=$myinspect $4 -stats -graph" "dump"
 
 wait
 
@@ -70,8 +70,9 @@ test_end
 }
 
 
-rtsp_test_single "regular" $MEDIA_DIR/auxiliary_files/enst_audio.aac " --tso=10000" ""
-rtsp_test_single "interleave" $MEDIA_DIR/auxiliary_files/enst_audio.aac " --tso=10000" " --interleave"
+rtsp_test_single "regular" $MEDIA_DIR/auxiliary_files/enst_audio.aac "--tso=10000" "rtsp" ""
+rtsp_test_single "interleave" $MEDIA_DIR/auxiliary_files/enst_audio.aac "--tso=10000" "rtsp" "--interleave=on"
+rtsp_test_single "tunnel" $MEDIA_DIR/auxiliary_files/enst_audio.aac "--tso=10000" "rtsph" ""
 
 rtsp_test_server "regular" "rtsp://$IP/enst_audio.aac" " --tso=10000" " " 0
 rtsp_test_server "dynurl" "rtsp://$IP/@enst_audio.aac@enst_video.h264" " --tso=10000 --dynurl" "" 1
@@ -91,7 +92,7 @@ do_test "$GPAC -runfor=4000 rtspout:port=$PORT:mounts=$MEDIA_DIR/auxiliary_files
 sleep 1
 
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i rtsp://$IP/?http://localhost/dummy inspect:deep:allp:dur=1/1:interleave=false:log=$myinspect -stats -graph" "dump"
+do_test "$GPAC -i rtsp://$IP/?http://localhost/dummy inspect:deep:allp:dur=1/1:interleave=off:log=$myinspect -stats -graph" "dump"
 
 wait
 test_end

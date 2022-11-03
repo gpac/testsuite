@@ -168,7 +168,6 @@ fi
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac -o http://127.0.0.1:8080/file1.mpd:gpac:rdirs=$TEMP_DIR:muxtype=raw:sfile:profile=main" "http-origin"
 do_hash_test $TEMP_DIR/file1.mpd "dash-sfile"
 
-#increase run time for tests on VM
 do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:rdirs=$TEMP_DIR" "http-server" &
 
 #sleep half a sec to make sure the server is up and running
@@ -198,7 +197,6 @@ fi
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=3.0 -new $TEMP_DIR/source.mp4 2> /dev/null
 $MP4BOX -dash 1000 -profile onDemand -out $TEMP_DIR/file.mpd $TEMP_DIR/source.mp4 2> /dev/null
 
-#increase run time for tests on VM
 do_test "$GPAC httpout:port=8080:rdirs=$TEMP_DIR -runfor=$HTTP_SERVER_RUNFOR -logs=dash:http@debug" "http-server" &
 #sleep half a sec to make sure the server is up and running
 sleep 0.5
@@ -220,8 +218,7 @@ fi
 
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac -new $TEMP_DIR/source.mp4 2> /dev/null
 
-#increase run time for tests on VM
-do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:wdir=$TEMP_DIR --reqlog=PUT,DELETE" "http-server" &
+do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:wdir=$TEMP_DIR$4 --reqlog=PUT,DELETE" "http-server" &
 
 #sleep half a sec to make sure the server is up and running
 sleep .5
@@ -249,7 +246,6 @@ fi
 
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=4 -new $TEMP_DIR/source.mp4 2> /dev/null
 
-#increase run time for tests on VM
 do_test "$GPAC  -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:wdir=$TEMP_DIR -logs=http@debug" "http-server" &
 #sleep half a sec to make sure the server is up and running
 sleep .5
@@ -295,7 +291,6 @@ fi
 tmp_aac=$TEMP_DIR/test.mp4
 do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=2 -new $tmp_aac" "make-input"
 
-#increase run time for tests on VM
 do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:rdirs=$TEMP_DIR:wdir=$TEMP_DIR:reqlog=*" "http-server" &
 #sleep to make sure the server is up and running
 sleep .5
@@ -356,9 +351,9 @@ test_http_byteranges
 test_http_dashraw
 
 #test live dash output to http with PUT and DELETE
-test_http_dashpush_live "" "mpd" ""
-test_http_dashpush_live "-hls" "m3u8" ""
-test_http_dashpush_live "-llhls" "m3u8" ":llhls=sf:seg_dur=2:cdur=1"
+test_http_dashpush_live "" "mpd" "" ""
+test_http_dashpush_live "-hls" "m3u8" "" ""
+test_http_dashpush_live "-llhls" "m3u8" ":llhls=sf:seg_dur=2:cdur=1" ""
 
 #test live dash output to http with PUT and byte range update for SIDX
 test_http_dashpush_vod
@@ -372,6 +367,11 @@ test_http_server_push_pull
 test_http_server_mem "dash" "mpd" ""
 test_http_server_mem "hls" "m3u8" ""
 test_http_server_mem "hls-ll-sf" "m3u8" ":llhls=sf:cdur=0.5"
+
+#test dash push with blocking IO
+test_http_dashpush_live "-blockio-c" "mpd" "" ":blockio"
+test_http_dashpush_live "-blockio-s" "mpd" ":blockio" ""
+test_http_dashpush_live "-blockio-cs" "mpd" ":blockio" ":blockio"
 
 }
 
