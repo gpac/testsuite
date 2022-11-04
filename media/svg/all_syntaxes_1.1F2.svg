@@ -130,7 +130,7 @@
           />
           
     <linearGradient gradientTransform="scale(0, 0)"
-                    gradientUnits="objectBoudingBox"
+                    gradientUnits="objectBoundingBox"
                     spreadMethod="pad"
                     xlink:href="Somref"              
                     x1="45.6" 
