@@ -108,7 +108,7 @@
          <animate xlink:href="#my_text4" attributeName="font-style" values="italic;inherit;oblique" dur="6"/>
          <animate xlink:href="#my_text4" attributeName="font-weight" values="100;inherit;bold" dur="6"/>
          <animate xlink:href="#my_text4" attributeName="solid-color" values="red;blue" dur="6"/>
-         <animate xlink:href="#my_text4" attributeName="font-style" from="courier" to="arial" dur="6"/>
+         <animate xlink:href="#my_text4" attributeName="font-family" from="courier" to="arial" dur="6"/>
          <animate xlink:href="#my_text4" attributeName="fill" from="red" to="blue" dur="6"/>
          <animate xlink:href="#my_text4" attributeName="solid-color" from="red" to="blue" dur="6"/>
          <text id="my_text4" x="10" y="100">My text</text>
@@ -143,7 +143,7 @@
 
          <a xlink:href="data:,void"/>
          <audio xlink:href="stream:mystream" syncMaster="true" audio-level="2" syncBehavior="canSlip" syncTolerance="1"/>
-         <video fullscreen="true" initialVisibility="hidden" focusHighlight="true" syncTolerance="default"/>
+         <video fullscreen="true" initialVisibility="always" focusHighlight="auto" syncTolerance="default"/>
 
          <g display="none" requiredFonts="Arial,Courier" line-increment="auto" id="prev" color="#999999">
             <rect id="rect_s" x="5" y="0" width="50" height="75" fill="rgb(44,45,46)" stroke="inherit"/>
@@ -160,7 +160,7 @@
 
             <animate attributeName="image-rendering" values="auto;inherit;optimizeSpeed" dur="10"/>
 
-         <g id="mygroup" display="none" line-increment="inherit" focusable="true" nav-prev="#prev" nav-next="url(#prev)" nav-up="#prev" nav-up-left="#prev" nav-up-right="#prev" nav-down="#prev" nav-down-left="#prev" nav-down-right="#prev" nav-left="#prev" nav-right="#prev" >
+         <g id="mygroup" display="none" line-increment="inherit" focusable="true" nav-prev="url(#prev)" nav-next="url(#prev)" nav-up="url(#prev)" nav-up-left="url(#prev)" nav-up-right="url(#prev)" nav-down="url(#prev)" nav-down-left="url(#prev)" nav-down-right="url(#prev)" nav-left="url(#prev)" nav-right="url(#prev)" >
             <linearGradient id="MyGradient2" stop-color="lime" stop-opacity="0.8" gradientUnits="objectBoundingBox" x1="0.2" y1="0.2" x2="0.9" y2="0.9">
               <stop offset="0" stop-opacity="1" stop-color="#FF0000" />
               <stop offset="0.5" stop-opacity="1" stop-color="#00FF00" />
@@ -271,7 +271,7 @@
 		</script>
 		<g id="grp"/>
 
-     		<image preserveAspectRatio="defer"/>
+     		<image preserveAspectRatio="defer none"/>
      		<image preserveAspectRatio="none"/>
      		<image preserveAspectRatio="xMinYMin"/>
      		<image preserveAspectRatio="xMidYMin"/>
@@ -282,8 +282,8 @@
      		<image preserveAspectRatio="xMinYMax"/>
      		<image preserveAspectRatio="xMidYMax"/>
      		<image preserveAspectRatio="xMaxYMax"/>
-     		<image preserveAspectRatio="meet"/>
-     		<image preserveAspectRatio="slice"/>
+     		<image preserveAspectRatio="none meet"/>
+     		<image preserveAspectRatio="none slice"/>
 
 			<lsr:selector choice="none"/>
 			<lsr:selector choice="all"/>
@@ -419,7 +419,7 @@
         <lsr:Replace ref="mygroup" attributeName="transform" value="translate(10 10)"/>
         <lsr:Replace ref="mygroup" attributeName="fill-opacity" value="inherit"/>
         <lsr:Replace ref="mygroup" attributeName="audio-level" value="0.5"/>
-        <lsr:Replace ref="mygroup" attributeName="nav-next" value=""/>
+        <lsr:Replace ref="mygroup" attributeName="nav-next" value="auto"/>
         <lsr:Replace ref="mygroup" attributeName="nav-next" value="self"/>
         <lsr:Replace ref="mygroup" attributeName="nav-next" value="url(#prev)"/>
         <lsr:Replace ref="root_node" attributeName="width" value="200"/>
