@@ -182,3 +182,38 @@ test_end
 }
 
 test_encrypt_cenc_switch
+
+
+
+#test clearkey
+test_clearkey()
+{
+test_begin "encryption-clearkey"
+if [ $test_skip  = 1 ] ; then
+ return
+fi
+
+#test decryption using one of dashif test files
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i https://media.axprod.net/TestVectors/v7-MultiDRM-SingleKey/Manifest_1080p_ClearKey.mpd dashin:debug_as=0:algo=none:start_with=min_q cdcrypt @ inspect:deep:dur=2:test=network:log=$myinspect -graph" "decrypt"
+do_hash_test $myinspect "decrypt"
+
+
+src=$MEDIA_DIR/auxiliary_files/counter.hvc
+dst=$TEMP_DIR/live.mpd
+
+#test encryption (just test setting of CKUrl prop)
+do_test "$GPAC -i $src:#CKUrl=https://ck.gpac.io cecrypt:cfile=$MEDIA_DIR/encryption/ctr.xml -o $dst" "encrypt"
+do_hash_test $dst "encrypt"
+
+
+#test encryption (just test setting of ckurl option on dasher)
+dst=$TEMP_DIR/live2.mpd
+do_test "$GPAC -i $src cecrypt:cfile=$MEDIA_DIR/encryption/ctr.xml -o $dst::ckurl=https://ck.gpac.io" "encrypt2"
+do_hash_test $dst "encrypt2"
+
+
+test_end
+}
+
+test_clearkey
