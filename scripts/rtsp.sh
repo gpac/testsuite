@@ -71,7 +71,7 @@ test_end
 
 
 rtsp_test_single "regular" $MEDIA_DIR/auxiliary_files/enst_audio.aac "--tso=10000" "rtsp" ""
-rtsp_test_single "interleave" $MEDIA_DIR/auxiliary_files/enst_audio.aac "--tso=10000" "rtsp" "--interleave=on"
+rtsp_test_single "interleave" $MEDIA_DIR/auxiliary_files/enst_audio.aac "--tso=10000" "rtsp" "--transport=tcp"
 rtsp_test_single "tunnel" $MEDIA_DIR/auxiliary_files/enst_audio.aac "--tso=10000" "rtsph" ""
 
 rtsp_test_server "regular" "rtsp://$IP/enst_audio.aac" " --tso=10000" " " 0
@@ -91,11 +91,67 @@ fi
 do_test "$GPAC -runfor=4000 rtspout:port=$PORT:mounts=$MEDIA_DIR/auxiliary_files/ --dynurl -stats" "server" &
 sleep 1
 
-myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i rtsp://$IP/?http://localhost/dummy inspect:deep:allp:dur=1/1:interleave=off:log=$myinspect -stats -graph" "dump"
+do_test "$GPAC -i rtsp://$IP/?http://localhost/dummy inspect:deep:allp:dur=1/1 -stats -graph" "dump"
 
 wait
 test_end
 }
 
 rtsp_test_server_error
+
+
+rtsp_test_auth ()
+{
+
+test_begin "rtsp-server-$1"
+if [ $test_skip  = 1 ] ; then
+return
+fi
+
+echo "[$MEDIA_DIR/auxiliary_files]" > $TEMP_DIR/rules.txt
+echo "ru=gpac" >> $TEMP_DIR/rules.txt
+
+do_test "$GPAC -creds=-gpac" "reset-creds"
+do_test "$GPAC -creds=_gpac:password=gpac" "set-creds"
+#start rtsp server
+do_test "$GPAC -runfor=4000 rtspout:port=$PORT:mounts=$TEMP_DIR/rules.txt:runfor=3000 --tso=10000 -logs=rtp@info" "server" &
+sleep 1
+
+myinspect=$TEMP_DIR/inspect.txt
+
+do_test "$GPAC -i rtsp://$2$IP/counter.hvc inspect:deep:allp:dur=1/1:log=$myinspect -stats -graph -logs=rtp@info" "dump"
+
+if [ -n "$2" ] ; then
+do_hash_test $myinspect "dump-inspect"
+fi
+
+wait
+
+test_end
+}
+
+rtsp_test_auth "auth" "gpac:gpac@"
+
+rtsp_test_auth "auth-none" ""
+
+
+
+test_rtsps_server()
+{
+test_begin "rtsp-server-$1"
+if [ $test_skip = 1 ] ; then
+ return
+fi
+
+do_test "$GPAC rtspout$2:mounts=$MEDIA_DIR:cert=$MEDIA_DIR/tls/localhost.crt:pkey=$MEDIA_DIR/tls/localhost.key:runfor=3000 --tso=10000" "rtsps-server" &
+sleep .5
+
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i $3/auxiliary_files/enst_audio.aac inspect:allp:deep:dur=1/1:test=network:interleave=false:log=$myinspect -graph -stats" "rtsps-client"
+do_hash_test $myinspect "rtsps-client"
+test_end
+
+}
+
+test_rtsps_server "tls" "" "rtsps://127.0.0.1"
+test_rtsps_server "https-tunnel" ":port=443" "rtsph://127.0.0.1:443"

@@ -328,6 +328,41 @@ test_end
 
 }
 
+
+
+test_http_auth ()
+{
+
+test_begin "http$TESTSUF-auth$1"
+if [ $test_skip  = 1 ] ; then
+return
+fi
+
+echo "[$MEDIA_DIR/auxiliary_files]" > $TEMP_DIR/rules.txt
+echo "ru=gpac" >> $TEMP_DIR/rules.txt
+
+do_test "$GPAC -creds=-gpac" "reset-creds"
+do_test "$GPAC -creds=_gpac:password=gpac" "set-creds"
+#start http server
+do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:rdirs=$TEMP_DIR/rules.txt -logs=http@info" "http-server" &
+sleep .5
+
+myinspect=$TEMP_DIR/inspect.txt
+src="http://$2"
+src+="127.0.0.1:8080/counter.hvc"
+do_test "$GPAC -i $src inspect:deep:allp:dur=1/1:log=$myinspect -stats -graph" "dump"
+
+if [ -n "$2" ] ; then
+do_hash_test $myinspect "dump"
+fi
+
+wait
+
+test_end
+}
+
+
+
 do_tests()
 {
 
@@ -372,6 +407,10 @@ test_http_server_mem "hls-ll-sf" "m3u8" ":llhls=sf:cdur=0.5"
 test_http_dashpush_live "-blockio-c" "mpd" "" ":blockio"
 test_http_dashpush_live "-blockio-s" "mpd" ":blockio" ""
 test_http_dashpush_live "-blockio-cs" "mpd" ":blockio" ":blockio"
+
+test_http_auth "" "gpac:gpac@"
+
+test_http_auth "-none" ""
 
 }
 
