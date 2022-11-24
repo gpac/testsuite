@@ -111,7 +111,8 @@ fi
 echo "[$MEDIA_DIR/auxiliary_files]" > $TEMP_DIR/rules.txt
 echo "ru=gpac" >> $TEMP_DIR/rules.txt
 
-do_test "$GPAC -creds=-gpac" "reset-creds"
+$GPAC -creds=-gpac 2&> /dev/null
+
 do_test "$GPAC -creds=_gpac:password=gpac" "set-creds"
 #start rtsp server
 do_test "$GPAC -runfor=4000 rtspout:port=$PORT:mounts=$TEMP_DIR/rules.txt:runfor=3000 --tso=10000 -logs=rtp@info" "server" &
@@ -153,5 +154,5 @@ test_end
 
 }
 
-test_rtsps_server "tls" "" "rtsps://127.0.0.1"
-test_rtsps_server "https-tunnel" ":port=443" "rtsph://127.0.0.1:443"
+test_rtsps_server "tls" ":port=8554" "rtsps://127.0.0.1:8554"
+test_rtsps_server "https-tunnel" ":port=8443" "rtsph://127.0.0.1:8443"
