@@ -151,7 +151,15 @@ session.post_task( ()=> {
 	f_evt.caption = "removed + insert";
 	session.fire_event(f_evt);
  }
+ //test args fetching on registry name
+ print('vout args: ' + JSON.stringify(session.filter_args('vout') ) );
+ print('ffenc args: ' + JSON.stringify(session.filter_args('ffenc:c=avc') ) );
 
+ all_filters.forEach (f => {
+ 	if (!f.nb_opid) return;
+	 print('Chain from ' + f.name + ' to PNG dump: ' + JSON.stringify(f.compute_link(0, 'dst=dump.png', true)) );
+ });
+ 
 
  session.lock_filters(false);
  nb_called++;
