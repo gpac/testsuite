@@ -98,9 +98,9 @@ test_encrypt_multi_stsd
 
 
 #test encryption with master/leaf key
-test_encrypt_master_leaf()
+test_encrypt_template()
 {
-test_begin "encryption-master-leaf"
+test_begin "encryption-template-$1"
 if [ $test_skip  = 1 ] ; then
  return
 fi
@@ -112,7 +112,7 @@ mfile=$TEMP_DIR/dash/live.mpd
 cifile=$TEMP_DIR/dash/crypt_dashinit.mp4
 cffile=$TEMP_DIR/dash/crypt_dash10.m4s
 
-do_test "$GPAC -i $src cecrypt:cfile=$MEDIA_DIR/encryption/tpl_roll.xml @ -o $cfile" "encrypt"
+do_test "$GPAC -i $src cecrypt:cfile=$2 @ -o $cfile" "encrypt"
 do_hash_test $cfile "encrypt"
 
 do_test "$MP4BOX -dash 1000 -profile live -out $mfile $cfile" "dash"
@@ -129,7 +129,8 @@ do_hash_test $ddfile "dashdecrypt"
 test_end
 }
 
-test_encrypt_master_leaf
+test_encrypt_template "master-leaf" "$MEDIA_DIR/encryption/tpl_roll_master.xml"
+test_encrypt_template "roll" "$MEDIA_DIR/encryption/tpl_roll.xml"
 
 
 
