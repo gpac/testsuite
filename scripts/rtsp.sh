@@ -111,16 +111,19 @@ fi
 echo "[$MEDIA_DIR/auxiliary_files]" > $TEMP_DIR/rules.txt
 echo "ru=gpac" >> $TEMP_DIR/rules.txt
 
-$GPAC -creds=-gpac 2&> /dev/null
+#do NOT use $GPAC since it may be passed with no config
+MYGPAC="gpac -for-test -mem-track"
 
-do_test "$GPAC -creds=_gpac:password=gpac" "set-creds"
+$MYGPAC -creds=-gpac 2&> /dev/null
+
+do_test "$MYGPAC -creds=_gpac:password=gpac" "set-creds"
 #start rtsp server
-do_test "$GPAC -runfor=4000 rtspout:port=$PORT:mounts=$TEMP_DIR/rules.txt:runfor=3000 --tso=10000 -logs=rtp@info" "server" &
+do_test "$MYGPAC -runfor=4000 rtspout:port=$PORT:mounts=$TEMP_DIR/rules.txt:runfor=3000 --tso=10000 -logs=rtp@info" "server" &
 sleep 1
 
 myinspect=$TEMP_DIR/inspect.txt
 
-do_test "$GPAC -i rtsp://$2$IP/counter.hvc inspect:deep:allp:dur=1/1:log=$myinspect -stats -graph -logs=rtp@info" "dump"
+do_test "$MYGPAC -i rtsp://$2$IP/counter.hvc inspect:deep:allp:dur=1/1:log=$myinspect -stats -graph -logs=rtp@info" "dump"
 
 if [ -n "$2" ] ; then
 do_hash_test $myinspect "dump-inspect"
