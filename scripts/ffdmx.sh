@@ -65,3 +65,21 @@ fi
 #ffavin_test "screencap" "video://:gfreg=ffavin:fmt=dshow:dev=screen-capture-recorder:probes=0"
 #ffavin_test "screencap-all" "video://:gfreg=ffavin:fmt=dshow:dev=screen-capture-recorder:copy:sclock"
 #fi
+
+
+ffdmx_test_sub ()
+{
+
+test_begin "ffdmx-subs"
+
+if [ $test_skip  = 1 ] ; then
+return
+fi
+
+do_test "$GPAC -no-reassign=no -i $EXTERNAL_MEDIA_DIR/m2ts/TNT_MUX_R1_586MHz_10s.ts @#PID=340 -o $TEMP_DIR/dump\$num\$.png -graph -stats" "dump"
+do_hash_test $TEMP_DIR/dump1.png "dump"
+
+test_end
+}
+
+ffdmx_test_sub

@@ -24,6 +24,9 @@ waitfonts=""
  *udomjs* )
   nojs=""
   ;;
+ *animvalues* )
+  nojs=""
+  ;;
  *fonts-overview-201-t* )
   waitfonts="-wait-fonts"
   ;;
