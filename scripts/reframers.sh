@@ -76,7 +76,7 @@ test_reframer "ac3" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3 -blacklis
 test_reframer "eac3" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.eac3 -blacklist=ffdmx" "dump.mp4"
 
 
-test_reframer "mhas-mha1" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas -logs=parser@debug --mpha" "dump.mp4"
+test_reframer "mhas-mha1" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas -logs=parser:media@debug --mpha" "dump.mp4"
 test_reframer "mhas-mhm1" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas" "dump.mp4"
 #test MHAS rewriter
 test_reframer "mha1-to-mhm1" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas --mpha" "dump.mhas"
@@ -88,6 +88,9 @@ test_reframer "aac71" "$EXTERNAL_MEDIA_DIR/mc_audio/aac_7.1.aac" "dump.aac"
 test_reframer "aac71brd" "$EXTERNAL_MEDIA_DIR/mc_audio/aac_7.1_brd.aac" "dump.aac"
 
 test_reframer "vvc" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc" "dump.mp4"
+
+test_reframer "truehd" "$EXTERNAL_MEDIA_DIR/import/truehd_ac3h.mlp:auxac3" "dump.mp4"
+
 
 #test bsdbg, for coverage
 test_begin "reframer-bsdbg"

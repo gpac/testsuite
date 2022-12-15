@@ -47,4 +47,24 @@ ts_test "ac3" "-i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3" ""
 
 ts_test "vvc" "-i $EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc" ""
 
+#to replace with ts_test once we have av1 ts demux
+ts_test_av1 ()
+{
+
+test_begin "tsmux-av1"
+if [ $test_skip  = 1 ] ; then
+return
+fi
+
+tsfile="$TEMP_DIR/test.ts"
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/video.av1 -o $tsfile:pcr_init=0:pes_pack=none" "mux"
+do_hash_test $tsfile "mux"
+
+test_end
+}
+
+ts_test_av1
+
+
+
 rm $mp4file
