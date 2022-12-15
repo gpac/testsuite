@@ -144,4 +144,9 @@ do_hash_test $LOCAL_OUT_DIR/temp/jsf-fileio/inspect.txt "read"
 fi
 test_end
 
-
+#test glpush filter for coverage of GPU access in JS
+test_begin "jsf-glpush"
+if [ $test_skip != 1 ] ; then
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 glpush vout:vsync=0" "read"
+fi
+test_end

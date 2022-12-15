@@ -97,6 +97,7 @@ sys.dir_exists('mytest');
 sys.dir_clean('mytest');
 sys.rmdir('mytest');
 
+sys.pixfmt_depth('rgba');
 
 let ar = new ArrayBuffer(8);
 let view = new Int32Array(ar);
@@ -147,6 +148,7 @@ function test_bs()
 	bs.put_s64(12);
 	bs.put_float(13.0);
 	bs.put_double(14.0);
+	bs.put_4cc("GPAC");
 	bs.put_bits(15, 5);
 	bs.put_bits(16, 40);
 	bs.is_align();
@@ -185,6 +187,7 @@ function test_bs()
 	bs.get_s64();
 	bs.get_float();
 	bs.get_double();
+	bs.get_4cc();
 	bs.get_bits(5);
 	bs.get_bits(40);
 	bs.align();

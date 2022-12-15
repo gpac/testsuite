@@ -381,6 +381,9 @@ function do_coverage()
 	tx2 = tx.split(0);
 	tx2 = tx.convolution({w:3, h:1, k: [0, 1, 0]})
 
+	ap = tx.diff_score(tx);
+
+
 	//test getPixel with bi-linear interpolation on a 8-bit color fomat
 	tx2.filtering = GF_TEXTURE_FILTER_HIGH_QUALITY;
 	let pix = tx2.get_pixelf(0.001, 0.004);

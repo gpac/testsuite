@@ -47,6 +47,8 @@ ffdmx_test "aac" "$MEDIA_DIR/auxiliary_files/enst_audio.aac:gfreg=ffdmx"
 config_linux=`gpac -h bin 2>&1 | grep GPAC_CONFIG_LINUX`
 config_osx=`gpac -h bin 2>&1 | grep GPAC_CONFIG_DARWIN`
 config_win=`gpac -h bin 2>&1 | grep GPAC_CONFIG_WIN32`
+#for coverage
+single_test "$GPAC -h ffavin" "ffavin-h"
 
 if [ -n "$config_osx" ] ; then
 ffavin_test "screencap" "video://:gfreg=ffavin:fmt=avfoundation:dev=screen0:probes=0"

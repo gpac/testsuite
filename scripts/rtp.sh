@@ -163,3 +163,8 @@ rtp_test "264" $mp4file "" ""
 mp4file="$MYTMP/vvc.mp4"
 $MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc:dur=1 -new $mp4file 2> /dev/null
 rtp_test "266" $mp4file "" ""
+
+
+mp4file="$MYTMP/opus.mp4"
+$MP4BOX -add $EXTERNAL_MEDIA_DIR/import/audio.opus:dur=1 -new $mp4file 2> /dev/null
+rtp_test "opus" $mp4file "" ""

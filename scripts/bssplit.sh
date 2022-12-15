@@ -63,3 +63,7 @@ test_split "shvc-layers" "" 1
 test_split "shvc-all" ":ltid=all" 1
 test_split "shvc-cust" ":ltid=0.1,0.2" 1
 test_split "shvc-alltid" ":ltid=.1,.2" 1
+
+#for coverage
+single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/logo.jpg bssplit inspect -graph" "bssplit-passthrough"
+single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/logo.jpg bsagg inspect -graph" "bsagg-passthrough"

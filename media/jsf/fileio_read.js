@@ -46,6 +46,7 @@ function(url)
 }
 );
 
+src.protect();
 
 session.add_filter('src='+src.url);
 session.add_filter('inspect:deep:log=./results/temp/jsf-fileio/inspect.txt');
@@ -55,6 +56,7 @@ session.add_filter('inspect:deep:log=./results/temp/jsf-fileio/inspect.txt');
 session.post_task( ()=> 
 {
  if (session.last_task) {
+	src.destroy();
  	return false;
  }
  return 1000;

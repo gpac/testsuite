@@ -55,6 +55,7 @@ mp4_test ()
  *.ttxt )
   return ;;
  *.opus )
+  do_dnal=1
   do_hint=0;;
  *.html* )
   return ;;
@@ -84,8 +85,6 @@ mp4_test ()
   do_dnal=1
   do_hint=0
   ;;
- *.opus )
-  do_hint=0 ;;
  *.obu )
   do_dnal=1
   do_hint=0
@@ -98,7 +97,8 @@ mp4_test ()
   do_hint=0 ;;
  *.ivf )
   do_dnal=1
-  do_hint=0 ;;
+  do_hint=0
+  ;;
  *.png )
   do_hint=0 ;;
  *.flac )
