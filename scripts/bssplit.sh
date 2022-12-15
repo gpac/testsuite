@@ -64,6 +64,10 @@ test_split "shvc-all" ":ltid=all" 1
 test_split "shvc-cust" ":ltid=0.1,0.2" 1
 test_split "shvc-alltid" ":ltid=.1,.2" 1
 
+
+filename="$EXTERNAL_MEDIA_DIR/counter/counter_30s_320x180p_I25_closedGOP_128kpbs.vvc"
+test_split "vvc" "" 0
+
 #for coverage
 single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/logo.jpg bssplit inspect -graph" "bssplit-passthrough"
 single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/logo.jpg bsagg inspect -graph" "bsagg-passthrough"

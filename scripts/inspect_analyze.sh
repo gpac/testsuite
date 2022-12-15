@@ -76,3 +76,13 @@ do_hash_test $inspect "inspect"
 fi
 test_end
 
+
+test_begin "inspect-bsdbg"
+if [ "$test_skip" != 1 ] ; then
+inspect="$TEMP_DIR/inspect.txt"
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264:bsdbg=full -logs=media@debug inspect:deep:full:analyze=on:log=$inspect" "inspect"
+do_hash_test $inspect "inspect"
+
+fi
+test_end
+

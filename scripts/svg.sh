@@ -7,6 +7,14 @@ svg_test()
  do_hash=1
  uitest="svg-tests-ui.xml"
 
+ #start our test, specifying all hash names we will check
+ test_begin "svg-$name"
+ if [ $test_skip  = 1 ] ; then
+  return
+ fi
+
+ dump_size=192x192
+
 nojs=":nojs"
 waitfonts=""
  case $name in
@@ -21,6 +29,7 @@ waitfonts=""
   ;;
  *anchor* )
   uitest="svg-tests-ui-anchor.xml"
+  dump_size=480x360
   ;;
  esac
 
@@ -29,18 +38,11 @@ if [ $GPAC_OSTYPE == "lin32" ] ; then
   do_hash=0
 fi
 
- #start our test, specifying all hash names we will check
- test_begin "svg-$name"
- if [ $test_skip  = 1 ] ; then
-  return
- fi
-
  RGB_DUMP="$TEMP_DIR/dump.rgb"
  PCM_DUMP="$TEMP_DIR/dump.pcm"
 
  #for the time being we don't check hashes nor use same size/dur for our tests. We will redo the UI tests once finaizing filters branch
  dump_dur=5
- dump_size=192x192
 
 
  #note that we force using a GNU Free Font SANS to make sure we always use the same font on all platforms
