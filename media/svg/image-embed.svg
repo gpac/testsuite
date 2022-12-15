@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.2" baseProfile="tiny" xml:id="svg-root" width="100%" height="100%" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> 
+  <!--======================================================================--> 
+  <!--= Copyright 2007 World Wide Web Consortium, (Massachusetts =--> 
+  <!--= Institute of Technology, European Research Consortium for =--> 
+  <!--= Informatics and Mathematics (ERCIM), Keio University). =--> 
+  <!--= All Rights Reserved. =--> 
+  <!--= See http://www.w3.org/Consortium/Legal/. =--> 
+  <!--======================================================================--> 
+  <SVGTestCase xmlns="http://www.w3.org/2000/02/svg/testsuite/description/" xmlns:xhtml="http://www.w3.org/1999/xhtml" reviewer="AS" owner="Tim Thompson" desc="Test that the jpg and png image formats are understood." status="accepted" approved="yes" version="$Revision: 1.8 $" testname="$RCSfile: struct-image-01-t.svg,v $"> 
+    <OperatorScript>
+      <p>The image test case checks to see if the basic image formats allowed in the tiny profile are supported. The upper right has an JPG image the lower right has a PNG image. They are the same image. Those positions are relative to the upper left of the entire canvas. If any of the components are missing, then an image format is not being properly supported.</p>
+      <p>The rendered picture should match the reference image, except for possible variations in the labelling text (per CSS2 rules).</p>
+    </OperatorScript> 
+  </SVGTestCase> 
+  <title xml:id="test-title">$RCSfile: struct-image-01-t.svg,v $</title> 
+  <g xml:id="test-body-content" font-family="sans-serif" font-size="18">
+    <image xml:id="image1JPEG" x="240" y="0" width="240" height="150" xlink:href="data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAyADIAAD/4QCMRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAADIAAAAAQAAAMgAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAAAygAwAEAAAAAQAAAAwAAAAA/+0AOFBob3Rvc2hvcCAzLjAAOEJJTQQEAAAAAAAAOEJJTQQlAAAAAAAQ1B2M2Y8AsgTpgAmY7PhCfv/AABEIAAwADAMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAgICAQICAgEBAgMCAgICAwMDAQIDAwMCAwICAwL/2wBDAQEBAQEBAQEBAQECAQEBAQICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgL/3QAEAAH/2gAMAwEAAhEDEQA/APtj/gp3+158BvC/ij4I+KP2jviv+3brfxXn8Q6p+1t4u+Gf7I3xlj+E/hDwb+x54S+IPjf4deEf2fLrwhf+J9Et9T1bxA3hPW7u61PTT/wkd5qHgXxGI9Y0CyHh3S4P3W+EP7VQ8D6FqXh3SdS8aftBfD1rvw54r+D3xB1K7ub7xf8A8Kl+Jfw38C/FDwX4b8c61cRG48R3+mxeM57aDUL8fb59Ni0h9Sl1HUDf31/+eX/BWP8A4JF/sr/tD/FD4ZeO/E2ofE/wrcaprPjGK98OeCNb8G23hWT/AIWDr+n+IPiBHHpvijQdVltrXXNRtTqd7pcdwunzXuo6jeG0W61XVJbz93v2ffgD8PvgB8PLbwZ4Ig1O9XUL0+JfE/ifxPdwaz4s8ZeJ73TdM02bX/EmprDDFJJHZaRoem21raW9pZ2Gn+H9N06wtrCw06xtoPj6fLia1bAYCP1XNcF/vNfb2t/78bzq8z9794o+za5YXTd/6RxsquR5XlvFnF9T/WDgPia6yXKlFVPqPs928NVVPDYL2MFKglg6tb65GSr4nkqQjE//2Q==" />
+  </g> 
+  <g font-family="sans-serif" font-size="32"> 
+    <text xml:id="revision" x="10" y="340" stroke="none" fill="black">$Revision: 1.8 $</text> 
+  </g> 
+</svg>

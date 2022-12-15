@@ -19,6 +19,8 @@ single_test "$GPAC -blacklist=vtbdec,nvdec -runfor=1000 -mp4c mosaic://$MEDIA_DI
 
 single_test "$GPAC -blacklist=vtbdec,nvdec -runfor=1000 --stereo=top -mp4c views://$MEDIA_DIR/auxiliary_files/count_video.cmp:$MEDIA_DIR/auxiliary_files/enst_video.h264" "gpac-mp4c-views"
 
+single_test "$GPAC -blacklist=vtbdec,nvdec -runfor=1000 -mp4c $MEDIA_DIR/svg/udomjs.svg -update=alert('foo!');" "gpac-mp4c-svg-update"
+
 test_begin "gpac-mp4c-start"
 if [ $test_skip = 0 ] ; then
 

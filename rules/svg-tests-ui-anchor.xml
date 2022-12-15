@@ -1,0 +1,5 @@
+<TestValidationScript >
+<mousemove time="1000.000000" x="100" y="100" />
+<mousedown time="1001.000000" button="Left" x="60" y="60" />
+<mouseup time="1001.000000" button="Left" x="60" y="60" />
+</TestValidationScript>
