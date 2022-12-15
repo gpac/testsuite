@@ -20,7 +20,8 @@ do_hash_test $insp "mux-inspect"
 fi
 
 do_test "$GPAC -blacklist=vtbdec,nvdec -i $tsfile compositor:fps=25:dur=1 @ -o $TEMP_DIR/dump.rgb @1 -o $TEMP_DIR/dump.pcm" "rip"
-do_hash_test $TEMP_DIR/dump.rgb "rip"
+#we don't hash, due to load on test machine the first frame of the addon may come in at different time in tha base timeline -> different results
+#do_hash_test $TEMP_DIR/dump.rgb "rip"
 
 test_end
 }
