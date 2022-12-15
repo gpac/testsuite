@@ -28,6 +28,7 @@ waitfonts=""
   waitfonts="-wait-fonts"
   ;;
  *anchor* )
+  nojs=""
   uitest="svg-tests-ui-anchor.xml"
   dump_size=480x360
   ;;
