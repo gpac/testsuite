@@ -109,7 +109,7 @@ sys.ntp_shift({'n': 1000000, 'd': 9000}, 120000);
 sys.exit(0, 0);
 sys.keyname(42);
 sys.get_event_type('keydown');
-sys.color_lerp('black', 'white', 0.5);
+sys.color_lerp(0.5, 'black', 'white');
 sys.color_component('black', 0);
 sys.color_component('black', 1);
 sys.color_component('black', 2);
@@ -152,6 +152,7 @@ function test_bs()
 	bs.is_align();
 	bs.bits_available;
 	bs.align();
+	bs.put_string('foo');
 	bs.put_data(ar);
 	bs.flush();
 
@@ -187,6 +188,7 @@ function test_bs()
 	bs.get_bits(5);
 	bs.get_bits(40);
 	bs.align();
+	bs.get_string();
 	bs.get_data(ar);
 
 	bs.pos = 0;
