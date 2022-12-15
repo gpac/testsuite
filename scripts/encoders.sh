@@ -108,7 +108,8 @@ fi
 
 test_encoder "aac-ffenc" $MEDIA_DIR/auxiliary_files/count_french.mp3 "test.aac" "" "" ":c=aac"
 
-test_encoder "ac3-ffenc" $MEDIA_DIR/auxiliary_files/count_french.mp3 "test.ac3" "" "" ""
+#force 48k resample for ac3, ffmpeg versions behave differently on allowed sample rate
+test_encoder "ac3-ffenc" $MEDIA_DIR/auxiliary_files/count_french.mp3 "test.ac3" "resample:osr=48k" "" ""
 
 
 
