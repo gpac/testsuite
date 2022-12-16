@@ -31,6 +31,12 @@ myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i $dstfile inspect:allp:fmt=%cts%-%size%%lf%:interleave=false:log=$myinspect -graph -stats" "inspect"
 do_hash_test $myinspect "inspect"
 
+if [ $3 != 0 ] ; then
+myinspect=$TEMP_DIR/inspect_seek.txt
+do_test "$GPAC -i $dstfile inspect:allp:fmt=%cts%-%size%%lf%:interleave=false:log=$myinspect:start=5 -graph -stats" "inspect-seek"
+do_hash_test $myinspect "inspect-seek"
+fi
+
 test_end
 
 }
