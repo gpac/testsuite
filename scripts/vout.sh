@@ -71,6 +71,8 @@ do_test "$GPAC -i $mp4file -o $sdpfile -runfor=100" "rtp"
 
 do_test "$GPAC -i $sdpfile vout -cfg=temp:vout_cov=yes --udp_timeout=500 -blacklist=vtbdec,nvdec,ffdec" "vout-rtp"
 
+do_test "gpac -i $mp4file vout:vsync=0" "vout-mp4-mx"
+
 wait
 
 

@@ -148,5 +148,8 @@ test_end
 test_begin "jsf-glpush"
 if [ $test_skip != 1 ] ; then
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 glpush vout:vsync=0" "read"
+
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 glpush @ $MEDIA_DIR/jsf/inspect.js" "inspect"
+
 fi
 test_end

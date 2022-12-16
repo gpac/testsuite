@@ -168,6 +168,7 @@ filter.process = function()
 				}
 				return;
 			}
+			pck.has_properties;
 			pid.nb_pck++;
 			//coverage
 			if (pid.nb_pck==1) {
@@ -175,12 +176,16 @@ filter.process = function()
 				pid.clear_eos(false);
 				pid.check_caps();
 				pid.discard_block();
-				//this will be a direct ref, since the source packet is only used by us
-				let clone1 = pck.clone();
+				try {
+					//this will be a direct ref, since the source packet is only used by us
+					let clone1 = pck.clone();
 
-				//this will force a frame copy, since the source packet is used twice (once by the packet, once by clone1)
-				let clone2 = pck.clone();
-				clone2.discard();
+					//this will force a frame copy, since the source packet is used twice (once by the packet, once by clone1)
+					let clone2 = pck.clone();
+					clone2.discard();
+				} catch (e) {
+					
+				}
 
 			}
 	
