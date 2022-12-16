@@ -47,10 +47,14 @@ lsr_test ()
  #mp4 read and render test
  RGB_DUMP="$TEMP_DIR/$name-dump.rgb"
 
- #for the time being we don't check hashes nor use same size/dur for our tests. We will redo the UI tests once finaizing filters branch
+ #for the time being we don't check hashes nor use same size/dur for our tests. We will redo the UI tests once finalizing filters branch
  dump_dur=5
  dump_size=192x192
  do_test "$GPAC -blacklist=vtbdec,nvdec -i $mp4file compositor:osize=$dump_size:vfr:dur=$dump_dur @ -o $RGB_DUMP" "dump"
+
+ #dump from uncompressed for command apply testing
+ RGB_DUMP="$TEMP_DIR/$name-dump2.rgb"
+ do_test "$GPAC -blacklist=vtbdec,nvdec -i $lsrfile compositor:osize=$dump_size:vfr:dur=$dump_dur @ -o $RGB_DUMP" "dump-lsr"
 
  if [ -f $RGB_DUMP ] ; then
 #  do_hash_test_bin "$RGB_DUMP" "rgb"
