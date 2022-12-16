@@ -64,6 +64,7 @@ single_test "$GPAC -h zzzzz" "gpac-h-unkn"
 single_test "$GPAC -hh avgen" "gpac-hh-avgen"
 single_test "gpac -p=0 -i $MEDIA_DIR/auxiliary_files/enst_video.h264 inspect:deep" "gpac-info"
 
+single_test "gpac flist:srcs=\$GDOCS/empty/ inspect" "gpac-gdocs"
 
 test_begin "gpac-link-dir"
 if [ $test_skip != 1 ] ; then
