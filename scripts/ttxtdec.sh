@@ -44,9 +44,9 @@ ttxt_test "vtt" $MEDIA_DIR/webvtt/simple.vtt:fontSize=80:color=cyan 0
 ttxt_test "ttml" $MEDIA_DIR/ttml/ttml_samples.ttml 0
 
 #test simple text
-ttxt_test "stxt" "$MEDIA_DIR/boxpatch/box_rem.xml:#CodecID=stxt" 0
+ttxt_test "stxt" "null:pck=HelloWorld:#CodecID=stxt" 0
 #test simple text with tx3g output
-ttxt_test "stxt-tx3g" "$MEDIA_DIR/boxpatch/box_rem.xml:#CodecID=stxt:stxtmod=tx3g:stxtdur=2" 0
+ttxt_test "stxt-tx3g" "null:pck=HelloWorld:#CodecID=stxt:stxtmod=tx3g:stxtdur=2" 0
 #test simple text with webvtt output
 ttxt_test "stxt-vtt" "null:pck=HelloWorld:#CodecID=stxt:stxtmod=vtt:fontSize=80:color=cyan" 0
 
