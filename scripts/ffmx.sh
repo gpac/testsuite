@@ -50,3 +50,17 @@ mv pl.m3u $TEMP_DIR
 
 test_end
 fi
+
+test_begin "ffmx-mkv-sub"
+if [ $test_skip != 1 ] ; then
+
+dstfile=$TEMP_DIR/mux.mkv
+do_test "$GPAC -no-reassign=no -i $MEDIA_DIR/auxiliary_files/subtitle.srt:webvtt:no_empty -o $dstfile -graph -stats" "mux"
+
+dstfile2=$TEMP_DIR/remux.mp4
+do_test "$GPAC -no-reassign=no -i $dstfile -o $dstfile2 -graph -stats" "remux"
+do_hash_test $dstfile2 "remux"
+
+test_end
+fi
+
