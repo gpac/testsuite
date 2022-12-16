@@ -16,7 +16,7 @@ ttxt_test()
  dump=$TEMP_DIR/dump.rgb
 
  #test source parsing and playback
- do_test "$GPAC -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts -i $srcfile compositor:osize=512x128:vfr @ -o $dump" "srcplay"
+ do_test "$GPAC -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts -i $srcfile compositor:osize=512x128:vfr @ -o $dump -graph" "srcplay"
  #don't hash content on 32 bits, fp precision leads to different results
  if [ $GPAC_OSTYPE != "lin32" ] ; then
   do_hash_test $dump "srcplay"
@@ -42,6 +42,13 @@ ttxt_test "vtt" $MEDIA_DIR/webvtt/simple.vtt:fontSize=80:color=cyan 0
 
 #test ttml
 ttxt_test "ttml" $MEDIA_DIR/ttml/ttml_samples.ttml 0
+
+#test simple text
+ttxt_test "stxt" "$MEDIA_DIR/boxpatch/box_rem.xml:#CodecID=stxt" 0
+#test simple text with tx3g output
+ttxt_test "stxt-tx3g" "$MEDIA_DIR/boxpatch/box_rem.xml:#CodecID=stxt:stxtmod=tx3g:stxtdur=2" 0
+#test simple text with webvtt output
+ttxt_test "stxt-vtt" "null:pck=HelloWorld:#CodecID=stxt:stxtmod=vtt:fontSize=80:color=cyan" 0
 
 
 ttxt_clipframe()

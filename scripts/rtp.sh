@@ -85,6 +85,7 @@ mp4file="$MYTMP/aac.mp4"
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=1 -new $mp4file 2> /dev/null
 rtp_test "aac" $mp4file "" ""
 rtp_test "latm" $mp4file ":latm" ":nat_keepalive=500"
+
 #rm $mp4file > /dev/null
 
 mp4file_crypt="$MYTMP/aac_crypted.mp4"
@@ -168,3 +169,28 @@ rtp_test "266" $mp4file "" ""
 mp4file="$MYTMP/opus.mp4"
 $MP4BOX -add $EXTERNAL_MEDIA_DIR/import/audio.opus:dur=1 -new $mp4file 2> /dev/null
 rtp_test "opus" $mp4file "" ""
+
+
+
+
+
+rtp_loss_test ()
+{
+
+test_begin "rtp-loss"
+if [ $test_skip  = 1 ] ; then
+return
+fi
+
+mp4file="$MYTMP/avc.mp4"
+$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_video.h264:dur=1 -new $mp4file 2> /dev/null
+
+#run without loop and tso=100000 to avoid a rand() that might impact TS rounding differently (hence slightly different durations->different hashes)
+do_test "$GPAC -i $mp4file -o $TEMP_DIR/session.sdp:loop=no:ip=$DST:ifce=$IFCE:tso=100000 -stats" "stream" &
+sleep 0.5
+do_test "$GPAC -for-test -runfor=2500 -i $TEMP_DIR/session.sdp:loss_rate=30:ifce=$IFCE inspect:deep:allp -stats -graph" "dump"
+
+test_end
+}
+
+rtp_loss_test
