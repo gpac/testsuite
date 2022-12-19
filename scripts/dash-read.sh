@@ -58,18 +58,18 @@ dur=4
 
 dash_test "live-timeline" "https://livesim.dashif.org/livesim/segtimeline_1/testpic_2s/Manifest.mpd" 0
 
-#HLS: certificate names mismatch (so use -broken-cert) and use low quality (highest is 8Mbps, may timeout)
-hls_opts="-broken-cert"
+#HLS/smooth: certificate names mismatch (so use -broken-cert) and use low quality (highest is 8Mbps, may timeout)
+h2_opts="-broken-cert"
 has_h2=`$GPAC -hx core 2>/dev/null | grep no-h2`
 if [ -n "$has_h2" ] ; then
-hls_opts="$hls_opts -no-h2"
+h2_opts="$h2_opts -no-h2"
 fi
 
-dash_test "hls" "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8 --start_with=min_bw $hls_opts -logs=dash:http:network@debug" 1
+dash_test "hls" "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8 --start_with=min_bw $h2_opts -logs=dash:http:network@debug" 1
 
-dash_test "smooth" "http://amssamples.streaming.mediaservices.windows.net/69fbaeba-8e92-4740-aedc-ce09ae945073/AzurePromo.ism/manifest" 1
+dash_test "smooth" "http://amssamples.streaming.mediaservices.windows.net/69fbaeba-8e92-4740-aedc-ce09ae945073/AzurePromo.ism/manifest $h2_opts" 1
 #VOD test seq without tfxd
-dash_test "smooth-no-tfxd" "https://test.playready.microsoft.com/smoothstreaming/SSWSS720H264/SuperSpeedway_720.ism/manifest -broken-cert -no-h2" 1
+dash_test "smooth-no-tfxd" "https://test.playready.microsoft.com/smoothstreaming/SSWSS720H264/SuperSpeedway_720.ism/manifest $h2_opts" 1
 
 
 #test no bitstream switching mode (reload of init segment at switch), forcing quality switch at each seg
