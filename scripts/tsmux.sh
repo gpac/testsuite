@@ -29,6 +29,8 @@ $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_video.h264 -add $MEDIA_DIR/auxiliar
 
 ts_test "simple" "-i $mp4file" ""
 
+ts_test "latm" "-i $mp4file" ":latm"
+
 ts_test "rate" "-i $mp4file" ":rate=1m"
 
 ts_test "temi" "-i $mp4file" ":temi=4,http://localhost/"
