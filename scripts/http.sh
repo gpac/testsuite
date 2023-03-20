@@ -23,15 +23,15 @@ test_end
 
 }
 
-test_http "mp4-simple" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/mp4/counter_video_360.mp4" "" 0
+test_http "mp4-simple" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/mp4/counter_video_360.mp4 --cache=disk" "" 0
 
-test_http "mp4-seek" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/mp4/counter_video_360.mp4" ":dur=2.0:start=10" 0
+test_http "mp4-seek" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/mp4/counter_video_360.mp4 --cache=disk" ":dur=2.0:start=10" 0
 
-test_http "aac-simple" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/regression_tests/auxiliary_files/enst_audio.aac" "" 0
+test_http "aac-simple" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/regression_tests/auxiliary_files/enst_audio.aac --cache=disk" "" 0
 
 #on linux 32 bit we for now disable the aac seek, since the rounding of (start) and indexes in file gives a slightly different cts
 if [ $GPAC_OSTYPE != "lin32" ] ; then
-test_http "aac-seek" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/regression_tests/auxiliary_files/enst_audio.aac" ":dur=2.0:start=2" 0
+test_http "aac-seek" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/regression_tests/auxiliary_files/enst_audio.aac --cache=disk" ":dur=2.0:start=2" 0
 fi
 
 # test MP4 with no cache

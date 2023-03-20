@@ -20,7 +20,7 @@ do_test "$GPAC httpout:port=8080:quit:reqlog:rdirs=$MEDIA_DIR" "http-server" &
 sleep .5
 
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i http://127.0.0.1:8080/auxiliary_files/enst_audio.aac inspect:allp:deep:test=network:interleave=false:log=$myinspect$3 -graph -stats" "client-inspect"
+do_test "$GPAC -i http://127.0.0.1:8080/auxiliary_files/enst_audio.aac --cache=disk inspect:allp:deep:test=network:interleave=false:log=$myinspect$3 -graph -stats" "client-inspect"
 do_hash_test $myinspect "inspect"
 test_end
 
@@ -77,7 +77,7 @@ do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac -o http://127.0.0.1:
 sleep .5
 
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i http://127.0.0.1:8080/live.aac inspect:allp:deep:test=network:interleave=false:log=$myinspect$3 -logs=http@debug" "client-inspect"
+do_test "$GPAC -i http://127.0.0.1:8080/live.aac --cache=disk inspect:allp:deep:test=network:interleave=false:log=$myinspect$3 -logs=http@debug" "client-inspect"
 do_hash_test $myinspect "inspect"
 
 test_end
@@ -150,8 +150,7 @@ sleep 0.25
 #inspect the first segment we get
 myinspect=$TEMP_DIR/inspect.txt
 
-do_test "$GPAC -i http://127.0.0.1:8080/live.mpd inspect:dur=1:allp:deep:test=network:interleave=false:log=$myinspect -logs=dash:http@debug -lu $opts" "dash-read"
-
+do_test "$GPAC -i http://127.0.0.1:8080/live.mpd inspect:dur=1:allp:deep:test=network:interleave=false:log=$myinspect -logs=dash:http@debug:ncl -lu $opts" "dash-read"
 do_hash_test $myinspect "inspect"
 
 test_end
@@ -273,7 +272,7 @@ do_test "$GPAC httpout:port=8080:quit:rdirs=$MEDIA_DIR:cert=$MEDIA_DIR/tls/local
 sleep .5
 
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i https://127.0.0.1:8080/auxiliary_files/enst_audio.aac inspect:allp:deep:test=network:interleave=false:log=$myinspect$3 -graph -stats" "client-inspect"
+do_test "$GPAC -i https://127.0.0.1:8080/auxiliary_files/enst_audio.aac --cache=disk inspect:allp:deep:test=network:interleave=false:log=$myinspect$3 -graph -stats" "client-inspect"
 do_hash_test $myinspect "inspect"
 test_end
 
@@ -353,7 +352,7 @@ sleep .5
 myinspect=$TEMP_DIR/inspect.txt
 src="http://$2"
 src+="127.0.0.1:8080/counter.hvc"
-do_test "$MYGPAC -i $src inspect:deep:allp:dur=1/1:log=$myinspect -stats -graph" "dump"
+do_test "$MYGPAC -i $src --cache=disk inspect:deep:allp:dur=1/1:log=$myinspect -stats -graph" "dump"
 
 if [ -n "$2" ] ; then
 do_hash_test $myinspect "dump"
