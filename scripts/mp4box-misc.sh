@@ -81,5 +81,9 @@ do_hash_test "$TEMP_DIR/test.h264" "rawcat"
 
 do_test "$MP4BOX -udp-write 127.0.0.1:1234 string_to_write" "udpwrite"
 
+mp4file="$TEMP_DIR/tkgp.mp4"
+do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_video.h264:tkgp=gpac,2 -new $mp4file" "tkgp"
+do_hash_test "$mp4file" "tkgp"
+
 test_end
 
