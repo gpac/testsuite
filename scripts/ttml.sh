@@ -68,8 +68,8 @@ src2=$MEDIA_DIR/ttml/ebu-ttd_sample_span.ttml
 pl=pl.m3u
 mp4file=$TEMP_DIR/file.mp4
 
-echo "$src1:ttml_split=0:ttml_dur=30k" > $pl
-echo "$src2:ttml_split=0:ttml_dur=20k" >> $pl
+echo "$src1:ttml_split=0:ttml_dur=30" > $pl
+echo "$src2:ttml_split=0:ttml_dur=20" >> $pl
 
 do_test "$MP4BOX -add $pl -new $mp4file" "import"
 do_hash_test $mp4file "import"
