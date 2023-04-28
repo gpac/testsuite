@@ -89,7 +89,7 @@ test_split "seek" $src ":xs=30/25:xe=55/25:xround=seek" "mp4" "" 0
 
 #create simple MP4 with video, audio and timecode
 src=$TEMP_DIR/src_tc.mp4
-$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_main_1280x720_512kbps.264:tc=25,1,20,0,0 -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:sopt:#Delay=-1024 -new $src 2>/dev/null
+$MP4BOX -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_main_1280x720_512kbps.264:tc=25,1,20,0,0 -add $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:tkidx=2:sopt:#Delay=-1024 -new $src 2>/dev/null
 #test  range extraction with tmcd
 test_split "tc" $src ":xs=30/25:xe=55/25" "mp4" "" 0
 #test sample-accurate range extraction with tmcd, this should give us exactly one second of audio, video and tmcd in output
