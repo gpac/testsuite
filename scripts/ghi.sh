@@ -121,22 +121,23 @@ do_hash_test "$src_file" "gen-src"
 do_test "$GPAC -i $src_file -o $idx_file:segdur=2"  "idx"
 do_hash_test "$idx_file" "idx"
 
+bl="-blacklist=vtbdec,ohevcdec,osvcdec,nvdec"
 #generate manifest + init segments with video transcode hevc->avc and tx3g->ttml
 dst_mpd=$TEMP_DIR/vod.mpd
-do_test "$GPAC -i $idx_file:gm=all c=avc:b=1m tx3g2ttml -o $dst_mpd"  "mpd"
+do_test "$GPAC -i $idx_file:gm=all c=avc:b=1m tx3g2ttml -o $dst_mpd $bl"  "mpd"
 do_hash_test "$dst_mpd" "mpd"
 do_hash_test "$TEMP_DIR/1-init.mp4" "init"
 
 #generate seg 4 of rep 1 (video)
 rep_seg=$TEMP_DIR/vod_r1_4.m4s
-do_test "$GPAC -i $idx_file:rep=1:sn=4:out=$rep_seg c=avc:b=1m -o $dst_mpd"  "seg-vid"
+do_test "$GPAC -i $idx_file:rep=1:sn=4:out=$rep_seg c=avc:b=1m -o $dst_mpd $bl"  "seg-vid"
 do_hash_test "$rep_seg" "seg-vid"
 
 #do_test "$GPAC --initseg=$TEMP_DIR/1-init.mp4 -i $rep_seg vout" "play"
 
 #generate seg 4 of rep 2 (subs)
 rep_seg=$TEMP_DIR/vod_r2_4.m4s
-do_test "$GPAC -i $idx_file:rep=2:sn=4:out=$rep_seg tx3g2ttml -o $dst_mpd"  "seg-sub"
+do_test "$GPAC -i $idx_file:rep=2:sn=4:out=$rep_seg tx3g2ttml -o $dst_mpd $bl"  "seg-sub"
 do_hash_test "$rep_seg" "seg-sub"
 
 test_end
@@ -164,7 +165,7 @@ cp $MEDIA_DIR/auxiliary_files/subtitle.srt $src_file
 do_test "$GPAC -i $src_file -o $idx_file:segdur=2"  "idx"
 do_hash_test "$idx_file" "idx"
 
-#generate manifest + init segments with video transcode and tx3g->ttml
+#generate manifest + init segments with tx3g->ttml
 dst_mpd=$TEMP_DIR/vod.mpd
 do_test "$GPAC -i $idx_file:gm=all -o $dst_mpd"  "mpd"
 do_hash_test "$dst_mpd" "mpd"
