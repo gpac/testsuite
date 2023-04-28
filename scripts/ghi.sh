@@ -131,7 +131,13 @@ do_hash_test "$TEMP_DIR/1-init.mp4" "init"
 #generate seg 4 of rep 1 (video)
 rep_seg=$TEMP_DIR/vod_r1_4.m4s
 do_test "$GPAC -i $idx_file:rep=1:sn=4:out=$rep_seg c=avc:b=1m -o $dst_mpd $bl"  "seg-vid"
-do_hash_test "$rep_seg" "seg-vid"
+
+#do a hash on inspect (encoder output will vary across platforms)
+myinspect="inspect:test=encx:fmt=@pn@-@dts@-@cts@@lf@"
+insfile=$TEMP_DIR/dump.txt
+do_test "$GPAC --initseg=$TEMP_DIR/1-init.mp4 -i $rep_seg $myinspect:log=$insfile" "seg-vid-insp"
+do_hash_test "$insfile" "seg-vid"
+
 
 #do_test "$GPAC --initseg=$TEMP_DIR/1-init.mp4 -i $rep_seg vout" "play"
 
