@@ -21,7 +21,7 @@ test_restamp "vdelay" ":delay_v=5/10"
 test_restamp "adelay" ":delay_a=9/10"
 #fps change tests
 test_restamp "rate" ":fps=-2"
-test_restamp "fps" ":fps=30000/1001:rawv=force"
+test_restamp "fps" ":fps=30000/1001:rawv=force -blacklist=vtbdec,nvdec,ohevcdec,osvcdec"
 
 #set initial ts to 10s
 test_restamp "init" ":tsinit=10"
