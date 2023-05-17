@@ -57,6 +57,7 @@ single_test 'gpac -p=0 -hh mp4mx' "gpac-null-profile"
 
 single_test "$GPAC -h layouts" "gpac-layouts"
 single_test "$GPAC -h colors" "gpac-colors"
+single_test "$GPAC -h net" "gpac-net"
 single_test "$GPAC -hx colr" "gpac-h-description"
 single_test "$GPAC -i $MEDIA_DIR/auxiliary_files/logo.png --colr" "gpac-suggestarg"
 single_test "gpac -noprog -for-test -i $MEDIA_DIR/auxiliary_files/logo.png inspect --zzzzz" "gpac-suggestarg-unkn"
