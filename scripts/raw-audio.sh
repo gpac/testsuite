@@ -47,16 +47,26 @@ do_test "$GPAC -i $rawfile:sr=48000:ch=2 aout:speed=-10:vol=0" "reverse_play"
 fi
 
 case $1 in
-"pcm" | "s24" | "s32" | "flt" |"dbl" )
+"pcm" | "pcmb" | "s24" | "s24b" | "s32" | "s32b" | "flt" | "fltb" | "dbl" | "dblb")
 #test isobmff pcm encapsulation
 do_test "$GPAC -i $rawfile:sr=48000:ch=2 -o $TEMP_DIR/pcm.mp4:ase=v1" "isobmff-write"
+do_test "$GPAC -i $rawfile:sr=48000:ch=2 -o $TEMP_DIR/pcm.mov" "qtff-write"
+do_test "$GPAC -i $rawfile:sr=48000:ch=2 -o $TEMP_DIR/pcm2.mov:ase=v2qt" "qtff2-write"
 if [ $GPAC_OSTYPE != "lin32" ] ; then
 do_hash_test "$TEMP_DIR/pcm.mp4" "isobmff-write"
+do_hash_test "$TEMP_DIR/pcm.mov" "qtff-write"
+do_hash_test "$TEMP_DIR/pcm2.mov" "qtff2-write"
 fi
+#disable crc test because of lin32, only check isom structure
 insfile=$TEMP_DIR/dump_isopcm.txt
-#disable crc test for lin32, only check isom structure
 do_test "$GPAC -i $TEMP_DIR/pcm.mp4 inspect:deep:log=$insfile:test=nocrc" "isobmff-read"
 do_hash_test "$insfile" "isobmff-read"
+insfile=$TEMP_DIR/dump_qtpcm.txt
+do_test "$GPAC -i $TEMP_DIR/pcm.mov inspect:log=$insfile:test=nocrc" "qtff-read"
+do_hash_test "$insfile" "qtff-read"
+insfile=$TEMP_DIR/dump_qtpcm2.txt
+do_test "$GPAC -i $TEMP_DIR/pcm2.mov inspect:log=$insfile:test=nocrc" "qtff2-read"
+do_hash_test "$insfile" "qtff2-read"
 ;;
 esac
 
@@ -70,7 +80,7 @@ mp4file="$TEMP_DIR/aud.mp4"
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=0.4 -new $mp4file 2> /dev/null
 
 #complete lists of audio formats extensions in gpac
-afstr="pc8 pcm s24 s32 flt dbl pc8p pcmp s24p s32p fltp dblp"
+afstr="pc8 pcm pcmb s24 s24b s32 s32b flt fltb dbl dblb pc8p pcmp s24p s32p fltp dblp"
 
 for i in $afstr ; do
 	raw_audio_test $i
