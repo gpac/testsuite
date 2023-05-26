@@ -58,3 +58,13 @@ fi
 test_end
 
 
+# test unci in heiv
+test_begin "heif-unci"
+if [ $test_skip != 1 ] ; then
+
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/sky.jpg:#ItemID=1 reframer:raw=v:copy -o $TEMP_DIR/unci.heif" "heif"
+do_hash_test $TEMP_DIR/unci.heif "heif"
+
+
+fi
+test_end
