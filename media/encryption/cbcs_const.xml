@@ -4,7 +4,6 @@
 <DRMInfo type="pssh" version="0">
 <BS ID128="9A04F07998404286AB92E65BE0885F95"/>
 <BS data="application/data;base64:ACE125"/>
-<BS sourceFile="cenc_blob.bin"/>
 </DRMInfo>
 
 <!-- example for GPAC - keys are listed after the content and UL follows -->
