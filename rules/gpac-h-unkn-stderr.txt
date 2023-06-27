@@ -1,1 +1,1 @@
-No such filter zzzzz
+No filter, option or help command with similar name found, see gpac -h filters, 
