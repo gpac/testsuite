@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" xmlns:tts="http://www.w3.org/ns/ttml#styling" xmlns:ttp="http://www.w3.org/ns/ttml#parameter" >
+ <head>
+  <layout>
+   <region xml:id="Default" tts:origin="5% 5%" tts:extent="90% 90%" tts:displayAlign="after" tts:overflow="visible" tts:textAlign="center" tts:fontSize="18px" tts:fontFamily="Serif" />
+  </layout>
+ </head>
+ <body>
+  <div>
+  <p begin="00:00:00.000" end="00:00:04.000" >Subtitle 1</p>
+  <p begin="00:00:08.000" end="00:00:12.000" >Subtitle 2</p>
+  <p begin="00:00:16.000" end="00:00:20.000" >Subtitle 3</p>
+  <p begin="00:00:24.000" end="00:00:28.000" >Subtitle 4</p>
+  </div>
+ </body>
+</tt>
