@@ -38,7 +38,7 @@ compositor_test()
 
  ui_rec=$RULES_DIR/$2-play-ui.xml
  if [ -f $ui_rec ] ; then
-  args="$args -cfg=Validator:Mode=Play -cfg=Validator:Trace=$ui_rec"
+  args="$args -cfg=validator:mode=play -cfg=validator:trace=$ui_rec"
  fi
 
  do_test "$args" $2

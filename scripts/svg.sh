@@ -50,7 +50,7 @@ fi
 
 
  #note that we force using a GNU Free Font SANS to make sure we always use the same font on all platforms
-do_test "$GPAC -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts -cfg=Validator:Mode=Play -cfg=Validator:Trace=$RULES_DIR/$uitest -blacklist=vtbdec,nvdec -i $1 compositor$nojs:osize=$dump_size:vfr:dur=$dump_dur:asr=44100:ach=2$compopt @ -o $RGB_DUMP @1 -o $PCM_DUMP $waitfonts" "dump"
+do_test "$GPAC -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts -cfg=validator:mode=play -cfg=validator:trace=$RULES_DIR/$uitest -blacklist=vtbdec,nvdec -i $1 compositor$nojs:osize=$dump_size:vfr:dur=$dump_dur:asr=44100:ach=2$compopt @ -o $RGB_DUMP @1 -o $PCM_DUMP $waitfonts" "dump"
 
  v_args=""
  if [ -f $RGB_DUMP ] ; then
