@@ -42,6 +42,8 @@ class MyFilter(gpac.FilterCustom):
 		gpac.FilterCustom.__init__(self, session, "PYnspect")
 		#indicate what we accept and produce - this can be done ether in the constructor or after
 		self.push_cap("StreamType", "Visual", gpac.GF_CAPS_INPUT)
+		#indicate we accept multiple PIDs
+		self.set_max_pids(-1)
 
 	#callbacks bmust be defined before instantiating an object from this class
 
@@ -63,7 +65,8 @@ class MyFilter(gpac.FilterCustom):
 		for pid in self.ipids:
 			pck = pid.get_packet()
 			if pck==None:
-				break
+				#no packets, continue to process packets from other PIDs
+				continue
 
 			pck.ref()
 			pid.drop_packet()
