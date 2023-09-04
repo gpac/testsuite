@@ -118,3 +118,38 @@ test_end
 }
 
 test_hls_absu
+
+
+test_hls_mvar_aud()
+{
+
+test_begin "hls-mvar-audio"
+if [ $test_skip != 1 ] ; then
+
+manifest=$TEMP_DIR/file.m3u8
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -i $MEDIA_DIR/auxiliary_files/count_english.mp3:#Representation=AudioOne:#HLSGroup=audio1::#HLSMExt=DEFAULT=YES -i $MEDIA_DIR/auxiliary_files/count_english.mp3:#Representation=AudioAlt:#HLSGroup=audio1::#HLSMExt=DEFAULT=NO -o $manifest" "hls-ext"
+do_hash_test "$TEMP_DIR/file.m3u8" "hls-master"
+
+fi
+test_end
+
+}
+
+test_hls_mvar_aud
+
+test_hls_mvar_vid()
+{
+
+test_begin "hls-mvar-video"
+if [ $test_skip != 1 ] ; then
+
+manifest=$TEMP_DIR/file.m3u8
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/count_english.mp3 -i $MEDIA_DIR/auxiliary_files/counter.hvc:#Representation=VideoOne:#HLSGroup=video1::#HLSMExt=DEFAULT=YES -i $MEDIA_DIR/auxiliary_files/counter.hvc:#Representation=VideoAlt:#HLSGroup=video1::#HLSMExt=DEFAULT=NO -o $manifest:hls_ap" "hls-ext"
+do_hash_test "$TEMP_DIR/file.m3u8" "hls-master"
+
+fi
+test_end
+
+}
+
+test_hls_mvar_vid
