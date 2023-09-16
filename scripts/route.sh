@@ -184,6 +184,28 @@ test_end
 }
 
 
+route_dash_stl ()
+{
+
+test_begin "route_dash_stl"
+if [ $test_skip = 1 ] ; then
+return
+fi
+
+#start receiver
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i route://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect" "receive" &
+
+#start sender, dash only 4s in dynamic MPD mode
+src=$MEDIA_DIR/auxiliary_files/counter.hvc
+do_test "$GPAC -i $src:#ClampDur=4 dasher:profile=live:dmode=dynamic:template=seg_\$Time\$:stl @ -o route://225.1.1.0:6000/manifest.mpd -logs=route@info" "send"
+
+test_end
+}
+
+
+
+
 route_dashing
 route_dash_filemode "" "mpd" ""
 route_dash_filemode "-hls" "m3u8" ":muxtype=ts"
@@ -194,3 +216,4 @@ atsc_dashing_rec
 route_dash_ll_filemode_push
 
 route_files
+route_dash_stl
