@@ -55,9 +55,9 @@ test_end
 
 }
 
-test_ghi "ghi-mp4" "ghi" "mp4" "" ":nodata" "" ""
+test_ghi "ghi-mp4" "ghi" "mp4" "" ":nodata=yes" "" ""
 
-test_ghi "ghix-fmp4" "ghix" "mp4" ":frag" ":sigfrag:nodata" "" ""
+test_ghi "ghix-fmp4" "ghix" "mp4" ":frag" ":sigfrag:nodata=yes" "" ""
 
 test_ghi "ghi-ts-mux" "ghi" "ts" "" ":sigfrag" ":mux=2@1" ""
 
