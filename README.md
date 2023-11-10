@@ -55,7 +55,7 @@ In order to provide test caching and produce the unified test report for all the
 
 Each test has its own log file `$LOGS` in which you can write (a lot is already in there, such as test name/data and all stderr).
 
-Tests may be customized depending on the platform they run on. the environment variable `$GPAC_OSTYPE` can be used to test the binary version used; the currently defined values are `lin32`, `lin64`, `win32`, `win64`, `osx32`, `osx64` and `unknown`.
+Tests may be customized depending on the platform they run on. The environment variable `$GPAC_OSTYPE` can be used to test the binary version used; the currently defined values are `lin32`, `lin64`, `win32`, `win64`, `osx32`, `osx64` and `unknown`.
 
 
 ## Simple Testing

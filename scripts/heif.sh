@@ -26,8 +26,7 @@ do_test "$MP4BOX -add-image $MEDIA_DIR/auxiliary_files/counter.hvc:time=-1:@@ref
 do_hash_test $heif_file "create-heif"
 
 # -let's have some fun and extract the items (we don't transcode here, to do so use .png or .jpg extensions)
-#:clone will force creating a new file for each now pid
-do_test "$GPAC -i $heif_file -o $TEMP_DIR/item_\$ItemID\$.hvc:clone" "dump-heif-items"
+do_test "$GPAC -i $heif_file -o $TEMP_DIR/item_\$ItemID\$.hvc" "dump-heif-items"
 
 do_hash_test $TEMP_DIR/item_1.hvc "dump-item1"
 do_hash_test $TEMP_DIR/item_10.hvc "dump-item10"
@@ -39,9 +38,8 @@ do_hash_test $dump_file "dump-mp4box"
 
 # -let's have some fun and extract the items as track (we don't transcode here, to do so use .png or .jpg extensions)
 #:itt will be inherited by the mp4dmx filter and will build a single track from all items, using each item as a sample
-#:clone will force creating a new file for each now pid
 #:split will be inherited by the writegen filter to force writing signaling file per frame
-do_test "$GPAC -i $heif_file:itt -o $TEMP_DIR/itt_\$num\$.hvc:clone:split" "dump-heif-items-itt"
+do_test "$GPAC -i $heif_file:itt -o $TEMP_DIR/itt_\$num\$.hvc:split" "dump-heif-items-itt"
 do_hash_test $TEMP_DIR/itt_1.hvc "dump-itt1"
 do_hash_test $TEMP_DIR/itt_10.hvc "dump-itt10"
 

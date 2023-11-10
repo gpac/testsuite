@@ -428,7 +428,7 @@ fi
 
 if [ $check_only = 0 ] ; then
 
-#check MP4Box and gpac (use default args, not custum ones because of -mem-track)
+#check MP4Box and gpac (use default args, not custom ones because of -mem-track)
 MP4Box -h > /dev/null 2>&1
 res=$?
 if [ $res != 0 ] ; then
