@@ -67,9 +67,13 @@ fi
 
 dash_test "hls" "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8 --start_with=min_bw $h2_opts -logs=dash:http:network@debug" 1
 
-dash_test "smooth" "http://amssamples.streaming.mediaservices.windows.net/69fbaeba-8e92-4740-aedc-ce09ae945073/AzurePromo.ism/manifest $h2_opts" 1
+#DEAD LINK - dash_test "smooth" "http://amssamples.streaming.mediaservices.windows.net/69fbaeba-8e92-4740-aedc-ce09ae945073/AzurePromo.ism/manifest $h2_opts" 1
+#live stream, do not hash
+dash_test "smooth" "https://demo.unified-streaming.com/k8s/live/stable/live.isml/Manifest?time_shift=300 $h2_opts" 0
+
 #VOD test seq without tfxd
-dash_test "smooth-no-tfxd" "https://test.playready.microsoft.com/smoothstreaming/SSWSS720H264/SuperSpeedway_720.ism/manifest $h2_opts" 1
+#DEAD LINK - dash_test "smooth-no-tfxd" "https://test.playready.microsoft.com/smoothstreaming/SSWSS720H264/SuperSpeedway_720.ism/manifest $h2_opts" 1
+dash_test "smooth-no-tfxd" "http://profficialsite.origin.mediaservices.windows.net/c51358ea-9a5e-4322-8951-897d640fdfd7/tearsofsteel_4k.ism/manifest $h2_opts" 1
 
 
 #test no bitstream switching mode (reload of init segment at switch), forcing quality switch at each seg
