@@ -30,7 +30,7 @@ fi
 #generate master manifest only
 dst_hls=$TEMP_DIR/vod.m3u8
 do_test "$GPAC -i $idx_file:gm=main$6 -o $dst_hls$7"  "hls"
-do_hash_test "$dst_hls" "mpd"
+do_hash_test "$dst_hls" "hls"
 
 #generate child manifest only
 child_hls=$TEMP_DIR/vod_r1.m3u8
