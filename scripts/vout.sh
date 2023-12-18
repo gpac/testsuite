@@ -34,6 +34,8 @@ config_win=`gpac -h bin 2>&1 | grep GPAC_CONFIG_WIN32`
 
 #SDL is built on all platforms
 vout_test "sdl"
+#caca is built on all platforms
+vout_test "caca"
 
 #X11 on linux
 if [ -n "$config_linux" ] ; then
