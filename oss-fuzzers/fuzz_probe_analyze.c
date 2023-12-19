@@ -15,7 +15,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
     fwrite(data, size, 1, fp);
     fclose(fp);
 
-    GF_FilterSesion *fs = gf_fs_new_defaults(0);
+    GF_FilterSession *fs = gf_fs_new_defaults(0);
     GF_Filter *src = gf_fs_load_source(fs, filename, NULL, NULL, &e);
     GF_Filter *insp = gf_fs_load_filter(fs, "inspect:deep:analyze=bs", &e);
     gf_fs_run(fs);
