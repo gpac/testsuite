@@ -206,3 +206,9 @@ single_test "$GPAC -i $plist inspect" "filelist-load-error"
 mv $plist $TEMP_DIR
 
 
+plist=pl_loop.m3u
+echo "" > $plist
+echo "$MEDIA_DIR/auxiliary_files/enst_video.h264" >> $plist
+
+test_flist "loop" "--floop=1 -i $plist" 0
+mv $plist $TEMP_DIR
