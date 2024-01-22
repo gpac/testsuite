@@ -21,6 +21,7 @@ for i, arg in enumerate(sys.argv):
 	elif arg == '-stats':
 		print_stats=True
 
+test_ok=True
 #init libgpac
 gpac.init(mem_track)
 #set logs
@@ -55,13 +56,17 @@ class MyFilter(gpac.FilterCustom):
 			print('PID reconfigured')
 		else:
 			print('PID configured - props:')
+			pid.set_framing(True)
 			pid.enum_props(self)
 			evt = gpac.FilterEvent(gpac.GF_FEVT_PLAY)
+			#test seek
+			evt.play.start_range = 6.0
 			pid.send_event(evt)
 		return 0
 
 	#process
 	def process(self):
+		global test_ok
 		for pid in self.ipids:
 			pck = pid.get_packet()
 			if pck==None:
@@ -70,8 +75,13 @@ class MyFilter(gpac.FilterCustom):
 
 			pck.ref()
 			pid.drop_packet()
-			print('Got Packet DTS ' + str(pck.dts) + ' CTS ' + str(pck.cts) + ' SAP ' + str(pck.sap) + ' dur ' + str(pck.dur) + ' size ' + str(pck.size))
+			print('Got Packet DTS ' + str(pck.dts) + ' CTS ' + str(pck.cts) + ' SAP ' + str(pck.sap) + ' dur ' + str(pck.dur) + ' size ' + str(pck.size) + ' seek ' + str(pck.seek))
+			#check we indeed seek by checking first frame is marked as seek
+			if pck.dts == 0 and not pck.seek:
+				print('Seek failed')
+				test_ok=False
 			pck.unref()
+			
 		return 0
 
 	def on_prop_enum(self, pname, pval):
@@ -95,3 +105,6 @@ fs.run()
 
 fs.delete()
 gpac.close()
+
+if not test_ok:
+	sys.exit(1)
