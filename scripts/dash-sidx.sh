@@ -16,3 +16,5 @@ test_end
 sidx_test "flat" ":subs_sidx=0"
 sidx_test "hierarchical" ":subs_sidx=2"
 sidx_test "daisy" ":subs_sidx=2:chain_sidx"
+#test one frag per sidx hence two entries (one frag, one chained sidx)
+sidx_test "daisy-one" ":subs_sidx=4:chain_sidx"
