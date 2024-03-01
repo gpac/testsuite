@@ -56,12 +56,14 @@ store_video=0
 quick_mode=0
 gpac_profile=""
 skip_all_tests=0
-
+dump_js=0
 current_script=""
 
 DEF_DUMP_DUR=10
 DEF_DUMP_SIZE="200x200"
 DEF_TIMEOUT=20
+
+echo "" > all_tests.js
 
 #remote location of resource files: all media files, hash files and generated videos
 REFERENCE_DIR="https://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/resources"
@@ -530,6 +532,13 @@ test_begin ()
    log $L_ERR "	@test_begin takes only two arguments - wrong call (first arg is $1)"
   fi
 
+  if [ $dump_js = 1 ] ; then
+   test_skip=0
+   echo '{ "name": "'$1'", "tests": [' >> all_tests.js
+   return
+  fi
+
+
  test_skip=0
  result=""
  TEST_NAME=$1
@@ -677,6 +686,12 @@ test_end ()
 {
  #wait for all sub-tests to complete (some may use subshells)
  wait
+
+  if [ $dump_js = 1 ] ; then
+   test_skip=0
+   echo '{}]},' >> all_tests.js
+   return
+  fi
 
  TEMP_DIR=$INTERN_TEMP_DIR
 
@@ -850,6 +865,13 @@ do_test ()
 {
   skip_next_hash_test=0
 
+  if [ $dump_js = 1 ] ; then
+   test_skip=0
+   echo '{ "subtest": "'$2'", "cmd": "'$1'"},' >> all_tests.js
+   return
+  fi
+
+
   if [ $# -gt 2 ] ; then
    log $L_ERR "> in test $TEST_NAME in script $current_script line $BASH_LINENO"
    log $L_ERR "	@do_test takes only two arguments - wrong call (first arg $1)"
@@ -988,6 +1010,10 @@ do_play_test ()
 #@do_hash_test: generates a hash for $1 file , compare it to HASH_DIR/$TEST_NAME$2.hash
 do_hash_test ()
 {
+  if [ $dump_js = 1 ] ; then
+    echo '{ "hash": "'$TEST_NAME$2.hash'", "file": "'$1'"},' >> all_tests.js
+    return
+  fi
   if [ $skip_next_hash_test = 1 ] ; then
     skip_next_hash_test=0
     return
@@ -1115,6 +1141,11 @@ do_hash_test_bin ()
 #compare hashes of $1 and $2, return 0 if OK, error otherwise
 do_compare_file_hashes ()
 {
+  if [ $dump_js = 1 ] ; then
+    echo '{ "hash": "compare", "file1": "'$1'", "file2" : "'$2'"},' >> all_tests.js
+    return
+  fi
+
   if [ $# -gt 2 ] ; then
    log $L_ERR "> in test $TEST_NAME in script $current_script line $BASH_LINENO"
    log $L_ERR "	@do_compare_file_hashes takes only two arguments - wrong call (first arg is $1)"

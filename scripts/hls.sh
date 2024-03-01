@@ -153,3 +153,28 @@ test_end
 }
 
 test_hls_mvar_vid
+
+
+
+test_hls_pl_tpl()
+{
+
+test_begin "hls-pl-tpl-$1"
+if [ $test_skip != 1 ] ; then
+
+manifest=$TEMP_DIR/file.m3u8
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/count_english.mp3:#HLSPL=audio/index.m3u8 -i $MEDIA_DIR/auxiliary_files/counter.hvc reframer:#HLSPL="'$Type$'"/index.m3u8 -o $manifest:dual:$2:template="'$Number$' "hls-pl-tpl"
+do_hash_test "$TEMP_DIR/file.mpd" "mpd"
+do_hash_test "$TEMP_DIR/file.m3u8" "hls-master"
+do_hash_test "$TEMP_DIR/audio/index.m3u8" "hls-audio"
+do_hash_test "$TEMP_DIR/video/index.m3u8" "hls-video"
+
+fi
+test_end
+
+}
+
+test_hls_pl_tpl "live" ":profile=live"
+test_hls_pl_tpl "vod" ":profile=onDemand"
+test_hls_pl_tpl "main" ":profile=main"
+test_hls_pl_tpl "main-sfile" ":profile=main:sfile"
