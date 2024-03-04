@@ -22,14 +22,16 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
     args[0] = "gpac";
     sprintf(argname, "-netcap=src=%s,nrt", filename);
     args[1] = argname;
-    gf_sys_set_args(2, args);
+    e = gf_sys_set_args(2, args);
 
-    const char *url = "route://234.0.0.1:1234/live.mpd";
-    GF_FilterSession *fs = gf_fs_new_defaults(0);
-    GF_Filter *src = gf_fs_load_source(fs, url, NULL, NULL, &e);
-    GF_Filter *insp = gf_fs_load_filter(fs, "inspect:deep", &e);
-    gf_fs_run(fs);
-	gf_fs_del(fs);
+    if (e==GF_OK) {
+        const char *url = "route://234.0.0.1:1234/live.mpd";
+        GF_FilterSession *fs = gf_fs_new_defaults(0);
+        GF_Filter *src = gf_fs_load_source(fs, url, NULL, NULL, &e);
+        GF_Filter *insp = gf_fs_load_filter(fs, "inspect:deep", &e);
+        gf_fs_run(fs);
+        gf_fs_del(fs);
+    }
 
     gf_sys_close();
     unlink(filename);
