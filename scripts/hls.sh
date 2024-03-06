@@ -174,7 +174,7 @@ test_end
 
 }
 
-test_hls_pl_tpl "live" ":profile=live"
-test_hls_pl_tpl "vod" ":profile=onDemand"
-test_hls_pl_tpl "main" ":profile=main"
-test_hls_pl_tpl "main-sfile" ":profile=main:sfile"
+test_hls_pl_tpl "live" "profile=live"
+test_hls_pl_tpl "vod" "profile=onDemand"
+test_hls_pl_tpl "main" "profile=main"
+test_hls_pl_tpl "main-sfile" "profile=main:sfile"
