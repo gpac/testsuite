@@ -245,7 +245,7 @@ test_end
 
 ## Testing events and interactivity
 
-The test suite has a UI trace generation mode used to record user events (mouse and keyboards) for SVG and BIFS interactivity testing for the media [compositor filter](https://github.com/gpac/gpac/wiki/compositor).
+The test suite has a UI trace generation mode used to record user events (mouse and keyboards) for SVG and BIFS interactivity testing for the media [compositor filter](https://wiki.gpac.io/Filters/compositor/).
 
 In this modes, all subtests are skipped (i.e.  `$test_skip` is  1), and the variable `$test_ui` is set to 1. A test may use the `do_ui_test` function to perform UI recording. As of GPAC 0.9.0, trace files have to be manually loaded by the test using them, as shown in [BT tests](https://github.com/gpac/testsuite/blob/filters/scripts/bt.sh).
 
