@@ -5,7 +5,7 @@ filter.set_name("JSStorage");
 filter.set_desc("JS-based storage filter");
 filter.set_version("0.1beta");
 filter.set_author("GPAC team");
-filter.set_help("This filter provides a very simple javascript inspecter, mostly for test purposes of Javascrip filter bindings");
+filter.set_help("This filter provides a very simple javascript inspecter, mostly for test purposes of Javascript filter bindings");
 
 //exposed arguments
 filter.set_arg({ name: "sec", desc: "default section", type: GF_PROP_STRING, def: "testSec"} );

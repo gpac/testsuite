@@ -6,7 +6,7 @@ filter.set_name("JSInspect");
 filter.set_desc("JS-based inspect filter");
 filter.set_version("0.1beta");
 filter.set_author("GPAC team");
-filter.set_help("This filter provides a very simple javascript inspecter, mostly for test purposes of Javascrip filter bindings");
+filter.set_help("This filter provides a very simple javascript inspecter, mostly for test purposes of Javascript filter bindings");
 
 //exposed arguments
 filter.set_arg({ name: "raw", desc: "if set, accept undemuxed input PIDs", type: GF_PROP_BOOL, def: "false"} );
