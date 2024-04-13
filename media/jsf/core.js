@@ -120,7 +120,7 @@ sys.color_component('black', 3);
 sys.rect_intersect({x: 0, y: 0, w: 20, h: 20}, {x: 10, y: 10, w: 20, h: 20}  );
 
 try {
-	sys.load_script('test.js');
+	sys.load_script('__null_test.js');
 } catch (e) {
 
 }
