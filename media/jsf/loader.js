@@ -6,7 +6,7 @@ filter.set_name("JSComp");
 filter.set_desc("JS-based complex filter");
 filter.set_version("0.1beta");
 filter.set_author("GPAC team");
-filter.set_help("This filter tests loading of sources and destinations from JS, mostly for test purposes of Javascrip filter bindings");
+filter.set_help("This filter tests loading of sources and destinations from JS, mostly for test purposes of Javascript filter bindings");
 
 //exposed arguments
 filter.set_arg({name: "in", desc: "indicates source to load", type: GF_PROP_STRING} );
