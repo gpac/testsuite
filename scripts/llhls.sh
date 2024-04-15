@@ -73,7 +73,7 @@ sleep .5
 
 #grab 4s of content, hash result
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC $h2_args -i http://127.0.0.1:8080/live.m3u8$3 inspect:deep:test=network:dur=4:log=$myinspect -logs=dash@debug" "client"
+do_test "$GPAC $h2_args -i http://127.0.0.1:8080/live.m3u8$3 inspect:deep:test=network:dur=4:log=$myinspect" "client"
 do_hash_test $myinspect "inspect"
 
 test_end

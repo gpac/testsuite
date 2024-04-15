@@ -71,11 +71,15 @@ do_test "$GPAC -i pipe://gpac_pipe_in:mkp:ka:sigflush:bpcnt=3 cecrypt:cfile=$MED
 
 sleep .5
 
-cat "$TEMP_DIR/src_dashinit.mp4" > gpac_pipe_in
+## do not use cat on pipe for windows tests
+#cat "$TEMP_DIR/src_dashinit.mp4" > gpac_pipe_in
+gpac -i "$TEMP_DIR/src_dashinit.mp4" -o pipe://gpac_pipe_in:ext=mp4:nomux
 sleep .1
-cat "$TEMP_DIR/src_dash1.m4s" > gpac_pipe_in
+#cat "$TEMP_DIR/src_dash1.m4s" > gpac_pipe_in
+gpac -i "$TEMP_DIR/src_dash1.m4s" -o pipe://gpac_pipe_in:ext=m4s:nomux
 sleep .1
-cat "$TEMP_DIR/src_dash2.m4s" > gpac_pipe_in
+#cat "$TEMP_DIR/src_dash2.m4s" > gpac_pipe_in
+gpac -i "$TEMP_DIR/src_dash2.m4s" -o pipe://gpac_pipe_in:ext=m4s:nomux
 
 wait
 
