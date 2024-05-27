@@ -63,7 +63,7 @@ do_hash_test $mp4file "add-stz2"
 
 mp4file="$TEMP_DIR/testrvc.mp4"
 do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_video.h264:rvc=$MEDIA_DIR/auxiliary_files/logo.jpg -new $mp4file" "add-rvc"
-#zip might produce dufferent binary result, hash the -diso for the file
+#zip might produce different binary result, hash the -diso for the file
 do_test "$MP4BOX -diso $mp4file" "dump-rvc"
 do_hash_test "$TEMP_DIR/testrvc_info.xml" "add-rvc"
 
@@ -73,6 +73,13 @@ do_hash_test "$mp4file" "hdr"
 insp=$TEMP_DIR/insp.xml
 do_test "$GPAC -i $mp4file inspect:deep:analyze=bs:log=$insp" "hdr-insp"
 do_hash_test "$insp" "hdr-insp"
+
+mp4file="$TEMP_DIR/hdr.mp4"
+do_test "$MP4BOX -add media/hdr/av1_hdr.obu -new $mp4file" "hdr-av1"
+do_hash_test "$mp4file" "hdr-av1"
+insp=$TEMP_DIR/insp.xml
+do_test "$GPAC -i $mp4file inspect:deep:analyze=bs:log=$insp" "hdr-insp-av1"
+do_hash_test "$insp" "hdr-insp-av1"
 
 
 cp $MEDIA_DIR/auxiliary_files/enst_video.h264 $TEMP_DIR/test.h264
