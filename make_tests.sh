@@ -524,6 +524,7 @@ reset_stat ()
  SOCKET_MSG_SENT="N/A"
 }
 
+test_start_ts=0
 #begin a test with name $1 and using hashes called $1-$2 ... $1-$N
 test_begin ()
 {
@@ -552,6 +553,7 @@ test_begin ()
  LOGS="$LOGS_DIR/$TEST_NAME-logs.txt-new"
  final_report="$LOGS_DIR/$TEST_NAME-passed.xml"
  test_ui=0
+ test_start_ts=`$GNU_DATE +%s%N`
 
 
  if [ $do_clean != 0 ] ; then
@@ -680,12 +682,16 @@ mark_test_error ()
  fi
 }
 
-
+test_end_ts=0
 #ends test - gather all logs/stats produced and generate report
 test_end ()
 {
  #wait for all sub-tests to complete (some may use subshells)
  wait
+
+ test_end_ts=`$GNU_DATE +%s%N`
+ test_runtime=$((test_end_ts-test_start_ts))
+ test_runtime=$(($test_runtime / 1000000))
 
   if [ $dump_js = 1 ] ; then
    test_skip=0
@@ -824,7 +830,7 @@ shopt -s nullglob
  fi
 
 
- echo " <test name=\"$TEST_NAME\" result=\"$result\" date=\"$(date '+%d/%m/%Y %H:%M:%S')\">" > $report
+ echo " <test name=\"$TEST_NAME\" result=\"$result\" date=\"$(date '+%d/%m/%Y %H:%M:%S')\" runtime=\"$test_runtime\">" > $report
  cat $stat_xml_temp >> $report
  rm -f $stat_xml_temp > /dev/null
  echo " </test>" >> $report
