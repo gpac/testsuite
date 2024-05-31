@@ -1,6 +1,8 @@
 
 
 
+test_mp4box_misc()
+{
 test_begin "mp4box-misc"
 if [ "$test_skip" = 1 ] ; then
 return
@@ -74,14 +76,6 @@ insp=$TEMP_DIR/insp.xml
 do_test "$GPAC -i $mp4file inspect:deep:analyze=bs:log=$insp" "hdr-insp"
 do_hash_test "$insp" "hdr-insp"
 
-mp4file="$TEMP_DIR/hdr.mp4"
-do_test "$MP4BOX -add media/hdr/av1_hdr.obu -new $mp4file" "hdr-av1"
-do_hash_test "$mp4file" "hdr-av1"
-insp=$TEMP_DIR/insp.xml
-do_test "$GPAC -i $mp4file inspect:deep:analyze=bs:log=$insp" "hdr-insp-av1"
-do_hash_test "$insp" "hdr-insp-av1"
-
-
 cp $MEDIA_DIR/auxiliary_files/enst_video.h264 $TEMP_DIR/test.h264
 do_test "$MP4BOX -raw-cat $MEDIA_DIR/auxiliary_files/enst_video.h264 $TEMP_DIR/test.h264" "rawcat"
 do_hash_test "$TEMP_DIR/test.h264" "rawcat"
@@ -93,4 +87,28 @@ do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_video.h264:tkgp=gpac,2 -ne
 do_hash_test "$mp4file" "tkgp"
 
 test_end
+}
+
+test_mp4box_misc
+
+
+test_mp4box_hdr_av1() {
+
+test_begin "mp4box-hdr-av1"
+if [ "$test_skip" = 1 ] ; then
+return
+fi
+
+mp4file="$TEMP_DIR/hdr.mp4"
+do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/hdr/av1_hdr.obu -new $mp4file" "hdr-av1"
+do_hash_test "$mp4file" "hdr-av1"
+insp=$TEMP_DIR/insp.xml
+do_test "$GPAC -i $mp4file inspect:deep:analyze=bs:log=$insp" "hdr-insp-av1"
+do_hash_test "$insp" "hdr-insp-av1"
+
+
+test_end
+
+}
+test_mp4box_hdr_av1
 
