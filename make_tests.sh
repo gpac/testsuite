@@ -91,6 +91,8 @@ LOGS_DIR="$LOCAL_OUT_DIR/logs"
 INTERN_TEMP_DIR="$LOCAL_OUT_DIR/temp"
 TEMP_DIR=$INTERN_TEMP_DIR
 
+HAS_GPAC_NODE="no"
+
 ALL_REPORTS="$LOCAL_OUT_DIR/all_results.xml"
 ALL_LOGS="$LOCAL_OUT_DIR/all_logs.txt"
 
@@ -427,6 +429,25 @@ else
 enable_timeout=1
 fi
 
+node -v > /dev/null 2>&1
+res=$?
+if [ $res = 0 ] ; then
+  TMPFILE=$(mktemp -p .)
+
+cat <<EOF > $TMPFILE
+const gpac = require('gpac');
+console.log("Welcome to GPAC NodeJS !\nVersion: " + gpac.version);
+EOF
+
+  node $TMPFILE > /dev/null 2>&1
+  node_res=$?
+  rm $TMPFILE
+  if [ $node_res = 0 ] ; then
+    HAS_GPAC_NODE="yes"
+  fi
+
+fi
+
 
 if [ $check_only = 0 ] ; then
 
@@ -440,7 +461,7 @@ fi
 
 GPAC_OSTYPE="unknown"
 
-gpac -h > /dev/null 2>&1
+gpac -p=0 -h > /dev/null 2>&1
 res=$?
 if [ $res != 0 ] ; then
 log $L_ERR "gpac not found (ret $res) - exiting"
