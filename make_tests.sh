@@ -432,7 +432,7 @@ fi
 node -v > /dev/null 2>&1
 res=$?
 if [ $res = 0 ] ; then
-  TMPFILE=$(mktemp -p .)
+  TMPFILE=$(mktemp)
 
 cat <<EOF > $TMPFILE
 const gpac = require('gpac');
