@@ -58,7 +58,8 @@ do_hash_test "$TEMP_DIR/single.mp4" "single"
 do_test "$MP4BOX -rb iso6 -frag 1000 $mp4file -out $TEMP_DIR/frag-1s.mp4" "frag-1s"
 do_hash_test "$TEMP_DIR/frag-1s.mp4" "frag-1s"
 
-do_test "$MP4BOX -rb iso6 -mfra -frag 1000 $mp4file -out $TEMP_DIR/frag-1s-mfra.mp4" "frag-1s-mfra"
+#also test -tmp option
+do_test "$MP4BOX -rb iso6 -mfra -frag 1000 $mp4file -tmp ./ -out $TEMP_DIR/frag-1s-mfra.mp4" "frag-1s-mfra"
 do_hash_test "$TEMP_DIR/frag-1s-mfra.mp4" "frag-1s-mfra"
 
 
