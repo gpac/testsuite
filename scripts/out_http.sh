@@ -390,7 +390,7 @@ test_http_dashraw
 #test live dash output to http with PUT and DELETE
 test_http_dashpush_live "" "mpd" "" ""
 test_http_dashpush_live "-hls" "m3u8" "" ""
-test_http_dashpush_live "-llhls" "m3u8" ":llhls=sf:seg_dur=2:cdur=1" ""
+test_http_dashpush_live "-llhls" "m3u8" ":llhls=sf:cdur=0.5" ""
 
 #test live dash output to http with PUT and byte range update for SIDX
 test_http_dashpush_vod
