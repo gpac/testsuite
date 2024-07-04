@@ -23,7 +23,7 @@ for i, arg in enumerate(sys.argv):
 
 test_ok=True
 #init libgpac
-gpac.init(mem_track)
+gpac.init(mem_track, b"0")
 #set logs
 if logs:
 	gpac.set_logs(logs)
@@ -81,7 +81,7 @@ class MyFilter(gpac.FilterCustom):
 				print('Seek failed')
 				test_ok=False
 			pck.unref()
-			
+
 		return 0
 
 	def on_prop_enum(self, pname, pval):

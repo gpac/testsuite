@@ -13,7 +13,7 @@ except ImportError:
 
 
 #init libgpac in mem-track mode
-gpac.init(1)
+gpac.init(1, b"0")
 
 #set global arguments for test
 gpac.set_args( ["gpacpy", "-for-test", "-no-reassign"] )

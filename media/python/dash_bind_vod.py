@@ -18,7 +18,7 @@ for i, arg in enumerate(sys.argv):
 		logs=arg[6:]
 
 #init libgpac
-gpac.init(mem_track)
+gpac.init(mem_track, b"0")
 #set logs
 if logs:
 	gpac.set_logs(logs)
