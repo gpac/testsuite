@@ -21,3 +21,14 @@ do_hash_test $mydst "frag"
 
 test_end
 fi
+
+test_begin "frags-straf"
+ if [ $test_skip != 1 ] ; then
+
+#fragment a ttml as single doc and don't realign timeline
+mydst=$TEMP_DIR/frag_straf.mp4
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc -i $MEDIA_DIR/auxiliary_files/counter.hvc -o $mydst:frag:straf:strun:fragdur::cmfc:cdur=1:" "frag"
+do_hash_test $mydst "frag"
+
+test_end
+fi
