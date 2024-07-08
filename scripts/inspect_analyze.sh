@@ -44,12 +44,12 @@ test_inspect $MEDIA_DIR/auxiliary_files/count_video.cmp "" 0
 test_inspect $MEDIA_DIR/auxiliary_files/count_english.mp3 "" 0
 test_inspect $MEDIA_DIR/auxiliary_files/enst_video.h264 "" 2
 test_inspect $MEDIA_DIR/auxiliary_files/enst_audio.aac "" 1
-test_inspect $MEDIA_DIR/auxiliary_files/counter.hvc "" 2
+test_inspect $MEDIA_DIR/auxiliary_files/counter.hvc:refs "" 2
 test_inspect $MEDIA_DIR/auxiliary_files/video.av1 "" 1
 test_inspect $EXTERNAL_MEDIA_DIR/qt_prores/prores422.mov ":SID=#PID=11" 0
 test_inspect $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3 "" 1
 test_inspect $MEDIA_DIR/auxiliary_files/enstvid.ivf "" 1
-test_inspect $EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc "" 1
+test_inspect $EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc:refs "" 2
 test_inspect $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas "" 2 "-mha"
 test_inspect $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas:mpha "" 1 "-mpha"
 test_inspect $EXTERNAL_MEDIA_DIR/import/counter_english.mlp "" 0
