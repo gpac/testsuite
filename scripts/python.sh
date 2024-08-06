@@ -10,6 +10,10 @@ elif [ -x "$(command -v Python)" ]; then
 pyth="Python"
 fi
 
+if [ $platform = "Darwin" ]  && [ -x "$(command -v python3.9)" ] ; then
+pyth="python3.9"
+fi
+
 if [ -z $pyth ] ; then
 echo "Python not available!"
 return
