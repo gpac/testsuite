@@ -272,7 +272,7 @@ do_test "$GPAC httpout:port=8080:quit:rdirs=$MEDIA_DIR:cert=$MEDIA_DIR/tls/local
 sleep .5
 
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i https://127.0.0.1:8080/auxiliary_files/enst_audio.aac --cache=disk inspect:allp:deep:test=network:interleave=false:log=$myinspect$3 -graph -stats" "client-inspect"
+do_test "$GPAC -i https://127.0.0.1:8080/auxiliary_files/enst_audio.aac -broken-cert --cache=disk inspect:allp:deep:test=network:interleave=false:log=$myinspect$3 -graph -stats" "client-inspect"
 do_hash_test $myinspect "inspect"
 test_end
 
