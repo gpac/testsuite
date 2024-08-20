@@ -196,7 +196,7 @@ fi
 
 #test decryption using one of dashif test files
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i https://media.axprod.net/TestVectors/v7-MultiDRM-SingleKey/Manifest_1080p_ClearKey.mpd dashin:debug_as=0:algo=none:start_with=min_q cdcrypt @ inspect:deep:dur=2:test=network:log=$myinspect -graph" "decrypt"
+do_test "$GPAC -i https://media.axprod.net/TestVectors/v7-MultiDRM-SingleKey/Manifest_1080p_ClearKey.mpd -broken-cert dashin:debug_as=0:algo=none:start_with=min_q cdcrypt @ inspect:deep:dur=2:test=network:log=$myinspect -graph" "decrypt"
 do_hash_test $myinspect "decrypt"
 
 
