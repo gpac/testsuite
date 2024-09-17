@@ -41,7 +41,7 @@ myinspect=$TEMP_DIR/inspect.txt
 do_test "$GPAC -i $proto://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect  -logs=route@info" "receive" &
 
 #start sender, reading from dash session
-do_test "$GPAC -i $TEMP_DIR/live.$2 dashin:forward=file @ -o $proto://225.1.1.0:6000/" "send"
+do_test "$GPAC -i $TEMP_DIR/live.$2 dashin:forward=file @ -o $proto://225.1.1.0:6000/$4" "send"
 
 test_end
 }
@@ -213,8 +213,8 @@ for i in $protos ; do
 	proto=$i
 
 	route_dashing
-	route_dash_filemode "" "mpd" ""
-	route_dash_filemode "-hls" "m3u8" ":muxtype=ts"
+	route_dash_filemode "" "mpd" "" ""
+	route_dash_filemode "-hls" "m3u8" ":muxtype=ts" ""
 	route_dash_ll
 	route_dash_ll_filemode
 	route_dash_ll_filemode_push
@@ -224,4 +224,8 @@ for i in $protos ; do
 done
 
 
+
+proto=mabr
+route_dash_filemode "-inband" "mpd" "" ":use_inband"
+route_dash_filemode "-inband-hls" "m3u8" "" ":use_inband"
 
