@@ -73,8 +73,8 @@ dash_test "smooth" "https://demo.unified-streaming.com/k8s/live/stable/live.isml
 
 #VOD test seq without tfxd
 #DEAD LINK - dash_test "smooth-no-tfxd" "https://test.playready.microsoft.com/smoothstreaming/SSWSS720H264/SuperSpeedway_720.ism/manifest $h2_opts" 1
-dash_test "smooth-no-tfxd" "http://profficialsite.origin.mediaservices.windows.net/c51358ea-9a5e-4322-8951-897d640fdfd7/tearsofsteel_4k.ism/manifest $h2_opts" 1
-
+#DEAD LINK - dash_test "smooth-no-tfxd" "http://profficialsite.origin.mediaservices.windows.net/c51358ea-9a5e-4322-8951-897d640fdfd7/tearsofsteel_4k.ism/manifest $h2_opts" 1
+dash_test "smooth-no-tfxd" "https://demo.unified-streaming.com/k8s/features/stable/usp-s3-storage/tears-of-steel/tears-of-steel.ism/Manifest $h2_opts" 1
 
 #test no bitstream switching mode (reload of init segment at switch), forcing quality switch at each seg
 dash_test "NBS" "http://download.tsi.telecom-paristech.fr/gpac/DASH_CONFORMANCE/TelecomParisTech/mp4-live-1s/mp4-live-1s-mpd-V-NBS.mpd:gpac:auto_switch=1" 1
