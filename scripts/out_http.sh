@@ -226,7 +226,11 @@ do_test "$MP4BOX -run-for 3000 -dash-live 1000 -subdur 1000 -profile live $TEMP_
 
 wait
 
+if [ $5 = 1 ] ; then
+do_hash_test $TEMP_DIR/source_dash3.m4s.1 "dash-seg3"
+else
 do_hash_test $TEMP_DIR/source_dash3.m4s "dash-seg3"
+fi
 
 if [ -f $TEMP_DIR/source_dash1.m4s ] ; then
  result="HTTP DELETE failed on segment 1"
@@ -388,9 +392,10 @@ test_http_byteranges
 test_http_dashraw
 
 #test live dash output to http with PUT and DELETE
-test_http_dashpush_live "" "mpd" "" ""
-test_http_dashpush_live "-hls" "m3u8" "" ""
-test_http_dashpush_live "-llhls" "m3u8" ":llhls=sf:cdur=0.5" ""
+test_http_dashpush_live "" "mpd" "" "" 0
+test_http_dashpush_live "-hls" "m3u8" "" "" 0
+test_http_dashpush_live "-llhls" "m3u8" ":llhls=sf:cdur=0.5" "" 0
+test_http_dashpush_live "-llhls-no-ct" "m3u8" ":llhls=sf:cdur=0.5:cte=0" "" 1
 
 #test live dash output to http with PUT and byte range update for SIDX
 test_http_dashpush_vod
@@ -406,9 +411,9 @@ test_http_server_mem "hls" "m3u8" ""
 test_http_server_mem "hls-ll-sf" "m3u8" ":llhls=sf:cdur=0.5"
 
 #test dash push with blocking IO
-test_http_dashpush_live "-blockio-c" "mpd" "" ":blockio"
-test_http_dashpush_live "-blockio-s" "mpd" ":blockio" ""
-test_http_dashpush_live "-blockio-cs" "mpd" ":blockio" ":blockio"
+test_http_dashpush_live "-blockio-c" "mpd" "" ":blockio" 0
+test_http_dashpush_live "-blockio-s" "mpd" ":blockio" "" 0
+test_http_dashpush_live "-blockio-cs" "mpd" ":blockio" ":blockio" 0
 
 test_http_auth "" "gpac:gpac@"
 
