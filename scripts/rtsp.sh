@@ -159,3 +159,31 @@ test_end
 
 test_rtsps_server "tls" ":port=8554" "rtsps://127.0.0.1:8554"
 test_rtsps_server "https-tunnel" ":port=8443" "rtsph://127.0.0.1:8443"
+
+
+rtsp_test_m2ts ()
+{
+
+test_begin "rtsp-server-m2ts"
+if [ $test_skip  = 1 ] ; then
+return
+fi
+
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac -o $TEMP_DIR/src.ts" "tsmux"
+
+#start rtsp server
+do_test "$GPAC -runfor=2000 rtspout:port=$PORT:runfor=1500:mounts=$TEMP_DIR/ -logs=rtp@info" "server" &
+
+sleep 0.5
+
+myinspect=$TEMP_DIR/inspect.txt
+
+do_test "$GPAC -i rtsp://127.0.0.1:$PORT/src.ts inspect:deep:allp:dur=1/1:log=$myinspect $4  -logs=rtp@info" "dump"
+
+wait
+do_hash_test $myinspect "dump-inspect"
+
+test_end
+}
+
+rtsp_test_m2ts
