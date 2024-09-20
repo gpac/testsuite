@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<NHNTStream version="1.0" timeScale="90000" mediaType="subt" mediaSubType="sc35" mime_type="text/plain" text_encoding="utf-8">
+
+ <NHNTSample DTS="100000" isRAP="yes">
+  <EventMessageInstanceBox Version="0" Flags="0" presentation_time_delta="165000" event_duration="135000" event_id="0" scheme_id_uri="urn:scte:scte35:2013:bin" value="">
+  <SpliceInfoSection xmlns="http://www.scte.org/schemas/35" sapType="3" protocolVersion="0" ptsAdjustment="0" tier="4095">
+   <TimeSignal>
+    <SpliceTime ptsTime="329696250"/>
+   </TimeSignal>
+   <SegmentationDescriptor segmentationEventId="3658" segmentationEventCancelIndicator="0" segmentationEventIdComplianceIndicator="1" programSegmentationFlag="1" segmentationDurationFlag="1" deliveryNotRestrictedFlag="1" segmentationDuration="135000" segmentationTypeId="52" segmentNum="0" segmentsExpected="0" subSegmentNum="0" subSegmentsExpected="0">
+   </SegmentationDescriptor>
+  </SpliceInfoSection>
+  </EventMessageInstanceBox>
+ </NHNTSample>
+
+ <NHNTSample DTS="400000" isRAP="yes">
+  <EventMessageEmptyBox Size="8" Type="emeb" Specification="EventMessageTrack" Container="file" />
+  <EventMessageInstanceBox Size="107" Type="emib" Version="0" Flags="0" Specification="EventMessageTrack" Container="file" presentation_time_delta="165000" event_duration="135000" event_id="0" scheme_id_uri="urn:scte:scte35:2013:bin" value="" message_data="0xFC302E00000000000000FFF00506FE13A6C3FA001802164355454900000E4A7FFF0000020F5800003400000000AD61F21C" />
+ </NHNTSample>
+
+<NHNTSample DTS="500000" isRAP="yes" >
+<EventMessageInstanceBox Size="107" Type="emib" Version="0" Flags="0" Specification="EventMessageTrack" Container="file" presentation_time_delta="2" event_duration="3" event_id="4" scheme_id_uri="urn:scte:scte35:2013:bin" value="" >
+  <SpliceInfoSection xmlns="http://www.scte.org/schemas/35" sapType="3" protocolVersion="0" ptsAdjustment="5" tier="4095">
+   <TimeSignal>
+    <SpliceTime ptsTime="6"/>
+   </TimeSignal>
+   <SegmentationDescriptor segmentationEventId="7" segmentationEventCancelIndicator="1" segmentationEventIdComplianceIndicator="1" programSegmentationFlag="1" segmentationDurationFlag="1" deliveryNotRestrictedFlag="1" segmentationDuration="8" segmentationTypeId="52" segmentNum="0" segmentsExpected="0" subSegmentNum="0" subSegmentsExpected="0">
+   </SegmentationDescriptor>
+  </SpliceInfoSection>
+</EventMessageInstanceBox>
+</NHNTSample>
+ 
+</NHNTStream>
