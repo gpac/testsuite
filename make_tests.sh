@@ -512,8 +512,8 @@ fi
 echo ""
 
 #reassign our default programs
-MP4BOX="MP4Box -noprog -for-test -old-arch $base_args"
-GPAC="gpac $base_args -noprog -for-test -old-arch -no-reassign"
+MP4BOX="MP4Box -noprog -for-test $base_args"
+GPAC="gpac $base_args -noprog -for-test -no-reassign"
 
 if [ "$gpac_profile" != "" ] ; then
 log $L_INF "GPAC profile: $gpac_profile"
