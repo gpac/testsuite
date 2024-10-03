@@ -704,11 +704,21 @@ mark_test_error ()
 }
 
 test_end_ts=0
+
+function test_force_end() {
+  if [ $# -gt 0 ] ; then
+    log $L_ERR "> in test $TEST_NAME in script $current_script line $BASH_LINENO"
+    log $L_ERR "	@test_force_end takes no argument - wrong call"
+  fi
+  kill -9 $(jobs -p) > /dev/null 2>&1
+  test_end
+}
+
 #ends test - gather all logs/stats produced and generate report
 test_end ()
 {
  #wait for all sub-tests to complete (some may use subshells)
- wait
+ wait > /dev/null 2>&1
 
  test_end_ts=`$GNU_DATE +%s%N`
  test_runtime=$((test_end_ts-test_start_ts))
