@@ -240,6 +240,28 @@ test_end
 }
 
 
+test_http_dash_llhls_no_ct()
+{
+test_begin "http$TESTSUF-dash-llhls-noct"
+if [ $test_skip = 1 ] ; then
+ return
+fi
+
+do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR -i $MEDIA_DIR/auxiliary_files/counter.hvc -o http://localhost:8080/live.m3u8:gpac:segdur=4:cdur=1:profile=live:dmode=dynamic:rdirs=$TEMP_DIR:llhls=sf:cte=0:tsb=1"
+
+do_hash_test $TEMP_DIR/counter_dash3.m4s.1 "dash-seg3-part1"
+do_hash_test $TEMP_DIR/counter_dash3.m4s "dash-seg3"
+if [ -f $TEMP_DIR/counter_dash1.m4s ] ; then
+ result="HTTP DELETE failed on segment 1"
+fi
+
+if [ -f $TEMP_DIR/counter_dash1.m4s.1 ] ; then
+ result="HTTP DELETE failed on segment 1 part 1"
+fi
+
+test_end
+}
+
 test_http_dashpush_vod()
 {
 test_begin "http$TESTSUF-dashpush-vod"
@@ -396,6 +418,7 @@ test_http_dashpush_live "" "mpd" "" "" 0
 test_http_dashpush_live "-hls" "m3u8" "" "" 0
 test_http_dashpush_live "-llhls" "m3u8" ":llhls=sf:cdur=0.5" "" 0
 test_http_dashpush_live "-llhls-no-ct" "m3u8" ":llhls=sf:cdur=0.5:cte=0" "" 1
+test_http_dash_llhls_no_ct
 
 #test live dash output to http with PUT and byte range update for SIDX
 test_http_dashpush_vod
