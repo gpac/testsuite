@@ -75,10 +75,10 @@ filter.configure_pid = function(pid)
 
 		if (this.fwd==true) {
 			pid.opid.set_prop(prop.name, prop.value);
-			//for coverage
-			pid.opid.ignore_blocking(false);
 		}
 	}
+		//for coverage
+		pid.ignore_blocking(false);
 
 	let prop = pid.get_prop("CodecID");
 	print(GF_LOG_INFO, "Parent filter is " + pid.filter_name);
