@@ -383,12 +383,7 @@ fi
 log $L_INF "Checking test suite config"
 
 if [ $generate_hash = 0 ] ; then
- if [ ! "$(ls -A $HASH_DIR)" ]; then
-  disable_hash=1
-  log $L_WAR "- Reference hashes unavailable - you may sync them using -sync-hash  - skipping hash tests"
-  else
-  log $L_INF "- Reference hashes available - enabling hash tests"
- fi
+  log $L_INF "- Enabling hash tests"
 fi
 
 if [ ! -e $EXTERNAL_MEDIA_DIR ] ; then
@@ -496,7 +491,7 @@ res=`MP4Box -mem-track -h 2>&1 | grep "WARNING"`
 if [ -n "$res" ]; then
   log $L_WAR "- GPAC not compiled with memory tracking"
 else
- log $L_INF "- Enabling memory-tracking"
+ log $L_INF "- Enabling memory tracking"
  if [ $track_stack = 1 ]; then
   base_args="$base_args -mem-track-stack"
   log_after_fail=1
@@ -505,15 +500,23 @@ else
  fi
 fi
 
+#set check-props by default if supported
+has_props=`gpac -hh core | grep check-props`
+if [ "$has_props" != "" ] ; then
+  base_args="$base_args -check-props"
+  log $L_INF "- Enabling property checking"
+fi
+
 fi
 #end check_only
 
-
 echo ""
+
 
 #reassign our default programs
 MP4BOX="MP4Box -noprog -for-test -old-arch $base_args"
-GPAC="gpac $base_args -noprog -for-test -old-arch -no-reassign"
+GPAC="gpac $base_args -noprog -for-test -old-arch -no-reassign "
+
 
 if [ "$gpac_profile" != "" ] ; then
 log $L_INF "GPAC profile: $gpac_profile"

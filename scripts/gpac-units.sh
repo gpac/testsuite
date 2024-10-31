@@ -21,6 +21,46 @@ single_test "$cmd -threads=4 -sched=lock" "$name-locksched"
 
 }
 
+prop_test()
+{
+test_begin "gpac-prop-test"
+if [ $test_skip = 1 ] ; then
+ return
+fi
+#check all property definitions are correct
+props=`gpac -h props.check`
+if [ "${props}" != "" ] ; then
+result="invalid properties"
+test_end
+return
+fi
+
+#check all PID properties are correct
+pid_props=`grep GF_PROP_PID_ ../include/gpac/filters.h | grep = | sed 's/.*(//' | sed "s/[ ',) ]//g"`
+for p in $pid_props ; do
+res=`gpac -h props.$p`
+if [ "$res" != "" ] ; then
+result="$res"
+test_end
+return
+fi
+done
+
+#check all Packet properties are correct
+pck_props=`grep GF_PROP_PCK_ ../include/gpac/filters.h | grep = | sed 's/.*(//' | sed "s/[ ',) ]//g"`
+for p in $pck_props ; do
+res=`gpac -h props.$p`
+if [ "$res" != "" ] ; then
+result="$res"
+test_end
+return
+fi
+done
+
+test_end
+}
+
+prop_test
 
 #coverage
 $GPAC 2> /dev/null
