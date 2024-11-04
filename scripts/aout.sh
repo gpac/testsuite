@@ -51,7 +51,7 @@ aout_test "pulseaudio" 0
 
 hasjd=`which jackd`
 
-if [ -n "hasjd" ] ; then
+if [ -n "$hasjd" ] ; then
 aout_test "jack" 1
 fi
 
