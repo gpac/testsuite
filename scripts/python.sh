@@ -57,11 +57,9 @@ fi
 
 fi
 
-if [ $keep_temp_dir != 1 ] ; then
- rm $testfile 2> /dev/null
-fi
+mv $testfile $TEMP_DIR/
 
- test_end
+test_end
 }
 
 
@@ -75,7 +73,7 @@ if [[ $(uname -s) == "CYGWIN_NT"* ]] && [ -x "$(command -v cygpath)" ]; then
 fi
 cd $cur_path
 
-#test all bifs
+#test all python
 for i in $MEDIA_DIR/python/*.py ; do
 py_test $i
 done
