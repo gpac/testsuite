@@ -129,7 +129,8 @@ test_decoder "mjp2-ff" $EXTERNAL_MEDIA_DIR/import/speedway.mj2 "test.yuv" "-blac
 fi
 
 test_decoder "ac3-a52" $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3 "test.pcm" "-blacklist=ffdec" 1
-test_decoder "ac3-ff" $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3 "test.pcm" "-blacklist=a52dec" 0
+#ffdec ac3 hashing differs among platforms
+test_decoder "ac3-ff" $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3 "test.pcm" "-blacklist=a52dec" 1
 
 test_decoder "vorbis" $EXTERNAL_MEDIA_DIR/import/dead_ogg.ogg "test.pcm" "-blacklist=ffdec" 0
 

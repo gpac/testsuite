@@ -214,12 +214,19 @@ test_end
 
 test_begin "gpac-opts-file"
 if [ $test_skip != 1 ] ; then
-optsfile1=$TEMP_DIR/opts1.txt
+
+#opts are created in current folder to bypass a weird bug on some msys builds where :./ is translated in ;.\
+
+optsfile1=opts1.txt
 echo "#ServiceID=20" > $optsfile1
-optsfile2=$TEMP_DIR/opts2.txt
+optsfile2=opts2.txt
 echo "log=$TEMP_DIR/insp.txt" > $optsfile2
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/logo.jpg:$optsfile1 inspect:$optsfile2" "gpac-exec"
 do_hash_test $TEMP_DIR/insp.txt  "gpac-inspect"
+
+mv $optsfile1 $TEMP_DIR
+mv $optsfile2 $TEMP_DIR
+
 fi
 test_end
 
