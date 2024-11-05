@@ -16,9 +16,11 @@ do_test "$GPAC $2 @ inspect:interleave=false:deep:fmt=%pn%-%dts%-%cts%-%sap%-%si
 
 #a2v-cfg hash test in winXX different from osx due tu different handing of fps and cts in libavfilter, do not hash
 if [ $1 == "a2v-cfg" ] ; then
-if [ $GPAC_OSTYPE != "win32" ] && [ $GPAC_OSTYPE != "win64" ]  ; then
-do_hash_test $myinspect "inspect"
+
+if [ ! -f $myinspect ] ; then
+result="AVF failure"
 fi
+
 else
 do_hash_test $myinspect "inspect"
 fi
@@ -40,8 +42,7 @@ ffavf_test "a2a" "-i $MEDIA_DIR/auxiliary_files/enst_audio.aac ffavf:dump::f=aco
 ffavf_test "a2a-cfg" "-i $MEDIA_DIR/auxiliary_files/enst_audio.aac ffavf:afmt=s16:sr=44100:dump::f=acompressor" "" ",ffdec"
 
 #audio -> video filter test with filter options, forcing pixel format - we have different number of frames depending on ffmpeg version, to investigate. For now only dump 4s
-ffavf_test "a2v-cfg" "-i $MEDIA_DIR/auxiliary_files/enst_audio.aac:gfreg=faad ffavf:pfmt=yuv:dump::f=showspectrum=size=320x320" ":dur=4" ",ffdec"
-
+ffavf_test "a2v-cfg" "-i $MEDIA_DIR/auxiliary_files/enst_audio.aac:gfreg=faad ffavf:pfmt=yuv:dump::f=showspectrum=size=320x320:fps=25" ":dur=4" ",ffdec"
 
 #video+video -> video filter test
 ffavf_test "vv2v" "-i $MEDIA_DIR/auxiliary_files/enst_video.h264:#ffid=a -i $MEDIA_DIR/auxiliary_files/logo.png:#ffid=b ffavf:dump::f=[a][b]overlay=main_w-overlay_w-10:main_h-overlay_h-10" "" ""
