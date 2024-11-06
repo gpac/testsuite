@@ -52,18 +52,18 @@ single_test "$GPAC -h ffavin" "ffavin-h"
 
 if [ -n "$config_osx" ] ; then
 ffavin_test "screencap" "video://:gfreg=ffavin:fmt=avfoundation:dev=screen0:probes=0"
-ffavin_test "screencap-all" "video://:gfreg=ffavin:fmt=avfoundation:dev=screen0:copy:sclock"
+ffavin_test "screencap-all" "video://:gfreg=ffavin:fmt=avfoundation:dev=screen0:copy=V:sclock"
 fi
 
 if [ -n "$config_linux" ] ; then
 ffavin_test "screencap" "video://:gfreg=ffavin:fmt=x11grab:dev=:0.0:probes=0"
-ffavin_test "screencap-all" "video://:gfreg=ffavin:fmt=x11grab:dev=:0.0:copy:sclock"
+ffavin_test "screencap-all" "video://:gfreg=ffavin:fmt=x11grab:dev=:0.0:copy=V:sclock"
 fi
 
 #todo
 #if [ -z "$config_win" ] ; then
 #ffavin_test "screencap" "video://:gfreg=ffavin:fmt=dshow:dev=screen-capture-recorder:probes=0"
-#ffavin_test "screencap-all" "video://:gfreg=ffavin:fmt=dshow:dev=screen-capture-recorder:copy:sclock"
+#ffavin_test "screencap-all" "video://:gfreg=ffavin:fmt=dshow:dev=screen-capture-recorder:copy=V:sclock"
 #fi
 
 

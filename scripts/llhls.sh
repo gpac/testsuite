@@ -52,7 +52,7 @@ do_test "$GPAC $h2_args -i $TEMP_DIR/live_brsf_IF.m3u8 inspect:deep:dur=1:log=$m
 do_hash_test $myinspect "inspect-brsf-sf"
 
 
-do_test "$GPAC $h2_args -i $source:#ClampDur=4 -o $TEMP_DIR/live_br.m3u8:segdur=2:cdur=0.2:llhls=br:seg_sync" "gen-br-sync"
+do_test "$GPAC $h2_args -i $source:#ClampDur=4 -o $TEMP_DIR/live_br.m3u8:segdur=2:cdur=0.2:llhls=br:seg_sync=yes" "gen-br-sync"
 do_hash_test $TEMP_DIR/live_br_1.m3u8 "manifest-br-sync"
 
 test_end

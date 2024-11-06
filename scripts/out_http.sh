@@ -275,8 +275,8 @@ do_test "$GPAC  -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:wdir=$TEMP_DIR -lo
 #sleep half a sec to make sure the server is up and running
 sleep .5
 
-#we are in test mode which triggers vodcache=true (no sidx patching), force vodcache=false to test on the fly patching of sidx
-do_test "$MP4BOX -dash 1000 -profile onDemand $TEMP_DIR/source.mp4 -out http://127.0.0.1:8080/live.mpd:hmode=push:vodcache=false -logs=http@debug" "dash_push"
+#we are in test mode which triggers vodcache=insert (no sidx patching), force vodcache=false to test on the fly patching of sidx
+do_test "$MP4BOX -dash 1000 -profile onDemand $TEMP_DIR/source.mp4 -out http://127.0.0.1:8080/live.mpd:hmode=push:vodcache=on -logs=http@debug" "dash_push"
 
 wait
 
