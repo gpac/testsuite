@@ -45,7 +45,7 @@ sleep 1
 
 myinspect=$TEMP_DIR/inspect.txt
 
-do_test "$GPAC -i $2 inspect:deep:allp:dur=1/1:interleave=off:log=$myinspect $4 -stats -graph" "dump"
+do_test "$GPAC -i $2 inspect:deep:allp:dur=1/1:interleave=false:log=$myinspect $4 -stats -graph" "dump"
 
 wait
 

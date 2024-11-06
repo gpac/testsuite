@@ -803,6 +803,22 @@ shopt -s nullglob
   rm -f $i > /dev/null
  done
 
+ # list all logs files
+ for i in $LOGS_DIR/$TEST_NAME-logs-*.txt; do
+  wa=`grep "Wrong argument value" $i`
+  #exception for this test where we test bad formatting for coverage
+  if [ "$wa" != "" ] && [ "$TEST_NAME" != "gpac-filter-dump_prop" ] ; then
+    result="$result CMDLINE_INVALID"
+    if [ $test_ok != 0 ] ; then
+      test_ok=0
+      test_fail=$((test_fail + 1))
+    fi
+  fi
+  cat $i >> $LOGS
+ done
+ rm -f $LOGS_DIR/$TEST_NAME-logs-*.txt > /dev/null
+
+
  #gather all hashes for this test
  for i in $TEMP_DIR/$TEST_NAME-stathash-*.sh ; do
   if [ -f $i ] ; then
@@ -865,12 +881,6 @@ shopt -s nullglob
  echo "NB_HASH_SUBTESTS=$nb_test_hash" >> $test_stats
  echo "NB_HASH_SUBTESTS_MISSING=$nb_hash_missing" >> $test_stats
  echo "NB_HASH_SUBTESTS_FAIL=$nb_hash_fail" >> $test_stats
-
- # list all logs files
- for i in $LOGS_DIR/$TEST_NAME-logs-*.txt; do
-  cat $i >> $LOGS
- done
- rm -f $LOGS_DIR/$TEST_NAME-logs-*.txt > /dev/null
 
  echo "NB_SUBTESTS=$nb_subtests" >> $test_stats
 

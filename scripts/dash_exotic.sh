@@ -53,14 +53,14 @@ dash_exotic_test "ogg-main" "$EXTERNAL_MEDIA_DIR/import/dead_ogg.ogg -profile ma
 
 test_begin "dash_exotic_ogg-sync"
 if [ $test_skip != 1 ] ; then
-do_test "$GPAC $h2_args -i $EXTERNAL_MEDIA_DIR/import/dead_ogg.ogg -o $TEMP_DIR/live_br.m3u8:segdur=2:cdur=0.2:llhls=br:seg_sync:muxtype=ogg" "gen-br-sync"
+do_test "$GPAC $h2_args -i $EXTERNAL_MEDIA_DIR/import/dead_ogg.ogg -o $TEMP_DIR/live_br.m3u8:segdur=2:cdur=0.2:llhls=br:seg_sync=yes:muxtype=ogg" "gen-br-sync"
 do_hash_test $TEMP_DIR/live_br_1.m3u8 "manifest-br-sync"
 fi
 test_end
 
 test_begin "dash_exotic_ts-sync"
 if [ $test_skip != 1 ] ; then
-do_test "$GPAC $h2_args -i $MEDIA_DIR/auxiliary_files/counter.hvc -o $TEMP_DIR/live_br.m3u8:segdur=2:cdur=0.2:llhls=br:seg_sync:muxtype=ts" "gen-br-sync"
+do_test "$GPAC $h2_args -i $MEDIA_DIR/auxiliary_files/counter.hvc -o $TEMP_DIR/live_br.m3u8:segdur=2:cdur=0.2:llhls=br:seg_sync=yes:muxtype=ts" "gen-br-sync"
 do_hash_test $TEMP_DIR/live_br_1.m3u8 "manifest-br-sync"
 fi
 test_end

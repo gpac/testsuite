@@ -40,7 +40,7 @@ done
 
 dash_test "abort" "$source:gpac:abort"  1
 dash_test "auto" "$source:gpac:auto_switch=1"  1
-dash_test "bmin" "$source:gpac:use_bmin"  1
+dash_test "bmin" "$source:gpac:use_bmin=mpd"  1
 dash_test "xlink" "http://dash.akamaized.net/dash264/TestCases/5b/nomor/6.mpd" 1
 
 start=255
