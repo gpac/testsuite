@@ -807,7 +807,7 @@ shopt -s nullglob
  for i in $LOGS_DIR/$TEST_NAME-logs-*.txt; do
   wa=`grep "Wrong argument value" $i`
   #exception for this test where we test bad formatting for coverage
-  if [ "$wa" != "" ] && [ "$TEST_NAME" != "gpac-filter-dump_prop" ] ; then
+  if [ "$wa" != "" ] && [ "$TEST_NAME" != "gpac-filter-dump_props" ] ; then
     result="$result CMDLINE_INVALID"
     if [ $test_ok != 0 ] ; then
       test_ok=0
