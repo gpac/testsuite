@@ -24,14 +24,20 @@ if [ $test_skip = 1 ] ; then
 fi
 
 do_test "$GPAC $h2_args -i $source:#ClampDur=4 -o $TEMP_DIR/live_br.m3u8:segdur=2:cdur=0.2:dmode=dynamic:llhls=br" "gen-br"
+#linux 32 bits gives slightly different float values for PART-HOLD-BACK and PART-TARGET ...
+if [ $GPAC_OSTYPE != "lin32" ] ; then
 do_hash_test $TEMP_DIR/live_br_1.m3u8 "manifest-br"
+fi
 
 myinspect=$TEMP_DIR/inspect-br.txt
 do_test "$GPAC $h2_args -i $TEMP_DIR/live_br.m3u8 inspect:deep:dur=1:log=$myinspect" "inspect-br"
 do_hash_test $myinspect "inspect-br"
 
 do_test "$GPAC $h2_args -i $source:#ClampDur=4 -o $TEMP_DIR/live_sf.m3u8:segdur=2:cdur=0.2:dmode=dynamic:llhls=sf" "gen-sf"
+
+if [ $GPAC_OSTYPE != "lin32" ] ; then
 do_hash_test $TEMP_DIR/live_sf_1.m3u8 "manifest-sf"
+fi
 
 myinspect=$TEMP_DIR/inspect-sf.txt
 do_test "$GPAC $h2_args -i $TEMP_DIR/live_br.m3u8 inspect:deep:dur=1:log=$myinspect" "inspect-sf"
@@ -39,9 +45,13 @@ do_hash_test $myinspect "inspect-sf"
 
 do_test "$GPAC $h2_args -i $source:#ClampDur=4 -o $TEMP_DIR/live_brsf.m3u8:segdur=2:cdur=0.2:dmode=dynamic:llhls=brsf" "gen-brsf"
 do_hash_test $TEMP_DIR/live_brsf.m3u8 "manifest1-brsf"
+if [ $GPAC_OSTYPE != "lin32" ] ; then
 do_hash_test $TEMP_DIR/live_brsf_1.m3u8 "chilpl1-brsf"
+fi
 do_hash_test $TEMP_DIR/live_brsf_IF.m3u8 "manifest2-brsf"
+if [ $GPAC_OSTYPE != "lin32" ] ; then
 do_hash_test $TEMP_DIR/live_brsf_1_IF.m3u8 "chilpl2-brsf"
+fi
 
 myinspect=$TEMP_DIR/inspect-brsf-br.txt
 do_test "$GPAC $h2_args -i $TEMP_DIR/live_brsf.m3u8 inspect:deep:dur=1:log=$myinspect" "inspect-brsf-br"
@@ -53,7 +63,10 @@ do_hash_test $myinspect "inspect-brsf-sf"
 
 
 do_test "$GPAC $h2_args -i $source:#ClampDur=4 -o $TEMP_DIR/live_br.m3u8:segdur=2:cdur=0.2:llhls=br:seg_sync=yes" "gen-br-sync"
+#linux 32 bits gives slightly different float values for PART-HOLD-BACK and PART-TARGET ...
+if [ $GPAC_OSTYPE != "lin32" ] ; then
 do_hash_test $TEMP_DIR/live_br_1.m3u8 "manifest-br-sync"
+fi
 
 test_end
 
