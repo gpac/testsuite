@@ -45,7 +45,6 @@ function do_xhr()
 
   print(`headers: ${this.getAllResponseHeaders()}`);
   let h = this.getResponseHeader('Server');
-
  };
 
  if (filter.url) {

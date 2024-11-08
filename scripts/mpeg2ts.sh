@@ -15,7 +15,8 @@ test_end
 test_begin "m2ts-mp4"
 if [ $test_skip != 1 ] ; then
 dstfile="$TEMP_DIR/mux.mp4"
-do_test "$GPAC -i $srcfile -o $dstfile" "mp4mux"
+#we don't set bitrate as 32 bits platforms rounding give slight different results
+do_test "$GPAC -i $srcfile -o $dstfile:btrt=0" "mp4mux"
 do_hash_test "$dstfile" "mp4mux"
 fi
 test_end
@@ -23,7 +24,8 @@ test_end
 test_begin "m2ts-mp4-split"
 if [ $test_skip != 1 ] ; then
 
-do_test "$GPAC -logs=app@debug -i $srcfile -o $TEMP_DIR/prog_\$ServiceID\$.mp4:SID=#ServiceID=" "mp4mux"
+#we don't set bitrate as 32 bits platforms rounding give slight different results
+do_test "$GPAC -logs=app@debug -i $srcfile -o $TEMP_DIR/prog_\$ServiceID\$.mp4:btrt=0:SID=#ServiceID=" "mp4mux"
 
 do_hash_test "$TEMP_DIR/prog_257.mp4" "prog_257"
 do_hash_test "$TEMP_DIR/prog_260.mp4" "prog_260"
