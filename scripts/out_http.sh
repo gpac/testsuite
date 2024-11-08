@@ -72,7 +72,7 @@ if [ $test_skip = 1 ] ; then
  return
 fi
 
-do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac -o http://127.0.0.1:8080/live.aac:gpac:hold" "http-sink" &
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac -o http://127.0.0.1:8080/live.aac:gpac:hold -logs=http@debug" "http-sink" &
 #sleep half a sec to make sure the server is up and running
 sleep .5
 
