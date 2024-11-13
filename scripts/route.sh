@@ -5,7 +5,7 @@ proto="route";
 
 route_dashing ()
 {
-test_begin $proto"_dashing"
+test_begin $proto"_dashing$1"
 if [ $test_skip = 1 ] ; then
 return
 fi
@@ -16,7 +16,7 @@ do_test "$GPAC -i $proto://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect" "
 
 #start sender, dash only 4s in dynamic MPD mode
 src=$MEDIA_DIR/auxiliary_files/counter.hvc
-do_test "$GPAC -i $src:#ClampDur=4 dasher:profile=live:dmode=dynamic @ -o $proto://225.1.1.0:6000/manifest.mpd" "send"
+do_test "$GPAC -i $src:#ClampDur=4 dasher:profile=live:dmode=dynamic$2 @ -o $proto://225.1.1.0:6000/manifest.mpd" "send"
 
 test_end
 }
@@ -212,7 +212,7 @@ protos="route mabr"
 for i in $protos ; do
 	proto=$i
 
-	route_dashing
+	route_dashing "" ""
 	route_dash_filemode "" "mpd" "" ""
 	route_dash_filemode "-hls" "m3u8" ":muxtype=ts" ""
 	route_dash_ll
@@ -228,4 +228,5 @@ done
 proto=mabr
 route_dash_filemode "-inband" "mpd" "" ":use_inband"
 route_dash_filemode "-inband-hls" "m3u8" "" ":use_inband"
+route_dashing "_dual" ":dual:mname=live.m3u8"
 
