@@ -207,7 +207,10 @@ test_begin "gpac-uncache"
 if [ test_skip != 1 ] ; then
 
 do_test "$GPAC -logs=filter@debug:ncl -i http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/regression_tests/auxiliary_files/logo.jpg inspect" "http-get"
-do_test "$GPAC -uncache" "uncache"
+do_test "$GPAC -cache-info" "info"
+do_test "$GPAC -cache-list=0;0" "list"
+do_test "$GPAC -cache-unflat" "uncache"
+do_test "$GPAC -cache-clean" "clean"
 
 fi
 test_end
