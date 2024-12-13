@@ -20,7 +20,7 @@ do_test "$GPAC httpout:port=8080:quit:reqlog:rdirs=$MEDIA_DIR" "http-server" &
 sleep .5
 
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i http://127.0.0.1:8080/auxiliary_files/enst_audio.aac --cache=disk inspect:allp:deep:test=network:interleave=false:log=$myinspect$3 -graph -stats" "client-inspect"
+do_test "$GPAC -i http://127.0.0.1:8080/auxiliary_files/enst_audio.aac --cache=disk -clean-cache inspect:allp:deep:test=network:interleave=false:log=$myinspect$3 -graph -stats" "client-inspect"
 do_hash_test $myinspect "inspect"
 test_end
 
