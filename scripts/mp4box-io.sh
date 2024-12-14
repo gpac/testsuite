@@ -127,6 +127,8 @@ mp4_test ()
   do_hint=0 ;;
  *.amr )
   no_btrt=1 ;;
+ *.iamf )
+  do_hint=0 ;;
  esac
 
  name=$(basename $1)
