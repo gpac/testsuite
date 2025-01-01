@@ -52,6 +52,24 @@ fi
  test_end
 }
 
+vtt_export ()
+{
+ test_begin "vtt-export"
+ if [ $test_skip  = 1 ] ; then
+  return
+ fi
+
+ vtt_file="$MEDIA_DIR/webvtt/empty.vtt"
+ mp4file="$TEMP_DIR/test.mp4"
+ $MP4BOX -add $vtt_file -new $mp4file
+
+ #should export empty vtt file
+ do_test "$MP4BOX -raw 1 $mp4file -out $TEMP_DIR/empty.vtt" "empty"
+ do_hash_test "$TEMP_DIR/empty.vtt" "empty"
+
+ test_end
+}
+
 
 vtt_tests ()
 {
@@ -64,4 +82,5 @@ vtt_tests ()
 }
 
 vtt_tests
+vtt_export
 
