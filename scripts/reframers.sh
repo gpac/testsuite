@@ -109,3 +109,16 @@ do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/raw/raw_3s_48k.pcm reframer:xs=1:xe=2 @ -o
 do_hash_test $file "reframe"
 test_end
 fi
+
+
+#test AVC/HEVC SEI filtering
+test_begin "reframer-sei"
+if [ $test_skip != 1 ] ; then
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264 rfnalu:seis=5 @ -o $TEMP_DIR/dump.h264" "avc-filter"
+do_hash_test $TEMP_DIR/dump.h264 "avc-filter"
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc rfnalu:seis=5 @ -o $TEMP_DIR/dump.hvc" "hevc-filter"
+do_hash_test $TEMP_DIR/dump.hvc "hevc-filter"
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc rfnalu:seis=132 @ -o $TEMP_DIR/dump.hvc" "hevc-filter-2"
+do_hash_test $TEMP_DIR/dump.hvc "hevc-filter-2"
+test_end
+fi
