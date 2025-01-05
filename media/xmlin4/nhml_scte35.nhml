@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<NHNTStream version="1.0" timeScale="90000" mediaType="subt" mediaSubType="sc35" mime_type="text/plain" text_encoding="utf-8">
+<NHNTStream version="1.0" timeScale="90000" mediaType="meta" mediaSubType="sc35" mime_type="text/plain" text_encoding="utf-8">
 
  <NHNTSample DTS="100000" isRAP="yes">
   <EventMessageInstanceBox Version="0" Flags="0" presentation_time_delta="165000" event_duration="135000" event_id="0" scheme_id_uri="urn:scte:scte35:2013:bin" value="">
