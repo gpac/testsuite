@@ -36,3 +36,8 @@ test_bsrw "sar-prores" "$EXTERNAL_MEDIA_DIR/qt_prores/prores422.mov#video" ":sar
 
 test_bsrw "sar-vvc" $EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc ":sar=16/9"
 test_bsrw "nosei-vvc" $EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc ":rmsei"
+
+#test SEI filtering
+test_bsrw "sei-whitelist" $MEDIA_DIR/auxiliary_files/counter.hvc ":seis=5"
+test_bsrw "sei-blacklist" $MEDIA_DIR/auxiliary_files/counter.hvc ":rmsei:seis=5"
+test_bsrw "sei-blacklist-single" $EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc ":rmsei:seis=5"
