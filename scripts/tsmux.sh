@@ -34,7 +34,7 @@ ts_test "latm" "-i $mp4file" ":latm"
 ts_test "rate" "-i $mp4file" ":rate=1m"
 
 ts_test "temi" "-i $mp4file" ":temi=4,http://localhost/"
-#test temi on video pid, timescale 1000, init val 100 forcing 64 bits timestamp, along with an inital PTS of 90k
+#test temi on video pid, timescale 1000, init val 100 forcing 64 bits timestamp, along with an initial PTS of 90k
 ts_test "temi2" "-i $mp4file" ":first_pts=90k:temi=#PV#T1000#I100#L#4"
 
 ts_test "pcr" "-i $mp4file" ":max_pcr=40:pcr_only:pcr_offset=30000:flush_rap"
