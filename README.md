@@ -195,7 +195,7 @@ my_test CMD_LINE2 "Name2" &
 ## Testing regressions with hashes
 
 Tests may perform all the required checks to detect a regression, such as checking generated file info, counting importing samples, etc ... 
-To simplify test writing, the GPAC testing environment provide simple hashing (SHA-1) functions that you can perform on generated files such as MP4 or TS files, logs, XML dumps, ... Using hashes avoid storing such files while allowing generic regression detection. Because of this functionnality, the test suite has a specific mode for generating the hashes, `./make_tests -hash`. Hashes are typically generated only once, upon initial test creation.
+To simplify test writing, the GPAC testing environment provide simple hashing (SHA-1) functions that you can perform on generated files such as MP4 or TS files, logs, XML dumps, ... Using hashes avoid storing such files while allowing generic regression detection. Because of this functionality, the test suite has a specific mode for generating the hashes, `./make_tests -hash`. Hashes are typically generated only once, upon initial test creation.
 The test suite script will mark a test as failed if it uses a missing reference hash.
 - To clean hashes for a single test, use `./make_tests -clean-hash mytest.sh`
 - To generate hashes for a single test, use `./make_tests -hash mytest.sh`

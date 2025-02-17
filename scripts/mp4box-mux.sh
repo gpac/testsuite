@@ -35,5 +35,9 @@ do_test "$MP4BOX -mux $TEMP_DIR/test2.mkv $mp4file" "mp4-mkv"
 
 fi
 
+iamf_mp4file="$TEMP_DIR/test-iamf.mp4"
+do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/video_5s.ivf -add $MEDIA_DIR/auxiliary_files/audio_opus.iamf -new $iamf_mp4file" "add-iamf"
+do_hash_test $iamf_mp4file "add-iamf"
+
 test_end
 
