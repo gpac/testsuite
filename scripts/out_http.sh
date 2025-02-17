@@ -6,6 +6,7 @@
 HTTP_SERVER_RUNFOR=6000
 
 ORIG_GPAC="$GPAC"
+ORIG_MP4BOX="$MP4BOX"
 TESTSUF=""
 
 test_http_server()
@@ -417,14 +418,20 @@ test_http_dashraw
 test_http_dashpush_live "" "mpd" "" "" 0
 test_http_dashpush_live "-hls" "m3u8" "" "" 0
 test_http_dashpush_live "-llhls" "m3u8" ":llhls=sf:cdur=0.5" "" 0
+
+#test no chunk transfer only for http1
+if [ $1 = 0 ] ; then
 test_http_dashpush_live "-llhls-no-ct" "m3u8" ":llhls=sf:cdur=0.5:cte=0" "" 1
 test_http_dash_llhls_no_ct
+fi
 
 #test live dash output to http with PUT and byte range update for SIDX
 test_http_dashpush_vod
 
-#test https server
+#test https server only for http1 and http2 (always on for H3)
+if [ $1 != 2 ] ; then
 test_https_server
+fi
 
 #test http server + push instance + client
 test_http_server_push_pull
@@ -433,35 +440,60 @@ test_http_server_mem "dash" "mpd" ""
 test_http_server_mem "hls" "m3u8" ""
 test_http_server_mem "hls-ll-sf" "m3u8" ":llhls=sf:cdur=0.5"
 
-#test dash push with blocking IO
+#test dash push with blocking IO only for http1 and http2 (always on for H3)
+if [ $1 != 2 ] ; then
 test_http_dashpush_live "-blockio-c" "mpd" "" ":blockio" 0
 test_http_dashpush_live "-blockio-s" "mpd" ":blockio" "" 0
 test_http_dashpush_live "-blockio-cs" "mpd" ":blockio" ":blockio" 0
+fi
 
+#same tests as h1 and h2
+if [ $1 != 2 ] ; then
 test_http_auth "" "gpac:gpac@"
-
 test_http_auth "-none" ""
+fi
 
 }
 
 
-#check if we have nghttp2 support
-has_h2=`$GPAC -hx core 2>/dev/null | grep no-h2`
-if [ -n "$has_h2" ] ; then
+#check if we have H2/h3 support
+has_h2=`$GPAC -h bin 2>/dev/null | grep HAS_HTTP2`
+has_h3=`$GPAC -h bin 2>/dev/null | grep HAS_NGTCP2`
 
-GPAC="$ORIG_GPAC -no-h2"
+h_mode=""
+h2_mode=""
+h3_mode=""
+
+if [ -n "$has_h2" ] ; then
+h_mode="-no-h2"
+fi
+
+if [ -n "$has_h3" ] ; then
+base_mode="$base_mode -h3=no"
+h2_mode="-h3=no"
+h3_mode="-h3=only"
+fi
+
+
+GPAC="$ORIG_GPAC $h_mode"
 TESTSUF=""
 
-do_tests
+do_tests 0
 
-GPAC="$ORIG_GPAC"
+if [ -n "$has_h2" ] ; then
+GPAC="$ORIG_GPAC $h2_mode"
 TESTSUF="2"
 
-do_tests
+do_tests 1
 
+fi
 
-else
+if [ -n "$has_h3" ] ; then
 
-do_tests
+MP4BOX="$ORIG_MP4BOX $h3_mode --cert=$MEDIA_DIR/tls/localhost.crt --pkey=$MEDIA_DIR/tls/localhost.key"
+GPAC="$ORIG_GPAC $h3_mode --cert=$MEDIA_DIR/tls/localhost.crt --pkey=$MEDIA_DIR/tls/localhost.key"
+TESTSUF="3"
+
+do_tests 2
 
 fi
