@@ -4,6 +4,7 @@ PORT=8888
 IP="127.0.0.1:$PORT"
 MCASTIP="234.0.0.1"
 IFCE="127.0.0.1"
+GPAC="$GPAC -broken-cert"
 
 rtsp_test_single ()
 {
@@ -151,7 +152,7 @@ do_test "$GPAC rtspout$2:mounts=$MEDIA_DIR:cert=$MEDIA_DIR/tls/localhost.crt:pke
 sleep .5
 
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i $3/auxiliary_files/enst_audio.aac -broken-cert inspect:allp:deep:dur=1/1:test=network:interleave=false:log=$myinspect -graph -stats" "rtsps-client"
+do_test "$GPAC -i $3/auxiliary_files/enst_audio.aac inspect:allp:deep:dur=1/1:test=network:interleave=false:log=$myinspect -graph -stats" "rtsps-client"
 do_hash_test $myinspect "rtsps-client"
 test_end
 
