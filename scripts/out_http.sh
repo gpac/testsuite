@@ -497,3 +497,5 @@ TESTSUF="3"
 do_tests 2
 
 fi
+
+GPAC="$ORIG_GPAC"
