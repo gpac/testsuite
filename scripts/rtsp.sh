@@ -4,6 +4,7 @@ PORT=8888
 IP="127.0.0.1:$PORT"
 MCASTIP="234.0.0.1"
 IFCE="127.0.0.1"
+ORIG_GPAC="$GPAC"
 GPAC="$GPAC -broken-cert"
 
 rtsp_test_single ()
@@ -188,3 +189,5 @@ test_end
 }
 
 rtsp_test_m2ts
+
+GPAC="$ORIG_GPAC"
