@@ -499,3 +499,4 @@ do_tests 2
 fi
 
 GPAC="$ORIG_GPAC"
+MP4BOX="$ORIG_MP4BOX"
