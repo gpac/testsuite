@@ -41,9 +41,9 @@ ts_test "pcr" "-i $mp4file" ":max_pcr=40:pcr_only:pcr_offset=30000:flush_rap"
 
 ts_test "sdt" "-i $mp4file" ":name=GPACTest:provider=GPAC:sdt_rate=500"
 
-ts_test "srt" "-i $MEDIA_DIR/auxiliary_files/subtitle.srt" ""
+ts_test "srt" "-i $MEDIA_DIR/auxiliary_files/subtitle.srt:sbtt:#M2TSRA=SRT" ""
 
-ts_test "webvtt" "-i $MEDIA_DIR/auxiliary_files/subtitle.srt:webvtt" ""
+ts_test "txt" "-i $MEDIA_DIR/auxiliary_files/subtitle.srt:#M2TSRA=SRT" ""
 
 ts_test "ac3" "-i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3" ""
 
