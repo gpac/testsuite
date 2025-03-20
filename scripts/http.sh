@@ -29,10 +29,10 @@ test_http "mp4-seek" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_su
 
 test_http "aac-simple" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/regression_tests/auxiliary_files/enst_audio.aac --cache=disk" "" 0
 
-#on linux 32 bit we for now disable the aac seek, since the rounding of (start) and indexes in file gives a slightly different cts
-if [ $GPAC_OSTYPE != "lin32" ] ; then
-test_http "aac-seek" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/regression_tests/auxiliary_files/enst_audio.aac --cache=disk" ":dur=2.0:start=2" 0
-fi
+#we don't test seeking of raw formats, as depending on the network speed the raw media indexing will have 0 or more entries at the time the PLAY event is sent
+#so file seeking may be ignored or not, resulting in different results
+
+#test_http "aac-seek" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/regression_tests/auxiliary_files/enst_audio.aac --cache=disk" ":dur=2.0:start=2" 0
 
 # test MP4 with no cache
 test_http "mp4-nocache" "http://download.tsi.telecom-paristech.fr/gpac/gpac_test_suite/mp4/counter_video_360.mp4:gpac:cache=none" "" 0
