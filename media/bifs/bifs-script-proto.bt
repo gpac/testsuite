@@ -120,6 +120,7 @@ PROTO P1 [
     trans -20 0
    }
    P0 {}
+#if 0
    P0 {
     trans 20 0
    }
@@ -147,6 +148,7 @@ PROTO P1 [
    P0 {
     trans 180 0
    }
+#endif
   ]
  }
 }
@@ -189,6 +191,7 @@ OrderedGroup {
      trans 0 20
     }
     P1 {}
+#if 0
     P1 {
      trans 0 -20
     }
@@ -216,6 +219,7 @@ OrderedGroup {
     P1 {
      trans 0 -180
     }
+#endif
    ]
   }
  ]
