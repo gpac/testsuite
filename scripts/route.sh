@@ -1,7 +1,20 @@
 #!/bin/sh
-inspectfilter="inspect:allp:deep:interleave=false:test=noprop:fmt=%dts%-%cts%-%sap%%lf%"
+#
+# Notes
+#
+# As mcast may be quite unreliable on VMs, most tests should be done using pcap recording and playback. This also allows hashing received data
+#
 
-proto="route";
+
+proto="route"
+
+#what we dump
+inspectfilter="inspect:allp:deep:interleave=false:test=noprop:fmt=%dts%-%cts%-%sap%%lf%:hdr=0"
+
+#amount of source we dash
+CLAMP=":#ClampDur=2"
+
+
 
 route_dashing ()
 {
@@ -10,18 +23,17 @@ if [ $test_skip = 1 ] ; then
 return
 fi
 
-#start receiver
-myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i $proto://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect" "receive" &
+#sender
+src=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_main_320x180_128kbps.264
+do_test "$GPAC -i $src$CLAMP dasher:profile=live:dmode=dynamic$2 @ -o $proto://225.1.1.0:6000/manifest.mpd -netcap=dst=$TEMP_DIR/dump.pcap" "send"
 
-#start sender, dash only 4s in dynamic MPD mode
-src=$MEDIA_DIR/auxiliary_files/counter.hvc
-do_test "$GPAC -i $src:#ClampDur=4 dasher:profile=live:dmode=dynamic$2 @ -o $proto://225.1.1.0:6000/manifest.mpd" "send"
+#receiver
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i $proto://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect -netcap=src=$TEMP_DIR/dump.pcap" "receive"
+do_hash_test $myinspect "receive"
 
 test_end
 }
-
-
 
 
 route_dash_filemode ()
@@ -33,15 +45,17 @@ return
 fi
 
 #create dash
-src=$MEDIA_DIR/auxiliary_files/counter.hvc
-do_test "$GPAC -i $src:#ClampDur=4 -o $TEMP_DIR/live.$2$3" "dash"
+src=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_main_320x180_128kbps.264
+do_test "$GPAC -i $src$CLAMP -o $TEMP_DIR/live.$2$3" "dash"
 
-#start receiver
+#sender, reading from dash session
+do_test "$GPAC -i $TEMP_DIR/live.$2 dashin:forward=file @ -o $proto://225.1.1.0:6000/$4 -netcap=dst=$TEMP_DIR/dump.pcap" "send"
+
+#receiver
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i $proto://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect  -logs=route@info" "receive" &
+do_test "$GPAC -i $proto://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect -netcap=src=$TEMP_DIR/dump.pcap -logs=route@info" "receive"
+do_hash_test $myinspect "receive"
 
-#start sender, reading from dash session
-do_test "$GPAC -i $TEMP_DIR/live.$2 dashin:forward=file @ -o $proto://225.1.1.0:6000/$4" "send"
 
 test_end
 }
@@ -56,13 +70,14 @@ if [ $test_skip = 1 ] ; then
 return
 fi
 
-#start receiver
-myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i $proto://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect -logs=dash@info" "receive" &
+#sender
+src=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_main_320x180_128kbps.264
+do_test "$GPAC -i $src$CLAMP dasher:profile=live:dmode=dynamic --cdur=0.2 --asto=0.8 @ -o $proto://225.1.1.0:6000/manifest.mpd:llmode -netcap=dst=$TEMP_DIR/dump.pcap" "send"
 
-#start sender, dash only 4s in dynamic MPD mode
-src=$MEDIA_DIR/auxiliary_files/counter.hvc
-do_test "$GPAC -i $src:#ClampDur=4 dasher:profile=live:dmode=dynamic --cdur=0.2 --asto=0.8 @ -o $proto://225.1.1.0:6000/manifest.mpd:llmode -logs=route@debug" "send"
+#receiver
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i $proto://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect -logs=dash@info -netcap=src=$TEMP_DIR/dump.pcap" "receive"
+do_hash_test $myinspect "receive"
 
 test_end
 }
@@ -76,15 +91,18 @@ if [ $test_skip = 1 ] ; then
 return
 fi
 
-#start sender from akamai LL
+#sender from akamai LL
 src=https://akamaibroadcasteruseast.akamaized.net/cmaf/live/657078/akasource/out.mpd
-do_test "$GPAC -i $src dashin:forward=file @ -o $proto://225.1.1.0:6000/:llmode:runfor=10000 -logs=route@debug" "send" &
+do_test "$GPAC -i $src dashin:forward=file @ -o $proto://225.1.1.0:6000/:llmode:runfor=4000:NCID=1 -netcap=id=1,dst=$TEMP_DIR/dump.pcap" "send"
 
-sleep 1
-#start receiver
+#receiver
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i $proto://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect -logs=dash:route@info" "receive"
+do_test "$GPAC -i $proto://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect -logs=dash:route@info -netcap=src=$TEMP_DIR/dump.pcap" "receive"
 
+#check we have received something
+if [ ! -s $myinspect ]; then
+result="Session not correctly received"
+fi
 
 test_end
 }
@@ -98,13 +116,15 @@ if [ $test_skip = 1 ] ; then
 return
 fi
 
-#start receiver
-myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i atsc://:tunein=1:nbcached=3 $inspectfilter:dur=1:log=$myinspect -logs=route@debug" "receive" &
+#sender
+src=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_main_320x180_128kbps.264
+do_test "$GPAC -i $src$CLAMP dasher:profile=live:dmode=dynamic @ -o atsc:// -netcap=dst=$TEMP_DIR/dump.pcap" "send"
 
-#start sender, dash only 4s in dynamic MPD mode
-src=$MEDIA_DIR/auxiliary_files/counter.hvc
-do_test "$GPAC -i $src:#ClampDur=6 dasher:profile=live:dmode=dynamic @ -o atsc://" "send"
+
+#receiver
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i atsc://:tunein=1:nbcached=3 $inspectfilter:dur=1:log=$myinspect -netcap=src=$TEMP_DIR/dump.pcap -logs=route@info" "receive"
+do_hash_test $myinspect "receive"
 
 test_end
 }
@@ -117,13 +137,20 @@ if [ $test_skip = 1 ] ; then
 return
 fi
 
-#start receiver
-myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -r -i atsc://:odir=$TEMP_DIR:max_segs=4:tsidbg=10" "receive" &
+#sender
+src=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_main_320x180_128kbps.264
+do_test "$GPAC -i $src$CLAMP dasher:profile=live:dmode=dynamic @ -o atsc:// -netcap=dst=$TEMP_DIR/dump.pcap" "send"
 
-#start sender, dash only 4s in dynamic MPD mode
-src=$MEDIA_DIR/auxiliary_files/counter.hvc
-do_test "$GPAC -i $src:#ClampDur=6 dasher:profile=live:dmode=dynamic @ -o atsc://" "send"
+#receiver
+do_test "$GPAC -r -i atsc://:odir=$TEMP_DIR:max_segs=4:tsidbg=10 -netcap=src=$TEMP_DIR/dump.pcap" "receive"
+
+do_hash_test $TEMP_DIR/service1/counter_30s_I25_main_320x180_128kbps_dashinit.mp4 "receive-init"
+do_hash_test $TEMP_DIR/service1/counter_30s_I25_main_320x180_128kbps_dash1.m4s "receive-seg"
+
+#don't hash MPD, availability start time will change at each test
+if [ ! -f $TEMP_DIR/service1/live.mpd ] ; then
+result="Missing MPD"
+fi
 
 test_end
 }
@@ -139,13 +166,13 @@ fi
 
 #start sender from akamai LL
 src=https://akamaibroadcasteruseast.akamaized.net/cmaf/live/657078/akasource/out.mpd
-do_test "$GPAC -i $src dashin:forward=file @ -o $proto://225.1.1.0:6000/:llmode:runfor=10000 -logs=route@info" "send" &
+do_test "$GPAC -i $src dashin:forward=file @ -o $proto://225.1.1.0:6000/:llmode:runfor=4000 -logs=route@info" "send" &
 
 #start HTTP server
-do_test "$GPAC httpout:port=8080:rdirs=$TEMP_DIR:wdir=$TEMP_DIR:reqlog=PUT -runfor=8000 -req-timeout=10000" "server" &
+do_test "$GPAC httpout:port=8080:rdirs=$TEMP_DIR:wdir=$TEMP_DIR:reqlog=PUT -runfor=4000 -req-timeout=10000" "server" &
 
 #start receiver: get route MPD, open in filemode and push files to server using PUT
-do_test "$GPAC -i $proto://225.1.1.0:6000/:max_segs=10 dashin:forward=file @ -o http://127.0.0.1:8080/live.mpd --hmode=push -runfor=6000 -req-timeout=2000 -logs=route:dash@info" "receive"
+do_test "$GPAC -i $proto://225.1.1.0:6000/:max_segs=10 dashin:forward=file @ -o http://127.0.0.1:8080/live.mpd --hmode=push -runfor=3000 -req-timeout=2000 -logs=route:dash@info" "receive"
 
 wait
 
@@ -167,13 +194,12 @@ if [ $test_skip = 1 ] ; then
 return
 fi
 
+#sender
 src=$MEDIA_DIR/auxiliary_files/logo.png
-do_test "$GPAC -i $src @ -o $proto://225.1.1.0:6000/:runfor=4000 -logs=route@info" "send" &
+do_test "$GPAC -i $src @ -o $proto://225.1.1.0:6000/:runfor=1000 -logs=route@info -netcap=dst=$TEMP_DIR/dump.pcap" "send"
 
-#start receiver: get route MPD, open in filemode and push files to server using PUT
-do_test "$GPAC -i $proto://225.1.1.0:6000/:gcache=false fout:dst=$TEMP_DIR/\$num\$:dynext=true -runfor=3000" "receive"
-
-wait
+#receiver
+do_test "$GPAC -i $proto://225.1.1.0:6000/:gcache=false fout:dst=$TEMP_DIR/\$num\$:dynext=true -netcap=src=$TEMP_DIR/dump.pcap" "receive"
 
 $DIFF $MEDIA_DIR/auxiliary_files/logo.png $TEMP_DIR/0.png > /dev/null
 rv=$?
@@ -193,13 +219,15 @@ if [ $test_skip = 1 ] ; then
 return
 fi
 
-#start receiver
-myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -i $proto://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect" "receive" &
+#sender
+src=$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_main_320x180_128kbps.264
+do_test "$GPAC -i $src$CLAMP dasher:profile=live:dmode=dynamic:template=seg_\$Time\$:stl @ -o $proto://225.1.1.0:6000/manifest.mpd -netcap=dst=$TEMP_DIR/dump.pcap -logs=route@info" "send"
 
-#start sender, dash only 4s in dynamic MPD mode
-src=$MEDIA_DIR/auxiliary_files/counter.hvc
-do_test "$GPAC -i $src:#ClampDur=4 dasher:profile=live:dmode=dynamic:template=seg_\$Time\$:stl @ -o $proto://225.1.1.0:6000/manifest.mpd -logs=route@info" "send"
+#receiver
+myinspect=$TEMP_DIR/inspect.txt
+do_test "$GPAC -i $proto://225.1.1.0:6000 $inspectfilter:dur=1:log=$myinspect -netcap=src=$TEMP_DIR/dump.pcap" "receive"
+do_hash_test $myinspect "receive"
+
 
 test_end
 }
