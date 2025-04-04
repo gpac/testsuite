@@ -11,9 +11,22 @@ if [ $test_skip  = 1 ] ; then
 return
 fi
 
+do_hash=1
+#ffsws is used in the conversion, skip hashes for format not giving same result on arm
+if [ "$GPAC_CPU" = "arm" ] ; then
+case $1 in
+ yuv2 | yuv4 | yuyv | yvyu | rgb | bgr | xrgb | rgbx | xbgr | bgrx )
+  do_hash=0
+  ;;
+esac
+fi
+
 rawfile=$TEMP_DIR/raw.$1
 do_test "$GPAC -i $mp4file -o $rawfile -blacklist=vtbdec,nvdec,ohevcdec" "dump"
+
+if [ $do_hash = 1 ] ; then
 do_hash_test "$rawfile" "dump"
+fi
 
 myinspect="inspect:fmt=@pn@-@cts@-@bo@@lf@"
 
@@ -39,13 +52,17 @@ do_test "$GPAC -i $rawfile:size=128x128 vout:dumpframes=20:out=$gpudump" "gpu_du
 #test video cropping filter in forward mode
 cropfile=$TEMP_DIR/dumpcrop.$1
 do_test "$GPAC -i $rawfile:size=128x128 vcrop:wnd=32x10x64x64 @ -o $cropfile" "crop"
+if [ $do_hash = 1 ] ; then
 do_hash_test_bin "$cropfile" "crop"
+fi
 
 #test video cropping filter in copy mode
 cropfile=$TEMP_DIR/dumpcropcp.$1
 do_test "$GPAC -i $rawfile:size=128x128 vcrop:copy:wnd=32x10x64x64 @ -o $cropfile" "crop"
+if [ $do_hash = 1 ] ; then
 #use same hash as before, they shall be identical
 do_hash_test_bin "$cropfile" "crop"
+fi
 
 test_end
 }

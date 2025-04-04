@@ -47,8 +47,17 @@ $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=0.4 -new $mp4file 2> 
 dumpfile=$TEMP_DIR/dump.pcm
 #use faad
 do_test "$GPAC -blacklist=ffdec -i $mp4file rewind @ -o $dumpfile:speed=-1"  "rewind"
+
+do_hash=1
 #on linux 32 bit we for now disable the hashes, they all differ due to different float/double precision
-if [ $GPAC_OSTYPE != "lin32" ] ; then
+
+if [ $GPAC_OSTYPE = "lin32" ] ; then
+do_hash=0
+elif [ $GPAC_CPU = "arm" ] ; then
+do_hash=0
+fi
+
+if [ $do_hash = 1 ] ; then
 do_hash_test "$dumpfile" "rewind"
 fi
 

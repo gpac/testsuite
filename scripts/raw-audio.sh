@@ -12,8 +12,15 @@ rawfile=$TEMP_DIR/raw.$1
 #test dumping to the given format - use faad
 do_test "$GPAC -blacklist=ffdec -i $mp4file -o $rawfile" "dump-$1"
 
-#on linux 32 bit we for now disable the hashes, they all differ due to different float/double precision
-if [ $GPAC_OSTYPE != "lin32" ] ; then
+#on linux 32 bit and arm we for now disable the hashes, they all differ due to different float/double precision
+do_hash=1
+if [ $GPAC_OSTYPE = "lin32" ] ; then
+do_hash=0
+elif [ $GPAC_CPU = "arm" ] ; then
+do_hash=0
+fi
+
+if [ $do_hash = 1 ] ; then
 do_hash_test_bin "$rawfile" "dump-$1"
 fi
 
@@ -25,7 +32,7 @@ do_hash_test "$insfile" "inspect"
 #test reading from the given format into pcm
 rawfile2=$TEMP_DIR/raw2.pcm
 do_test "$GPAC -i $rawfile -o $rawfile2" "dump-pcm"
-if [ $GPAC_OSTYPE != "lin32" ] ; then
+if [ $do_hash = 1 ] ; then
 do_hash_test_bin "$rawfile2" "dump-pcm"
 fi
 
@@ -52,12 +59,12 @@ case $1 in
 do_test "$GPAC -i $rawfile:sr=48000:ch=2 -o $TEMP_DIR/pcm.mp4:ase=v1" "isobmff-write"
 do_test "$GPAC -i $rawfile:sr=48000:ch=2 -o $TEMP_DIR/pcm.mov" "qtff-write"
 do_test "$GPAC -i $rawfile:sr=48000:ch=2 -o $TEMP_DIR/pcm2.mov:ase=v2qt" "qtff2-write"
-if [ $GPAC_OSTYPE != "lin32" ] ; then
+if [ $do_hash = 1 ] ; then
 do_hash_test "$TEMP_DIR/pcm.mp4" "isobmff-write"
 do_hash_test "$TEMP_DIR/pcm.mov" "qtff-write"
 do_hash_test "$TEMP_DIR/pcm2.mov" "qtff2-write"
 fi
-#disable crc test because of lin32, only check isom structure
+#disable crc test, only check isom structure
 insfile=$TEMP_DIR/dump_isopcm.txt
 do_test "$GPAC -i $TEMP_DIR/pcm.mp4 inspect:deep:log=$insfile:test=nocrc" "isobmff-read"
 do_hash_test "$insfile" "isobmff-read"

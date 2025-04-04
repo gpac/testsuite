@@ -89,7 +89,7 @@ do_test "$GPAC -i $rawfile:size=128x128 compositor:opfmt=$pf @ -o $rawout" "blit
 #yp4l->yuv without SSE does not give exactly the same results as with sse, disable hash test
 check_hash=1
 if [ $check_32b = 1 ] ; then
- if [ $GPAC_OSTYPE = "lin32" ] || [ $GPAC_OSTYPE = "win32" ]  ; then
+ if [ $GPAC_OSTYPE = "lin32" ] || [ $GPAC_OSTYPE = "win32" ] || [ $GPAC_CPU = "arm" ]  ; then
   check_hash=0
  fi
 fi

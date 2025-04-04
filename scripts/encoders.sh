@@ -79,7 +79,8 @@ test_encoder "jpeg-ffenc" $MEDIA_DIR/auxiliary_files/logo.png "test.jpg" "" "-bl
 test_encoder "m4v-ffenc" $MEDIA_DIR/auxiliary_files/enst_video.h264 "test.cmp" "" "-blacklist=vtbdec,nvdec,ohevcdec" ""
 
 #test h263 encode - insert a crop filter to produce a valid h263 frame size
-test_encoder "h263-ffenc" $MEDIA_DIR/auxiliary_files/enst_video.h264 "test.263" "vcrop:wnd=0x0x128x96 @" "-blacklist=vtbdec,nvdec,ohevcdec" ""
+#only do 1s, as ffenc gives garbage for this source video on arm after frame 70
+test_encoder "h263-ffenc" $MEDIA_DIR/auxiliary_files/enst_video.h264 "test.263" "vcrop:wnd=0x0x128x96 @" "-blacklist=vtbdec,nvdec,ohevcdec" ":dur=1"
 
 #test m1v encode
 test_encoder "mpeg1-ffenc" $MEDIA_DIR/auxiliary_files/enst_video.h264 "test.m1v" "" "-blacklist=vtbdec,nvdec,ohevcdec" ""

@@ -16,7 +16,6 @@ EXTERNAL_MEDIA_AVAILABLE=1
 
 platform=`uname -s`
 
-
 if [ $platform = "Darwin" ] ; then
 GNU_TIME=gtime
 GNU_DATE=gdate
@@ -24,6 +23,16 @@ GNU_TIMEOUT=gtimeout
 READLINK=greadlink
 fi
 
+GPAC_CPU="x86"
+cpu_arch=`uname -m`
+
+if [ $cpu_arch = "armv4l" ] ; then
+GPAC_CPU="arm"
+elif [ $cpu_arch = "arm" ] ; then
+GPAC_CPU="arm"
+elif [ $cpu_arch = "aarch64" ] ; then
+GPAC_CPU="arm"
+fi
 
 #if the script in launched from elsewhere, main_dir still needs to be the script directory
 main_dir="$(dirname $($READLINK -f $0))"

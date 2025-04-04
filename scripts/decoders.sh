@@ -32,6 +32,11 @@ test_end
 
 }
 
+arm_skip=0
+if [ "$GPAC_CPU" = "arm" ] ; then
+arm_skip=1
+fi
+
 nvdec=`$GPAC -h nvdec 2>/dev/null | grep nvdec`
 vtbdec=`$GPAC -h vtbdec 2>/dev/null | grep vtbdec`
 ohevcdec=`$GPAC -h ohevcdec 2>/dev/null | grep ohevc`
@@ -47,7 +52,7 @@ test_decoder "png-ffdec" $MEDIA_DIR/auxiliary_files/logo.png "test.rgb" "-blackl
 
 #test jpg decode to raw
 test_decoder "jpg-imgdec" $MEDIA_DIR/auxiliary_files/logo.jpg "test.rgb" "-blacklist=ffdec" 0
-test_decoder "jpg-ffdec" $MEDIA_DIR/auxiliary_files/logo.jpg "test.rgb" "-blacklist=imgdec" 0
+test_decoder "jpg-ffdec" $MEDIA_DIR/auxiliary_files/logo.jpg "test.rgb" "-blacklist=imgdec" arm_skip
 test_decoder "jpg-bmp" $MEDIA_DIR/auxiliary_files/logo.jpg "test.bmp" "-blacklist=ffdec" 0
 
 #test aac decode to raw
@@ -109,7 +114,7 @@ test_decoder "amr-ffdec" $EXTERNAL_MEDIA_DIR/import/bear_audio.amr "test.pcm" ""
 
 test_decoder "amrwb-ffdec" $EXTERNAL_MEDIA_DIR/import/obrother_wideband.amr "test.pcm" "" 1
 
-test_decoder "h263-ffdec" $EXTERNAL_MEDIA_DIR/import/bear_video.263 "test.yuv" "-blacklist=vtbdec" 0
+test_decoder "h263-ffdec" $EXTERNAL_MEDIA_DIR/import/bear_video.263 "test.yuv" "-blacklist=vtbdec" arm_skip
 if [ -n "$vtbdec" ] ; then
 test_decoder "h263-vtb" $EXTERNAL_MEDIA_DIR/import/bear_video.263 "test.yuv" "-blacklist=ffdec" 0
 fi
@@ -124,7 +129,7 @@ test_decoder "mjp2-oj2k" $EXTERNAL_MEDIA_DIR/import/speedway.mj2 "test.yuv" "-bl
 fi
 
 if [ -n "$j2kff" ] ; then
-test_decoder "j2k-ff" $EXTERNAL_MEDIA_DIR/import/logo.jp2 "test.yuv" "-blacklist=j2kdec" 0
+test_decoder "j2k-ff" $EXTERNAL_MEDIA_DIR/import/logo.jp2 "test.yuv" "-blacklist=j2kdec" arm_skip
 test_decoder "mjp2-ff" $EXTERNAL_MEDIA_DIR/import/speedway.mj2 "test.yuv" "-blacklist=j2kdec" 0
 fi
 

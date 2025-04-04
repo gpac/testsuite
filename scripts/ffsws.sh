@@ -10,7 +10,11 @@ fi
 
 dstfile=$TEMP_DIR/dump.mp4
 do_test "$GPAC -blacklist=vtbdec,nvdec,ohevcdec,osvcdec -i $2 ffsws$3 -o $dstfile:dur=1 -graph -stats" "scale"
+
+#ffsws does not give the same result on arm than on x86
+if [ "$GPAC_CPU" != "arm" ] ; then
 do_hash_test $dstfile "scale"
+fi
 test_end
 }
 
