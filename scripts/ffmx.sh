@@ -64,3 +64,43 @@ do_hash_test $dstfile2 "remux"
 test_end
 fi
 
+libsrt=`$GPAC -h protocols 2>/dev/null | grep srt:`
+
+if [ -n "$libsrt" ] ; then
+
+ffmx_proto_srt ()
+{
+
+test_begin "ffmx-proto-srt-$1"
+if [ $test_skip = 1 ] ; then
+return;
+fi
+
+srcf=$TEMP_DIR/src.$1
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/counter.hvc reframer:xs=0:xe=2 -o $srcf$2" "src"
+do_hash_test "$srcf" "src"
+
+do_test "$GPAC -i $srcf -o srt://127.0.0.1:9999\?mode=listener:gpac:proto:ext=$1 -graph" "srt-send" &
+sleep .5
+
+dstf=$TEMP_DIR/rec.$1
+do_test "$GPAC -i srt://127.0.0.1:9999:gpac:proto -o $dstf -graph" "srt-recv"
+wait
+
+#we must have the same files
+$DIFF $dstf $srcf > /dev/null
+rv=$?
+if [ $rv != 0 ] ; then
+result="source and copied files differ"
+fi
+
+
+test_end
+}
+
+ffmx_proto_srt "ts" ":pcr_offset=100000"
+ffmx_proto_srt "gsf" ""
+ffmx_proto_srt "mp4" ":frag"
+
+fi
+
