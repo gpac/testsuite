@@ -14,26 +14,37 @@ let all_filters = [];
 
 session.reporting(true);
 
-session.set_rmt_fun( (text)=> {
-	print("rmt says " + text);
-	session.rmt_send("yep !");
-});
+session.rmt_on_new_client = function(client) {
+	console.log("rmt new client", client.peer_address);
 
-session.rmt_send("Loaded !");
-session.rmt_sampling = false;
+	client.on_data = (msg) =>  {
+		if (typeof(msg) == "string") {
+			console.log("Client ", client.peer_address, " got text message: ", msg);
+		} else {
+			let buf = new Uint8Array(msg)
+			console.log("Client ", client.peer_address, " got binary message of type", typeof(msg), "len ", buf.length, "with data:", buf);
+		}
+		client.send("ACK");
+	}
+
+	client.on_close = function() {
+		console.log("ON_CLOSE on client ", client.peer_address);
+	}
+
+}
 
 session.set_new_filter_fun( (f) => {
 		print("new filter " + f.name);
 		f.iname = "JS"+f.name;
 		all_filters.push(f);
-} ); 
+} );
 
 session.set_del_filter_fun( (f) => {
 	print("delete filter " + f.iname);
 	let idx = all_filters.indexOf(f);
 	if (idx>=0)
 		all_filters.splice (idx, 1);
-}); 
+});
 
 session.set_event_fun( (evt) => {
 	if (evt.type != GF_FEVT_USER) return 0;
@@ -121,7 +132,7 @@ session.post_task( ()=> {
  		print("source for pid is filter " + f.ipid_source(0).name);
 		if (!f.nb_opid) {
 			f.update("deep", "true");
-	
+
 			check_remove++;
 			if (check_remove==1) {
 				remove_f = f;
@@ -143,7 +154,7 @@ session.post_task( ()=> {
 //			f.insert("inspect:deep");
 		}
 	}
- } 
+ }
 
  if (remove_f) {
  	let f = remove_f.ipid_source(0);
@@ -164,11 +175,9 @@ session.post_task( ()=> {
  	if (!f.nb_opid) return;
 	 print('Chain from ' + f.name + ' to PNG dump: ' + JSON.stringify(f.compute_link(0, 'dst=dump.png', true)) );
  });
- 
+
 
  session.lock_filters(false);
  nb_called++;
  return all_connected ? 1000 : 0;
 });
-
-

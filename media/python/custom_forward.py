@@ -134,19 +134,12 @@ class MyFilter(gpac.FilterCustom):
 			opid.pck_ref.unref()
 			opid.pck_ref = None
 
-	def on_rmt_event(self, text):
-		print('Remoter got message ' + text)
-
 #load a custom filter
 my_filter = MyFilter(fs)
 
 #load a dest
 ins = fs.load("inspect:deep")
 ins.set_source(my_filter)
-
-
-gpac.set_rmt_fun(my_filter)
-
 
 #enable status messages reporting
 fs.reporting(True)
