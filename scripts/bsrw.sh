@@ -37,6 +37,21 @@ test_bsrw "tc-shift-neg" $TEMP_DIR/enst_tc.mp4 ":tc=shift:tcsc=-TC00:00:10:00"
 test_bsrw "tc-shift-empty" $MEDIA_DIR/auxiliary_files/enst_video.h264 ":tc=shift:tcsc=TC00:00:10:00"
 test_bsrw "tc-constant" $TEMP_DIR/enst_tc.mp4 ":tc=constant:tcsc=TC12:34:56:00"
 
+#timecode with other codecs
+test_bsrw "tc-hevc" $MEDIA_DIR/auxiliary_files/counter.hvc ":rmsei:tc=insert"
+if [ -f $TEMP_DIR/setsar.mp4 ]; then
+  cp $TEMP_DIR/setsar.mp4 $TEMP_DIR/enst_tc.mp4
+fi
+test_bsrw "tc-hevc-remove" $TEMP_DIR/enst_tc.mp4 ":tc=remove"
+test_bsrw "tc-hevc-shift" $TEMP_DIR/enst_tc.mp4 ":tc=shift:tcsc=TC00:00:10:00"
+
+test_bsrw "tc-av1" $MEDIA_DIR/auxiliary_files/video.av1 ":tc=insert"
+if [ -f $TEMP_DIR/setsar.mp4 ]; then
+  cp $TEMP_DIR/setsar.mp4 $TEMP_DIR/enst_tc.mp4
+fi
+test_bsrw "tc-av1-remove" $TEMP_DIR/enst_tc.mp4 ":tc=remove"
+test_bsrw "tc-av1-shift" $TEMP_DIR/enst_tc.mp4 ":tc=shift:tcsc=TC00:00:10:00"
+
 if [ $EXTERNAL_MEDIA_AVAILABLE = 0 ] ; then
   return
 fi
