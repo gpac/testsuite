@@ -168,3 +168,14 @@ fi
 test_end
 
 
+
+test_begin "mp4box-cust-tags"
+if [ "$test_skip" != 1 ] ; then
+
+mp4file="$TEMP_DIR/test.mp4"
+do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac -new $mp4file -itags cust=com.apple.iTunes,iTunEXTC,MyTagValue" "create"
+do_hash_test $mp4file "create"
+
+do_test "$MP4BOX -info $mp4file" "info"
+fi
+test_end
