@@ -18,7 +18,7 @@ function bufferToString(buffer) {
 
 print("Running, your are " + sys.getenv('USER') );
 
-session.enable_rmtws();
+sys.enable_rmtws();
 sys.prompt_input();
 sys.prompt_string(1);
 let wdir = sys.last_wdir;

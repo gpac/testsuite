@@ -14,7 +14,7 @@ let all_filters = [];
 
 session.reporting(true);
 
-session.rmt_on_new_client = function(client) {
+sys.rmt_on_new_client = function(client) {
 	console.log("rmt new client", client.peer_address);
 
 	client.on_data = (msg) =>  {
