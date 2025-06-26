@@ -52,6 +52,36 @@ do_hash_test "$TEMP_DIR/prog_20.ts" "prog_20"
 fi
 test_end
 
+
+srcfile=$MEDIA_DIR/auxiliary_files/counter.hvc
+test_begin "m2ts-pcr"
+if [ $test_skip != 1 ] ; then
+
+insp=$TEMP_DIR/insp-roll.txt
+do_test "$GPAC -i $srcfile reframer:xs=4:xe=8 -o $TEMP_DIR/roll.ts:pes_pack=none:pcr_init=-27000000" "roll"
+do_test "$GPAC -i $TEMP_DIR/roll.ts inspect:deep:fmt=%pn%/%dts%/%ddts%/%lf%:log=$insp" "roll-dump"
+do_hash_test "$insp" "roll"
+
+do_test "$GPAC -i $srcfile reframer:xs=2:xe=4 -o $TEMP_DIR/low.ts:pes_pack=none:pcr_init=27000000" "roll"
+do_test "$GPAC -i $srcfile reframer:xs=8:xe=10 -o $TEMP_DIR/high.ts:pes_pack=none:pcr_init=2700000000" "roll"
+
+cat $TEMP_DIR/low.ts > $TEMP_DIR/fwd.ts
+cat $TEMP_DIR/high.ts >> $TEMP_DIR/fwd.ts
+insp=$TEMP_DIR/insp-fwd.txt
+do_test "$GPAC -i $TEMP_DIR/fwd.ts inspect:deep:fmt=%pn%/%dts%/%ddts%/%lf%:log=$insp" "fwd-dump"
+do_hash_test "$insp" "fwd"
+
+cat $TEMP_DIR/high.ts > $TEMP_DIR/bck.ts
+cat $TEMP_DIR/low.ts >> $TEMP_DIR/bck.ts
+insp=$TEMP_DIR/insp-bck.txt
+do_test "$GPAC -i $TEMP_DIR/bck.ts inspect:deep:fmt=%pn%/%dts%/%ddts%/%lf%:log=$insp" "bck-dump"
+do_hash_test "$insp" "bck"
+
+
+fi
+test_end
+
+
 srcfile=$EXTERNAL_MEDIA_DIR/m2ts/paff.ts
 
 test_begin "m2ts-paff"
