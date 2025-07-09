@@ -96,6 +96,8 @@ if [ $1 == "vp9" ] ; then
  	continue ;;
  *forceclear* )
  	continue ;;
+ *sei_avc* )
+ 	continue ;;
  *clear_stsd* )
  	continue ;;
  *roll_rap* )
@@ -110,6 +112,8 @@ elif [ $1 != "avc" ] ; then
  *clear_stsd* )
  	continue ;;
  *roll_rap* )
+ 	continue ;;
+ *sei_avc* )
  	continue ;;
  esac
 fi
