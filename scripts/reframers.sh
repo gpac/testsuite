@@ -95,6 +95,8 @@ test_reframer "vvc" "$EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_close
 
 test_reframer "truehd" "$EXTERNAL_MEDIA_DIR/import/truehd_ac3h.mlp:auxac3" "dump.mp4"
 
+test_reframer "ac4" "$EXTERNAL_MEDIA_DIR/import/atsc3_test_audio.ac4" "dump.mp4"
+
 
 #test bsdbg, for coverage
 test_begin "reframer-bsdbg"
