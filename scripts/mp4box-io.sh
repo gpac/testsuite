@@ -125,6 +125,8 @@ mp4_test ()
   do_hint=0 ;;
  *.eac3 )
   do_hint=0 ;;
+ *.ac4 )
+  do_hint=0 ;;
  *.amr )
   no_btrt=1 ;;
  *.iamf )
