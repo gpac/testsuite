@@ -10,7 +10,7 @@
 <BS ID128="0x5544694d47473326622665665a396b36"/>
 </DRMInfo>
 
-<CrypTrack trackID="1" IsEncrypted="1" IV_size="8" first_IV="0x0a610676cb88f302" saiSavedBox="senc" encryptSliceHeader="yes" encryptNonVLCs="yes" blockAlign="disable" clear_bytes="5">
+<CrypTrack trackID="1" IsEncrypted="1" IV_size="8" first_IV="0x0a610676cb88f302" saiSavedBox="senc" encryptSliceHeader="yes" encryptNonVCLs="yes" blockAlign="disable" clear_bytes="5">
 <key KID="0x279926496a7f5d25da69f2b3b2799a7f" value="0x5544694d47473326622665665a396b36"/>
 </CrypTrack>
 </GPACDRM>
