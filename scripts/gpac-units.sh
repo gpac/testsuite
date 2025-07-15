@@ -152,9 +152,9 @@ do_hash_test $TEMP_DIR/logs3.txt  "inspect-res3"
 fi
 test_end
 
-test_begin "gpac-remotery"
+test_begin "gpac-rmtws"
 if [ $test_skip != 1 ] ; then
-do_test "$GPAC src=$MEDIA_DIR/auxiliary_files/enst_audio.aac inspect -logs=filter@info -rmt -rmt-log" "remotery"
+do_test "$GPAC src=$MEDIA_DIR/auxiliary_files/enst_audio.aac inspect -logs=filter@info -rmt" "rmtws"
 fi
 test_end
 
@@ -294,4 +294,3 @@ single_test "$GPAC -ltf -stats UTSource:FID=1:max_pck=2 UTFilter:FID=2:fwd=mix:f
 
 #test argument update
 sched_test "UTSource:max_pck=100:update=1,fwd,copy UTFilter:FID=1:fwd=shared UTSink:SID=1" "gpac-filter-1source-1filter-1sink-update"
-

@@ -47,6 +47,8 @@ ts_test "txt" "-i $MEDIA_DIR/auxiliary_files/subtitle.srt:#M2TSRA=SRT" ""
 
 ts_test "ac3" "-i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3" ""
 
+ts_test "ac4" "-i $EXTERNAL_MEDIA_DIR/import/atsc3_test_audio.ac4" ""
+
 ts_test "vvc" "-i $EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc" ""
 
 #to replace with ts_test once we have av1 ts demux

@@ -18,7 +18,7 @@ function bufferToString(buffer) {
 
 print("Running, your are " + sys.getenv('USER') );
 
-session.enable_rmt();
+sys.enable_rmtws();
 sys.prompt_input();
 sys.prompt_string(1);
 let wdir = sys.last_wdir;
@@ -51,7 +51,7 @@ sys.discard_opts();
 let files = sys.enum_directory('/');
 
 files = sys.enum_directory('.');
-files.forEach( (f) => { 
+files.forEach( (f) => {
 	for(let propertyName in f) {
 		print("f." + propertyName + " : " + f[propertyName]);
 	}
@@ -248,5 +248,3 @@ function test_file()
     sys.rmdir('mytest');
 
 }
-
-
