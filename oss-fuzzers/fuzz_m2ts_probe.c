@@ -1,4 +1,4 @@
-#include "/src/gpac/include/gpac/mpegts.h"
+#include <gpac/mpegts.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
