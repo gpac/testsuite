@@ -1291,7 +1291,7 @@ do_ui_test()
  fi
 
  if [ "$single_test_name" != "" ] && [ "$single_test_name" != "$TEST_NAME" ] ; then
-   log $L_DEB "skiping ui test $TEST_NAME"
+   log $L_DEB "skipping ui test $TEST_NAME"
    return
  fi
 
