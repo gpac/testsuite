@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<NHNTStream version="1.0" timeScale="90000" mediaType="meta" mediaSubType="evte" mime_type="text/plain" text_encoding="utf-8">
+
+ <NHNTSample DTS="0" duration="135000" isRAP="yes">
+  <EventMessageInstanceBox Version="0" Flags="0" presentation_time_delta="165000" event_duration="135000" event_id="0" scheme_id_uri="gpac:events" value="DUMMY"/>
+ </NHNTSample>
+ 
+ <NHNTSample DTS="135000" duration="90000" isRAP="yes">
+  <EventMessageInstanceBox Type="emib" Version="0" Flags="0" presentation_time_delta="-565324760" event_duration="4294967295" event_id="10" scheme_id_uri="urn:scte:scte35:2013:bin" value="" message_data="0xFC302E00000000000000FFF00506FE13A6C3FA001802164355454900000E4A7FFF0000020F5800003400000000AD61F21C" />
+ </NHNTSample>
+
+ <NHNTSample DTS="225000" duration="15000" isRAP="yes">
+  <EventMessageEmptyBox Size="8" Type="emeb" Specification="EventMessageTrack" Container="file" />
+ </NHNTSample>
+ 
+ <NHNTSample DTS="240000" duration="15000" isRAP="yes">
+  <EventMessageInstanceBox Type="emib" Version="0" Flags="0" presentation_time_delta="-282723441" event_duration="282754472" event_id="24" scheme_id_uri="urn:scte:scte35:2013:bin" value="" message_data="0xFC302E00000000000000FFF00506FE13A6C3FA001802164355454900000E4A7FFF0000020F5800003400000000AD61F21C" />
+  <EventMessageInstanceBox Type="emib" Version="0" Flags="0" presentation_time_delta="31031" event_duration="0" event_id="25" scheme_id_uri="urn:scte:scte35:2013:bin" value="" message_data="0xFC302E00000000000000FFF00506FE13A6C3FA001802164355454900000E4A7FFF0000020F5800003400000000AD61F21C" />
+ </NHNTSample>
+
+ <NHNTSample DTS="255000" duration="15000" isRAP="yes">
+  <EventMessageInstanceBox Type="emib" Version="0" Flags="0" presentation_time_delta="-900000"
+    event_duration="900000" event_id="3639044800" scheme_id_uri="urn:org:media_event:v1"
+    value="app:ui"
+    message_data="DUMMY" />
+ </NHNTSample>
+
+</NHNTStream>
