@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NHNTStream version="1.0" timeScale="1000" mediaType="meta" mediaSubType="mett"
+    mime_type="text/plain" text_encoding="utf-8" baseMediaFile="input.txt">
+    <NHNTSample DTS="0" dataLength="45" isRAP="yes">
+        <Properties>
+            <P name="SenderNTP" value="32" type="ulong" />
+        </Properties>
+    </NHNTSample>
+</NHNTStream>
