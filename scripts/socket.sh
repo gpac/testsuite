@@ -16,7 +16,8 @@ dst_file_i=$TEMP_DIR/i-$3
 #first do test with sending as server
 do_test "$GPAC -i $src_file -o tcp://127.0.0.1:1234:listen:ext=$4 -graph"  "osrv-out" &
 
-sleep .1
+#give 400 ms for socket server to setup
+sleep .4
 do_test "$GPAC -i tcp://127.0.0.1:1234:ext=$4 -o $dst_file_o -graph"  "osrv-in"
 
 do_hash_test "$dst_file_o" "osrv-in"
