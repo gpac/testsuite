@@ -18,6 +18,10 @@ do_test "$GPAC -i $srcfile vout:drv=$1:blit" "2D"
 
 do_test "$GPAC -i $srcfile vout:drv=$1:soft" "softblt"
 
+if [ "$1" = "caca" ] ; then
+do_test "$GPAC -h modules caca" "softblt"
+fi
+
 test_end
 
 }
