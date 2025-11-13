@@ -784,7 +784,9 @@ shopt -s nullglob
 
   echo "  <stat subtest=\"$SUBTEST_NAME\" execution_status=\"$EXECUTION_STATUS\" return_status=\"$RETURN_STATUS\" mem_total_avg=\"$MEM_TOTAL_AVG\" mem_resident_avg=\"$MEM_RESIDENT_AVG\" mem_resident_max=\"$MEM_RESIDENT_MAX\" cpu_percent=\"$CPU_PERCENT\" cpu_elapsed_time=\"$CPU_ELAPSED_TIME\" cpu_user_time=\"$CPU_USER_TIME\" cpu_kernel_time=\"$CPU_KERNEL_TIME\" page_faults=\"$PAGE_FAULTS\" file_inputs=\"$FILE_INPUTS\" socket_msg_rec=\"$SOCKET_MSG_REC\" socket_msg_sent=\"$SOCKET_MSG_SENT\" return_value=\"$RETURN_VALUE\">" >> $stat_xml_temp
 
-  echo "   <command_line>$COMMAND_LINE</command_line>" >> $stat_xml_temp
+  XML_CMD_LINE=${COMMAND_LINE//&/&amp;}
+
+  echo "   <command_line>$XML_CMD_LINE</command_line>" >> $stat_xml_temp
   echo "  </stat>" >> $stat_xml_temp
 
   test_ok=1
