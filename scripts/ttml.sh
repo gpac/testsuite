@@ -62,7 +62,7 @@ ttml_test_cat  ()
  fi
 
 #note that the resulting file is not a valid TTML because we use two time-overlaping docs as source
-#the tes is only intended to check ttml single doc mode from playlist for adding or dashing
+#the test is only intended to check ttml single doc mode from playlist for adding or dashing
 src1=$MEDIA_DIR/ttml/ebu-ttd_sample.ttml
 src2=$MEDIA_DIR/ttml/ebu-ttd_sample_span.ttml
 pl=pl.m3u
@@ -76,7 +76,11 @@ do_hash_test $mp4file "import"
 
 #dash using inband cues, each input in playlist resulting in a media segment
 do_test "$MP4BOX -dash 1000 -profile onDemand -out $TEMP_DIR/vod.mpd $pl:sigcues" "dash-cues"
-do_hash_test $TEMP_DIR/ebu-ttd_sample_dashinit.mp4 "dash"
+do_hash_test $TEMP_DIR/ebu-ttd_sample_dashinit.mp4 "dash-cues"
+
+#dash using multiperiod and timing rewrite
+do_test "$GPAC flist:srcs=$pl:floop=1:sigperiods -out $TEMP_DIR/vod.mpd" "dash-multiperiod-timestamp-rewrite"
+do_hash_test $TEMP_DIR/ebu-ttd_sample_dashinit.mp4 "dash-multiperiod-timestamp-rewrite"
 
 mv $pl $TEMP_DIR
 
