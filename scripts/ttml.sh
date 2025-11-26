@@ -79,8 +79,9 @@ do_test "$MP4BOX -dash 1000 -profile onDemand -out $TEMP_DIR/vod.mpd $pl:sigcues
 do_hash_test $TEMP_DIR/ebu-ttd_sample_dashinit.mp4 "dash-cues"
 
 #dash using multiperiod and timing rewrite
-do_test "$GPAC flist:srcs=$pl:floop=1:sigperiods -out $TEMP_DIR/vod.mpd" "dash-multiperiod-timestamp-rewrite"
-do_hash_test $TEMP_DIR/ebu-ttd_sample_dashinit.mp4 "dash-multiperiod-timestamp-rewrite"
+do_test "$GPAC flist:srcs=$src1:floop=1:sigperiods -o $TEMP_DIR/vod.mpd" "dash-multiperiod-timestamp-rewrite"
+do_hash_test $TEMP_DIR/ebu-ttd_sample_dashinit.mp4 "dash-multiperiod-timestamp-rewrite_p0"
+do_hash_test $TEMP_DIR/ebu-ttd_sample_dashinit_r1_.mp4 "dash-multiperiod-timestamp-rewrite_p1"
 
 mv $pl $TEMP_DIR
 
