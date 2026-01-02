@@ -117,8 +117,8 @@ Argument:
 - `TESTNAME`: specifies the test name for logging, as used in `single_test`
 
 This function defines overridable variables:
-- `$dump_size`: by default "192x192" but can be overriden by your test
-- `$dump_dur`: by default "5" seconds but can be overriden by your test
+- `$dump_size`: by default "192x192" but can be overridden by your test
+- `$dump_dur`: by default "5" seconds but can be overridden by your test
 
 ### test_end
 No argument.
