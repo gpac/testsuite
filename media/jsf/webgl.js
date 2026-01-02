@@ -310,8 +310,8 @@ function loadTexture(gl) {
   const level = 0;
   const internalFormat = gl.RGBA;
   const border = 0;
-  const srcFormat = gl.RGBA; //ignored, overriden by texImage2D from object
-  const srcType = gl.UNSIGNED_BYTE;  //ignored, overriden by texImage2D from object
+  const srcFormat = gl.RGBA; //ignored, overridden by texImage2D from object
+  const srcType = gl.UNSIGNED_BYTE;  //ignored, overridden by texImage2D from object
 
   //for coverage
   let texture = gl.createTexture();

@@ -339,8 +339,8 @@ function loadTexture(gl) {
   gl.bindTexture(gl.TEXTURE_2D, texture);
   const level = 0;
   const internalFormat = gl.RGBA;
-  const srcFormat = gl.RGBA; //ignored, overriden by texImage2D from object
-  const srcType = gl.UNSIGNED_BYTE;  //ignored, overriden by texImage2D from object
+  const srcFormat = gl.RGBA; //ignored, overridden by texImage2D from object
+  const srcType = gl.UNSIGNED_BYTE;  //ignored, overridden by texImage2D from object
   let tx = new Texture("../auxiliary_files/logo.png", true);
   gl.texImage2D(gl.TEXTURE_2D, level, internalFormat, srcFormat, srcType, tx);
 
