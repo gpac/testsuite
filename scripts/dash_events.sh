@@ -7,7 +7,7 @@ dash_event_test()
         return
     fi
 
-    do_test "$GPAC -i $mp4file -o $TEMP_DIR/file.mpd:inband_event" "dash"
+    do_test "$GPAC -i $mp4file -o $TEMP_DIR/file.mpd::inband_event=https://aomedia.org/emsg/ID3@https://aomedia.org/emsg/ID3@audio,https://aomedia.org/emsg/ID3@www.nielsen.com:id3:v1@audio" "dash"
     do_hash_test $TEMP_DIR/file.mpd "$1-hash-mpd"
 
     test_end
