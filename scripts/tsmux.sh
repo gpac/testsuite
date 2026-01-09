@@ -51,6 +51,8 @@ ts_test "ac4" "-i $EXTERNAL_MEDIA_DIR/import/atsc3_test_audio.ac4" ""
 
 ts_test "vvc" "-i $EXTERNAL_MEDIA_DIR/counter/counter_30s_1280x720p_I25_closedGOP_512kpbs.vvc" ""
 
+ts_test "usac" "-i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.usac" ""
+
 #to replace with ts_test once we have av1 ts demux
 ts_test_av1 ()
 {
