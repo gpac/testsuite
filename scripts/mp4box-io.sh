@@ -134,7 +134,8 @@ mp4_test ()
  esac
 
  name=$(basename $1)
- test_begin "mp4box-io-$name"
+ opt="${2##*:}"
+ test_begin "mp4box-io-$name${opt:+-$opt}"
 
  mp4file="$TEMP_DIR/$name.mp4"
  nalfile="$TEMP_DIR/nal.xml"
@@ -148,7 +149,7 @@ mp4_test ()
  #test media
  do_test "$MP4BOX -info $1" "RawMediaInfo"
  #import media
- do_test "$MP4BOX -add $1 -new $mp4file" "MediaImport"
+ do_test "$MP4BOX -add $1$2 -new $mp4file" "MediaImport"
 
  if [ $do_hash != 0 ] ; then
   do_hash_test $mp4file "add"
@@ -212,8 +213,10 @@ mp4box_tests ()
  done
 
   mp4_test $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3
+  mp4_test $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.ac3 ":ac3compat"
 
   mp4_test $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.eac3
+  mp4_test $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.eac3 ":ac3compat"
 
   mp4_test $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas
 
