@@ -32,7 +32,8 @@ $GPAC -i $1 -o $mp4file 2> /dev/null
 fi
 
 inspect="$TEMP_DIR/inspect_unframe.txt"
-do_test "$GPAC -i $mp4file @$2 unframer @ inspect:deep:log=$inspect" "inspect-unframer"
+opt="${1##*:SID=}"
+do_test "$GPAC -i $mp4file @$opt unframer @ inspect:deep:log=$inspect" "inspect-unframer"
 do_hash_test $inspect "inspect-unframer"
 
 
