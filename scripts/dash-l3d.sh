@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# !! commented as not working with master yet
+return
+
+
 rm -f "$TEMP_DIR/l3d"
 
 do_low_delay() {
