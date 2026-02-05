@@ -4,7 +4,7 @@ single_test "$GPAC -gui -fs -runfor=2000" "gpac-gui"
 echo "bla" > $TEMP_DIR/test.mp4
 single_test "gpac -p=$gpac_profile -mem-track -for-test -no-reassign -gui -runfor=2000 $TEMP_DIR/test.mp4" "gpac-gui-urlerror"
 
-single_test "$GPAC -gui -rmt -runfor=2000 -stats $MEDIA_DIR/auxiliary_files/sky.jpg" "gpac-gui-stats"
+single_test "$GPAC -gui -runfor=2000 -stats $MEDIA_DIR/auxiliary_files/sky.jpg" "gpac-gui-stats"
 
 single_test "$GPAC -gui -for-test -gui-test http://download.tsi.telecom-paristech.fr/gpac/DASH_CONFORMANCE/TelecomParisTech/mp4-live-1s/mp4-live-1s-mpd-V-BS.mpd" "gpac-gui-dash"
 
