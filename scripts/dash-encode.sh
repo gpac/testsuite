@@ -7,7 +7,7 @@
 test_begin "dash-encode-single-v"
 if [ $test_skip = 0 ] ; then
 
-#load a video source, decode + resize it , encode it and and dash the result
+#load a video source, decode + resize it, encode it and and dash the result
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264:FID=1 ffsws:osize=512x512:SID=1 @ enc:c=avc:fintra=1 @ -o $TEMP_DIR/file.mpd:profile=live" "dash"
 
 do_hash_test $TEMP_DIR/file.mpd "mpd"
@@ -25,7 +25,7 @@ test_end
 test_begin "dash-encode-single-a"
 if [ $test_skip = 0 ] ; then
 
-#load an audio source, decode it , encode it and dash the result
+#load an audio source, decode it, encode it and dash the result
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/count_english.mp3 @ enc:c=aac @ -o $TEMP_DIR/file.mpd:profile=live" "dash"
 
 do_hash_test $TEMP_DIR/file.mpd "mpd"
@@ -43,7 +43,7 @@ test_end
 test_begin "dash-encode-vv"
 if [ $test_skip = 0 ] ; then
 
-#load a source, decode it , resize+encode in two resolutions and dash the result
+#load a source, decode it, resize+encode in two resolutions and dash the result
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_video.h264:FID=1 ffsws:osize=512x512:SID=1 @ enc:c=avc:fintra=1:FID=EV1 ffsws:osize=256x256:SID=1 @ enc:c=avc:fintra=1:FID=EV2 -o $TEMP_DIR/file.mpd:profile=live:SID=EV1,EV2 -graph" "dash"
 
 do_hash_test $TEMP_DIR/file.mpd "mpd"
@@ -63,7 +63,7 @@ test_end
 test_begin "dash-encode-avv"
 if [ $test_skip = 0 ] ; then
 
-#load a video MP3G-4part2 source, decode it , resize+encode in AVC in two resolutions
+#load a video MPEG-4part2 source, decode it, resize+encode in AVC in two resolutions
 #load a an audio MP3 source, decode + encode in AAC
 #dash the result
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/count_video.cmp:FID=1 ffsws:osize=512x512:SID=1 @ enc:c=avc:fintra=1:FID=EV1 ffsws:osize=256x256:SID=1 @ enc:c=avc:fintra=1:FID=EV2 -i $MEDIA_DIR/auxiliary_files/count_english.mp3:FID=2  @ enc:c=aac:FID=EA -o $TEMP_DIR/file.mpd:profile=live:SID=EV1,EV2,EA -graph -blacklist=vtbdec" "dash"

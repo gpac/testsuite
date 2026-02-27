@@ -33,6 +33,3 @@ do_hash_test $mp4file "faststart-mp4"
 fi
 
 test_end
-
-
-

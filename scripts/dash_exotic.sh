@@ -76,6 +76,16 @@ fi
 test_end
 
 
+test_begin "dash_exotic_sfrag_tolerance"
+if [ $test_skip != 1 ] ; then
+#sfrag tolerance to adjust fragment boundaries inside segments on RAPs while keeping fragment number
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264:#ClampDur=8 -o $TEMP_DIR/vod.mpd::onDemand:segdur=4:cdur=4/3:sfrag_tolerance=50:stl:cmaf=cmfc" "dash"
+do_hash_test "$TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dashinit.mp4" "sfrag"
+fi
+test_end
+
+
+
 #check if we have ffmpeg mux support
 ffmx=`$GPAC -h filters 2>&1 | grep ffmx`
 
