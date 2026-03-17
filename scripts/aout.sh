@@ -9,7 +9,6 @@ test_begin "audio-$1"
 if [ $test_skip  = 1 ] ; then
 return
 fi
-fuser -v /dev/snd/* || true
 if [ $2 = 1 ] ; then
 jdon=`pgrep jackd$`
 if [ -z "$jdon" ] ; then
@@ -28,7 +27,6 @@ if [ $2 = 1 ] && [ -z "$jdon" ] ; then
 echo "killing jackd" >> $LOGS
 killall -9 jackd
 fi
-fuser -v /dev/snd/* || true
 #sleep 1
 
 test_end
