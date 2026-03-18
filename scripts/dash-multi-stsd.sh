@@ -11,7 +11,7 @@ echo "$EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_openGOP_320x180_112kbps.264" >
 
 do_test "$GPAC -i pl.m3u -o $TEMP_DIR/src.mp4" "multi-stsd-input"
 
-do_test "$MP4BOX -old-arch=0 -dash 1000 -profile live -out $TEMP_DIR/file.mpd $TEMP_DIR/src.mp4 --pswitch=stsd" "dash-multi-stsd"
+do_test "$MP4BOX -dash 1000 -profile live -out $TEMP_DIR/file.mpd $TEMP_DIR/src.mp4 --pswitch=stsd" "dash-multi-stsd"
 
 do_hash_test $TEMP_DIR/file.mpd "mpd"
 do_hash_test $TEMP_DIR/src_dashinit.mp4 "init"
