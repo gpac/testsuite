@@ -17,3 +17,10 @@ do_test "$MP4BOX -dnal 1 $MEDIA_DIR/dolby_vision/dolby_vision_cenc.ismv -out $TE
 do_hash_test $TEMP_DIR/dolby_vision_cenc_1_nalu.xml "cenc-dnal"
 
 test_end
+
+test_begin "dovi-muxing"
+
+do_test "$MP4BOX -add $MEDIA_DIR/dolby_vision/ChromaPulse_10.0.obu:dvp=10.0 -new $TEMP_DIR/dolby_vision_profile_10.0.mp4" "profile-10"
+do_hash_test $TEMP_DIR/dolby_vision_profile_10.0.mp4 "profile-10"
+
+test_end
