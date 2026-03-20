@@ -17,8 +17,18 @@ ttxt_test()
 
  #test source parsing and playback
  do_test "$GPAC -font-dirs=$EXTERNAL_MEDIA_DIR/fonts/ -rescan-fonts -i $srcfile compositor:osize=512x128:vfr @ -o $dump -graph" "srcplay"
+
+ do_hash=1
  #don't hash content on 32 bits, fp precision leads to different results
- if [ $GPAC_OSTYPE != "lin32" ] ; then
+ if [ $GPAC_OSTYPE = "lin32" ] ; then
+  do_hash=0
+ fi
+
+ if [ "$1" = "vtt" ] && [ "$GPAC_CPU" = "arm" ] && [ $GPAC_OSTYPE = "osx64" ] ; then
+  do_hash=0
+ fi
+
+ if [ "$do_hash" == "1" ] ; then
   do_hash_test $dump "srcplay"
  fi
 

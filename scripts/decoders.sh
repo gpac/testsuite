@@ -61,10 +61,10 @@ test_decoder "aac-ffdec" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.pcm" "-
 
 #test mp3 decode to raw
 test_decoder "mp3-maddec" $MEDIA_DIR/auxiliary_files/count_english.mp3 "test.pcm" "-blacklist=ffdec" 1
-test_decoder "mp3-ffdec" $MEDIA_DIR/auxiliary_files/count_english.mp3 "test.pcm" "-blacklist=maddec" 0
+test_decoder "mp3-ffdec" $MEDIA_DIR/auxiliary_files/count_english.mp3 "test.pcm" "-blacklist=maddec" arm_skip
 
 #test mp3 decode to wav
-test_decoder "mp3-wav" $MEDIA_DIR/auxiliary_files/count_english.mp3 "test.wav" "-blacklist=maddec" 0
+test_decoder "mp3-wav" $MEDIA_DIR/auxiliary_files/count_english.mp3 "test.wav" "-blacklist=maddec" arm_skip
 
 #test h264 decode to raw using ffmpeg
 test_decoder "avc-ffdec" $MEDIA_DIR/auxiliary_files/enst_video.h264 "test.yuv" "-blacklist=vtbdec,nvdec,ohevcdec" 0

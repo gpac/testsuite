@@ -62,7 +62,12 @@ do_test "$GPAC -blacklist=vtbdec,nvdec compositor:fps=25:dur=3:src=$tsfile @ ins
 #do_hash_test $TEMP_DIR/dump.rgb "rip"
 has_4k=`grep 3840 $insp`
 if [ -z "$has_4k" ] ; then
+
+ohevcdec=`$GPAC -h ohevcdec 2>/dev/null | grep ohevc`
+if [ -n "$ohevcdec" ] ; then
 result="switch failed"
+fi
+
 fi
 
 

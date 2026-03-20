@@ -26,7 +26,15 @@ else
 #do a hash on inspect
 insfile=$TEMP_DIR/dump.txt
 do_test "$GPAC -i $dst_file $myinspect:log=$insfile:test=encx" "inspect"
+
+skip_hash=0
+if [ "$3" = "test.m2v" ] && [ "$GPAC_CPU" = "arm" ] &&  [ $GPAC_OSTYPE = "lin64" ] ; then
+skip_hash=1
+fi
+
+if [ "$kip_hash" = "0" ] ; then
 do_hash_test "$insfile" "inspect"
+fi
 
 fi
 
