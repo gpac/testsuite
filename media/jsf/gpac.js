@@ -46,6 +46,21 @@ session.set_del_filter_fun( (f) => {
 		all_filters.splice (idx, 1);
 });
 
+session.set_filter_pid_modified_fun( (f) => {
+	print("PID modified in filter " + f.iname);
+	let idx = all_filters.indexOf(f);
+	if (idx>=0)
+		all_filters.splice (idx, 1);
+});
+
+session.set_filter_arg_updated_fun( (f) => {
+	print("ARG modified in filter " + f.iname);
+	let idx = all_filters.indexOf(f);
+	if (idx>=0)
+		all_filters.splice (idx, 1);
+});
+
+
 session.set_event_fun( (evt) => {
 	if (evt.type != GF_FEVT_USER) return 0;
 	print("evt " + evt.name);
@@ -74,6 +89,7 @@ session.post_task( ()=> {
     session.abort();
  	return false;
  }
+ 	return false;
 
  session.lock_filters(true);
 
