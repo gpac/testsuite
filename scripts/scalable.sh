@@ -1,5 +1,7 @@
 #!/bin/sh
 
+ohevcdec=`$GPAC -h ohevcdec 2>/dev/null | grep ohevc`
+
 scalable_test()
 {
 testname=$(basename "$1" | cut -d '.' -f1)
@@ -47,9 +49,12 @@ case $1 in
  ;;
  
 *shvc*)
- do_test "$GPAC -blacklist=nvdec,vtbdec,ffdec -i $splitfile -o $splitdump:sstart=8:send=9" "decode"
- do_hash_test "$splitdump" "decode"
- do_play_test "split" "$splitdump:size=3840x1600";;
+ if [ -n "$ohevcdec" ] ; then
+  do_test "$GPAC -blacklist=nvdec,vtbdec,ffdec -i $splitfile -o $splitdump:sstart=8:send=9" "decode"
+  do_hash_test "$splitdump" "decode"
+  do_play_test "split" "$splitdump:size=3840x1600"
+ fi
+ ;;
 esac
 
 

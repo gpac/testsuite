@@ -75,9 +75,15 @@ do_test "$GPAC -i $mp4file aout vout -cfg=temp:vout_cov=yes  -blacklist=vtbdec,n
 #we don't test streaming, just write sdp
 do_test "$GPAC -i $mp4file -o $sdpfile -runfor=100" "rtp"
 
+
+ohevcdec=`$GPAC -h ohevcdec 2>/dev/null | grep ohevc`
+if [ -n "$ohevcdec" ] ; then
+
 do_test "$GPAC -i $sdpfile vout -cfg=temp:vout_cov=yes --udp_timeout=500 -blacklist=vtbdec,nvdec,ffdec" "vout-rtp"
 
-do_test "gpac -i $mp4file vout:vsync=0" "vout-mp4-mx"
+do_test "gpac -i $mp4file vout:vsync=0 -blacklist=vtbdec,nvdec,ffdec" "vout-mp4-mx"
+
+fi
 
 wait
 

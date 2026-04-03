@@ -53,7 +53,7 @@ do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_
 #do_hash_test $myinspect "inspect"
 
 do_hash_test $TEMP_DIR/file.mpd "inspect-mpd"
-do_hash_test $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash.ts "inspect-seg"
+do_hash_test $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dashinit.ts "inspect-seg"
 
 fi
 test_end

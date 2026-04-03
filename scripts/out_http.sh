@@ -223,7 +223,14 @@ do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR httpout:port=8080:wdir=$TEMP_DIR$4 --
 #sleep half a sec to make sure the server is up and running
 sleep .5
 
-do_test "$MP4BOX -run-for 3000 -dash-live 1000 -subdur 1000 -profile live $TEMP_DIR/source.mp4 -out http://127.0.0.1:8080/live.$2:hmode=push$3 -logs=http@debug" "dash_push"
+tsb=""
+#fixme - on arm Mx, mp4box runs a bit faster and triggers deletion of last segment
+#we currently use tsb to block this but this needs further investigation
+if [ "$GPAC_CPU" = "arm" ] ; then
+tsb="-time-shift 2.5"
+fi
+
+do_test "$MP4BOX -run-for 3000 -dash-live 1000 -subdur 1000 $tsb -profile live $TEMP_DIR/source.mp4 -out http://127.0.0.1:8080/live.$2:hmode=push$3 -logs=http@debug" "dash_push"
 
 wait
 

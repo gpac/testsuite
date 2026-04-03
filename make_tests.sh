@@ -30,6 +30,8 @@ if [ $cpu_arch = "armv4l" ] ; then
 GPAC_CPU="arm"
 elif [ $cpu_arch = "arm" ] ; then
 GPAC_CPU="arm"
+elif [ $cpu_arch = "arm64" ] ; then
+GPAC_CPU="arm"
 elif [ $cpu_arch = "aarch64" ] ; then
 GPAC_CPU="arm"
 fi
@@ -523,18 +525,19 @@ if [ "$has_props" != "" ] ; then
 fi
 
 fi
+log $L_INF "- CPU config: $GPAC_CPU - OS: $GPAC_OSTYPE"
 #end check_only
 
 echo ""
 
 
 #reassign our default programs
-MP4BOX="MP4Box -noprog -for-test -old-arch $base_args"
-GPAC="gpac $base_args -noprog -for-test -old-arch -no-reassign "
+MP4BOX="MP4Box -noprog -for-test $base_args"
+GPAC="gpac $base_args -noprog -for-test -no-reassign "
 
 
 if [ "$gpac_profile" != "" ] ; then
-log $L_INF "GPAC profile: $gpac_profile"
+log $L_INF "- GPAC profile: $gpac_profile"
 MP4BOX="$MP4BOX -p=$gpac_profile"
 GPAC="$GPAC -p=$gpac_profile"
 fi
