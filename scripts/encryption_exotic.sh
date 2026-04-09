@@ -67,6 +67,29 @@ test_encrypt_mkey "subs" "mkey_subs.xml"
 
 
 
+#test encryption per layer for scalable codecs
+test_encrypt_scalable()
+{
+test_begin "encryption-scalable"
+if [ $test_skip  = 1 ] ; then
+ return
+fi
+
+cfile=$TEMP_DIR/crypt.mp4
+dfile=$TEMP_DIR/decrypt.mp4
+
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/misc/tiger.obu_2.av1:#ID=1 cecrypt:cfile=$MEDIA_DIR/encryption/scalable.xml @ -o $cfile" "encrypt"
+do_hash_test $cfile "encrypt"
+
+do_test "$MP4BOX -decrypt $cfile -out $dfile" "decrypt"
+do_hash_test $dfile "decrypt"
+
+test_end
+}
+
+test_encrypt_scalable
+
+
 #test encryption with multiple sample desc
 test_encrypt_multi_stsd()
 {
