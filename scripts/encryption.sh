@@ -79,6 +79,8 @@ case $drm in
   continue ;;
 *roll_period* )
   continue ;;
+*scalable* )
+  continue ;;
 esac
 
 #vp9 only supports ctr for now
