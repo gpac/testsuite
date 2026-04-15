@@ -73,6 +73,8 @@ case $drm in
   continue ;;
 *tpl_* )
   continue ;;
+*scalable* )
+  continue ;;
 esac
 
 name=$(basename $drm)
