@@ -546,7 +546,7 @@ GPAC="$GPAC -p=$gpac_profile"
 fi
 
 $MP4BOX -version 2> $INTERN_TEMP_DIR/version.txt
-VERSION="`head -1 $INTERN_TEMP_DIR/version.txt | cut -d ' ' -f 5-` "
+VERSION="`grep 'GPAC version' $INTERN_TEMP_DIR/version.txt | head -1 | cut -d ' ' -f 5-` "
 rm $INTERN_TEMP_DIR/version.txt
 log $L_INF "GPAC version: $VERSION"
 log $L_INF ""
