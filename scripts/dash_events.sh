@@ -1,6 +1,6 @@
 #!/bin/sh
 
-dash_event_test()
+dash_inband_event_test()
 {
     test_begin $1
     if [ $test_skip  = 1 ] ; then
@@ -16,4 +16,5 @@ dash_event_test()
 mp4file=$TEMP_DIR/file.mp4
 $GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac -o $mp4file 2> /dev/null
 
-dash_event_test "inband-events"
+dash_inband_event_test "inband-events"
+
