@@ -4,6 +4,11 @@
 #include <gpac/filters.h>
 #include <gpac/constants.h>
 
+/*
+** Reproducer command-line:
+** gpac -p=0 -i <poc> inspect:deep:analyze=full
+*/
+
 int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 {
     char filename[256];

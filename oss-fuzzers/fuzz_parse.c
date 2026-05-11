@@ -6,6 +6,11 @@
 #include <gpac/constants.h>
 #include <gpac/setup.h>
 
+/*
+** Reproducer command-line:
+** MP4Box -fuzz-chk <poc>
+*/
+
 int LLVMFuzzerInitialize(int *argc, char ***argv) {
     gf_log_set_tool_level(GF_LOG_ALL, GF_LOG_QUIET);
     return 0;

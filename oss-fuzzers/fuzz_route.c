@@ -4,6 +4,10 @@
 #include <gpac/filters.h>
 #include <gpac/constants.h>
 
+/*
+** Reproducer command-line:
+** gpac -p=0 -i route://234.0.0.1:1234 inspect:deep -netcap=src=<poc>,nrt
+*/
 
 int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 {
