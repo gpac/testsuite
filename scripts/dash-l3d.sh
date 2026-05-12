@@ -10,8 +10,19 @@ return
 fi
 do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264:FID=AV c=libx264:fintra=2:#ASID=1:SID=AV:FID=SM c=libx264:fintra=0.2:#SSR=1:#ASID=2:SID=AV:FID=STI -o $TEMP_DIR/low_delay.mpd:stl:segdur=2:cdur=0.2:cmf2:SID=SM,STI" "low_delay"
 do_hash_test $TEMP_DIR/low_delay.mpd "mpd"
-do_hash_test $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track2_0.m4s.0 "pseg"
-do_hash_test $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track1_0.m4s "seg"
+
+#cannot hash file due to encoders, dump timing instead
+#do_hash_test $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track2_0.m4s.0 "pseg"
+
+ofile=$TEMP_DIR/dump_pseg.txt
+$GPAC -i $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track2_0.m4s.0 --initseg=$TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track2_init.mp4 inspect:deep:log=$ofile:fmt='%dts% %cts%%lf%'
+do_hash_test $ofile "pseg"
+
+#cannot hash file due to encoders, dump timing instead
+#do_hash_test $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track1_0.m4s "seg"
+ofile=$TEMP_DIR/dump_seg.txt
+$GPAC -i $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track1_0.m4s --initseg=$TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track1_init.mp4 inspect:deep:log=$ofile:fmt='%dts% %cts%%lf%'
+do_hash_test $ofile "seg"
 
 test_end
 }
@@ -24,9 +35,24 @@ fi
 
 do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_I25_baseline_1280x720_512kbps.264:FID=V -i $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.aac:FID=A c=libx264:fintra=2:#ASID=1:SID=V:FID=SMV c=libx264:fintra=0.2:#SSR=1:#ASID=2:SID=V:FID=STV c=aac:#ASID=3:#SSR=-1:SID=A:FID=SMA -o $TEMP_DIR/low_delay.mpd:stl:segdur=2:cdur=0.2:cmf2:SID=SMV,STV,SMA" "low_delay_with_audio"
 do_hash_test $TEMP_DIR/low_delay.mpd "mpd"
-do_hash_test $TEMP_DIR/counter_30s_audio_dash0.m4s.1 "pseg_audio"
-do_hash_test $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track3_0.m4s.0 "pseg_video"
-do_hash_test $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track2_0.m4s "seg_video"
+
+#cannot hash file due to encoders, dump timing instead
+#do_hash_test $TEMP_DIR/counter_30s_audio_dash0.m4s.1 "pseg_audio"
+ofile=$TEMP_DIR/dump_pseg_audio.txt
+$GPAC -i $TEMP_DIR/counter_30s_audio_dash0.m4s.1 --initseg=$TEMP_DIR/counter_30s_audio_dashinit.mp4 inspect:deep:log=$ofile:fmt='%dts% %cts%%lf%'
+do_hash_test $ofile "pseg_audio"
+
+#cannot hash file due to encoders, dump timing instead
+#do_hash_test $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track3_0.m4s.0 "pseg_video"
+ofile=$TEMP_DIR/dump_speg_video.txt
+$GPAC -i $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track3_0.m4s.0 --initseg=$TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track3_init.mp4 inspect:deep:log=$ofile:fmt='%dts% %cts%%lf%'
+do_hash_test $ofile "pseg_video"
+
+#cannot hash file due to encoders, dump timing instead
+#do_hash_test $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track2_0.m4s "seg_video"
+ofile=$TEMP_DIR/dump_seg_video.txt
+$GPAC -i $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track2_0.m4s --initseg=$TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash_track2_init.mp4 inspect:deep:log=$ofile:fmt='%dts% %cts%%lf%'
+do_hash_test $ofile "seg_video"
 
 test_end
 }
@@ -45,7 +71,12 @@ if [ "res" = "" ] ; then
 fi
 
 do_hash_test $TEMP_DIR/llhls_compat_1.m3u8 "hls"
-do_hash_test $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash0.m4s.1 "pseg"
+
+#cannot hash file due to encoders, dump timing instead
+#do_hash_test $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash0.m4s.1 "pseg"
+ofile=$TEMP_DIR/dump_seg_video.txt
+$GPAC -i $TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dash0.m4s.1 --initseg=$TEMP_DIR/counter_30s_I25_baseline_1280x720_512kbps_dashinit.mp4 inspect:deep:log=$ofile:fmt='%dts% %cts%%lf%'
+do_hash_test $ofile "pseg"
 
 test_end
 }
