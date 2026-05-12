@@ -86,12 +86,12 @@ do_hash_test $TEMP_DIR/scte35-all.mpd "mpd-all"
 do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/scte35/scte35-simple.ts -o $TEMP_DIR/scte35-none.mpd:segdur=1:scte35=none" "mpd-none"
 do_hash_test $TEMP_DIR/scte35-none.mpd "mpd-none"
 
-do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/scte35/scte35-simple.ts -o $TEMP_DIR/scte35.m3u8:segdur=1:tsb=-1" "hls-simple"
-do_hash_test $TEMP_DIR/scte35_1.m3u8 "hls-simple"
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/scte35/scte35-simple.ts -o $TEMP_DIR/scte35_simple.m3u8:segdur=1:tsb=-1" "hls-simple"
+do_hash_test $TEMP_DIR/scte35_simple_1.m3u8 "hls-simple"
 
-#multiple events embedded in the same segment
-do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/scte35/scte35-simple.ts -o $TEMP_DIR/scte35.m3u8:segdur=6:tsb=-1" "hls-multi"
-do_hash_test $TEMP_DIR/scte35_1.m3u8 "hls-multi"
+# multiple events embedded in the same segment
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/scte35/scte35-simple.ts -o $TEMP_DIR/scte35_multi.m3u8:segdur=6:tsb=-1" "hls-multi"
+do_hash_test $TEMP_DIR/scte35_multi_1.m3u8 "hls-multi"
 
 test_end
 
