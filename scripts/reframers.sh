@@ -27,6 +27,14 @@ do_hash_test "$dst_file2" "rewrite-latm"
 
 fi
 
+if [ "$3" == "audio_iamf.mp4" ] ; then
+
+dst_file2=$TEMP_DIR/audio.iamf
+do_test "$GPAC -i $dst_file reframer @ -o $dst_file2  -graph -stats"  "ext-rewrite"
+do_hash_test "$dst_file2" "ext-rewrite"
+
+fi
+
 test_end
 
 }
@@ -52,8 +60,7 @@ test_reframer "av1-obu" $MEDIA_DIR/auxiliary_files/video.av1 "video.obu"
 
 test_reframer "av1-ivf" $MEDIA_DIR/auxiliary_files/video.av1 "video.ivf"
 
-test_reframer "iamf" $MEDIA_DIR/auxiliary_files/audio_opus.iamf "audio.mp4"
-test_reframer "iamf-ext" "results/temp/reframer-iamf/audio.mp4" "audio.iamf"
+test_reframer "iamf" $MEDIA_DIR/auxiliary_files/audio_opus.iamf "audio_iamf.mp4"
 
 test_reframer "amr" $EXTERNAL_MEDIA_DIR/import/bear_audio.amr
 
