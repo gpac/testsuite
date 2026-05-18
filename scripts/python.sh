@@ -12,7 +12,6 @@ fi
 
 
 if [ $platform = "Darwin" ] ; then
- pyth="python"
  if [ -x "$(command -v python3.9)" ] ; then
   pyth="python3.9"
  fi
