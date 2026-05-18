@@ -53,6 +53,7 @@ test_reframer "av1-obu" $MEDIA_DIR/auxiliary_files/video.av1 "video.obu"
 test_reframer "av1-ivf" $MEDIA_DIR/auxiliary_files/video.av1 "video.ivf"
 
 test_reframer "iamf" $MEDIA_DIR/auxiliary_files/audio_opus.iamf "audio.mp4"
+test_reframer "iamf-ext" "results/temp/reframer-iamf/audio.mp4" "audio.iamf"
 
 test_reframer "amr" $EXTERNAL_MEDIA_DIR/import/bear_audio.amr
 
