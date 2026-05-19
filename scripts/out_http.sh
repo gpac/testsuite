@@ -16,6 +16,11 @@ if [ $test_skip = 1 ] ; then
  return
 fi
 
+if [ $keep_temp_dir != 1 ] ; then
+  rm -rf $TEMP_DIR/* 2> /dev/null
+fi
+
+
 do_test "$GPAC httpout:port=8080:quit:reqlog:rdirs=$MEDIA_DIR" "http-server" &
 #sleep half a sec to make sure the server is up and running
 sleep .5
@@ -34,6 +39,11 @@ test_begin "http$TESTSUF-server-dlist"
 if [ $test_skip = 1 ] ; then
  return
 fi
+
+if [ $keep_temp_dir != 1 ] ; then
+  rm -rf $TEMP_DIR/* 2> /dev/null
+fi
+
 
 touch $TEMP_DIR/file.txt
 mkdir -p $TEMP_DIR/mydir
@@ -73,6 +83,11 @@ if [ $test_skip = 1 ] ; then
  return
 fi
 
+if [ $keep_temp_dir != 1 ] ; then
+  rm -rf $TEMP_DIR/* 2> /dev/null
+fi
+
+
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac -o http://127.0.0.1:8080/live.aac:gpac:hold -logs=http@debug" "http-sink" &
 #sleep half a sec to make sure the server is up and running
 sleep .5
@@ -92,6 +107,10 @@ test_http_push()
 test_begin "http$TESTSUF-push"
 if [ $test_skip = 1 ] ; then
  return
+fi
+
+if [ $keep_temp_dir != 1 ] ; then
+  rm -rf $TEMP_DIR/* 2> /dev/null
 fi
 
 do_test "$GPAC httpout:port=8080:quit:wdir=$TEMP_DIR" "http-server-rec" &
@@ -118,6 +137,10 @@ if [ $test_skip = 1 ] ; then
  return
 fi
 
+if [ $keep_temp_dir != 1 ] ; then
+  rm -rf $TEMP_DIR/* 2> /dev/null
+fi
+
 do_test "$GPAC httpout:port=8080:quit:hmode=source -o $TEMP_DIR/mydir/test.aac" "http-source" &
 #sleep half a sec to make sure the server is up and running
 sleep .5
@@ -141,6 +164,11 @@ test_begin "http$TESTSUF-origin"
 if [ $test_skip = 1 ] ; then
  return
 fi
+
+if [ $keep_temp_dir != 1 ] ; then
+  rm -rf $TEMP_DIR/* 2> /dev/null
+fi
+
 #make a 3sec input
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=3.4 -new $TEMP_DIR/source.mp4 2> /dev/null
 do_test "$GPAC -i $TEMP_DIR/source.mp4 reframer:rt=on @ -o http://127.0.0.1:8080/live.mpd:gpac:rdirs=$TEMP_DIR --sutc --cdur=0.1 --asto=0.9 --dmode=dynamic -logs=http@info -lu" "http-origin" &
@@ -163,6 +191,10 @@ test_http_dashraw()
 test_begin "http$TESTSUF-dashraw"
 if [ $test_skip = 1 ] ; then
  return
+fi
+
+if [ $keep_temp_dir != 1 ] ; then
+  rm -rf $TEMP_DIR/* 2> /dev/null
 fi
 
 do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac -o http://127.0.0.1:8080/file1.mpd:gpac:rdirs=$TEMP_DIR:muxtype=raw:sfile:profile=main" "http-origin"
@@ -193,6 +225,11 @@ test_begin "http$TESTSUF-byteranges"
 if [ $test_skip = 1 ] ; then
  return
 fi
+
+if [ $keep_temp_dir != 1 ] ; then
+  rm -rf $TEMP_DIR/* 2> /dev/null
+fi
+
 #make a 3sec dash
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=3.0 -new $TEMP_DIR/source.mp4 2> /dev/null
 $MP4BOX -dash 1000 -profile onDemand -out $TEMP_DIR/file.mpd $TEMP_DIR/source.mp4 2> /dev/null
@@ -214,6 +251,10 @@ test_http_dashpush_live()
 test_begin "http$TESTSUF-dashpush$1"
 if [ $test_skip = 1 ] ; then
  return
+fi
+
+if [ $keep_temp_dir != 1 ] ; then
+  rm -rf $TEMP_DIR/* 2> /dev/null
 fi
 
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac -new $TEMP_DIR/source.mp4 2> /dev/null
@@ -255,6 +296,10 @@ if [ $test_skip = 1 ] ; then
  return
 fi
 
+if [ $keep_temp_dir != 1 ] ; then
+  rm -rf $TEMP_DIR/* 2> /dev/null
+fi
+
 do_test "$GPAC -runfor=$HTTP_SERVER_RUNFOR -i $MEDIA_DIR/auxiliary_files/counter.hvc -o http://localhost:8080/live.m3u8:gpac:segdur=4:cdur=1:profile=live:dmode=dynamic:rdirs=$TEMP_DIR:llhls=sf:cte=0:tsb=1"
 
 do_hash_test $TEMP_DIR/counter_dash3.m4s.1 "dash-seg3-part1"
@@ -275,6 +320,10 @@ test_http_dashpush_vod()
 test_begin "http$TESTSUF-dashpush-vod"
 if [ $test_skip = 1 ] ; then
  return
+fi
+
+if [ $keep_temp_dir != 1 ] ; then
+  rm -rf $TEMP_DIR/* 2> /dev/null
 fi
 
 $MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=4 -new $TEMP_DIR/source.mp4 2> /dev/null
@@ -301,6 +350,10 @@ if [ $test_skip = 1 ] ; then
  return
 fi
 
+if [ $keep_temp_dir != 1 ] ; then
+  rm -rf $TEMP_DIR/* 2> /dev/null
+fi
+
 do_test "$GPAC httpout:port=8080:quit:rdirs=$MEDIA_DIR:cert=$MEDIA_DIR/tls/localhost.crt:pkey=$MEDIA_DIR/tls/localhost.key" "https-server" &
 #sleep half a sec to make sure the server is up and running
 sleep .5
@@ -319,6 +372,10 @@ test_http_server_push_pull()
 test_begin "http$TESTSUF-server-push-pull"
 if [ $test_skip = 1 ] ; then
  return
+fi
+
+if [ $keep_temp_dir != 1 ] ; then
+  rm -rf $TEMP_DIR/* 2> /dev/null
 fi
 
 tmp_aac=$TEMP_DIR/test.mp4
@@ -347,6 +404,10 @@ if [ $test_skip = 1 ] ; then
  return
 fi
 
+if [ $keep_temp_dir != 1 ] ; then
+  rm -rf $TEMP_DIR/* 2> /dev/null
+fi
+
 tmp_aac=$TEMP_DIR/test.mp4
 do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac:dur=3 -new $tmp_aac" "make-input"
 
@@ -369,6 +430,10 @@ test_http_auth ()
 test_begin "http$TESTSUF-auth$1"
 if [ $test_skip  = 1 ] ; then
 return
+fi
+
+if [ $keep_temp_dir != 1 ] ; then
+  rm -rf $TEMP_DIR/* 2> /dev/null
 fi
 
 echo "[$MEDIA_DIR/auxiliary_files]" > $TEMP_DIR/rules.txt
