@@ -74,7 +74,7 @@ if [ $EXTERNAL_MEDIA_AVAILABLE = 0 ] ; then
  return
 fi
 
-do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/scte35/scte35-simple.ts -o $TEMP_DIR/scte35-oob.mpd:segdur=1:scte35=xml+bin" "mpd-outband"
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/scte35/scte35-simple.ts -o $TEMP_DIR/scte35-oob.mpd:segdur=1:scte35=xmlbin" "mpd-outband"
 do_hash_test $TEMP_DIR/scte35-oob.mpd "mpd-outband"
 
 do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/scte35/scte35-simple.ts -o $TEMP_DIR/scte35-ib.mpd:segdur=1:scte35=inband" "mpd-inband"
