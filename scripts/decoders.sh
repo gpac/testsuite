@@ -44,6 +44,7 @@ xviddec=`$GPAC -h xviddec 2>/dev/null | grep xvid`
 libaom=`gpac -hh ffdec:* 2>/dev/null | grep ffdec:libaom-av1`
 j2koj2k=`$GPAC -h j2kdec 2>/dev/null | grep j2kdec`
 j2kff=`gpac -hh ffdec:* 2>/dev/null | grep ffdec:jpeg2000`
+mpegh=`gpac -h mpeghdec 2>/dev/null | grep mpeghdec`
 
 
 #test png+alpha decode to raw
@@ -90,6 +91,10 @@ if [ -n "$ohevcdec" ] ; then
 test_decoder "hevc-ohevc" $MEDIA_DIR/auxiliary_files/counter.hvc "test.yuv" "-blacklist=vtbdec,nvdec,ffdec -logs=codec@info" 0
 
 test_decoder "hevc-ohevc-nocopy" $MEDIA_DIR/auxiliary_files/counter.hvc "test.yuv" "-blacklist=vtbdec,nvdec,ffdec --no_copy" 0
+fi
+
+if [ -n "$mpegh" ] ; then
+test_decoder "mpeghdec" $MEDIA_DIR/auxiliary_files/counter_30s_audio.mhas "test.pcm" "" 1
 fi
 
 #latest OSX releases breaks decoding of our counter sequence !! Commented for now until we find a fix
