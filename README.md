@@ -39,6 +39,7 @@ This directory is cleaned after each script, unless `-tmp` option is set. This a
 __WARNING__
 Since the temp directory is __ONLY__ cleaned after each script, be careful to remove any state file (for example dasher context) produced if you run several tests in the same script, or use different names for each test.
 
+If the variable `CLEAN_TEMP` is set to 1 in a script, the temp directory is cleaned at the beginning of each test. This allows running several tests in the same script without worrying about state files.
  
 A simple GPAC test can be:
 ```

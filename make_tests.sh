@@ -920,6 +920,13 @@ shopt -s nullglob
   log $L_ERR "$TEST_NAME: $result"
  fi
 
+ #cleanup temp dir
+ if [ $keep_temp_dir != 1 ] ; then
+  if [ $CLEAN_TEMP != 0 ] ; then
+   rm -rf $TEMP_DIR/* 2> /dev/null
+  fi
+ fi
+
 shopt -u nullglob
 }
 
@@ -1607,6 +1614,7 @@ for i in $scripts_torun ; do
 if [ $verbose = 1 ] ; then
  log $L_DEB "Source script: $i"
 fi
+CLEAN_TEMP=0
 current_script=$i
 skip_all_tests=0
 source $i

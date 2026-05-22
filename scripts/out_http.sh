@@ -4,6 +4,7 @@
 
 #increase run time for tests on VM
 HTTP_SERVER_RUNFOR=6000
+CLEAN_TEMP=1
 
 ORIG_GPAC="$GPAC"
 ORIG_MP4BOX="$MP4BOX"
