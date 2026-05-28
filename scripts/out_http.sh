@@ -236,7 +236,7 @@ do_test "$MP4BOX -run-for 3000 -dash-live 1000 -subdur 1000 $tsb -profile live $
 wait
 
 if [ $5 = 1 ] ; then
-do_hash_test $TEMP_DIR/source_dash3.m4s.1 "dash-seg3"
+do_hash_test $TEMP_DIR/source_dash3.m4s.0 "dash-seg3"
 else
 do_hash_test $TEMP_DIR/source_dash3.m4s "dash-seg3"
 fi
