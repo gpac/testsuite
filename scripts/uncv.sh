@@ -83,6 +83,12 @@ do_hash_test $mp4file "$suf"
 do_test "$GPAC -i $mp4file -o $TEMP_DIR/dump_$suf.rgb --force_pf" "dec-$suf"
 do_hash_test $TEMP_DIR/dump_$suf.rgb "dec-$suf"
 
+suf="422p"
+mp4file=$TEMP_DIR/file_$suf.mp4
+do_test "$GPAC uncvg:c=Y,U,V:dur=1/25:sampling=422:interleave=comp -o $mp4file" "$suf"
+do_hash_test $mp4file "$suf"
+do_test "$GPAC -i $mp4file -o $TEMP_DIR/dump_$suf.rgb --force_pf" "dec-$suf"
+do_hash_test $TEMP_DIR/dump_$suf.rgb "dec-$suf"
 
 
 mp4file=$TEMP_DIR/file_pal.mp4
