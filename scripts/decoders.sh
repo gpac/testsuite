@@ -93,10 +93,6 @@ test_decoder "hevc-ohevc" $MEDIA_DIR/auxiliary_files/counter.hvc "test.yuv" "-bl
 test_decoder "hevc-ohevc-nocopy" $MEDIA_DIR/auxiliary_files/counter.hvc "test.yuv" "-blacklist=vtbdec,nvdec,ffdec --no_copy" 0
 fi
 
-if [ -n "$mpegh" ] ; then
-test_decoder "mpeghdec" $MEDIA_DIR/auxiliary_files/counter_30s_audio.mhas "test.pcm" "" 1
-fi
-
 #latest OSX releases breaks decoding of our counter sequence !! Commented for now until we find a fix
 #if [ -n "$vtbdec" ] ; then
 #test_decoder "hevc-vtb" $MEDIA_DIR/auxiliary_files/counter.hvc "test.yuv" "-blacklist=ohevcdec,nvdec,ffdec" 0
@@ -114,6 +110,11 @@ fi
  if [ $EXTERNAL_MEDIA_AVAILABLE = 0 ] ; then
   return
  fi
+
+if [ -n "$mpegh" ] ; then
+test_decoder "mpeghdec" $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas "test.pcm" "" 1
+fi
+
 
 test_decoder "amr-ffdec" $EXTERNAL_MEDIA_DIR/import/bear_audio.amr "test.pcm" "" 1
 
