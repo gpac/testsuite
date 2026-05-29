@@ -646,7 +646,7 @@ test_begin ()
  #reset defaults
  dump_dur=$DEF_DUMP_DUR
  dump_size=$DEF_DUMP_SIZE
- test_timeout=$DEF_TIMEOUT
+ test_timeout="-k $DEF_TIMEOUT $DEF_TIMEOUT"
 
  test_skip=0
  single_test=0
@@ -808,7 +808,10 @@ shopt -s nullglob
    test_ok=0
    test_leak=$((test_leak + 1))
   elif [ $RETURN_VALUE != 0 ] ; then
-   if [ $enable_timeout != 0 ] && [ $RETURN_VALUE = 124 ] ; then
+   # 124 is gnu timeout sigterm
+   # 137 is 128 from gnu time + 9 sigkill from timeout
+   # both mean timeout for us
+   if [[ $enable_timeout -ne 0 ]] && [[ $RETURN_VALUE -eq 124 || $RETURN_VALUE -eq 137 ]]; then
     result="$SUBTEST_NAME:Timeout $result"
    else
     result="$SUBTEST_NAME:Fail(ret code $RETURN_VALUE) $result"
@@ -976,7 +979,7 @@ if [ $enable_timeout != 0 ] ; then
 timeout_args="$GNU_TIMEOUT $test_timeout"
 fi
 
-$UNBUFFER $timeout_args $GNU_TIME -o $stat_subtest -f ' EXECUTION_STATUS="OK"\n RETURN_STATUS=%x\n MEM_TOTAL_AVG=%K\n MEM_RESIDENT_AVG=%t\n MEM_RESIDENT_MAX=%M\n CPU_PERCENT=%P\n CPU_ELAPSED_TIME=%E\n CPU_USER_TIME=%U\n CPU_KERNEL_TIME=%S\n PAGE_FAULTS=%F\n FILE_INPUTS=%I\n SOCKET_MSG_REC=%r\n SOCKET_MSG_SENT=%s' $1 >> $log_subtest 2>&1
+$UNBUFFER $GNU_TIME -o $stat_subtest -f 'EXECUTION_STATUS="OK"\n RETURN_STATUS=%x\n MEM_TOTAL_AVG=%K\n MEM_RESIDENT_AVG=%t\n MEM_RESIDENT_MAX=%M\n CPU_PERCENT=%P\n CPU_ELAPSED_TIME=%E\n CPU_USER_TIME=%U\n CPU_KERNEL_TIME=%S\n PAGE_FAULTS=%F\n FILE_INPUTS=%I\n SOCKET_MSG_REC=%r\n SOCKET_MSG_SENT=%s' $timeout_args $1 >> $log_subtest 2>&1
 rv=$?
 
 echo "SUBTEST_NAME=$2" >> $stat_subtest
