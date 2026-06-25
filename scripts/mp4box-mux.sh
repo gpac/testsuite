@@ -39,5 +39,9 @@ iamf_mp4file="$TEMP_DIR/test-iamf.mp4"
 do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/video_5s.ivf -add $MEDIA_DIR/auxiliary_files/audio_opus.iamf -new $iamf_mp4file" "add-iamf"
 do_hash_test $iamf_mp4file "add-iamf"
 
+iamf_pcm_mp4file="$TEMP_DIR/test-iamf-pcm.mp4"
+do_test "$MP4BOX -add $MEDIA_DIR/auxiliary_files/video_5s.ivf -add $MEDIA_DIR/auxiliary_files/audio_pcm.iamf -new $iamf_pcm_mp4file" "add-iamf-pcm"
+do_hash_test $iamf_pcm_mp4file "add-iamf-pcm"
+
 test_end
 
