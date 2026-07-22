@@ -54,7 +54,7 @@ case $1 in
  *audio_only* )
   skip_hash=1;;
 
- *frame_alloc* | *seq_av_simple* | *seq_av_swipe* | *seq_av_xfade* | *group_seq* | *pl_reload_timer* | *script* | *seq_v_persp* | *seq_v_persp_wide* | *timer* | *seq_mix* | *seq_replace_a* )
+ *frame_alloc* | *group_seq* | *pl_reload_timer* | *script* | *seq_mix* | *seq_replace_a* | *seq_v_persp* )
   if [ $GPAC_CPU = "arm" ] ; then
     skip_hash=1
   fi
