@@ -25,3 +25,10 @@ do_hash_test $TEMP_DIR/dolby_vision_profile_10.0.mp4 "profile-10"
 
 test_end
 fi
+
+test_begin "dv2"
+
+do_test "$MP4BOX -add $MEDIA_DIR/dolby_vision/chroma_pulse.265:dvp=8.1:dvflags=0x200 -new $TEMP_DIR/dv2_p81.mp4" "import-set-dv-feature-flags"
+do_hash_test $TEMP_DIR/dv2_p81.mp4 "dv-feature-flags"
+
+test_end
