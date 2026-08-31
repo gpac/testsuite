@@ -35,6 +35,14 @@ do_hash_test "$dst_file2" "ext-rewrite"
 
 fi
 
+if [ "$3" == "audio_iamf_pcm.mp4" ] ; then
+
+dst_file2=$TEMP_DIR/audio_pcm.iamf
+do_test "$GPAC -i $dst_file reframer @ -o $dst_file2  -graph -stats"  "ext-rewrite-pcm"
+do_hash_test "$dst_file2" "ext-rewrite-pcm"
+
+fi
+
 test_end
 
 }
@@ -62,7 +70,11 @@ test_reframer "av1-ivf" $MEDIA_DIR/auxiliary_files/video.av1 "video.ivf"
 
 test_reframer "iamf" $MEDIA_DIR/auxiliary_files/audio_opus.iamf "audio_iamf.mp4"
 
+test_reframer "iamf-pcm" $MEDIA_DIR/auxiliary_files/audio_pcm.iamf "audio_iamf_pcm.mp4"
+
 test_reframer "iamf-opus-5ms" $MEDIA_DIR/auxiliary_files/audio_opus_5ms.iamf "audio_iamf_5ms.mp4"
+
+test_reframer "iamf-pcm" $MEDIA_DIR/auxiliary_files/audio_pcm.iamf "audio_iamf_pcm.mp4"
 
 test_reframer "amr" $EXTERNAL_MEDIA_DIR/import/bear_audio.amr
 
