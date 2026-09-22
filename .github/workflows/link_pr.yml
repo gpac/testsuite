@@ -1,0 +1,118 @@
+name: Link and Merge Testsuite PR
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  link-pr:
+    # Trigger if it's a PR comment containing '/linkpr' anywhere in the body
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '/linkpr') }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Verify Authorization
+        id: check_auth
+        run: |
+          ASSOC="${{ github.event.comment.author_association }}"
+          if [[ "$ASSOC" =~ ^(OWNER|MEMBER|COLLABORATOR)$ ]]; then
+            echo "authorized=true" >> $GITHUB_OUTPUT
+          else
+            echo "authorized=false" >> $GITHUB_OUTPUT
+            echo "Commenter is not authorized ($ASSOC)."
+          fi
+
+      - name: Process Linked PR
+        if: steps.check_auth.outputs.authorized == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const commentBody = context.payload.comment.body;
+            const prB1Number = context.payload.issue.number;
+            const repoB = context.repo;
+
+            // Matches "/linkpr <URL>" anywhere in multiline or formatted text
+            const linkPrRegex = /\/linkpr\s+https:\/\/github\.com\/([^\/\s]+)\/(gpac)\/pull\/(\d+)/;
+            const match = commentBody.match(linkPrRegex);
+
+            if (!match) {
+              await github.rest.issues.createComment({
+                ...repoB,
+                issue_number: prB1Number,
+                body: "❌ Could not parse `/linkpr` command. Expected format anywhere in comment: `/linkpr https://github.com/gpac/gpac/pull/123`"
+              });
+              core.setFailed("Invalid /linkpr command format.");
+              return;
+            }
+
+            const [_, ownerA, repoA, prA1Number] = match;
+
+            // Fetch PR-A1 details to get source branch name
+            core.info(`Fetching details for ${ownerA}/${repoA}#${prA1Number}...`);
+            const prA1 = await github.rest.pulls.get({
+              owner: ownerA,
+              repo: repoA,
+              pull_number: parseInt(prA1Number, 10),
+            });
+
+            const branchA1 = prA1.data.head.ref;
+            const titleA1 = prA1.data.title;
+            core.info(`Target branch name determined from PR-A1: ${branchA1} - Title: ${titleA1}`);
+
+            // Get latest commit SHA from repoB's master branch
+            const masterRef = await github.rest.git.getRef({
+              ...repoB,
+              ref: 'heads/master',
+            });
+            const masterSha = masterRef.data.object.sha;
+
+            // Create branch repoB:branchA1
+            try {
+              await github.rest.git.createRef({
+                ...repoB,
+                ref: `refs/heads/${branchA1}`,
+                sha: masterSha,
+              });
+              core.info(`Created branch refs/heads/${branchA1}`);
+            } catch (err) {
+              core.info(`Branch ${branchA1} might already exist: ${err.message}`);
+            }
+
+            // Update PR-B1's base branch to repoB:branchA1
+            await github.rest.pulls.update({
+              ...repoB,
+              pull_number: prB1Number,
+              base: branchA1,
+            });
+            core.info(`Updated PR-B1 base branch to ${branchA1}`);
+
+            // Merge PR-B1 into repoB:branchA1
+            await github.rest.pulls.merge({
+              ...repoB,
+              pull_number: prB1Number,
+              merge_method: 'squash',
+            });
+            core.info(`Merged PR-B1 into ${branchA1}`);
+
+            // Create PR-B2 (repoB:branchA1 -> repoB:master)
+            const prB2 = await github.rest.pulls.create({
+              ...repoB,
+              title: `[testsuite sync] ${titleA1} (see ${ownerA}/${repoA}#${prA1Number})`,
+              head: branchA1,
+              base: 'master',
+              body: `Automated testsuite aggregation PR for linked code PR:\n\n🔗${titleA1} https://github.com/${ownerA}/${repoA}/pull/${prA1Number}\n\nContains changes from merged testsuite PR #${prB1Number}.\n\nMerge this before merging the code PR.`,
+            });
+            core.info(`Created PR-B2 #${prB2.data.number}`);
+
+            // Confirmations on PR-B1 and PR-B2
+            await github.rest.issues.createComment({
+              ...repoB,
+              issue_number: prB1Number,
+              body: `✅ Linked with **${repoA}#${prA1Number}**!\n- Changes merged into intermediate branch \`${branchA1}\`.\n- Aggregate PR created: #${prB2.data.number}\n\nIf further changes are needed open a new testsuite PR against base branch \`${branchA1}\`.`
+            });

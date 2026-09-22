@@ -55,6 +55,8 @@ case $drm in
   continue ;;
 *clearbytes* )
   continue ;;
+*cpix* )
+  continue ;;
 *forceclear* )
   continue ;;
 *clear_stsd* )
@@ -72,6 +74,8 @@ case $drm in
 *hls_saes* )
   continue ;;
 *tpl_* )
+  continue ;;
+*scalable* )
   continue ;;
 esac
 

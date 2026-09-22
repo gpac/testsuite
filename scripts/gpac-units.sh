@@ -203,6 +203,12 @@ do_test "$GPAC -i media/auxiliary_files/enst_video.h264 inspect -r -logs=filter@
 fi
 test_end
 
+test_begin "gpac-sid-prefix"
+if [ $test_skip != 1 ] ; then
+do_test "$GPAC -i media/auxiliary_files/logo.png:FID=AB  -i media/auxiliary_files/logo.png:FID=AC inspect:SID=A*" "prefix1"
+fi
+test_end
+
 test_begin "gpac-uncache"
 if [ test_skip != 1 ] ; then
 

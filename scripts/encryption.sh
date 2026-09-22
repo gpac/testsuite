@@ -69,6 +69,8 @@ case $drm in
   continue ;;
 *hls_saes* )
   continue ;;
+*cpix* )
+  continue ;;
 *mkey* )
   continue ;;
 *subs* )
@@ -78,6 +80,8 @@ case $drm in
 *roll_seg* )
   continue ;;
 *roll_period* )
+  continue ;;
+*scalable* )
   continue ;;
 esac
 

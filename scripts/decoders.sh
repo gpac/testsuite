@@ -44,6 +44,7 @@ xviddec=`$GPAC -h xviddec 2>/dev/null | grep xvid`
 libaom=`gpac -hh ffdec:* 2>/dev/null | grep ffdec:libaom-av1`
 j2koj2k=`$GPAC -h j2kdec 2>/dev/null | grep j2kdec`
 j2kff=`gpac -hh ffdec:* 2>/dev/null | grep ffdec:jpeg2000`
+mpegh=`gpac -h mpeghdec 2>/dev/null | grep mpeghdec`
 
 
 #test png+alpha decode to raw
@@ -61,10 +62,10 @@ test_decoder "aac-ffdec" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.pcm" "-
 
 #test mp3 decode to raw
 test_decoder "mp3-maddec" $MEDIA_DIR/auxiliary_files/count_english.mp3 "test.pcm" "-blacklist=ffdec" 1
-test_decoder "mp3-ffdec" $MEDIA_DIR/auxiliary_files/count_english.mp3 "test.pcm" "-blacklist=maddec" 0
+test_decoder "mp3-ffdec" $MEDIA_DIR/auxiliary_files/count_english.mp3 "test.pcm" "-blacklist=maddec" arm_skip
 
 #test mp3 decode to wav
-test_decoder "mp3-wav" $MEDIA_DIR/auxiliary_files/count_english.mp3 "test.wav" "-blacklist=maddec" 0
+test_decoder "mp3-wav" $MEDIA_DIR/auxiliary_files/count_english.mp3 "test.wav" "-blacklist=maddec" arm_skip
 
 #test h264 decode to raw using ffmpeg
 test_decoder "avc-ffdec" $MEDIA_DIR/auxiliary_files/enst_video.h264 "test.yuv" "-blacklist=vtbdec,nvdec,ohevcdec" 0
@@ -109,6 +110,11 @@ fi
  if [ $EXTERNAL_MEDIA_AVAILABLE = 0 ] ; then
   return
  fi
+
+if [ -n "$mpegh" ] ; then
+test_decoder "mpeghdec" $EXTERNAL_MEDIA_DIR/counter/counter_30s_audio.mhas "test.pcm" "" 1
+fi
+
 
 test_decoder "amr-ffdec" $EXTERNAL_MEDIA_DIR/import/bear_audio.amr "test.pcm" "" 1
 

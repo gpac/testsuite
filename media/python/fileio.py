@@ -87,7 +87,7 @@ def run_test(mode):
 	if mode==1:
 		fio_root = gpac.FileIO("media/auxiliary_files/counter.hvc", fio)
 		f1 = fs.load_src(fio_root.url)
-		f2 = fs.load("inspect:deep:log=results/temp/py_fileio/inspect-sf.txt")
+		f2 = fs.load("inspect:deep:log=results/temp/py_fileio/inspect-sf.txt:dur=2")
 		name="input gfio"
 
 	#multiple file destination fileIO (dash creation)

@@ -43,7 +43,7 @@ fi
 
 if [ $3 = 3 ] ; then
 dump=$TEMP_DIR/dump.mpd
-do_test "$GPAC $2 -o $dump -logs=dash@info" "dash-dump"
+do_test "$GPAC $2 -o $dump -logs=dash@info --td_limit=0" "dash-dump"
 do_hash_test $dump "dash-dump"
 
 do_play_test "dump" "$dump"

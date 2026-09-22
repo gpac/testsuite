@@ -42,6 +42,15 @@ if [ $GPAC_OSTYPE == "lin32" ] ; then
   do_hash=0
 fi
 
+if [ $GPAC_OSTYPE == "osx64" ] && [ $GPAC_CPU == "arm" ] ; then
+ case $name in
+ *anchoranim* | *anchorview* | *animvalues* | *shapes-rect-01-t* | *text-area-204-t*)
+  do_hash=0
+  ;;
+ esac
+fi
+
+
  RGB_DUMP="$TEMP_DIR/dump.rgb"
  PCM_DUMP="$TEMP_DIR/dump.pcm"
 

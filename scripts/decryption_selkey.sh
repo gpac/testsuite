@@ -45,7 +45,7 @@ echo '<?xml version="1.0" encoding="UTF-8" />
 do_test "$GPAC -i $src1 -i $src2 -o $mpdfile" "dash"
 
 myinspect=$TEMP_DIR/inspect.txt
-do_test "$GPAC -old-arch=0 --cfile=$cfile -i $mpdfile --auto_switch=1 inspect:deep:log=$myinspect" "inspect"
+do_test "$GPAC --cfile=$cfile -i $mpdfile --auto_switch=1 inspect:deep:log=$myinspect" "inspect"
 do_hash_test "$myinspect" "inspect"
 
 

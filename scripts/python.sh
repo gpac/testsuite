@@ -10,8 +10,11 @@ elif [ -x "$(command -v Python)" ]; then
 pyth="Python"
 fi
 
-if [ $platform = "Darwin" ]  && [ -x "$(command -v python3.9)" ] ; then
-pyth="python3.9"
+
+if [ $platform = "Darwin" ] ; then
+ if [ -x "$(command -v python3.9)" ] ; then
+  pyth="python3.9"
+ fi
 fi
 
 if [ -z $pyth ] ; then
@@ -38,6 +41,7 @@ py_test()
  echo "" >> $testfile
  cat $1 >> $testfile
 
+  export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:/usr/local/lib
  do_test "$pyth $testfile" "run"
 
 if [ "$name" == "fileio" ] ; then

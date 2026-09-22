@@ -27,6 +27,22 @@ do_hash_test "$dst_file2" "rewrite-latm"
 
 fi
 
+if [ "$3" == "audio_iamf.mp4" ] ; then
+
+dst_file2=$TEMP_DIR/audio.iamf
+do_test "$GPAC -i $dst_file reframer @ -o $dst_file2  -graph -stats"  "ext-rewrite"
+do_hash_test "$dst_file2" "ext-rewrite"
+
+fi
+
+if [ "$3" == "audio_iamf_pcm.mp4" ] ; then
+
+dst_file2=$TEMP_DIR/audio_pcm.iamf
+do_test "$GPAC -i $dst_file reframer @ -o $dst_file2  -graph -stats"  "ext-rewrite-pcm"
+do_hash_test "$dst_file2" "ext-rewrite-pcm"
+
+fi
+
 test_end
 
 }
@@ -39,7 +55,7 @@ test_reframer "aac" $MEDIA_DIR/auxiliary_files/enst_audio.aac
 
 test_reframer "latm" $MEDIA_DIR/auxiliary_files/enst_audio.aac "test.latm"
 
-test_reframer "mp3" $MEDIA_DIR/auxiliary_files/count_english.mp3 "test.mp2"
+test_reframer "mp3" $MEDIA_DIR/auxiliary_files/count_english.mp3 "test.mp3"
 
 test_reframer "avc" $MEDIA_DIR/auxiliary_files/enst_video.h264
 
@@ -52,7 +68,13 @@ test_reframer "av1-obu" $MEDIA_DIR/auxiliary_files/video.av1 "video.obu"
 
 test_reframer "av1-ivf" $MEDIA_DIR/auxiliary_files/video.av1 "video.ivf"
 
-test_reframer "iamf" $MEDIA_DIR/auxiliary_files/audio_opus.iamf "audio.mp4"
+test_reframer "iamf" $MEDIA_DIR/auxiliary_files/audio_opus.iamf "audio_iamf.mp4"
+
+test_reframer "iamf-pcm" $MEDIA_DIR/auxiliary_files/audio_pcm.iamf "audio_iamf_pcm.mp4"
+
+test_reframer "iamf-opus-5ms" $MEDIA_DIR/auxiliary_files/audio_opus_5ms.iamf "audio_iamf_5ms.mp4"
+
+test_reframer "iamf-pcm" $MEDIA_DIR/auxiliary_files/audio_pcm.iamf "audio_iamf_pcm.mp4"
 
 test_reframer "amr" $EXTERNAL_MEDIA_DIR/import/bear_audio.amr
 

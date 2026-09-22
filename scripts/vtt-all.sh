@@ -61,7 +61,7 @@ vtt_export ()
 
  vtt_file="$MEDIA_DIR/webvtt/empty.vtt"
  mp4file="$TEMP_DIR/test.mp4"
- $MP4BOX -add $vtt_file -new $mp4file
+ $MP4BOX -add $vtt_file -new $mp4file 2> /dev/null
 
  #should export empty vtt file
  do_test "$MP4BOX -raw 1 $mp4file -out $TEMP_DIR/empty.vtt" "empty"

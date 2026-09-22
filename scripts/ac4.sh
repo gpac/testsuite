@@ -49,3 +49,24 @@ do_hash_test "$TEMP_DIR/ac4-crypted_dash1.m4s" "dash-seg-encrypted"
 
 fi
 test_end
+
+
+test_begin "ac4-preselection"
+
+if [ $test_skip != 1 ] ; then
+
+mp4file="$TEMP_DIR/pbde.mp4"
+tmp="$mp4file.xml"
+
+# mux with preselection config
+do_test "$MP4BOX -add $EXTERNAL_MEDIA_DIR/misc/pbde_2ch.ac4:preselection=$EXTERNAL_MEDIA_DIR/misc/pbde_2ch.ini -new $mp4file" "Mux"
+do_hash_test "$mp4file" "mux"
+
+do_test "$MP4BOX -diso $mp4file -out $tmp" "diso"
+do_hash_test "$tmp" "diso"
+
+do_test "$MP4BOX -dash 4000 -profile ondemand -out $TEMP_DIR/pbde.mpd  $mp4file:asID=1" "Dash"
+do_hash_test "$TEMP_DIR/pbde.mpd" "dash"
+
+fi
+test_end

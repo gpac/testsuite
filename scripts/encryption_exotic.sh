@@ -24,6 +24,24 @@ test_end
 
 test_encrypt_subs
 
+#CPIX DRM configuration
+test_encrypt_cpix()
+{
+test_begin "encryption-cpix"
+if [ $test_skip = 1 ] ; then
+ return
+fi
+
+cfile=$TEMP_DIR/cpix-crypt.mp4
+
+do_test "$GPAC -i $src cecrypt:cfile=$MEDIA_DIR/encryption/cpix.xml @ -o $cfile" "encrypt-cpix"
+do_hash_test $cfile "encrypt-cpix"
+
+test_end
+}
+
+test_encrypt_cpix
+
 
 
 #test encryption and decryption of a subset of the subsamples
@@ -43,7 +61,7 @@ do_hash_test $cfile "encrypt"
 do_test "$MP4BOX -decrypt $cfile -out $dfile" "decrypt"
 do_hash_test $dfile "decrypt"
 
-#also test  mkey SAI senc dump
+#also test mkey SAI senc dump
 do_test "$MP4BOX -diso $dfile" "diso"
 do_hash_test $TEMP_DIR/decrypt_info.xml "diso"
 
@@ -65,6 +83,29 @@ test_encrypt_mkey "base" "mkey_base.xml"
 test_encrypt_mkey "roll" "mkey_roll.xml"
 test_encrypt_mkey "subs" "mkey_subs.xml"
 
+
+
+#test encryption per layer for scalable codecs
+test_encrypt_scalable()
+{
+test_begin "encryption-scalable"
+if [ $test_skip  = 1 ] ; then
+ return
+fi
+
+cfile=$TEMP_DIR/crypt.mp4
+dfile=$TEMP_DIR/decrypt.mp4
+
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/misc/tiger.obu_2.av1:#ID=1 cecrypt:cfile=$MEDIA_DIR/encryption/scalable.xml @ -o $cfile" "encrypt"
+do_hash_test $cfile "encrypt"
+
+do_test "$MP4BOX -decrypt $cfile -out $dfile" "decrypt"
+do_hash_test $dfile "decrypt"
+
+test_end
+}
+
+test_encrypt_scalable
 
 
 #test encryption with multiple sample desc
@@ -218,3 +259,56 @@ test_end
 }
 
 test_clearkey
+
+
+#test kpswitch (new DASH Period on new Key)
+test_kpswitch()
+{
+test_begin "encryption-kpswitch"
+if [ $test_skip  = 1 ] ; then
+ return
+fi
+
+$MP4BOX -add "$EXTERNAL_MEDIA_DIR"/counter/counter_30s_I25_baseline_320x180_128kbps.264:dur=1 -new "$TEMP_DIR/src.mp4" 2> /dev/null
+
+cfile1="$TEMP_DIR/drm1.xml"
+echo '<?xml version="1.0" encoding="UTF-8" />
+<GPACDRM type="CENC AES-CTR">
+<CrypTrack IV_size="16" first_IV="0x0a610676cb88f302d10ac8bc66e039ed">
+<key KID="0x279926496a7f5d25da69f2b3b2799a7f" value="0x5544694d47473326622665665a396b36"/>
+</CrypTrack>
+</GPACDRM>' > $cfile1
+
+cfile2="$TEMP_DIR/drm2.xml"
+echo '<?xml version="1.0" encoding="UTF-8" />
+<GPACDRM type="CENC AES-CTR">
+<CrypTrack IV_size="16" first_IV="0x0a610676cb88f302d10ac8bc66e039ed">
+<key KID="0x279926496a7f5d25da69f2b3b2799a80" value="0x5544694d47473326622665665a396b37"/>
+</CrypTrack>
+</GPACDRM>' > $cfile2
+
+src="$TEMP_DIR/2k.pl"
+echo "##begin pl.pl
+src.mp4:#CryptInfo=$cfile1
+src.mp4:#CryptInfo=$cfile2
+##end playlist" > $src
+
+dst="$TEMP_DIR/live_2p.mpd"
+do_test "$GPAC -i $src cecrypt -o $dst:kpswitch" "encrypt_2key_2period"
+do_hash_test $dst "encrypt_2key_2period"
+
+src="$TEMP_DIR/same_key.pl"
+echo "##begin same.pl
+src.mp4:#CryptInfo=$cfile1
+src.mp4:#CryptInfo=$cfile1
+##end playlist" > $src
+
+dst="$TEMP_DIR/live_1p.mpd"
+do_test "$GPAC -i $src cecrypt -o $dst:kpswitch" "encrypt_same_key_1period"
+do_hash_test $dst "encrypt_same_key_1period"
+
+
+test_end
+}
+
+test_kpswitch

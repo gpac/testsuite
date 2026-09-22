@@ -4,8 +4,19 @@
 #include <gpac/filters.h>
 #include <gpac/constants.h>
 
+/*
+** Reproducer command-line:
+** gpac -p=0 -i <poc> inspect:deep:analyze=full
+*/
+
 int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 {
+    // prevent blocking on fread(stdin)
+    int devnull = open("/dev/null", O_RDONLY);
+    if (devnull >= 0) {
+        dup2(devnull, STDIN_FILENO);
+        close(devnull);
+    }
     char filename[256];
     GF_Err e;
     sprintf(filename, "/tmp/libfuzzer.%d", getpid());
