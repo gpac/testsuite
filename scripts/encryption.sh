@@ -69,6 +69,8 @@ case $drm in
   continue ;;
 *hls_saes* )
   continue ;;
+*cpix* )
+  continue ;;
 *mkey* )
   continue ;;
 *subs* )

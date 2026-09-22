@@ -55,6 +55,8 @@ case $drm in
   continue ;;
 *clearbytes* )
   continue ;;
+*cpix* )
+  continue ;;
 *forceclear* )
   continue ;;
 *clear_stsd* )

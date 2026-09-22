@@ -24,6 +24,24 @@ test_end
 
 test_encrypt_subs
 
+#CPIX DRM configuration
+test_encrypt_cpix()
+{
+test_begin "encryption-cpix"
+if [ $test_skip = 1 ] ; then
+ return
+fi
+
+cfile=$TEMP_DIR/cpix-crypt.mp4
+
+do_test "$GPAC -i $src cecrypt:cfile=$MEDIA_DIR/encryption/cpix.xml @ -o $cfile" "encrypt-cpix"
+do_hash_test $cfile "encrypt-cpix"
+
+test_end
+}
+
+test_encrypt_cpix
+
 
 
 #test encryption and decryption of a subset of the subsamples
