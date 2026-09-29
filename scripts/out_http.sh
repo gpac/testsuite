@@ -210,6 +210,34 @@ test_end
 }
 
 
+#many requests over one connection: the server allows few concurrent streams (-hx-max-st), and must keep
+#accepting requests as they complete (for HTTP/3, stream credit must be returned when a request stream closes)
+test_http_many_requests()
+{
+test_begin "http$TESTSUF-many-requests"
+if [ $test_skip = 1 ] ; then
+ return
+fi
+#7 sec of AAC in 100 ms segments: 70 segments + init + MPD, 9 times the server's stream limit
+$MP4BOX -add $MEDIA_DIR/auxiliary_files/enst_audio.aac -new $TEMP_DIR/source.mp4 2> /dev/null
+$MP4BOX -dash 100 -profile live -out $TEMP_DIR/file.mpd $TEMP_DIR/source.mp4 2> /dev/null
+
+do_test "$GPAC -hx-max-st=8 httpout:port=8080:rdirs=$TEMP_DIR -runfor=$HTTP_SERVER_RUNFOR" "http-server" &
+#sleep half a sec to make sure the server is up and running
+sleep .5
+
+do_test "$GPAC -i http://127.0.0.1:8080/file.mpd -o $TEMP_DIR/remote.aac" "dash-read"
+do_test "$GPAC -i $TEMP_DIR/file.mpd -o $TEMP_DIR/local.aac" "dash-read-local"
+
+$DIFF $TEMP_DIR/local.aac $TEMP_DIR/remote.aac > /dev/null
+rv=$?
+if [ $rv != 0 ] ; then
+  result="content read over http differs from local content"
+fi
+
+test_end
+}
+
 test_http_dashpush_live()
 {
 test_begin "http$TESTSUF-dashpush$1"
@@ -418,6 +446,9 @@ test_http_origin
 
 #test ondemand dash served (for byte ranges)
 test_http_byteranges
+
+#test many requests on one connection with a low stream limit
+test_http_many_requests
 
 #test dash with raw format on http (for seg size messages)
 test_http_dashraw
