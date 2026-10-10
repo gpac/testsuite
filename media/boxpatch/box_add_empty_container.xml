@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GPACBOXES>
+
+<!-- append into a box without children: the tmcd sample entry created by self:tc -->
+<Box path="trak.mdia.minf.stbl.stsd.tmcd" trackID="2">
+<BS fcc="name"/>
+<BS value="8" bits="16"/>
+<BS value="0" bits="16"/>
+<BS text="MYTAPE01"/>
+</Box>
+
+</GPACBOXES>
