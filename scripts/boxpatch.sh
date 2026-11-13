@@ -97,6 +97,11 @@ EOF
   result="Wildcard HDR removal failed for $codec ($mode)"
   fi
   done
+
+#rmhdr must produce the same output as the recursive box patch
+dst="$TEMP_DIR/hdr-$codec-rmhdr.mp4"
+do_test "$GPAC -i $hdr -o $dst:rmhdr" "rmhdr-$codec"
+do_hash_test "$dst" "rmhdr-$codec"
 done
 
 
