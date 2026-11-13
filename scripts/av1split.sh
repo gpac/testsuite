@@ -6,9 +6,9 @@ if [ $test_skip = 1 ] ; then
 return
 fi
 #extract 720p tiled high quality source
-do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_1280_720_I_25_tiled_512k.obu  av1split -o $TEMP_DIR/high_\$CropOrigin\$.mp4" "split-qp20"
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_1280_720_I_25_tiled_512k.obu  av1split:FID=1 -o $TEMP_DIR/high_\$CropOrigin\$.mp4:SID=1#CropOrigin=*" "split-qp20"
 #extract 720p tiled low quality source
-do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_1280_720_I_25_tiled_128k.obu  av1split -o $TEMP_DIR/low_\$CropOrigin\$.mp4" "split-qp35"
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_1280_720_I_25_tiled_128k.obu  av1split:FID=1 -o $TEMP_DIR/low_\$CropOrigin\$.mp4:SID=1#CropOrigin=*" "split-qp35"
 
 #hash all our results
 for i in $TEMP_DIR/*.mp4 ; do
