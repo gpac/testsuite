@@ -198,3 +198,39 @@ test_end
 }
 
 test_ghi_subs
+
+#test non-constant duration indexing
+test_ghi_no_const_dur()
+{
+
+test_begin "ghi-no-const-dur"
+
+if [ $test_skip  = 1 ] ; then
+return
+fi
+
+idx_file=$TEMP_DIR/idx.ghi
+src_file=$TEMP_DIR/src.mp4
+
+do_test "$GPAC -i $MEDIA_DIR/auxiliary_files/enst_audio.aac -o $src_file:mediats=50000"  "gen"
+do_hash_test "$src_file" "gen"
+
+do_test "$GPAC -i $src_file -o $idx_file:segdur=2"  "idx"
+do_hash_test "$idx_file" "idx"
+
+#generate manifest + init segments with tx3g->ttml
+dst_mpd=$TEMP_DIR/vod.mpd
+do_test "$GPAC -i $idx_file:gm=all -o $dst_mpd"  "mpd"
+do_hash_test "$dst_mpd" "mpd"
+do_hash_test "$TEMP_DIR/1-init.mp4" "init"
+
+#generate seg 2 of rep 1
+rep_seg=$TEMP_DIR/vod_r1_2.m4s
+do_test "$GPAC -i $idx_file:rep=1:sn=2:out=$rep_seg -o $dst_mpd"  "seg-2"
+do_hash_test "$rep_seg" "seg-2"
+
+test_end
+
+}
+
+test_ghi_no_const_dur
