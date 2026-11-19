@@ -259,7 +259,7 @@ if [ "$GPAC_CPU" = "arm" ] ; then
 tsb="-time-shift 2.5"
 fi
 
-do_test "$MP4BOX -run-for 3000 -dash-live 1000 -subdur 1000 $tsb -profile live $TEMP_DIR/source.mp4 -out http://127.0.0.1:8080/live.$2:hmode=push$3 -logs=http@debug" "dash_push"
+do_test "$MP4BOX -run-for 2500 -dash-live 1000 -subdur 1000 $tsb -profile live $TEMP_DIR/source.mp4 -out http://127.0.0.1:8080/live.$2:hmode=push$3 -logs=http@debug" "dash_push"
 
 wait
 
@@ -508,7 +508,7 @@ h_mode="-no-h2"
 fi
 
 if [ -n "$has_h3" ] ; then
-base_mode="$base_mode -h3=no"
+h_mode="$h_mode -h3=no"
 h2_mode="-h3=no"
 h3_mode="-h3=only"
 fi
