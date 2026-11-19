@@ -497,7 +497,7 @@ fi
 
 #check if we have H2/h3 support
 has_h2=`$GPAC -h bin 2>/dev/null | grep HAS_HTTP2`
-has_h3=`$GPAC -h bin 2>/dev/null | grep HAS_NGTCP2`
+has_h3=`$GPAC -h bin 2>/dev/null | grep -E 'HAS_NGTCP2|HAS_PICOQUIC'`
 
 h_mode=""
 h2_mode=""
@@ -529,8 +529,8 @@ fi
 
 if [ -n "$has_h3" ] ; then
 
-MP4BOX="$ORIG_MP4BOX $h3_mode --cert=$MEDIA_DIR/tls/localhost.crt --pkey=$MEDIA_DIR/tls/localhost.key"
-GPAC="$ORIG_GPAC $h3_mode --cert=$MEDIA_DIR/tls/localhost.crt --pkey=$MEDIA_DIR/tls/localhost.key"
+MP4BOX="$ORIG_MP4BOX $h3_mode -broken-cert --cert=$MEDIA_DIR/tls/localhost.crt --pkey=$MEDIA_DIR/tls/localhost.key"
+GPAC="$ORIG_GPAC $h3_mode -broken-cert --cert=$MEDIA_DIR/tls/localhost.crt --pkey=$MEDIA_DIR/tls/localhost.key"
 TESTSUF="3"
 
 do_tests 2
