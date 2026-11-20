@@ -77,6 +77,8 @@ case $drm in
   continue ;;
 *scalable* )
   continue ;;
+*cbcs_any* )
+  continue ;;
 esac
 
 name=$(basename $drm)

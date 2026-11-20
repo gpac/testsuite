@@ -83,6 +83,8 @@ case $drm in
   continue ;;
 *scalable* )
   continue ;;
+*cbcs_any* )
+  continue ;;
 esac
 
 #vp9 only supports ctr for now
