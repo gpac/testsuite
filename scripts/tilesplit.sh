@@ -30,3 +30,19 @@ do_hash_test $myinspect "inspect-dash"
 test_end
 fi
 
+test_begin "tilesplit-dash-enc"
+if [ $test_skip != 1 ] ; then
+
+#src -> tile -> encrypt -> dash
+do_test "$GPAC -i $EXTERNAL_MEDIA_DIR/counter/counter_1280_720_I_25_tiled_1mb.hevc tilesplit cecrypt:cfile=$MEDIA_DIR/encryption/cbcs_any.xml @ -o $TEMP_DIR/tiled.mpd" "dash-tiles"
+do_hash_test $TEMP_DIR/tiled.mpd "dash-tiles"
+#hash init, we must have cenc on all tracks
+do_hash_test $TEMP_DIR/counter_1280_720_I_25_tiled_1mb_dash_track1_init.mp4 "dash-init"
+
+
+dst=$TEMP_DIR/agg.hvc
+do_test "$GPAC -i $TEMP_DIR/tiled.mpd cdcrypt tileagg -o $dst" "decrypt-agg"
+do_hash_test $dst "decrypt-agg"
+
+test_end
+fi
