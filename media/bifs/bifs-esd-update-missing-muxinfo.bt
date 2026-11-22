@@ -1,0 +1,13 @@
+// Regression test for https://github.com/gpac/gpac/issues/3986
+// MP4Box -mp4 must report the failed MuxInfo import and exit cleanly.
+// Previously the error path freed the ESD update command while it was
+// still owned by the access unit, causing a heap-use-after-free on
+// cleanup (gf_odf_delete_command / gf_sm_au_del).
+InitialObjectDescriptor {
+ esDescr [
+  ES_Descriptor { ES_ID 1 decConfigDescr DecoderConfigDescriptor { streamType 3 } }
+  ES_Descriptor { ES_ID 2 decConfigDescr DecoderConfigDescriptor { streamType 1 } }
+ ]
+}
+Group {}
+AT 0 IN 2 { UPDATE ESD IN 10 [ ES_Descriptor { ES_ID 21 muxInfo MuxInfo { fileName "gpac-esd-update-missing-file.mp4" } } ] }
